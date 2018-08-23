@@ -1,0 +1,15 @@
+*.jpg
+*.h5
+*.JPG
+*.png
+*.wav
+*.zip
+*.pyc
+*~
+*.pkl
+*.pickle
+*.swp
+.DS_Store
+.git
+downloads
+venv
