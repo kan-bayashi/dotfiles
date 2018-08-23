@@ -4,7 +4,13 @@
 # language setting
 LANG=en_US.UTF-8
 
+# my ssh function
+function connect {
+    ssh -tX $1 "zsh -c 'export OS=mac;zsh;'"
+}
+
 # alias settings
+alias ls="ls -G"
 alias la="ls -a"
 alias ll="ls -l"
 alias free="free -g"
@@ -187,19 +193,8 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:
 ########################
 #    extra settings    #
 ########################
-# path setting
-if [ -z "$TMUX" ];then
-    export PYENV_ROOT=$HOME/.pyenv
-    export PATH=$PYENV_ROOT/bin:$PATH
-    export PATH=${HOME}/local/bin:$PATH
-    export PATH=/usr/local/bin:$PATH
-fi
-eval "$(pyenv init -)"
-
-# load environment dependent setting
-if [ `hostname | grep sp.m.is.nagoya-u.ac.jp` ];then
-    [ -e ~/.zshrc.takedalab ] && source ~/.zshrc.takedalab
-fi
+# add path
+export PATH=/Applications/MacVim.app/Contents/bin:$PATH
 
 # compile zshrc
 if [ ~/.zshrc -nt ~/.zshrc.zwc ]; then
