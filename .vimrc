@@ -82,9 +82,11 @@ set number       " show line number
 set laststatus=2 " always show status number
 set cmdheight=2  " command line height
 set noshowmode   " do not show mode in command line
+set noshowcmd
 
 " cursor related
 set cursorline   " highlight cursor line
+set guicursor=
 
 " command line completion related
 set wildmenu      " enable completion in command mode
