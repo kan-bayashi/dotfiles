@@ -5,6 +5,7 @@ source $VIMRUNTIME/menu.vim
 set background=dark
 
 set guifont=Sauce\ Code\ Pro\ Nerd\ Font\ Complete:h14
+set guifontwide=Migu\ 1C\ Regular:h14
 set ambiwidth=single
 set imdisable
 set belloff=all
