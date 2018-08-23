@@ -75,7 +75,6 @@ hook_source = '''
 # {{{
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
-on_event = 'InsertCharPre'
 on_i = 1
 hook_source = '''
     " <TAB> and <S-TAB>: select items
