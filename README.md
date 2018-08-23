@@ -8,7 +8,7 @@ My dotfiles (zsh + tmux 2.6 + vim 8 or nvim)
 
 - zsh
 
-## How-to-install
+## How-to-install (for Linux)
 
 1. Get Nerd fonts from <https://github.com/ryanoasis/nerd-fonts>
 2. If use iterm2, install `iterm2/jellybeans_like.itermcolors`
