@@ -52,6 +52,7 @@ set encoding=utf-8                              " default encoding
 set fileencodings=utf-8,iso-2022-jp,sjis,euc-jp " auto encoding select
 set ffs=unix,mac,dos                            " auto file format select "
 scriptencoding utf-8                            " setting for multi byte char
+set ambiwidth=single
 
 " search related
 set incsearch  " enable incremental search
