@@ -47,7 +47,7 @@ fi
 pip install -r requirements.txt
 pip3 install -r requirements.txt
 
-# install dependencies for ubuntu
+# install dependencies
 if [ -e /etc/lsb-release ];then
     sudo apt-get install -y build-essential ncurses-dev lua5.2 lua5.2-dev luajit libevent-dev
 fi
@@ -70,6 +70,12 @@ LDFLAGS="-Wl,-rpath=${HOME}/.pyenv/versions/2.7.14/lib:${HOME}/.pyenv/versions/3
     --enable-multibyte \
     --prefix="${HOME}"/local
 make && make install
+
+# install nvim
+cd "${HOME}/local/bin"
+wget https://github.com/neovim/neovim/releases/download/v0.3.1/nvim.appimage
+chmod u+x nvim.appimage
+ln -s "$PWD"/nvim.appimage nvim
 
 # install tmux
 cd "$TMPDIR"
