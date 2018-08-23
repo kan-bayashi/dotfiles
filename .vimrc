@@ -68,6 +68,7 @@ set noundofile " do not make undo file
 " key related
 set ttimeoutlen=10             " minimum key strock time
 set backspace=indent,eol,start " make backspace strong
+set noshowcmd
 
 " use space instead of tab
 set tabstop=4    " tab width
@@ -84,6 +85,7 @@ set noshowmode   " do not show mode in command line
 
 " cursor related
 set cursorline   " highlight cursor line
+set guicursor=
 
 " command line completion related
 set wildmenu      " enable completion in command mode
