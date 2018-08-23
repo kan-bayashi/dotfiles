@@ -23,17 +23,10 @@ $ cd dotfiles
 $ ./setup.sh
 
 # install denpendencies
-$ brew install python
+$ brew install python  # now default is python3
+$ pip3 install flake8 neovim jedi
 $ brew install ripgrep
 $ brew install fd
-$ pip3 install flake8 neovim jedi
-
-# install macvim with self-compilation
-$ brew tap universal-ctags/universal-ctags
-$ brew install --HEAD universal-ctags
-$ brew tap splhack/splhack
-$ brew install --HEAD cmigemo-mk
-$ brew install --HEAD macvim-kaoriya
 
 # install nvim
 $ brew install neovim
