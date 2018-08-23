@@ -105,8 +105,7 @@ set hidden            " change buffer without saving
 set mouse=a           " enable mouse
 
 " python path related
-let g:python2_host_prog = expand('~/') . '.pyenv/versions/2.7.14/bin/python'
-let g:python3_host_prog = expand('~/') . '.pyenv/versions/3.6.4/bin/python'
+let g:python3_host_prog = '/usr/local/bin/python3'
 " }}}
 
 "------------------------------------
@@ -149,9 +148,4 @@ nnoremap <C-w>\| :<C-u>vs<CR>
 nnoremap <silent>tt :tabnew<CR>
 nnoremap <silent>th gT
 nnoremap <silent>tl gt
-
-" share clipboard
-if $OS == "win"
-    vmap <silent><leader>y :w !xsel -ib<CR><CR>
-endif
 " }}}

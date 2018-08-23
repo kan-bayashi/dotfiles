@@ -277,14 +277,6 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'wincent/vim-clipper'
-hook_add = '''
-    if $OS != "mac"
-        let g:ClipperAuto = 0
-    endif
-'''
-
-[[plugins]]
 repo = 'christoomey/vim-tmux-navigator'
 hook_add = '''
     " keymappig for terminal in vim

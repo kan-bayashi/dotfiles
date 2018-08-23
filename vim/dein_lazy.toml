@@ -141,3 +141,37 @@ hook_source = '''
     let g:vim_markdown_math = 1
 '''
 # }}}
+
+#############################
+#       LATEX PLUGINS       #
+#############################
+# {{{
+[[plugins]]
+repo = 'lervag/vimtex'
+on_ft = 'tex'
+depends = 'deoplete.nvim'
+hook_source = '''
+    let $PATH = "/usr/local/texlive/2014/bin/x86_64-darwin:".$PATH
+    let g:vimtex_compiler_latexmk = {
+            \ 'background' : 1,
+            \ 'build_dir' : '',
+            \ 'continuous' : 1,
+            \ 'options' : [
+            \   '-pdfdvi',
+            \   '-verbose',
+            \   '-file-line-error',
+            \   '-synctex=1',
+            \   '-interaction=nonstopmode',
+            \ ],
+            \}
+    let g:vimtex_fold_enabled = 0
+    let g:vimtex_fold_envs = 0
+    let g:vimtex_quickfix_latexlog = {
+        \ 'default' : 0,
+        \}
+    let g:vimtex_toc_width = 0
+    let g:tex_conceal=''
+    autocmd FileType tex setlocal spell spelllang=en,cjk
+    let g:deoplete#omni#input_patterns.tex = g:vimtex#re#deoplete
+'''
+# }}}

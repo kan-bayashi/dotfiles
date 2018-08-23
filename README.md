@@ -8,7 +8,7 @@ My dotfiles (zsh + tmux 2.6 + vim 8 or nvim)
 
 - zsh
 
-## How-to-install
+## How-to-install (for mac)
 
 1. Get Nerd fonts from <https://github.com/ryanoasis/nerd-fonts>
 2. If use iterm2, install `iterm2/jellybeans_like.itermcolors`
@@ -22,12 +22,21 @@ $ cd dotfiles
 # setup dotfiles
 $ ./setup.sh
 
-# install softwares
-$ ./install.sh
+# install denpendencies
+$ brew install python
+$ brew install ripgrep
+$ brew install fd
+$ pip3 install flake8 neovim jedi
 
-# install vim plugins
-$ vim
-$ nvim
+# install macvim with self-compilation
+$ brew tap universal-ctags/universal-ctags
+$ brew install --HEAD universal-ctags
+$ brew tap splhack/splhack
+$ brew install --HEAD cmigemo-mk
+$ brew install --HEAD macvim-kaoriya
+
+# install nvim
+$ brew install neovim
 ```
 
 ## References

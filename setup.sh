@@ -55,14 +55,6 @@ if [ ! -e ~/.tmux/plugins/tpm ];then
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
 
-# install pyenv
-if [ ! -e ~/.pyenv ];then
-    echo "####################################################"
-    echo "#                  PYENV INSTALL                   #"
-    echo "####################################################"
-    git clone https://github.com/yyuu/pyenv.git ~/.pyenv
-fi
-
 # install fzf
 if [ ! -e ~/.fzf ];then
     echo "####################################################"
