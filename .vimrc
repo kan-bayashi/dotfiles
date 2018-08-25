@@ -68,7 +68,6 @@ set noundofile " do not make undo file
 " key related
 set ttimeoutlen=10             " minimum key strock time
 set backspace=indent,eol,start " make backspace strong
-set noshowcmd
 
 " use space instead of tab
 set tabstop=4    " tab width
@@ -76,12 +75,14 @@ set expandtab    " use space instead of tab
 set shiftwidth=4 " shift width in auto indent
 set autoindent   " enable auto indent
 set showmatch    " highlight corresponding parentheses
+set completeopt-=preview
 
 " status line realted
 set number       " show line number
 set laststatus=2 " always show status number
 set cmdheight=2  " command line height
 set noshowmode   " do not show mode in command line
+set noshowcmd    " do not show command in status line
 
 " cursor related
 set cursorline   " highlight cursor line

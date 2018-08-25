@@ -64,9 +64,6 @@ hook_source = '''
 [[plugins]]
 repo = 'zchee/deoplete-jedi'
 on_ft = 'python'
-hook_source = '''
-    set completeopt-=preview
-'''
 # }}}
 
 #############################
@@ -105,7 +102,7 @@ hook_source = '''
 
 [[plugins]]
 repo = 'w0rp/ale'
-hook_add = '''
+hook_source = '''
     nmap <silent> <SPACE>j <Plug>(ale_next_wrap)
     nmap <silent> <SPACE>k <Plug>(ale_previous_wrap)
     let g:ale_linters = {
