@@ -55,23 +55,25 @@ hook_add = '''
           \             ['filename'],
           \           ],
           \   'right': [ ['linter_ok', 'linter_errors', 'linter_warnings'],
-          \              [ 'percent'],
-          \              [ 'fileformat', 'fileencoding', 'filetype' ],
+          \              ['percent'],
+          \              ['fileformat', 'fileencoding', 'filetype'],
           \            ]
           \ },
           \ 'component_function': {
-          \   'mode': 'LightlineMode',
-          \   'fugitive': 'MyFugitive',
-          \   'filename': 'MyFilename',
-          \   'gitguitter': 'MyGitGutter',
-          \   'linter_warnings': 'LightlineLinterWarnings',
-          \   'linter_errors': 'LightlineLinterErrors',
-          \   'linter_ok': 'LightlineLinterOK'
+          \   'mode': 'LightLineMode',
+          \   'fugitive': 'LightLineFugitive',
+          \   'filename': 'LightLineFilename',
+          \   'filetype': 'LightLineFiletype',
+          \   'fileformat': 'LightLineFileformat',
+          \   'gitguitter': 'LightLineGitGutter',
+          \   'linter_warnings': 'LightLineLinterWarnings',
+          \   'linter_errors': 'LightLineLinterErrors',
+          \   'linter_ok': 'LightLineLinterOK'
           \ },
           \ 'component_expand': {
-          \   'linter_warnings': 'LightlineLinterWarnings',
-          \   'linter_errors': 'LightlineLinterErrors',
-          \   'linter_ok': 'LightlineLinterOK'
+          \   'linter_warnings': 'LightLineLinterWarnings',
+          \   'linter_errors': 'LightLineLinterErrors',
+          \   'linter_ok': 'LightLineLinterOK'
           \ },
           \ 'component_type': {
           \   'linter_warnings': 'warning',
@@ -84,21 +86,21 @@ hook_add = '''
     let g:lightline_warn_symbol = "\uf420 "
     let g:lightline_ok_symbol = "\uf42e "
 
-    function! LightlineLinterWarnings() abort
+    function! LightLineLinterWarnings() abort
       let l:counts = ale#statusline#Count(bufnr(''))
       let l:all_errors = l:counts.error + l:counts.style_error
       let l:all_non_errors = l:counts.total - l:all_errors
       return l:counts.total == 0 ? '' : printf('%d '. g:lightline_warn_symbol, all_non_errors)
     endfunction
 
-    function! LightlineLinterErrors() abort
+    function! LightLineLinterErrors() abort
       let l:counts = ale#statusline#Count(bufnr(''))
       let l:all_errors = l:counts.error + l:counts.style_error
       let l:all_non_errors = l:counts.total - l:all_errors
       return l:counts.total == 0 ? '' : printf('%d '. g:lightline_error_symbol, all_errors)
     endfunction
 
-    function! LightlineLinterOK() abort
+    function! LightLineLinterOK() abort
       let l:counts = ale#statusline#Count(bufnr(''))
       let l:all_errors = l:counts.error + l:counts.style_error
       let l:all_non_errors = l:counts.total - l:all_errors
@@ -112,7 +114,7 @@ hook_add = '''
       autocmd User ALEFixPost call lightline#update()
     augroup END
 
-    function! LightlineMode()
+    function! LightLineMode()
       return  &ft == 'unite' ? 'Unite' :
             \ &ft == 'vimfiler' ? 'VimFiler' :
             \ &ft == 'denite' ? 'Denite' :
@@ -124,7 +126,7 @@ hook_add = '''
     let g:lightline_gitgutter_sign_modified = '-'
     let g:lightline_gitgutter_sign_removed = 'x'
 
-    function! MyGitGutter()
+    function! LightLineGitGutter()
       if ! exists('*GitGutterGetHunkSummary')
             \ || ! get(g:, 'gitgutter_enabled', 0)
             \ || winwidth('.') <= 90
@@ -145,7 +147,7 @@ hook_add = '''
       return join(ret, ' ')
     endfunction
 
-    function! MyFugitive()
+    function! LightLineFugitive()
       let l:git_master_symbol = "\uf402 "
       let l:git_branch_symbol = "\uf418 "
       try
@@ -162,28 +164,52 @@ hook_add = '''
       return ''
     endfunction
 
-    function! MyModified()
+    function! LightLineModified()
       return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
     endfunction
 
-    function! MyReadonly()
+    function! LightLineReadonly()
       return &ft !~? 'help\|vimfiler\|gundo' && &ro ? '⭤' : ''
     endfunction
 
-    function! MyFilename()
-      return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+    function! LightLineFilename()
+      return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
             \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
             \  &ft == 'unite' ? unite#get_status_string() :
             \  &ft == 'denite' ? LightLineDenite() :
             \  &ft == 'vimshell' ? substitute(b:vimshell.current_dir,expand('~'),'~','') :
             \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
-            \ ('' != MyModified() ? ' ' . MyModified() : '')
+            \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
+    endfunction
+
+    function! LightLineFiletype()
+      return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+    endfunction
+
+    function! LightLineFileformat()
+      return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
     endfunction
 
     function! LightLineDenite()
-        let mode_str = substitute(denite#get_status_mode(), "-\\| ", "", "g")
-        call lightline#link(tolower(mode_str[0]))
-        return mode_str
+      let mode_str = substitute(denite#get_status_mode(), "-\\| ", "", "g")
+      call lightline#link(tolower(mode_str[0]))
+      return mode_str
+    endfunction
+
+    let g:lightline.tab = {
+      \ 'active': ['tabnum', 'filename', 'modified'],
+      \ 'inactive': ['tabnum', 'filename', 'modified']
+      \ }
+
+    let g:lightline.tab_component_function = {
+      \ 'filename': 'LightlineTabFilename'
+      \ }
+
+    function! LightlineTabFilename(n) abort
+      let buflist = tabpagebuflist(a:n)
+      let winnr = tabpagewinnr(a:n)
+      let _ = expand('#'.buflist[winnr - 1].':t')
+      return _ !=# '' ? _ . ' ' . WebDevIconsGetFileTypeSymbol() : '[No Name]'
     endfunction
 '''
 
