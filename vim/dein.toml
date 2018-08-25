@@ -20,12 +20,6 @@ if = '''!has('nvim')'''
 # {{{
 [[plugins]]
 repo = 'tpope/vim-fugitive'
-hook_add = '''
-    nmap <Space>gs :Gstatus<CR>
-    nmap <Space>gw :Gwrite<CR>
-    nmap <Space>gc :Gcommit<CR>
-    nmap <Space>gr :Gread<CR>
-'''
 
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
