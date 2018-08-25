@@ -6,31 +6,31 @@
 repo ='tell-k/vim-autopep8'
 on_ft = 'python'
 hook_add = '''
-    function! Preserve(command)
-        " Save the last search.
-        let search = @/
-        " Save the current cursor position.
-        let cursor_position = getpos('.')
-        " Save the current window position.
-        normal! H
-        let window_position = getpos('.')
-        call setpos('.', cursor_position)
-        " Execute the command.
-        execute a:command
-        " Restore the last search.
-        let @/ = search
-        " Restore the previous window position.
-        call setpos('.', window_position)
-        normal! zt
-        " Restore the previous cursor position.
-        call setpos('.', cursor_position)
-    endfunction
+  function! Preserve(command)
+    " Save the last search.
+    let search = @/
+    " Save the current cursor position.
+    let cursor_position = getpos('.')
+    " Save the current window position.
+    normal! H
+    let window_position = getpos('.')
+    call setpos('.', cursor_position)
+    " Execute the command.
+    execute a:command
+    " Restore the last search.
+    let @/ = search
+    " Restore the previous window position.
+    call setpos('.', window_position)
+    normal! zt
+    " Restore the previous cursor position.
+    call setpos('.', cursor_position)
+  endfunction
 
-    function! Autopep8()
-        call Preserve(':silent %!autopep8 -')
-    endfunction
+  function! Autopep8()
+    call Preserve(':silent %!autopep8 -')
+  endfunction
 
-    nnoremap <F9> :call Autopep8()<CR>
+  nnoremap <F9> :call Autopep8()<CR>
 '''
 
 [[plugins]]
@@ -45,28 +45,25 @@ on_ft = 'python'
 repo = 'hdima/python-syntax'
 on_ft = 'python'
 hook_source = '''
-    let g:python_highlight_all = 1
-    let g:python_version_3 = 1
+  let g:python_highlight_all = 1
+  let g:python_version_3 = 1
 '''
 
 [[plugins]]
 repo = 'davidhalter/jedi-vim'
 on_ft = 'python'
 hook_source = '''
-    let g:jedi#auto_vim_configuration = 0
-    let g:jedi#smart_auto_mapping = 0
-    let g:jedi#completions_enabled = 0
-    let g:jedi#use_tabs_not_buffers = 1
-    let g:jedi#rename_command = '<leader>m'
-    let g:jedi#documentation_command = '<leader>k'
+  let g:jedi#auto_vim_configuration = 0
+  let g:jedi#smart_auto_mapping = 0
+  let g:jedi#completions_enabled = 0
+  let g:jedi#use_tabs_not_buffers = 1
+  let g:jedi#rename_command = '<leader>m'
+  let g:jedi#documentation_command = '<leader>k'
 '''
 
 [[plugins]]
 repo = 'zchee/deoplete-jedi'
 on_ft = 'python'
-hook_source = '''
-    set completeopt-=preview
-'''
 # }}}
 
 #############################
@@ -75,55 +72,56 @@ hook_source = '''
 # {{{
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
+on_event = 'InsertCharPre'
 on_i = 1
 hook_source = '''
-    " <TAB> and <S-TAB>: select items
-    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-    inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
+  " <TAB> and <S-TAB>: select items
+  inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+  inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
 
-    " basic setting
-    let g:deoplete#enable_at_startup = 1
-    let g:deoplete#enable_smart_case = 1
-    let g:deoplete#auto_complete_delay = 0
-    let g:deoplete#auto_complete_start_length = 1
-    let g:deoplete#enable_camel_case = 0
-    let g:deoplete#enable_ignore_case = 0
-    let g:deoplete#enable_refresh_always = 0
-    let g:deoplete#file#enable_buffer_path = 1
-    let g:deoplete#max_list = 50
-    let g:deoplete#sources#jedi#server_timeout = 60
+  " basic setting
+  let g:deoplete#enable_at_startup = 1
+  let g:deoplete#enable_smart_case = 1
+  let g:deoplete#auto_complete_delay = 0
+  let g:deoplete#auto_complete_start_length = 1
+  let g:deoplete#enable_camel_case = 0
+  let g:deoplete#enable_ignore_case = 0
+  let g:deoplete#enable_refresh_always = 0
+  let g:deoplete#file#enable_buffer_path = 1
+  let g:deoplete#max_list = 50
+  let g:deoplete#sources#jedi#server_timeout = 60
 
-    " completion setting
-    let g:deoplete#keyword_patterns = {}
-    let g:deoplete#keyword_patterns._ = '[a-zA-Z_]\k*\(?'
-    let g:deoplete#omni#input_patterns = {}
-    let g:deoplete#omni#input_patterns.python = ''
-    let g:deoplete#omni#functions = {}
-    let g:deoplete#omni_patterns = {}
+  " completion setting
+  let g:deoplete#keyword_patterns = {}
+  let g:deoplete#keyword_patterns._ = '[a-zA-Z_]\k*\(?'
+  let g:deoplete#omni#input_patterns = {}
+  let g:deoplete#omni#input_patterns.python = ''
+  let g:deoplete#omni#functions = {}
+  let g:deoplete#omni_patterns = {}
 '''
 
 [[plugins]]
 repo = 'w0rp/ale'
-hook_add = '''
-    nmap <silent> <SPACE>j <Plug>(ale_next_wrap)
-    nmap <silent> <SPACE>k <Plug>(ale_previous_wrap)
-    let g:ale_linters = {
-        \   'python': ['flake8'],
-        \   'sh': ['shellcheck'],
-    \}
-    let g:ale_python_flake8_args="--max-line-length=120"
-    let g:ale_open_list = 0
-    let g:ale_list_window_size = 5
-    let g:ale_lint_delay = 1000
-    let g:ale_lint_on_enter = 1
-    let g:ale_echo_msg_error_str = '[ERROR]'
-    let g:ale_echo_msg_warning_str = '[WARNING]'
-    let g:ale_echo_msg_format = '%severity% %linter% - %s'
-    let g:ale_sign_error = "\uf41b"
-    let g:ale_sign_warning = "\uf420"
+hook_source = '''
+  nmap <silent> <SPACE>j <Plug>(ale_next_wrap)
+  nmap <silent> <SPACE>k <Plug>(ale_previous_wrap)
+  let g:ale_linters = {
+    \ 'python': ['flake8'],
+    \ 'sh': ['shellcheck'],
+    \ }
+  let g:ale_python_flake8_args="--max-line-length=120"
+  let g:ale_open_list = 0
+  let g:ale_list_window_size = 5
+  let g:ale_lint_delay = 1000
+  let g:ale_lint_on_enter = 1
+  let g:ale_echo_msg_error_str = '[ERROR]'
+  let g:ale_echo_msg_warning_str = '[WARNING]'
+  let g:ale_echo_msg_format = '%severity% %linter% - %s'
+  let g:ale_sign_error = "\uf41b"
+  let g:ale_sign_warning = "\uf420"
 
-    " auto close error popup
-    autocmd QuitPre * if empty(&bt) | lclose | endif
+  " auto close error popup
+  autocmd QuitPre * if empty(&bt) | lclose | endif
 '''
 # }}}
 
@@ -135,9 +133,9 @@ hook_add = '''
 repo = 'plasticboy/vim-markdown'
 on_ft = 'markdown'
 hook_source = '''
-    let g:vim_markdown_conceal = 0
-    let g:tex_conceal = ""
-    let g:vim_markdown_math = 1
+  let g:vim_markdown_conceal = 0
+  let g:tex_conceal = ""
+  let g:vim_markdown_math = 1
 '''
 # }}}
 
@@ -150,27 +148,27 @@ repo = 'lervag/vimtex'
 on_ft = 'tex'
 depends = 'deoplete.nvim'
 hook_source = '''
-    let $PATH = "/usr/local/texlive/2014/bin/x86_64-darwin:".$PATH
-    let g:vimtex_compiler_latexmk = {
-            \ 'background' : 1,
-            \ 'build_dir' : '',
-            \ 'continuous' : 1,
-            \ 'options' : [
-            \   '-pdfdvi',
-            \   '-verbose',
-            \   '-file-line-error',
-            \   '-synctex=1',
-            \   '-interaction=nonstopmode',
-            \ ],
-            \}
-    let g:vimtex_fold_enabled = 0
-    let g:vimtex_fold_envs = 0
-    let g:vimtex_quickfix_latexlog = {
-        \ 'default' : 0,
-        \}
-    let g:vimtex_toc_width = 0
-    let g:tex_conceal=''
-    autocmd FileType tex setlocal spell spelllang=en,cjk
-    let g:deoplete#omni#input_patterns.tex = g:vimtex#re#deoplete
+  let $PATH = "/usr/local/texlive/2014/bin/x86_64-darwin:".$PATH
+  let g:vimtex_compiler_latexmk = {
+    \ 'background' : 1,
+    \ 'build_dir' : '',
+    \ 'continuous' : 1,
+    \ 'options' : [
+    \   '-pdfdvi',
+    \   '-verbose',
+    \   '-file-line-error',
+    \   '-synctex=1',
+    \   '-interaction=nonstopmode',
+    \ ],
+    \ }
+  let g:vimtex_fold_enabled = 0
+  let g:vimtex_fold_envs = 0
+  let g:vimtex_quickfix_latexlog = {
+    \ 'default' : 0,
+    \ }
+  let g:vimtex_toc_width = 0
+  let g:tex_conceal=''
+  autocmd FileType tex setlocal spell spelllang=en,cjk
+  let g:deoplete#omni#input_patterns.tex = g:vimtex#re#deoplete
 '''
 # }}}

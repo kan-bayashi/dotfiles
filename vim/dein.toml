@@ -20,22 +20,16 @@ if = '''!has('nvim')'''
 # {{{
 [[plugins]]
 repo = 'tpope/vim-fugitive'
-hook_add = '''
-    nmap <Space>gs :Gstatus<CR>
-    nmap <Space>gw :Gwrite<CR>
-    nmap <Space>gc :Gcommit<CR>
-    nmap <Space>gr :Gread<CR>
-'''
 
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
 hook_add = '''
-    nmap <Space>h :GitGutterLineHighlightsToggle<CR>
-    set signcolumn=yes
-    set updatetime=100
-    let g:gitgutter_sign_added = '+'
-    let g:gitgutter_sign_modified = '-'
-    let g:gitgutter_sign_removed = 'x'
+  nmap <Space>h :GitGutterLineHighlightsToggle<CR>
+  set signcolumn=yes
+  set updatetime=100
+  let g:gitgutter_sign_added = '+'
+  let g:gitgutter_sign_modified = '-'
+  let g:gitgutter_sign_removed = 'x'
 '''
 # }}}
 
@@ -47,156 +41,182 @@ hook_add = '''
 repo = 'itchyny/lightline.vim'
 depends = ['vim-fugitive', 'vim-gitgutter', 'ale']
 hook_add = '''
-    let g:lightline = {
-          \ 'colorscheme': 'jellybeans',
-          \ 'component': {
-          \   'readonly': '%{&readonly?"x":""}',
-          \ },
-          \ 'separator': {'left': "\ue0b0", 'right': "\ue0b2"},
-          \ 'subseparator': {'left': "\ue0b1", 'right': "\ue0b3"},
-          \ 'active': {
-          \   'left': [ ['mode', 'paste'],
-          \             ['fugitive'],
-          \             ['gitguitter'],
-          \             ['filename'],
-          \           ],
-          \   'right': [ ['linter_ok', 'linter_errors', 'linter_warnings'],
-          \              [ 'percent'],
-          \              [ 'fileformat', 'fileencoding', 'filetype' ],
-          \            ]
-          \ },
-          \ 'component_function': {
-          \   'mode': 'LightlineMode',
-          \   'fugitive': 'MyFugitive',
-          \   'filename': 'MyFilename',
-          \   'gitguitter': 'MyGitGutter',
-          \   'linter_warnings': 'LightlineLinterWarnings',
-          \   'linter_errors': 'LightlineLinterErrors',
-          \   'linter_ok': 'LightlineLinterOK'
-          \ },
-          \ 'component_expand': {
-          \   'linter_warnings': 'LightlineLinterWarnings',
-          \   'linter_errors': 'LightlineLinterErrors',
-          \   'linter_ok': 'LightlineLinterOK'
-          \ },
-          \ 'component_type': {
-          \   'linter_warnings': 'warning',
-          \   'linter_errors': 'error',
-          \   'linter_ok': 'ok'
-          \ }
-          \ }
+  let g:lightline = {
+        \ 'colorscheme': 'jellybeans',
+        \ 'component': {
+        \   'readonly': '%{&readonly?"x":""}',
+        \ },
+        \ 'separator': {'left': "\ue0b0", 'right': "\ue0b2"},
+        \ 'subseparator': {'left': "\ue0b1", 'right': "\ue0b3"},
+        \ 'active': {
+        \   'left': [ ['mode', 'paste'],
+        \             ['fugitive'],
+        \             ['gitguitter'],
+        \             ['filename'],
+        \           ],
+        \   'right': [ ['linter_ok', 'linter_errors', 'linter_warnings'],
+        \              ['percent'],
+        \              ['fileformat', 'fileencoding', 'filetype'],
+        \            ]
+        \ },
+        \ 'component_function': {
+        \   'mode': 'LightLineMode',
+        \   'fugitive': 'LightLineFugitive',
+        \   'filename': 'LightLineFilename',
+        \   'filetype': 'LightLineFiletype',
+        \   'fileformat': 'LightLineFileformat',
+        \   'gitguitter': 'LightLineGitGutter',
+        \   'linter_warnings': 'LightLineLinterWarnings',
+        \   'linter_errors': 'LightLineLinterErrors',
+        \   'linter_ok': 'LightLineLinterOK'
+        \ },
+        \ 'component_expand': {
+        \   'linter_warnings': 'LightLineLinterWarnings',
+        \   'linter_errors': 'LightLineLinterErrors',
+        \   'linter_ok': 'LightLineLinterOK'
+        \ },
+        \ 'component_type': {
+        \   'linter_warnings': 'warning',
+        \   'linter_errors': 'error',
+        \   'linter_ok': 'ok'
+        \ }
+        \ }
 
-    let g:lightline_error_symbol = "\uf41b "
-    let g:lightline_warn_symbol = "\uf420 "
-    let g:lightline_ok_symbol = "\uf42e "
+  let g:lightline_error_symbol = "\uf41b "
+  let g:lightline_warn_symbol = "\uf420 "
+  let g:lightline_ok_symbol = "\uf42e "
 
-    function! LightlineLinterWarnings() abort
-      let l:counts = ale#statusline#Count(bufnr(''))
-      let l:all_errors = l:counts.error + l:counts.style_error
-      let l:all_non_errors = l:counts.total - l:all_errors
-      return l:counts.total == 0 ? '' : printf('%d '. g:lightline_warn_symbol, all_non_errors)
-    endfunction
+  function! LightLineLinterWarnings() abort
+    let l:counts = ale#statusline#Count(bufnr(''))
+    let l:all_errors = l:counts.error + l:counts.style_error
+    let l:all_non_errors = l:counts.total - l:all_errors
+    return l:counts.total == 0 ? '' : printf('%d '. g:lightline_warn_symbol, all_non_errors)
+  endfunction
 
-    function! LightlineLinterErrors() abort
-      let l:counts = ale#statusline#Count(bufnr(''))
-      let l:all_errors = l:counts.error + l:counts.style_error
-      let l:all_non_errors = l:counts.total - l:all_errors
-      return l:counts.total == 0 ? '' : printf('%d '. g:lightline_error_symbol, all_errors)
-    endfunction
+  function! LightLineLinterErrors() abort
+    let l:counts = ale#statusline#Count(bufnr(''))
+    let l:all_errors = l:counts.error + l:counts.style_error
+    let l:all_non_errors = l:counts.total - l:all_errors
+    return l:counts.total == 0 ? '' : printf('%d '. g:lightline_error_symbol, all_errors)
+  endfunction
 
-    function! LightlineLinterOK() abort
-      let l:counts = ale#statusline#Count(bufnr(''))
-      let l:all_errors = l:counts.error + l:counts.style_error
-      let l:all_non_errors = l:counts.total - l:all_errors
-      return l:counts.total == 0 ? g:lightline_ok_symbol : ''
-    endfunction
+  function! LightLineLinterOK() abort
+    let l:counts = ale#statusline#Count(bufnr(''))
+    let l:all_errors = l:counts.error + l:counts.style_error
+    let l:all_non_errors = l:counts.total - l:all_errors
+    return l:counts.total == 0 ? g:lightline_ok_symbol : ''
+  endfunction
 
-    augroup LightLineLinter
-      autocmd!
-      autocmd User ALEJobStarted call lightline#update()
-      autocmd User ALELintPost call lightline#update()
-      autocmd User ALEFixPost call lightline#update()
-    augroup END
+  augroup LightLineLinter
+    autocmd!
+    autocmd User ALEJobStarted call lightline#update()
+    autocmd User ALELintPost call lightline#update()
+    autocmd User ALEFixPost call lightline#update()
+  augroup END
 
-    function! LightlineMode()
-      return  &ft == 'unite' ? 'Unite' :
-            \ &ft == 'vimfiler' ? 'VimFiler' :
-            \ &ft == 'denite' ? 'Denite' :
-            \ &ft == 'vimshell' ? 'VimShell' :
-            \ winwidth(0) > 60 ? lightline#mode() : ''
-    endfunction
+  function! LightLineMode()
+    return  &ft == 'unite' ? 'Unite' :
+          \ &ft == 'vimfiler' ? 'VimFiler' :
+          \ &ft == 'denite' ? 'Denite' :
+          \ &ft == 'vimshell' ? 'VimShell' :
+          \ winwidth(0) > 60 ? lightline#mode() : ''
+  endfunction
 
-    let g:lightline_gitgutter_sign_added = '+'
-    let g:lightline_gitgutter_sign_modified = '-'
-    let g:lightline_gitgutter_sign_removed = 'x'
+  let g:lightline_gitgutter_sign_added = '+'
+  let g:lightline_gitgutter_sign_modified = '-'
+  let g:lightline_gitgutter_sign_removed = 'x'
 
-    function! MyGitGutter()
-      if ! exists('*GitGutterGetHunkSummary')
-            \ || ! get(g:, 'gitgutter_enabled', 0)
-            \ || winwidth('.') <= 90
-        return ''
-      endif
-      let symbols = [
-            \ g:lightline_gitgutter_sign_added . ' ',
-            \ g:lightline_gitgutter_sign_modified . ' ',
-            \ g:lightline_gitgutter_sign_removed . ' '
-            \ ]
-      let hunks = GitGutterGetHunkSummary()
-      let ret = []
-      for i in [0, 1, 2]
-        if hunks[i] > 0
-          call add(ret, symbols[i] . hunks[i])
-        endif
-      endfor
-      return join(ret, ' ')
-    endfunction
-
-    function! MyFugitive()
-      let l:git_master_symbol = "\uf402 "
-      let l:git_branch_symbol = "\uf418 "
-      try
-        if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
-          let _ = fugitive#head()
-          if _ == 'master'
-            return strlen(_) ? l:git_master_symbol ._ : ''
-          else
-            return strlen(_) ? l:git_branch_symbol ._ : ''
-          endif
-        endif
-      catch
-      endtry
+  function! LightLineGitGutter()
+    if ! exists('*GitGutterGetHunkSummary')
+          \ || ! get(g:, 'gitgutter_enabled', 0)
+          \ || winwidth('.') <= 90
       return ''
-    endfunction
+    endif
+    let symbols = [
+          \ g:lightline_gitgutter_sign_added . ' ',
+          \ g:lightline_gitgutter_sign_modified . ' ',
+          \ g:lightline_gitgutter_sign_removed . ' '
+          \ ]
+    let hunks = GitGutterGetHunkSummary()
+    let ret = []
+    for i in [0, 1, 2]
+      if hunks[i] > 0
+        call add(ret, symbols[i] . hunks[i])
+      endif
+    endfor
+    return join(ret, ' ')
+  endfunction
 
-    function! MyModified()
-      return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
-    endfunction
+  function! LightLineFugitive()
+    let l:git_master_symbol = "\uf402 "
+    let l:git_branch_symbol = "\uf418 "
+    try
+      if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
+        let _ = fugitive#head()
+        if _ == 'master'
+          return strlen(_) ? l:git_master_symbol ._ : ''
+        else
+          return strlen(_) ? l:git_branch_symbol ._ : ''
+        endif
+      endif
+    catch
+    endtry
+    return ''
+  endfunction
 
-    function! MyReadonly()
-      return &ft !~? 'help\|vimfiler\|gundo' && &ro ? '⭤' : ''
-    endfunction
+  function! LightLineModified()
+    return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+  endfunction
 
-    function! MyFilename()
-      return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
-            \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
-            \  &ft == 'unite' ? unite#get_status_string() :
-            \  &ft == 'denite' ? LightLineDenite() :
-            \  &ft == 'vimshell' ? substitute(b:vimshell.current_dir,expand('~'),'~','') :
-            \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
-            \ ('' != MyModified() ? ' ' . MyModified() : '')
-    endfunction
+  function! LightLineReadonly()
+    return &ft !~? 'help\|vimfiler\|gundo' && &ro ? '⭤' : ''
+  endfunction
 
-    function! LightLineDenite()
-        let mode_str = substitute(denite#get_status_mode(), "-\\| ", "", "g")
-        call lightline#link(tolower(mode_str[0]))
-        return mode_str
-    endfunction
+  function! LightLineFilename()
+    return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
+          \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+          \  &ft == 'unite' ? unite#get_status_string() :
+          \  &ft == 'denite' ? LightLineDenite() :
+          \  &ft == 'vimshell' ? substitute(b:vimshell.current_dir,expand('~'),'~','') :
+          \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+          \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
+  endfunction
+
+  function! LightLineFiletype()
+    return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+  endfunction
+
+  function! LightLineFileformat()
+    return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+  endfunction
+
+  function! LightLineDenite()
+    let mode_str = substitute(denite#get_status_mode(), "-\\| ", "", "g")
+    call lightline#link(tolower(mode_str[0]))
+    return mode_str
+  endfunction
+
+  let g:lightline.tab = {
+    \ 'active': ['tabnum', 'filename', 'modified'],
+    \ 'inactive': ['tabnum', 'filename', 'modified']
+    \ }
+
+  let g:lightline.tab_component_function = {
+    \ 'filename': 'LightlineTabFilename'
+    \ }
+
+  function! LightlineTabFilename(n) abort
+    let buflist = tabpagebuflist(a:n)
+    let winnr = tabpagewinnr(a:n)
+    let _ = expand('#'.buflist[winnr - 1].':t')
+    return _ !=# '' ? _ . ' ' . WebDevIconsGetFileTypeSymbol() : '[No Name]'
+  endfunction
 '''
 
 [[plugins]]
 repo = 'Yggdroot/indentLine'
 hook_add = '''
-    let g:indentLine_color_term = 239
+  let g:indentLine_color_term = 239
 '''
 
 [[plugins]]
@@ -215,12 +235,12 @@ build = 'make'
 repo = 'Shougo/neosnippet'
 depends = ['neosnippet-snippets']
 hook_add = '''
-    imap <C-k> <Plug>(neosnippet_expand_or_jump)
-    smap <C-k> <Plug>(neosnippet_expand_or_jump)
-    xmap <C-k> <Plug>(neosnippet_expand_target)
-    if has('conceal')
-        set conceallevel=2 concealcursor=niv
-    endif
+  imap <C-k> <Plug>(neosnippet_expand_or_jump)
+  smap <C-k> <Plug>(neosnippet_expand_or_jump)
+  xmap <C-k> <Plug>(neosnippet_expand_target)
+  if has('conceal')
+    set conceallevel=2 concealcursor=niv
+  endif
 '''
 
 [[plugins]]
@@ -233,29 +253,29 @@ repo = 'Shougo/neomru.vim'
 repo = 'Shougo/denite.nvim'
 depends = ['neomru.vim']
 hook_add = '''
-    call denite#custom#option('default', 'prompt', '>>>')
-    call denite#custom#option('default', 'statusline', v:false)
-    if executable('fd')
-        call denite#custom#var('file_rec', 'command', ['fd', '--type', 'file', '--hidden', '--ignore-file', expand('~/.ignore'), '.'])
-        call denite#custom#var('directory_rec', 'command', ['fd', '--type', 'directory', '--hidden', '--no-ignore', '.'])
-    endif
-    if executable('rg')
-        call denite#custom#var('grep', 'command', ['rg'])
-        call denite#custom#var('grep', 'recursive_opts', [])
-        call denite#custom#var('grep', 'final_opts', [])
-        call denite#custom#var('grep', 'separator', ['--'])
-        call denite#custom#var('grep', 'default_opts', ['--vimgrep', '--no-heading'])
-    endif
-    nnoremap <silent> <C-f>b :<C-u>Denite -winheight=15 buffer<CR>
-    nnoremap <silent> <C-f>g :<C-u>Denite -winheight=15 grep<CR>
-    nnoremap <silent> <C-f>r :<C-u>Denite -winheight=15 file_mru<CR>
-    nnoremap <silent> <C-f>f :<C-u>Denite -winheight=15 file_rec<CR>
-    nnoremap <silent> <C-f>d :<C-u>Denite -winheight=15 directory_rec<CR>
-    nnoremap <silent> <C-f>o :<C-u>Denite -winheight=15 outline<CR>
-    nnoremap <silent> <C-f>c :<C-u>Denite -winheight=15 colorsheme<CR>
-    nnoremap <silent> <C-f><C-f> :<C-u>Denite -resume -mode=normal<CR>
-    nnoremap <silent> <C-f>/ :<C-u>Denite -winheight=15 -auto-highlight line<CR>
-    nnoremap <silent> <C-f>* :<C-u>DeniteCursorWord -winheight=15 -auto-highlight -mode=normal line<CR>
+  call denite#custom#option('default', 'prompt', '>>>')
+  call denite#custom#option('default', 'statusline', v:false)
+  if executable('fd')
+    call denite#custom#var('file_rec', 'command', ['fd', '--type', 'file', '--hidden', '--ignore-file', expand('~/.ignore'), '.'])
+    call denite#custom#var('directory_rec', 'command', ['fd', '--type', 'directory', '--hidden', '--no-ignore', '.'])
+  endif
+  if executable('rg')
+    call denite#custom#var('grep', 'command', ['rg'])
+    call denite#custom#var('grep', 'recursive_opts', [])
+    call denite#custom#var('grep', 'final_opts', [])
+    call denite#custom#var('grep', 'separator', ['--'])
+    call denite#custom#var('grep', 'default_opts', ['--vimgrep', '--no-heading'])
+  endif
+  nnoremap <silent> <C-f>b :<C-u>Denite -winheight=15 buffer<CR>
+  nnoremap <silent> <C-f>g :<C-u>Denite -winheight=15 grep<CR>
+  nnoremap <silent> <C-f>r :<C-u>Denite -winheight=15 file_mru<CR>
+  nnoremap <silent> <C-f>f :<C-u>Denite -winheight=15 file_rec<CR>
+  nnoremap <silent> <C-f>d :<C-u>Denite -winheight=15 directory_rec<CR>
+  nnoremap <silent> <C-f>o :<C-u>Denite -winheight=15 outline<CR>
+  nnoremap <silent> <C-f>c :<C-u>Denite -winheight=15 colorsheme<CR>
+  nnoremap <silent> <C-f><C-f> :<C-u>Denite -resume -mode=normal<CR>
+  nnoremap <silent> <C-f>/ :<C-u>Denite -winheight=15 -auto-highlight line<CR>
+  nnoremap <silent> <C-f>* :<C-u>DeniteCursorWord -winheight=15 -auto-highlight -mode=normal line<CR>
 '''
 # }}}
 
@@ -266,26 +286,32 @@ hook_add = '''
 [[plugins]]
 repo = 'thinca/vim-quickrun'
 hook_add = '''
-    set splitbelow
-    let g:quickrun_config = {
-    \   "_" : {
-    \       "outputter/buffer/split" : ":botright 10",
-    \       "runner" : "vimproc",
-    \       "runner/vimproc/updatetime" : 40,
-    \   }
-    \}
+  set splitbelow
+  let g:quickrun_config = {
+   \ "_" : { "outputter/buffer/split" : ":botright 10",
+   \         "runner" : "vimproc",
+   \         "runner/vimproc/updatetime" : 40 }
+   \ }
+'''
+
+[[plugins]]
+repo = 'wincent/vim-clipper'
+hook_add = '''
+  if $OS != "mac"
+    let g:ClipperAuto = 0
+  endif
 '''
 
 [[plugins]]
 repo = 'christoomey/vim-tmux-navigator'
 hook_add = '''
-    " keymappig for terminal in vim
-    if has('terminal')
-        tmap <c-k> <c-w>:TmuxNavigateUp<cr>
-        tmap <c-j> <c-w>:TmuxNavigateDown<cr>
-        tmap <c-h> <c-w>:TmuxNavigateLeft<cr>
-        tmap <c-l> <c-w>:TmuxNavigateRight<cr>
-    endif
+  " keymappig for terminal in vim
+  if has('terminal')
+    tmap <c-k> <c-w>:TmuxNavigateUp<cr>
+    tmap <c-j> <c-w>:TmuxNavigateDown<cr>
+    tmap <c-h> <c-w>:TmuxNavigateLeft<cr>
+    tmap <c-l> <c-w>:TmuxNavigateRight<cr>
+  endif
 '''
 
 [[plugins]]
@@ -315,10 +341,10 @@ repo = 'ConradIrwin/vim-bracketed-paste'
 [[plugins]]
 repo = 'LeafCage/yankround.vim'
 hook_add = '''
-    nmap p <Plug>(yankround-p)
-    nmap P <Plug>(yankround-P)
-    nmap <C-p> <Plug>(yankround-prev)
-    nmap <C-n> <Plug>(yankround-next)
+  nmap p <Plug>(yankround-p)
+  nmap P <Plug>(yankround-P)
+  nmap <C-p> <Plug>(yankround-prev)
+  nmap <C-n> <Plug>(yankround-next)
 '''
 
 [[plugins]]
@@ -331,7 +357,7 @@ hook_add = '''
 repo = 'Konfekt/FastFold'
 depends = 'SimplyFold'
 hook_add = '''
-    let g:fastfold_fold_command_suffixes = []
+  let g:fastfold_fold_command_suffixes = []
 '''
 # }}}
 
@@ -342,8 +368,8 @@ hook_add = '''
 [[plugins]]
 repo = 'scrooloose/nerdtree'
 hook_add = '''
-    nmap <silent> <SPACE><SPACE> :NERDTreeToggle<CR>
-    let g:NERDTreeShowHidden=1
+  nmap <silent> <SPACE><SPACE> :NERDTreeToggle<CR>
+  let g:NERDTreeShowHidden=1
 '''
 # }}}
 

@@ -76,13 +76,14 @@ set expandtab    " use space instead of tab
 set shiftwidth=4 " shift width in auto indent
 set autoindent   " enable auto indent
 set showmatch    " highlight corresponding parentheses
+set completeopt-=preview
 
 " status line realted
 set number       " show line number
 set laststatus=2 " always show status number
 set cmdheight=2  " command line height
 set noshowmode   " do not show mode in command line
-set noshowcmd
+set noshowcmd    " do not show command in status line
 
 " cursor related
 set cursorline   " highlight cursor line
@@ -96,9 +97,9 @@ set history=1000  " number of command history
 set t_Co=256           " terminal
 set background=dark    " background color
 if (has("termguicolors"))
-    set termguicolors
-    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
 colorscheme jellybeans " colorscheme
 
