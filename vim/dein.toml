@@ -42,45 +42,45 @@ repo = 'itchyny/lightline.vim'
 depends = ['vim-fugitive', 'vim-gitgutter', 'ale']
 hook_add = '''
   let g:lightline = {
-        \ 'colorscheme': 'jellybeans',
-        \ 'component': {
-        \   'readonly': '%{&readonly?"x":""}',
-        \ },
-        \ 'separator': {'left': "\ue0b0", 'right': "\ue0b2"},
-        \ 'subseparator': {'left': "\ue0b1", 'right': "\ue0b3"},
-        \ 'active': {
-        \   'left': [ ['mode', 'paste'],
-        \             ['fugitive'],
-        \             ['gitguitter'],
-        \             ['filename'],
-        \           ],
-        \   'right': [ ['linter_ok', 'linter_errors', 'linter_warnings'],
-        \              ['percent'],
-        \              ['fileformat', 'fileencoding', 'filetype'],
-        \            ]
-        \ },
-        \ 'component_function': {
-        \   'mode': 'LightLineMode',
-        \   'fugitive': 'LightLineFugitive',
-        \   'filename': 'LightLineFilename',
-        \   'filetype': 'LightLineFiletype',
-        \   'fileformat': 'LightLineFileformat',
-        \   'gitguitter': 'LightLineGitGutter',
-        \   'linter_warnings': 'LightLineLinterWarnings',
-        \   'linter_errors': 'LightLineLinterErrors',
-        \   'linter_ok': 'LightLineLinterOK'
-        \ },
-        \ 'component_expand': {
-        \   'linter_warnings': 'LightLineLinterWarnings',
-        \   'linter_errors': 'LightLineLinterErrors',
-        \   'linter_ok': 'LightLineLinterOK'
-        \ },
-        \ 'component_type': {
-        \   'linter_warnings': 'warning',
-        \   'linter_errors': 'error',
-        \   'linter_ok': 'ok'
-        \ }
-        \ }
+    \ 'colorscheme': 'jellybeans',
+    \ 'component': {
+    \   'readonly': '%{&readonly?"x":""}',
+    \ },
+    \ 'separator': {'left': "\ue0b0", 'right': "\ue0b2"},
+    \ 'subseparator': {'left': "\ue0b1", 'right': "\ue0b3"},
+    \ 'active': {
+    \   'left': [ ['mode', 'paste'],
+    \             ['fugitive'],
+    \             ['gitguitter'],
+    \             ['filename'],
+    \           ],
+    \   'right': [ ['linter_ok', 'linter_errors', 'linter_warnings'],
+    \              ['percent'],
+    \              ['fileformat', 'fileencoding', 'filetype'],
+    \            ]
+    \ },
+    \ 'component_function': {
+    \   'mode': 'LightLineMode',
+    \   'fugitive': 'LightLineFugitive',
+    \   'filename': 'LightLineFilename',
+    \   'filetype': 'LightLineFiletype',
+    \   'fileformat': 'LightLineFileformat',
+    \   'gitguitter': 'LightLineGitGutter',
+    \   'linter_warnings': 'LightLineLinterWarnings',
+    \   'linter_errors': 'LightLineLinterErrors',
+    \   'linter_ok': 'LightLineLinterOK'
+    \ },
+    \ 'component_expand': {
+    \   'linter_warnings': 'LightLineLinterWarnings',
+    \   'linter_errors': 'LightLineLinterErrors',
+    \   'linter_ok': 'LightLineLinterOK'
+    \ },
+    \ 'component_type': {
+    \   'linter_warnings': 'warning',
+    \   'linter_errors': 'error',
+    \   'linter_ok': 'ok'
+    \ }
+    \ }
 
   let g:lightline_error_symbol = "\uf41b "
   let g:lightline_warn_symbol = "\uf420 "
@@ -128,15 +128,15 @@ hook_add = '''
 
   function! LightLineGitGutter()
     if ! exists('*GitGutterGetHunkSummary')
-          \ || ! get(g:, 'gitgutter_enabled', 0)
-          \ || winwidth('.') <= 90
+      \ || ! get(g:, 'gitgutter_enabled', 0)
+      \ || winwidth('.') <= 90
       return ''
     endif
     let symbols = [
-          \ g:lightline_gitgutter_sign_added . ' ',
-          \ g:lightline_gitgutter_sign_modified . ' ',
-          \ g:lightline_gitgutter_sign_removed . ' '
-          \ ]
+      \ g:lightline_gitgutter_sign_added . ' ',
+      \ g:lightline_gitgutter_sign_modified . ' ',
+      \ g:lightline_gitgutter_sign_removed . ' '
+      \ ]
     let hunks = GitGutterGetHunkSummary()
     let ret = []
     for i in [0, 1, 2]
@@ -174,12 +174,12 @@ hook_add = '''
 
   function! LightLineFilename()
     return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
-          \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
-          \  &ft == 'unite' ? unite#get_status_string() :
-          \  &ft == 'denite' ? LightLineDenite() :
-          \  &ft == 'vimshell' ? substitute(b:vimshell.current_dir,expand('~'),'~','') :
-          \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
-          \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
+      \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+      \  &ft == 'unite' ? unite#get_status_string() :
+      \  &ft == 'denite' ? LightLineDenite() :
+      \  &ft == 'vimshell' ? substitute(b:vimshell.current_dir,expand('~'),'~','') :
+      \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+      \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
   endfunction
 
   function! LightLineFiletype()
@@ -197,12 +197,12 @@ hook_add = '''
   endfunction
 
   let g:lightline.tab = {
-    \ 'active': ['tabnum', 'filename', 'modified'],
+    \ 'active': ['tabnum', 'myfilename', 'modified'],
     \ 'inactive': ['tabnum', 'filename', 'modified']
     \ }
 
   let g:lightline.tab_component_function = {
-    \ 'filename': 'LightlineTabFilename'
+    \ 'myfilename': 'LightlineTabFilename'
     \ }
 
   function! LightlineTabFilename(n) abort
