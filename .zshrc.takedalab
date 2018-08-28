@@ -1,9 +1,13 @@
 # export environment setting
 if [ -z "$TMUX" ];then
     export PATH=/usr/local/MATLAB/R2016b/bin:$PATH
-    export PATH=/usr/local/cuda/bin:$PATH
-    export LD_LIBRARY_PATH=/usr/local/cuda/lib64:/lib:/usr/local/lib:/usr/local/lib64:$LD_LIBRARY_PATH
-    export CUDA_HOME=/usr/local/cuda
+    export CUDA_ROOT=/usr/local/cuda-9.0
+    export PATH=$CUDA_ROOT/bin:$PATH
+    export LD_LIBRARY_PATH=$CUDA_ROOT/lib64:/lib:/usr/local/lib:/usr/local/lib64:$LD_LIBRARY_PATH
+    export CUDA_HOME=$CUDA_ROOT
+    export CUDA_PATH=$CUDA_ROOT
+    export CPATH=$CUDA_ROOT/include:$CPATH
+    export LD_LIBRARY_PATH=/opt/intel/mkl/lib/intel64:$LD_LIBRARY_PATH
 fi
 
 # alias setting

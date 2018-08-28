@@ -101,6 +101,8 @@ if (has("termguicolors"))
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
 colorscheme jellybeans " colorscheme
+" does not work with hook in dein
+highlight ALEErrorSign ctermfg=Red guifg=#cb484c
 
 " other
 set foldmethod=marker " enable marker folding
