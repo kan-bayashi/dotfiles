@@ -336,6 +336,9 @@ repo = 'tpope/vim-surround'
 repo = 'tpope/vim-repeat'
 
 [[plugins]]
+repo = 'mhinz/vim-startify'
+
+[[plugins]]
 repo = 'ConradIrwin/vim-bracketed-paste'
 
 [[plugins]]

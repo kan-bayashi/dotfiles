@@ -64,6 +64,20 @@ hook_source = '''
 [[plugins]]
 repo = 'zchee/deoplete-jedi'
 on_ft = 'python'
+
+[[plugins]]
+repo = 'tpope/vim-dispatch'
+
+[[plugins]]
+repo = 'aliev/vim-compiler-python'
+
+[[plugins]]
+repo = 'janko-m/vim-test'
+on_ft = 'python'
+depends = ['vim-dispatch', 'vim-compiler-python']
+hook_source = '''
+  let g:test#strategy = "dispatch"
+'''
 # }}}
 
 #############################
