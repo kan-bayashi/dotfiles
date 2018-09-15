@@ -337,6 +337,8 @@ repo = 'tpope/vim-repeat'
 
 [[plugins]]
 repo = 'mhinz/vim-startify'
+hook_add = '''
+'''
 
 [[plugins]]
 repo = 'ConradIrwin/vim-bracketed-paste'
