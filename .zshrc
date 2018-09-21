@@ -9,6 +9,7 @@ alias la="ls -a"
 alias ll="ls -l"
 alias free="free -g"
 alias watch='watch '
+alias vim='nvim'
 
 # vim like movement
 bindkey -v
