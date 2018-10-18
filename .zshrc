@@ -5,6 +5,7 @@
 LANG=en_US.UTF-8
 
 # alias settings
+alias ls="ls --color=auto"
 alias la="ls -a"
 alias ll="ls -l"
 alias free="free -g"
