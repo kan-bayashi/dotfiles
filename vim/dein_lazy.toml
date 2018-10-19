@@ -38,10 +38,22 @@ repo = 'kan-bayashi/deoplete-jedi'
 on_ft = 'python'
 
 [[plugins]]
+repo = 'Shougo/neco-vim'
+on_ft = 'vim'
+
+[[plugins]]
 repo = 'ujihisa/neco-look'
 
 [[plugins]]
 repo = 'Shougo/neco-syntax'
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
+[[plugins]]
+repo = 'osyo-manga/vim-precious'
+depends = ['context_filetype.vim']
+on_ft = ['toml', 'markdown']
 # }}}
 
 #############################
@@ -86,6 +98,11 @@ hook_source = '''
   let g:tex_conceal = ""
   let g:vim_markdown_math = 1
 '''
+
+# --- toml related ---
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
 
 # --- json related ---
 [[plugins]]
