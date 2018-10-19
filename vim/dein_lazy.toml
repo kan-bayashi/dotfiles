@@ -1,38 +1,101 @@
 #############################
-#      PYTHON PLUGINS       #
+#    COMPLETION PLUGINS     #
 #############################
 # {{{
 [[plugins]]
-repo ='tell-k/vim-autopep8'
-on_ft = 'python'
-hook_add = '''
-  function! Preserve(command)
-    " Save the last search.
-    let search = @/
-    " Save the current cursor position.
-    let cursor_position = getpos('.')
-    " Save the current window position.
-    normal! H
-    let window_position = getpos('.')
-    call setpos('.', cursor_position)
-    " Execute the command.
-    execute a:command
-    " Restore the last search.
-    let @/ = search
-    " Restore the previous window position.
-    call setpos('.', window_position)
-    normal! zt
-    " Restore the previous cursor position.
-    call setpos('.', cursor_position)
-  endfunction
+repo = 'Shougo/deoplete.nvim'
+on_event = 'InsertEnter'
+hook_source = '''
+  " <TAB> and <S-TAB>: select items
+  inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+  inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
+  inoremap <expr><CR>  pumvisible() ? deoplete#close_popup() : "<CR>"
 
-  function! Autopep8()
-    call Preserve(':silent %!autopep8 -')
-  endfunction
+  " basic setting
+  let g:deoplete#enable_at_startup = 1
+  let g:deoplete#enable_smart_case = 1
+  let g:deoplete#enable_ignore_case = 0
+  let g:deoplete#enable_camel_case = 0
+  let g:deoplete#auto_complete_delay = 0
+  let g:deoplete#auto_complete_start_length = 1
+  let g:deoplete#min_pattern_length = 1
+  let g:deoplete#auto_refresh_delay = 25
+  let g:deoplete#enable_refresh_always = 0
+  let g:deoplete#sources#jedi#server_timeout = 60
 
-  nnoremap <F9> :call Autopep8()<CR>
+  " completion setting
+  let g:deoplete#keyword_patterns = {}
+  let g:deoplete#keyword_patterns._ = '[a-zA-Z_]\k*\(?'
+  let g:deoplete#omni#input_patterns = {}
+  let g:deoplete#omni#input_patterns.python = ''
+  let g:deoplete#omni#functions = {}
+  let g:deoplete#omni_patterns = {}
 '''
 
+# --- deoplete sources ---
+[[plugins]]
+repo = 'kan-bayashi/deoplete-jedi'
+on_ft = 'python'
+
+[[plugins]]
+repo = 'ujihisa/neco-look'
+
+[[plugins]]
+repo = 'Shougo/neco-syntax'
+# }}}
+
+#############################
+#       LINTER PLUGINS      #
+#############################
+# {{{
+[[plugins]]
+repo = 'w0rp/ale'
+hook_source = '''
+  nmap <silent> <SPACE>j <Plug>(ale_next_wrap)
+  nmap <silent> <SPACE>k <Plug>(ale_previous_wrap)
+  let g:ale_linters = {
+    \ 'python': ['flake8'],
+    \ 'sh': ['shellcheck'],
+    \ }
+  let g:ale_python_flake8_args="--max-line-length=120"
+  let g:ale_open_list = 0
+  let g:ale_list_window_size = 5
+  let g:ale_lint_delay = 1000
+  let g:ale_lint_on_enter = 0
+  let g:ale_echo_msg_error_str = '[ERROR]'
+  let g:ale_echo_msg_warning_str = '[WARNING]'
+  let g:ale_echo_msg_format = '%severity% %linter% - %s'
+  let g:ale_sign_error = "\uf41b"
+  let g:ale_sign_warning = "\uf420"
+
+  " auto close error popup
+  autocmd QuitPre * if empty(&bt) | lclose | endif
+'''
+# }}}
+
+####################################
+#    FILETYPE DEPENDENT PLUGINS    #
+####################################
+# {{{
+# --- markdown related ---
+[[plugins]]
+repo = 'plasticboy/vim-markdown'
+on_ft = 'markdown'
+hook_source = '''
+  let g:vim_markdown_conceal = 0
+  let g:tex_conceal = ""
+  let g:vim_markdown_math = 1
+'''
+
+# --- json related ---
+[[plugins]]
+repo = 'elzr/vim-json'
+on_ft = 'json'
+hook_source = '''
+  let g:vim_json_syntax_conceal = 0
+'''
+
+# --- python related ---
 [[plugins]]
 repo = 'tmhedberg/SimpylFold'
 on_ft = 'python'
@@ -60,11 +123,12 @@ hook_source = '''
   let g:jedi#rename_command = '<leader>m'
   let g:jedi#documentation_command = '<leader>k'
 '''
+# }}}
 
-[[plugins]]
-repo = 'kan-bayashi/deoplete-jedi'
-on_ft = 'python'
-
+#############################
+#      TESTER PLUGINS       #
+#############################
+# {{{
 [[plugins]]
 repo = 'tpope/vim-dispatch'
 
@@ -77,86 +141,5 @@ on_ft = 'python'
 depends = ['vim-dispatch', 'vim-compiler-python']
 hook_source = '''
   let g:test#strategy = "dispatch"
-'''
-# }}}
-
-#############################
-#      OHTER PLUGINS        #
-#############################
-# {{{
-[[plugins]]
-repo = 'Shougo/deoplete.nvim'
-on_event = 'InsertEnter'
-hook_source = '''
-  " <TAB> and <S-TAB>: select items
-  inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-  inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
-
-  " basic setting
-  let g:deoplete#enable_at_startup = 1
-  let g:deoplete#enable_smart_case = 1
-  let g:deoplete#enable_ignore_case = 0
-  let g:deoplete#enable_camel_case = 0
-  let g:deoplete#auto_complete_delay = 0
-  let g:deoplete#auto_complete_start_length = 1
-  let g:deoplete#min_pattern_length = 1
-  let g:deoplete#auto_refresh_delay = 10
-  let g:deoplete#enable_refresh_always = 0
-  let g:deoplete#max_list = 1000
-  let g:deoplete#sources#jedi#server_timeout = 60
-  let g:deoplete#num_processes = 2
-
-  " completion setting
-  let g:deoplete#keyword_patterns = {}
-  let g:deoplete#keyword_patterns._ = '[a-zA-Z_]\k*\(?'
-  let g:deoplete#omni#input_patterns = {}
-  let g:deoplete#omni#input_patterns.python = ''
-  let g:deoplete#omni#functions = {}
-  let g:deoplete#omni_patterns = {}
-'''
-
-[[plugins]]
-repo = 'w0rp/ale'
-hook_source = '''
-  nmap <silent> <SPACE>j <Plug>(ale_next_wrap)
-  nmap <silent> <SPACE>k <Plug>(ale_previous_wrap)
-  let g:ale_linters = {
-    \ 'python': ['flake8'],
-    \ 'sh': ['shellcheck'],
-    \ }
-  let g:ale_python_flake8_args="--max-line-length=120"
-  let g:ale_open_list = 0
-  let g:ale_list_window_size = 5
-  let g:ale_lint_delay = 1000
-  let g:ale_lint_on_enter = 0
-  let g:ale_echo_msg_error_str = '[ERROR]'
-  let g:ale_echo_msg_warning_str = '[WARNING]'
-  let g:ale_echo_msg_format = '%severity% %linter% - %s'
-  let g:ale_sign_error = "\uf41b"
-  let g:ale_sign_warning = "\uf420"
-
-  " auto close error popup
-  autocmd QuitPre * if empty(&bt) | lclose | endif
-'''
-
-[[plugins]]
-repo = 'elzr/vim-json'
-on_ft = 'json'
-hook_source = '''
-  let g:vim_json_syntax_conceal = 0
-'''
-# }}}
-
-#############################
-#     MARKDOWN PLUGINS      #
-#############################
-# {{{
-[[plugins]]
-repo = 'plasticboy/vim-markdown'
-on_ft = 'markdown'
-hook_source = '''
-  let g:vim_markdown_conceal = 0
-  let g:tex_conceal = ""
-  let g:vim_markdown_math = 1
 '''
 # }}}

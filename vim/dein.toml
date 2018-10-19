@@ -15,7 +15,7 @@ if = '''!has('nvim')'''
 # }}}
 
 #############################
-#    GIT RELATED PLUGINS    #
+#        GIT PLUGINS        #
 #############################
 # {{{
 [[plugins]]
@@ -321,12 +321,6 @@ repo = 'bronson/vim-trailing-whitespace'
 repo = 'tomtom/tcomment_vim'
 
 [[plugins]]
-repo = 'ujihisa/neco-look'
-
-[[plugins]]
-repo = 'Shougo/neco-syntax'
-
-[[plugins]]
 repo = 'Townk/vim-autoclose'
 
 [[plugins]]
@@ -338,6 +332,7 @@ repo = 'tpope/vim-repeat'
 [[plugins]]
 repo = 'mhinz/vim-startify'
 hook_add = '''
+  let g:startify_change_to_vcs_root = 1
 '''
 
 [[plugins]]
@@ -360,7 +355,6 @@ hook_add = '''
 
 [[plugins]]
 repo = 'Konfekt/FastFold'
-depends = 'SimplyFold'
 hook_add = '''
   let g:fastfold_fold_command_suffixes = []
 '''
