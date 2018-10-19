@@ -62,7 +62,7 @@ hook_source = '''
 '''
 
 [[plugins]]
-repo = 'zchee/deoplete-jedi'
+repo = 'kan-bayashi/deoplete-jedi'
 on_ft = 'python'
 
 [[plugins]]
@@ -102,8 +102,9 @@ hook_source = '''
   let g:deoplete#min_pattern_length = 1
   let g:deoplete#auto_refresh_delay = 10
   let g:deoplete#enable_refresh_always = 0
-  let g:deoplete#max_list = 300
+  let g:deoplete#max_list = 1000
   let g:deoplete#sources#jedi#server_timeout = 60
+  let g:deoplete#num_processes = 2
 
   " completion setting
   let g:deoplete#keyword_patterns = {}
@@ -127,7 +128,7 @@ hook_source = '''
   let g:ale_open_list = 0
   let g:ale_list_window_size = 5
   let g:ale_lint_delay = 1000
-  let g:ale_lint_on_enter = 1
+  let g:ale_lint_on_enter = 0
   let g:ale_echo_msg_error_str = '[ERROR]'
   let g:ale_echo_msg_warning_str = '[WARNING]'
   let g:ale_echo_msg_format = '%severity% %linter% - %s'
