@@ -102,7 +102,7 @@ export ENHANCD_FILTER=fzf
 #########################
 #     less settings     #
 #########################
-export LESS=" -R "
+export LESS="-i -R -M"
 
 #########################
 #      fzf settings     #
