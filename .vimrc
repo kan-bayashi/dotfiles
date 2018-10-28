@@ -103,6 +103,9 @@ endif
 colorscheme jellybeans " colorscheme
 " does not work with hook in dein
 highlight ALEErrorSign ctermfg=Red guifg=#cb484c
+highlight Normal guibg=none
+highlight NonText guibg=none
+highlight LineNr guibg=none
 
 " other
 set foldmethod=marker " enable marker folding
