@@ -158,8 +158,8 @@ nnoremap <silent>tt :tabnew<CR>
 nnoremap <silent>th gT
 nnoremap <silent>tl gt
 
-" share clipboard
+" share clipboard over ssh
 if $OS == "win"
-  vmap <silent><leader>y :w !xsel -ib<CR><CR>
+  vmap <C-c> :!xclip -f -sel clip <CR>
 endif
 " }}}
