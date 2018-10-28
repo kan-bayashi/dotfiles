@@ -98,6 +98,7 @@ zplug load
 export ENHANCD_USE_FUZZY_MATCH=0 # do not use fuzzy match
 export ENHANCD_DISABLE_HOME=1    # "cd" then go home
 export ENHANCD_FILTER=fzf
+export ENHANCD_AWK=awk
 
 #########################
 #     less settings     #
@@ -110,7 +111,7 @@ export LESS="-i -R -M"
 export FZF_DEFAULT_OPTS='
     --height=40% --reverse --border
     --exit-0 --select-1
-    --color fg:188,bg:233,hl:103,fg+:222,bg+:234,hl+:104
+    --color fg:188,hl:103,fg+:222,bg+:234,hl+:104
     --color info:183,prompt:110,spinner:107,pointer:167,marker:215'
 export FZF_CTRL_T_OPTS="
     --preview 'echo {}'
