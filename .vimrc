@@ -159,7 +159,5 @@ nnoremap <silent>th gT
 nnoremap <silent>tl gt
 
 " share clipboard over ssh
-if $OS == "win"
-  vmap <C-c> :!xclip -f -sel clip <CR>
-endif
+vmap <C-c> :!xclip -f -sel clip <CR>
 " }}}
