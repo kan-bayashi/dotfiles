@@ -60,10 +60,6 @@ hook_source = '''
   let g:jedi#rename_command = '<leader>m'
   let g:jedi#documentation_command = '<leader>k'
 '''
-
-[[plugins]]
-repo = 'zchee/deoplete-jedi'
-on_ft = 'python'
 # }}}
 
 #############################
@@ -72,23 +68,23 @@ on_ft = 'python'
 # {{{
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
-on_event = 'InsertCharPre'
-on_i = 1
+on_event = 'InsertEnter'
 hook_source = '''
   " <TAB> and <S-TAB>: select items
   inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
   inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
+  inoremap <expr><CR>  pumvisible() ? deoplete#close_popup() : "<CR>"
 
   " basic setting
   let g:deoplete#enable_at_startup = 1
   let g:deoplete#enable_smart_case = 1
+  let g:deoplete#enable_ignore_case = 0
+  let g:deoplete#enable_camel_case = 0
   let g:deoplete#auto_complete_delay = 0
   let g:deoplete#auto_complete_start_length = 1
-  let g:deoplete#enable_camel_case = 0
-  let g:deoplete#enable_ignore_case = 0
+  let g:deoplete#min_pattern_length = 1
+  let g:deoplete#auto_refresh_delay = 25
   let g:deoplete#enable_refresh_always = 0
-  let g:deoplete#file#enable_buffer_path = 1
-  let g:deoplete#max_list = 50
   let g:deoplete#sources#jedi#server_timeout = 60
 
   " completion setting
@@ -99,6 +95,29 @@ hook_source = '''
   let g:deoplete#omni#functions = {}
   let g:deoplete#omni_patterns = {}
 '''
+
+# --- deoplete sources ---
+[[plugins]]
+repo = 'kan-bayashi/deoplete-jedi'
+on_ft = 'python'
+
+[[plugins]]
+repo = 'Shougo/neco-vim'
+on_ft = 'vim'
+
+[[plugins]]
+repo = 'ujihisa/neco-look'
+
+[[plugins]]
+repo = 'Shougo/neco-syntax'
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
+[[plugins]]
+repo = 'osyo-manga/vim-precious'
+depends = ['context_filetype.vim']
+on_ft = ['toml', 'markdown']
 
 [[plugins]]
 repo = 'w0rp/ale'

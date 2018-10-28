@@ -92,6 +92,7 @@ set guicursor=
 " command line completion related
 set wildmenu      " enable completion in command mode
 set history=1000  " number of command history
+set clipboard+=unnamed
 
 " color related
 set t_Co=256           " terminal
@@ -102,6 +103,10 @@ if (has("termguicolors"))
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
 colorscheme jellybeans " colorscheme
+highlight ALEErrorSign ctermfg=Red guifg=#cb484c
+highlight Normal ctermbg=none guibg=none
+highlight NonText ctermbg=none guibg=none
+highlight LineNr ctermbg=none guibg=none
 
 " other
 set foldmethod=marker " enable marker folding

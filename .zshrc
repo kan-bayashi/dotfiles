@@ -4,11 +4,6 @@
 # language setting
 LANG=en_US.UTF-8
 
-# my ssh function
-function connect {
-    ssh -tX $1 "zsh -c 'export OS=mac;zsh;'"
-}
-
 # alias settings
 alias ls="ls -G"
 alias la="ls -a"
