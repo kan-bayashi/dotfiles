@@ -111,6 +111,7 @@ highlight LineNr ctermbg=none guibg=none
 set foldmethod=marker " enable marker folding
 set hidden            " change buffer without saving
 set mouse=a           " enable mouse
+set clipboard+=unnamedplus " share clipboard (work over ssh in neovim)
 
 " python path related
 let g:python2_host_prog = expand('~/') . '.pyenv/versions/2.7.14/bin/python'
@@ -157,7 +158,4 @@ nnoremap <C-w>\| :<C-u>vs<CR>
 nnoremap <silent>tt :tabnew<CR>
 nnoremap <silent>th gT
 nnoremap <silent>tl gt
-
-" share clipboard over ssh
-vmap <C-c> :!xclip -f -sel clip <CR>
 " }}}
