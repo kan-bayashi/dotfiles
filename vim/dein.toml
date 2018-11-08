@@ -350,6 +350,14 @@ repo = 'Konfekt/FastFold'
 hook_add = '''
   let g:fastfold_fold_command_suffixes = []
 '''
+
+[[plugins]]
+repo = 'wincent/vim-clipper'
+hook_add = '''
+  if $OS != "mac"
+    let g:ClipperLoaded = 1
+  endif
+'''
 # }}}
 
 #############################
