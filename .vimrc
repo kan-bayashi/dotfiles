@@ -102,14 +102,16 @@ if (has("termguicolors"))
 endif
 colorscheme jellybeans " colorscheme
 
+" transpalent terminal
+highlight Normal guibg=none ctermbg=none
+highlight NonText guibg=none ctermbg=none
+highlight LineNr guibg=none ctermbg=none
+
 " custom highlight color related (does not work with hook in dein...)
-highlight ALEErrorSign ctermfg=Red guifg=#cb484c
-highlight GitGutterAdd guifg=#009900 guibg=s:termBlack ctermfg=2 ctermbg=0
-highlight GitGutterChange guifg=#bbbb00 guibg=s:termBlack ctermfg=3 ctermbg=0
-highlight GitGutterDelete guifg=#ff2222 guibg=s:termBlack ctermfg=1 ctermbg=0
-highlight Normal ctermbg=none guibg=none
-highlight NonText ctermbg=none guibg=none
-highlight LineNr ctermbg=none guibg=none
+highlight ALEErrorSign guifg=#cb484c ctermfg=Red
+highlight GitGutterAdd guifg=#009900 guibg=none ctermfg=Green ctermbg=none
+highlight GitGutterChange guifg=#bbbb00 guibg=none ctermfg=Yellow ctermbg=none
+highlight GitGutterDelete guifg=#ff2222 guibg=none ctermfg=Red ctermbg=none
 
 " other
 set foldmethod=marker " enable marker folding
