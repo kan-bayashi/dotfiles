@@ -15,13 +15,14 @@ for f in .??*; do
 done
 
 # make symbolic link of vim setting files
-if [ ! -e ~/.vim/rc ]; then
-    mkdir -p ~/.vim/rc
-    ln -s "$PWD"/vim/dein.toml ~/.vim/rc
-    ln -s "$PWD"/vim/dein_lazy.toml ~/.vim/rc
-    ln -s ~/.vim ~/.config/nvim
-    ln -s ~/.vimrc ~/.config/nvim/init.vim
+if [ -e ~/.vim/rc ]; then
+    mv ~/.vim ~/.vim.bak
 fi
+mkdir -p ~/.vim/rc
+ln -s "$PWD"/vim/dein.toml ~/.vim/rc
+ln -s "$PWD"/vim/dein_lazy.toml ~/.vim/rc
+ln -s ~/.vim ~/.config/nvim
+ln -s ~/.vimrc ~/.config/nvim/init.vim
 
 # copy cool zsh theme
 if [ ! -e ~/.zsh/themes/bullet-train.zsh-theme ];then
