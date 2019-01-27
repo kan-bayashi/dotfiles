@@ -101,8 +101,12 @@ if (has("termguicolors"))
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
 colorscheme jellybeans " colorscheme
-" does not work with hook in dein
+
+" custom highlight color related (does not work with hook in dein...)
 highlight ALEErrorSign ctermfg=Red guifg=#cb484c
+highlight GitGutterAdd guifg=#009900 guibg=s:termBlack ctermfg=2 ctermbg=0
+highlight GitGutterChange guifg=#bbbb00 guibg=s:termBlack ctermfg=3 ctermbg=0
+highlight GitGutterDelete guifg=#ff2222 guibg=s:termBlack ctermfg=1 ctermbg=0
 highlight Normal ctermbg=none guibg=none
 highlight NonText ctermbg=none guibg=none
 highlight LineNr ctermbg=none guibg=none
@@ -114,8 +118,8 @@ set mouse=a           " enable mouse
 set clipboard+=unnamedplus " share clipboard (work over ssh in neovim)
 
 " python path related
-let g:python2_host_prog = expand('~/') . '.pyenv/versions/2.7.14/bin/python'
-let g:python3_host_prog = expand('~/') . '.pyenv/versions/3.6.4/bin/python'
+let g:python2_host_prog = expand('~/.pyenv/versions/2.7.14/bin/python')
+let g:python3_host_prog = expand('~/.pyenv/versions/3.6.4/bin/python')
 " }}}
 
 "------------------------------------
