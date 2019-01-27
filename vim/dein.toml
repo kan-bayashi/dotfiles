@@ -30,6 +30,9 @@ hook_add = '''
   let g:gitgutter_sign_added = '+'
   let g:gitgutter_sign_modified = '-'
   let g:gitgutter_sign_removed = 'x'
+  if executable('rg')
+    let g:gitgutter_grep = 'rg'
+  endif
 '''
 # }}}
 
