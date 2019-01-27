@@ -85,8 +85,6 @@ zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "b4b4r07/enhancd", use:init.sh
 # load theme from local
 zplug "~/.zsh/themes/", from:local, use:bullet-train.zsh-theme, defer:3
-# visual mode for zsh vim key binding
-zplug "b4b4r07/zsh-vimode-visual", defer:3
 
 # install check and then load
 zplug check || zplug install
