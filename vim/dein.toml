@@ -274,8 +274,6 @@ hook_add = '''
   nnoremap <silent> <C-f>r :<C-u>Denite -winheight=15 file_mru<CR>
   nnoremap <silent> <C-f>f :<C-u>Denite -winheight=15 file_rec<CR>
   nnoremap <silent> <C-f>d :<C-u>Denite -winheight=15 directory_rec<CR>
-  nnoremap <silent> <C-f>o :<C-u>Denite -winheight=15 outline<CR>
-  nnoremap <silent> <C-f>c :<C-u>Denite -winheight=15 colorsheme<CR>
   nnoremap <silent> <C-f><C-f> :<C-u>Denite -resume -mode=normal<CR>
   nnoremap <silent> <C-f>/ :<C-u>Denite -winheight=15 -auto-highlight line<CR>
   nnoremap <silent> <C-f>* :<C-u>DeniteCursorWord -winheight=15 -auto-highlight -mode=normal line<CR>
