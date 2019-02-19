@@ -73,7 +73,7 @@ make && make install
 
 # install nvim
 cd "${HOME}/local/bin"
-wget https://github.com/neovim/neovim/releases/download/v0.4.0/nvim.appimage
+wget https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
 chmod u+x nvim.appimage
 ln -s "$PWD"/nvim.appimage nvim
 
