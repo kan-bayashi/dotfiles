@@ -254,7 +254,7 @@ repo = 'Shougo/neomru.vim'
 
 [[plugins]]
 repo = 'Shougo/denite.nvim'
-depends = ['neomru.vim']
+depends = ['neomru.vim', 'vim-qfreplace']
 hook_add = '''
   call denite#custom#option('default', 'prompt', '>>>')
   call denite#custom#option('default', 'statusline', v:false)
@@ -277,6 +277,25 @@ hook_add = '''
   nnoremap <silent> <C-f><C-f> :<C-u>Denite -resume -mode=normal<CR>
   nnoremap <silent> <C-f>/ :<C-u>Denite -winheight=15 -auto-highlight line<CR>
   nnoremap <silent> <C-f>* :<C-u>DeniteCursorWord -winheight=15 -auto-highlight -mode=normal line<CR>
+
+  " replace with grep
+  function! MyDeniteReplace(context)
+    let qflist = []
+    for target in a:context['targets']
+      if !has_key(target, 'action__path') | continue | endif
+      if !has_key(target, 'action__line') | continue | endif
+      if !has_key(target, 'action__text') | continue | endif
+
+      call add(qflist, {
+            \ 'filename': target['action__path'],
+            \ 'lnum': target['action__line'],
+            \ 'text': target['action__text']
+            \ })
+    endfor
+    call setqflist(qflist)
+    call qfreplace#start('')
+  endfunction
+  call denite#custom#action('file', 'replace', function('MyDeniteReplace'))
 '''
 # }}}
 
@@ -309,6 +328,9 @@ hook_add = '''
 
 [[plugins]]
 repo = 'bronson/vim-trailing-whitespace'
+
+[[plugins]]
+repo = 'thinca/vim-qfreplace'
 
 [[plugins]]
 repo = 'tomtom/tcomment_vim'
