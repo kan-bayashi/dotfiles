@@ -271,6 +271,7 @@ hook_add = '''
   endif
   nnoremap <silent> <C-f>b :<C-u>Denite -winheight=15 buffer<CR>
   nnoremap <silent> <C-f>g :<C-u>Denite -winheight=15 grep<CR>
+  nnoremap <silent> <C-f><C-g> :<C-u>Denite -winheight=15 grep:::!<CR>
   nnoremap <silent> <C-f>r :<C-u>Denite -winheight=15 file_mru<CR>
   nnoremap <silent> <C-f>f :<C-u>Denite -winheight=15 file_rec<CR>
   nnoremap <silent> <C-f>d :<C-u>Denite -winheight=15 directory_rec<CR>

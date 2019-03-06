@@ -75,7 +75,7 @@ make && make install
 cd "${HOME}/local/bin"
 wget https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
 chmod u+x nvim.appimage
-ln -s "$PWD"/nvim.appimage nvim
+ln -s "${PWD}"/nvim.appimage nvim
 
 # install tmux
 cd "$TMPDIR"

@@ -10,7 +10,7 @@ for f in .??*; do
     [[ "$f" == ".gitignore" ]] && continue
     [[ "$f" == ".DS_Store" ]] && continue
     [ -e ~/"$f" ] && mv ~/"$f" ~/"$f".bak
-    ln -s "$PWD"/"$f" ~/
+    ln -s "${PWD}"/"$f" ~/
     echo "make symlink of $f"
 done
 
@@ -19,25 +19,25 @@ if [ -e ~/.vim/rc ]; then
     mv ~/.vim ~/.vim.bak
 fi
 mkdir -p ~/.vim/rc
-ln -s "$PWD"/vim/dein.toml ~/.vim/rc
-ln -s "$PWD"/vim/dein_lazy.toml ~/.vim/rc
+ln -s "${PWD}"/vim/dein.toml ~/.vim/rc
+ln -s "${PWD}"/vim/dein_lazy.toml ~/.vim/rc
 ln -s ~/.vim ~/.config/nvim
 ln -s ~/.vimrc ~/.config/nvim/init.vim
 
 # copy cool zsh theme
 if [ ! -e ~/.zsh/themes/bullet-train.zsh-theme ];then
     mkdir -p ~/.zsh/themes
-    ln -s "$PWD"/themes/bullet-train.zsh-theme ~/.zsh/themes
+    ln -s "${PWD}"/themes/bullet-train.zsh-theme ~/.zsh/themes
 fi
 
 # make symbolic link of vim setting files
 if [ ! -e ~/.ipython/profile_default ];then
     mkdir -p ~/.ipython/profile_default
-    ln -s "$PWD"/ipython/ipython_config.py ~/.ipython/profile_default/
+    ln -s "${PWD}"/ipython/ipython_config.py ~/.ipython/profile_default/
 fi
 if [ ! -e ~/.ipython/profile_default/startup ];then
     mkdir -p ~/.ipython/profile_default/startup
-    ln -s "$PWD"/ipython/startup/keybindings.py ~/.ipython/profile_default/startup
+    ln -s "${PWD}"/ipython/startup/keybindings.py ~/.ipython/profile_default/startup
 fi
 
 # install zplug
