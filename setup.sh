@@ -70,7 +70,8 @@ if [ ! -e ~/.fzf ];then
     echo "#                   FZF INSTALL                    #"
     echo "####################################################"
     git clone https://github.com/junegunn/fzf.git ~/.fzf
-    cd ~/.fzf && ./install
+    workdir=${PWD}
+    cd ~/.fzf && ./install && cd ${workdir}
 fi
 
 # start zsh
