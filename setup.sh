@@ -1,8 +1,7 @@
-#!/bin/bash
+#!/bin/bash -eu
 
-# Hyper cool terminal setup script in takedalab's servers
-# Copyright 2017 Tomoki Hayashi
-set -e
+# Dotfile setup script
+# Copyright 2019 Tomoki Hayashi
 
 # make symbolic link of dotfiles
 for f in .??*; do

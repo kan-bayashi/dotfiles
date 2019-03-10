@@ -1,8 +1,7 @@
-#!/bin/bash
+#!/bin/bash -eu
 
-# Script to install vim 8 with pyenv python and tmux 2.6
-# Copyright 2018 Tomoki Hayashi
-set -e
+# Pyenv-pythons, Vim8, Neovim, and Tmux installation script
+# Copyright 2019 Tomoki Hayashi
 
 # check pyenv existence
 if ! type "pyenv" > /dev/null 2>&1;then
@@ -15,7 +14,7 @@ if [ -e /etc/lsb-release ];then
     sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
         libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
         xz-utils tk-dev libffi-dev liblzma-dev python-openssl \
-        ncurses-dev lua5.2 lua5.2-dev luajit libevent-dev
+        ncurses-dev lua5.2 lua5.2-dev luajit libevent-dev xclip xsel
 fi
 
 # install enable-shared python using pyenv
