@@ -7,13 +7,13 @@
 if [ -e /etc/lsb-release ];then
     required_packages="build-essential libssl-dev zlib1g-dev libbz2-dev
         libreadline-dev libsqlite3-dev llvm libncurses5-dev libncursesw5-dev
-        xz-utils tk-dev liblzma-dev python-openssl lua5.2 lua5.2-dev luajit libevent-dev
+        xz-utils tk-dev liblzma-dev python-openssl lua5.2 liblua5.2-dev luajit libevent-dev
         make git zsh wget curl xclip xsel gawk"
     install_packages=""
     installed_packages=$(COLUMNS=200 dpkg -l | awk '{print $2}' | sed -e "s/\:.*$//g")
     for package in ${required_packages}; do
         echo -n "check ${package}..."
-        if echo ${installed_packages} | grep -xq ${package}; then
+        if echo "${installed_packages}" | grep -xq ${package}; then
             echo "OK."
         else
             echo "Not installed."
@@ -32,7 +32,7 @@ elif [ -e /etc/redhat-release ]; then
     installed_packages=$(yum list installed | awk '{print $1}' | sed -e "s/\..*$//g")
     for package in ${required_packages}; do
         echo -n "check ${package}..."
-        if echo ${installed_packages} | grep -xq ${package}; then
+        if echo "${installed_packages}" | grep -xq ${package}; then
             echo "OK."
         else
             echo "Not installed."
