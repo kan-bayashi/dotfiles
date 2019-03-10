@@ -7,4 +7,3 @@ scipy
 ipython
 matplotlib
 pudb
-pdb++

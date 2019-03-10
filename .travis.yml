@@ -1,4 +1,4 @@
-language: ruby
+language: shell
 
 services:
   - docker
@@ -8,5 +8,6 @@ env:
         - OS=ubuntu
         - OS=centos
 
-build:
-    - cd docker/${OS}; docker build . -t ${OS}
+script:
+    - cd docker/${OS}
+    - docker build . -t ${OS}
