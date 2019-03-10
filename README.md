@@ -1,4 +1,3 @@
-
 # Dotfiles
 
 [![Build Status](https://travis-ci.org/kan-bayashi/dotfiles.svg?branch=master)](https://travis-ci.org/kan-bayashi/dotfiles)
@@ -14,7 +13,7 @@ This scripts are tested on following envrionments:
 - CentOS 7.5
 - Ubuntu 16.04 and 18.04
 
-## How-to-install (for Linux)
+## Setup
 
 1. Get Nerd fonts from <https://github.com/ryanoasis/nerd-fonts>
 2. If use iterm2, install `iterm2/jellybeans_like.itermcolors`
