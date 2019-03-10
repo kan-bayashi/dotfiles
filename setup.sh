@@ -8,6 +8,7 @@ for f in .??*; do
     [[ "$f" == ".git" ]] && continue
     [[ "$f" == ".gitignore" ]] && continue
     [[ "$f" == ".DS_Store" ]] && continue
+    [[ "$f" == ".travis.yml" ]] && continue
     [ -e ~/"$f" ] && mv ~/"$f" ~/"$f".bak
     ln -s "${PWD}"/"$f" ~/
     echo "Made symlink of $f"

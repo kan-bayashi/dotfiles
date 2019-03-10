@@ -141,7 +141,7 @@ chmod u+x nvim.appimage
 if ./nvim.appimage --version >& /dev/null; then
     ln -s ./nvim.appimage nvim
 else
-    nvim.appimage --appimage-extract
+    ./nvim.appimage --appimage-extract
     mv -v squashfs-root ../nvim
     ln -s ../nvim/AppRun nvim
     rm nvim.appimage
@@ -166,13 +166,8 @@ export PATH=${HOME}/local/bin:$PATH
 git clone https://github.com/Shougo/dein.vim ~/.cache/dein/repos/github.com/Shougo/dein.vim
 vim -c "try | call dein#install() | finally | qall! | endtry" -N -u ${HOME}/.vimrc -U NONE -i NONE -V1 -e -s
 vim -c "try | call dein#update() | finally | qall! | endtry" -N -u ${HOME}/.vimrc -U NONE -i NONE -V1 -e -s
-nvim -c "try | call dein#install() | finally | qall! | endtry" -N -u ${HOME}/.vimrc -U NONE -i NONE -V1 -e -s
-nvim -c "try | call dein#update() | finally | qall! | endtry" -N -u ${HOME}/.vimrc -U NONE -i NONE -V1 -e -s
-
-# install zplug plugins
-echo "installing zplug plugins..."
-source ~/.zplug/init.zsh
-zplug update
+nvim -c "try | call dein#install() | finally | qall! | endtry" -N -u ${HOME}/.vim/init.vim -U NONE -i NONE -V1 -e -s
+nvim -c "try | call dein#update() | finally | qall! | endtry" -N -u ${HOME}/.vim/init.vim -U NONE -i NONE -V1 -e -s
 
 echo "Sucessfully installed essential tools."
 echo "Please run following command \"exec zsh -l\" to run zsh."
