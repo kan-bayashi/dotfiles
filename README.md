@@ -1,4 +1,7 @@
+
 # Dotfiles
+
+[![Build Status](https://travis-ci.org/kan-bayashi/dotfiles.svg?branch=master)](https://travis-ci.org/kan-bayashi/dotfiles)
 
 My dotfiles (zsh + tmux 2.6 + vim 8 or nvim)
 
