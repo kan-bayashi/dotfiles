@@ -3,13 +3,14 @@ language: ruby
 services:
   - docker
 
+env:
+    matrix:
+        - OS=ubuntu
+        - OS=centos
+
 before_install:
     - docker pull ubuntu:18.04
     - docker pull centos:centos7
 
 install:
-    - cd docker/ubuntu
-    - docker build . -t ubuntu
-    - cd -
-    - cd docker/centos
-    - docker build . -t centos
+    - cd docker/${OS}; docker build . -t ${OS}
