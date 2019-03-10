@@ -386,6 +386,9 @@ hook_add = '''
     let g:ClipperLoaded = 1
   endif
 '''
+
+[[plugins]]
+repo = 'roxma/vim-tmux-clipboard'
 # }}}
 
 #############################
