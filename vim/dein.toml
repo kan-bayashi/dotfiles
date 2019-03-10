@@ -280,7 +280,7 @@ hook_add = '''
   nnoremap <silent> <C-f>* :<C-u>DeniteCursorWord -winheight=15 -auto-highlight -mode=normal line<CR>
 
   " replace with grep
-  function! MyDeniteReplace(context)
+  function! DeniteGrepAllReplace(context)
     let qflist = []
     for target in a:context['targets']
       if !has_key(target, 'action__path') | continue | endif
@@ -296,7 +296,7 @@ hook_add = '''
     call setqflist(qflist)
     call qfreplace#start('')
   endfunction
-  call denite#custom#action('file', 'replace', function('MyDeniteReplace'))
+  call denite#custom#action('file', 'replace', function('DeniteGrepAllReplace'))
 '''
 # }}}
 
@@ -358,7 +358,11 @@ repo = 'ConradIrwin/vim-bracketed-paste'
 repo = 'LeafCage/yankround.vim'
 hook_add = '''
   nmap p <Plug>(yankround-p)
+  xmap p <Plug>(yankround-p)
   nmap P <Plug>(yankround-P)
+  nmap gp <Plug>(yankround-gp)
+  xmap gp <Plug>(yankround-gp)
+  nmap gP <Plug>(yankround-gP)
   nmap <C-p> <Plug>(yankround-prev)
   nmap <C-n> <Plug>(yankround-next)
 '''
@@ -391,7 +395,7 @@ hook_add = '''
 [[plugins]]
 repo = 'scrooloose/nerdtree'
 hook_add = '''
-  nmap <silent> <SPACE><SPACE> :NERDTreeToggle<CR>
+  nmap <silent> <SPACE>n :NERDTreeToggle<CR>
   let g:NERDTreeShowHidden=1
 '''
 # }}}
