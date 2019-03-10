@@ -114,47 +114,53 @@ pip install -r requirements.txt
 pip3 install -r requirements.txt
 
 # install vim
-echo "installing vim 8..."
 ROOTDIR=$PWD
 TMPDIR=$(mktemp -d /tmp/XXXXX)
-cd "$TMPDIR"
-git clone https://github.com/vim/vim.git
-cd vim
-LDFLAGS="-Wl,-rpath=${HOME}/.pyenv/versions/2.7.14/lib:${HOME}/.pyenv/versions/3.6.4/lib" \
-    ./configure \
-    --enable-fail-if-missing \
-    --enable-pythoninterp=dynamic \
-    --enable-python3interp=dynamic \
-    --with-features=huge \
-    --enable-luainterp \
-    --enable-cscope \
-    --enable-fontset \
-    --enable-multibyte \
-    --prefix="${HOME}"/local
-make -j && make install
+if [ ! -e ${HOME}/local/bin/vim ]; then
+    echo "installing vim 8..."
+    cd "$TMPDIR"
+    git clone https://github.com/vim/vim.git
+    cd vim
+    LDFLAGS="-Wl,-rpath=${HOME}/.pyenv/versions/2.7.14/lib:${HOME}/.pyenv/versions/3.6.4/lib" \
+        ./configure \
+        --enable-fail-if-missing \
+        --enable-pythoninterp=dynamic \
+        --enable-python3interp=dynamic \
+        --with-features=huge \
+        --enable-luainterp \
+        --enable-cscope \
+        --enable-fontset \
+        --enable-multibyte \
+        --prefix="${HOME}"/local
+    make -j && make install
+fi
 
 # install nvim
-echo "installing neovim..."
-cd ${HOME}/local/bin
-wget https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
-chmod u+x nvim.appimage
-if ./nvim.appimage --version >& /dev/null; then
-    ln -s ./nvim.appimage nvim
-else
-    ./nvim.appimage --appimage-extract
-    mv -v squashfs-root ../nvim
-    ln -s ../nvim/AppRun nvim
-    rm nvim.appimage
+if [ ! -e ${HOME}/local/bin/nvim ]; then
+    echo "installing neovim..."
+    cd ${HOME}/local/bin
+    wget https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
+    chmod u+x nvim.appimage
+    if ./nvim.appimage --version >& /dev/null; then
+        ln -s ./nvim.appimage nvim
+    else
+        ./nvim.appimage --appimage-extract
+        mv -v squashfs-root ../nvim
+        ln -s ../nvim/AppRun nvim
+        rm nvim.appimage
+    fi
 fi
 
 # install tmux
-echo "installing tmux..."
-cd "$TMPDIR"
-wget https://github.com/tmux/tmux/releases/download/2.6/tmux-2.6.tar.gz
-tar -xvf tmux-2.6.tar.gz
-cd tmux-2.6
-./configure --prefix="${HOME}"/local
-make -j && make install
+if [ ! -e ${HOME}/local/bin/tmux ]; then
+    echo "installing tmux..."
+    cd "$TMPDIR"
+    wget https://github.com/tmux/tmux/releases/download/2.6/tmux-2.6.tar.gz
+    tar -xvf tmux-2.6.tar.gz
+    cd tmux-2.6
+    ./configure --prefix="${HOME}"/local
+    make -j && make install
+fi
 
 # clean up
 cd "$ROOTDIR"
@@ -163,11 +169,13 @@ cd "$ROOTDIR"
 # install vim plugins
 echo "installing vim plugins..."
 export PATH=${HOME}/local/bin:$PATH
-git clone https://github.com/Shougo/dein.vim ~/.cache/dein/repos/github.com/Shougo/dein.vim
+[ ! -e ~/.cache/dein/repos/github.com/Shougo/dein.vim ] && \
+    git clone https://github.com/Shougo/dein.vim ~/.cache/dein/repos/github.com/Shougo/dein.vim
 vim -c "try | call dein#install() | finally | qall! | endtry" -N -u ${HOME}/.vimrc -U NONE -i NONE -V1 -e -s
 vim -c "try | call dein#update() | finally | qall! | endtry" -N -u ${HOME}/.vimrc -U NONE -i NONE -V1 -e -s
 nvim -c "try | call dein#install() | finally | qall! | endtry" -N -u ${HOME}/.vim/init.vim -U NONE -i NONE -V1 -e -s
 nvim -c "try | call dein#update() | finally | qall! | endtry" -N -u ${HOME}/.vim/init.vim -U NONE -i NONE -V1 -e -s
 
+echo ""
 echo "Sucessfully installed essential tools."
 echo "Please run following command \"exec zsh -l\" to run zsh."
