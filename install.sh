@@ -1,21 +1,81 @@
-#!/bin/bash -eu
+#!/bin/bash -e
 
 # Pyenv-pythons, Vim8, Neovim, and Tmux installation script
 # Copyright 2019 Tomoki Hayashi
 
-# check pyenv existence
-if ! type "pyenv" > /dev/null 2>&1;then
-    echo "ERROR: pyenv is not activated."
-    exit 1
+# check and install dependencies
+if [ -e /etc/lsb-release ];then
+    required_packages="build-essential libssl-dev zlib1g-dev libbz2-dev
+        libreadline-dev libsqlite3-dev llvm libncurses5-dev libncursesw5-dev
+        xz-utils tk-dev liblzma-dev python-openssl lua5.2 lua5.2-dev luajit libevent-dev
+        make git zsh wget curl xclip xsel gawk"
+    install_packages=""
+    installed_packages=$(COLUMNS=200 dpkg -l | awk '{print $2}' | sed -e "s/\:.*$//g")
+    for package in ${required_packages}; do
+        echo -n "check ${package}..."
+        if echo ${installed_packages} | grep -xq ${package}; then
+            echo "OK."
+        else
+            echo "Not installed."
+            install_packages="${install_packages} ${package}"
+        fi
+    done
+    if [ ! -z "${install_packages}" ]; then
+        echo "following packages will be installed: ${install_packages}"
+        sudo apt install -y ${install_packages}
+    fi
+elif [ -e /etc/redhat-release ]; then
+    required_packages="gcc zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel
+        openssl-devel xz xz-devel findutils lua-devel luajit-devel ncurses-devel perl-ExtUtils-Embed
+        ncurses-devel libevent-devel make git zsh wget curl xclip xsel"
+    install_packages=""
+    installed_packages=$(yum list installed | awk '{print $1}' | sed -e "s/\..*$//g")
+    for package in ${required_packages}; do
+        echo -n "check ${package}..."
+        if echo ${installed_packages} | grep -xq ${package}; then
+            echo "OK."
+        else
+            echo "Not installed."
+            install_packages="${install_packages} ${package}"
+        fi
+    done
+    if [ ! -z "${install_packages}" ]; then
+        echo "following packages will be installed: ${install_packages}"
+        sudo yum install -y ${install_packages}
+    fi
+else
+    echo "WARNING: It seems that your environment is not tested."
 fi
 
-# install dependencies
-if [ -e /etc/lsb-release ];then
-    sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
-        libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
-        xz-utils tk-dev libffi-dev liblzma-dev python-openssl \
-        ncurses-dev lua5.2 lua5.2-dev luajit libevent-dev xclip xsel
+# install zplug
+if [ ! -e ~/.zplug ];then
+    echo "Installing zplug..."
+    git clone https://github.com/zplug/zplug ~/.zplug
 fi
+
+# install tpm
+if [ ! -e ~/.tmux/plugins/tpm ];then
+    echo "Installing tpm..."
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
+
+# install pyenv
+if [ ! -e ~/.pyenv ];then
+    echo "Installing pyenv..."
+    git clone https://github.com/yyuu/pyenv.git ~/.pyenv
+fi
+
+# install fzf
+if [ ! -e ~/.fzf ];then
+    echo "Installing fzf..."
+    git clone https://github.com/junegunn/fzf.git ~/.fzf
+    workdir=${PWD}
+    cd ~/.fzf && ./install --key-bindings --no-completion --no-update-rc && cd ${workdir}
+fi
+
+# pyenv init
+export PATH=${HOME}/.pyenv/bin:$PATH
+eval "$(pyenv init -)"
 
 # install enable-shared python using pyenv
 if [ ! -e "${HOME}"/.pyenv/versions/2.7.14 ];then
@@ -30,7 +90,6 @@ else
 fi
 
 # set python
-eval "$(pyenv init -)"
 pyenv shell --unset
 pyenv global 2.7.14 3.6.4
 
@@ -54,13 +113,8 @@ fi
 pip install -r requirements.txt
 pip3 install -r requirements.txt
 
-# install nvim
-cd "${HOME}/local/bin"
-wget https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
-chmod u+x nvim.appimage
-ln -s "${PWD}"/nvim.appimage nvim
-
 # install vim
+echo "installing vim 8..."
 ROOTDIR=$PWD
 TMPDIR=$(mktemp -d /tmp/XXXXX)
 cd "$TMPDIR"
@@ -77,16 +131,48 @@ LDFLAGS="-Wl,-rpath=${HOME}/.pyenv/versions/2.7.14/lib:${HOME}/.pyenv/versions/3
     --enable-fontset \
     --enable-multibyte \
     --prefix="${HOME}"/local
-make && make install
+make -j && make install
+
+# install nvim
+echo "installing neovim..."
+cd ${HOME}/local/bin
+wget https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
+chmod u+x nvim.appimage
+if ./nvim.appimage --version >& /dev/null; then
+    ln -s ./nvim.appimage nvim
+else
+    nvim.appimage --appimage-extract
+    mv -v squashfs-root ../nvim
+    ln -s ../nvim/AppRun nvim
+    rm nvim.appimage
+fi
 
 # install tmux
+echo "installing tmux..."
 cd "$TMPDIR"
 wget https://github.com/tmux/tmux/releases/download/2.6/tmux-2.6.tar.gz
 tar -xvf tmux-2.6.tar.gz
 cd tmux-2.6
 ./configure --prefix="${HOME}"/local
-make && make install
+make -j && make install
 
 # clean up
 cd "$ROOTDIR"
 [ -e "$TMPDIR" ] && rm -fr "$TMPDIR"
+
+# install vim plugins
+echo "installing vim plugins..."
+export PATH=${HOME}/local/bin:$PATH
+git clone https://github.com/Shougo/dein.vim ~/.cache/dein/repos/github.com/Shougo/dein.vim
+vim -c "try | call dein#install() | finally | qall! | endtry" -N -u ${HOME}/.vimrc -U NONE -i NONE -V1 -e -s
+vim -c "try | call dein#update() | finally | qall! | endtry" -N -u ${HOME}/.vimrc -U NONE -i NONE -V1 -e -s
+nvim -c "try | call dein#install() | finally | qall! | endtry" -N -u ${HOME}/.vimrc -U NONE -i NONE -V1 -e -s
+nvim -c "try | call dein#update() | finally | qall! | endtry" -N -u ${HOME}/.vimrc -U NONE -i NONE -V1 -e -s
+
+# install zplug plugins
+echo "installing zplug plugins..."
+source ~/.zplug/init.zsh
+zplug update
+
+echo "Sucessfully installed essential tools."
+echo "Please run following command \"exec zsh -l\" to run zsh."

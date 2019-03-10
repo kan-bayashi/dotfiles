@@ -103,15 +103,15 @@ endif
 colorscheme jellybeans " colorscheme
 
 " transpalent terminal
-highlight Normal guibg=none ctermbg=none
-highlight NonText guibg=none ctermbg=none
-highlight LineNr guibg=none ctermbg=none
+highlight Normal guibg=NONE ctermbg=NONE
+highlight NonText guibg=NONE ctermbg=NONE
+highlight LineNr guibg=NONE ctermbg=NONE
 
 " custom highlight color related (does not work with hook in dein...)
 highlight ALEErrorSign guifg=#cb484c ctermfg=Red
-highlight GitGutterAdd guifg=#009900 guibg=none ctermfg=Green ctermbg=none
-highlight GitGutterChange guifg=#bbbb00 guibg=none ctermfg=Yellow ctermbg=none
-highlight GitGutterDelete guifg=#ff2222 guibg=none ctermfg=Red ctermbg=none
+highlight GitGutterAdd guifg=#009900 guibg=NONE ctermfg=Green ctermbg=NONE
+highlight GitGutterChange guifg=#bbbb00 guibg=NONE ctermfg=Yellow ctermbg=NONE
+highlight GitGutterDelete guifg=#ff2222 guibg=NONE ctermfg=Red ctermbg=NONE
 
 " other
 set foldmethod=marker " enable marker folding

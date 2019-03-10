@@ -6,7 +6,10 @@ My dotfiles (zsh + tmux 2.6 + vim 8 or nvim)
 
 ## Requirements
 
-- zsh
+This scripts are tested on following envrionments:
+
+- CentOS 7.5
+- Ubuntu 16.04 and 18.04
 
 ## How-to-install (for Linux)
 
@@ -22,13 +25,14 @@ $ cd dotfiles
 # setup dotfiles
 $ ./setup.sh
 
-# install softwares
+# install essential tools (required sudo)
 $ ./install.sh
 
-# install vim plugins
-$ vim
-$ nvim
+# enable zsh environment
+$ exec zsh -l
 ```
+
+If you do not have sudo, please contact your administrator to install dependencies.
 
 ## References
 
