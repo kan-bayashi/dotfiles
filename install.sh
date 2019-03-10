@@ -10,6 +10,14 @@ if ! type "pyenv" > /dev/null 2>&1;then
     exit 1
 fi
 
+# install dependencies
+if [ -e /etc/lsb-release ];then
+    sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
+        libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
+        xz-utils tk-dev libffi-dev liblzma-dev python-openssl \
+        ncurses-dev lua5.2 lua5.2-dev luajit libevent-dev
+fi
+
 # install enable-shared python using pyenv
 if [ ! -e "${HOME}"/.pyenv/versions/2.7.14 ];then
     CONFIGURE_OPTS="--enable-shared" pyenv install 2.7.14
@@ -43,14 +51,15 @@ else
     exit 1
 fi
 
-# install requirements
+# install python libraries
 pip install -r requirements.txt
 pip3 install -r requirements.txt
 
-# install dependencies
-if [ -e /etc/lsb-release ];then
-    sudo apt-get install -y build-essential ncurses-dev lua5.2 lua5.2-dev luajit libevent-dev
-fi
+# install nvim
+cd "${HOME}/local/bin"
+wget https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
+chmod u+x nvim.appimage
+ln -s "${PWD}"/nvim.appimage nvim
 
 # install vim
 ROOTDIR=$PWD
@@ -70,12 +79,6 @@ LDFLAGS="-Wl,-rpath=${HOME}/.pyenv/versions/2.7.14/lib:${HOME}/.pyenv/versions/3
     --enable-multibyte \
     --prefix="${HOME}"/local
 make && make install
-
-# install nvim
-cd "${HOME}/local/bin"
-wget https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
-chmod u+x nvim.appimage
-ln -s "${PWD}"/nvim.appimage nvim
 
 # install tmux
 cd "$TMPDIR"
