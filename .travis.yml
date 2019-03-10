@@ -8,9 +8,5 @@ env:
         - OS=ubuntu
         - OS=centos
 
-before_install:
-    - docker pull ubuntu:18.04
-    - docker pull centos:centos7
-
-install:
+build:
     - cd docker/${OS}; docker build . -t ${OS}
