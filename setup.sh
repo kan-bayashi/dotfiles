@@ -18,6 +18,9 @@ done
 if [ -e ~/.vim/rc ]; then
     mv ~/.vim ~/.vim.bak
 fi
+if [ -e ~/.config/nvim ]; then
+    mv ~/.config/nvim ~/.config/nvim.bak
+fi
 [ ! -e ~/.vim/rc ] && mkdir -p ~/.vim/rc
 [ ! -e ~/.config ] && mkdir -p ~/.config
 ln -s "${PWD}"/vim/dein.toml ~/.vim/rc

@@ -6,9 +6,9 @@ My dotfiles (zsh + tmux 2.6 + vim 8 or nvim)
 
 ![](./sample/terminal.png)
 
-## Requirements
+## Recommended environments
 
-This scripts are tested on following envrionments:
+Scripts are tested on following environments:
 
 - CentOS 7.5
 - Ubuntu 16.04 and 18.04
