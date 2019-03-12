@@ -1,16 +1,16 @@
 # export environment setting
 if [ -z "$TMUX" ];then
-    export PATH=/usr/local/MATLAB/R2016b/bin:$PATH
     export CUDA_ROOT=/usr/local/cuda-9.0
-    export PATH=$CUDA_ROOT/bin:$PATH
-    export LD_LIBRARY_PATH=$CUDA_ROOT/lib64:/lib:/usr/local/lib:/usr/local/lib64:$LD_LIBRARY_PATH
     export CUDA_HOME=$CUDA_ROOT
     export CUDA_PATH=$CUDA_ROOT
     export CPATH=$CUDA_ROOT/include:$CPATH
+    export PATH=$CUDA_ROOT/bin:/usr/local/MATLAB/R2016b/bin:$PATH
+    export LD_LIBRARY_PATH=$CUDA_ROOT/lib64:/lib:/usr/local/lib:/usr/local/lib64:$LD_LIBRARY_PATH
     export LD_LIBRARY_PATH=/opt/intel/mkl/lib/intel64:$LD_LIBRARY_PATH
 fi
 
 # alias setting
+alias vim="nvim"
 alias ls="ls --color=auto"
 alias squeue='squeue -h -o "%.9i %.6P %.40j %.8u %.1t %.10M %.10R cpu:%.2C %.6b"'
 alias sqw='watch -n 1 -c "schecker -c;echo;squeue -h -o \"%.14i %.6P %.40j %.8u %.1t %.10M %.10R cpu:%.2C %.6b\""'
