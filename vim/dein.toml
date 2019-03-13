@@ -249,7 +249,7 @@ repo = 'thinca/vim-qfreplace'
 repo = 'tomtom/tcomment_vim'
 
 [[plugins]]
-repo = 'Townk/vim-autoclose'
+repo = 'Raimondi/delimitMate'
 
 [[plugins]]
 repo = 'tpope/vim-surround'
