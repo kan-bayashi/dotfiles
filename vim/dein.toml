@@ -227,97 +227,13 @@ repo = 'ryanoasis/vim-devicons'
 # }}}
 
 #############################
-#    SHOUGO-WARE PLUGINS    #
+#   INPUT ENHANCED PLUGINS  #
 #############################
 # {{{
 [[plugins]]
 repo = 'Shougo/vimproc.vim'
-hook_post_update = '''
-    let g:dein#plugin.build = 'make'
-'''
+build = 'make'
 
-[[plugins]]
-repo = 'Shougo/neosnippet'
-depends = ['neosnippet-snippets']
-hook_add = '''
-  imap <C-k> <Plug>(neosnippet_expand_or_jump)
-  smap <C-k> <Plug>(neosnippet_expand_or_jump)
-  xmap <C-k> <Plug>(neosnippet_expand_target)
-  if has('conceal')
-    set conceallevel=2 concealcursor=niv
-  endif
-'''
-
-[[plugins]]
-repo = 'Shougo/neosnippet-snippets'
-
-[[plugins]]
-repo = 'Shougo/neomru.vim'
-
-[[plugins]]
-repo = 'Shougo/denite.nvim'
-depends = ['neomru.vim', 'vim-qfreplace', 'fruzzy']
-hook_add = '''
-  " default settings
-  call denite#custom#option('default', 'prompt', '>>>')
-  call denite#custom#option('default', 'statusline', v:false)
-
-  " use fd instead of find
-  if executable('fd')
-    call denite#custom#var('file_rec', 'command',
-      \ ['fd', '--type', 'file', '--hidden', '--ignore-file', expand('~/.ignore'), '.'])
-    call denite#custom#var('directory_rec', 'command',
-      \ ['fd', '--type', 'directory', '--hidden', '--no-ignore', '.'])
-  endif
-
-  " use rg intead of grep
-  if executable('rg')
-    call denite#custom#var('grep', 'command', ['rg'])
-    call denite#custom#var('grep', 'recursive_opts', [])
-    call denite#custom#var('grep', 'final_opts', [])
-    call denite#custom#var('grep', 'separator', ['--'])
-    call denite#custom#var('grep', 'default_opts', ['--vimgrep', '--no-heading'])
-  endif
-
-  " use custom matcher
-  call denite#custom#source('_', 'matchers', ['matcher/fruzzy'])
-
-  " shortcut setting
-  nnoremap <silent> <C-f>b :<C-u>Denite -winheight=15 buffer<CR>
-  nnoremap <silent> <C-f>g :<C-u>Denite -winheight=15 grep<CR>
-  nnoremap <silent> <C-f><C-g> :<C-u>Denite -winheight=15 grep:::!<CR>
-  nnoremap <silent> <C-f>r :<C-u>Denite -winheight=15 file_mru<CR>
-  nnoremap <silent> <C-f>f :<C-u>Denite -winheight=15 file_rec<CR>
-  nnoremap <silent> <C-f>d :<C-u>Denite -winheight=15 directory_rec<CR>
-  nnoremap <silent> <C-f><C-f> :<C-u>Denite -resume -mode=normal<CR>
-  nnoremap <silent> <C-f>/ :<C-u>Denite -winheight=15 -auto-highlight line<CR>
-  nnoremap <silent> <C-f>* :<C-u>DeniteCursorWord -winheight=15 -auto-highlight -mode=normal line<CR>
-
-  " replace with grep
-  function! DeniteGrepAllReplace(context)
-    let qflist = []
-    for target in a:context['targets']
-      if !has_key(target, 'action__path') | continue | endif
-      if !has_key(target, 'action__line') | continue | endif
-      if !has_key(target, 'action__text') | continue | endif
-
-      call add(qflist, {
-            \ 'filename': target['action__path'],
-            \ 'lnum': target['action__line'],
-            \ 'text': target['action__text']
-            \ })
-    endfor
-    call setqflist(qflist)
-    call qfreplace#start('')
-  endfunction
-  call denite#custom#action('file', 'replace', function('DeniteGrepAllReplace'))
-'''
-# }}}
-
-#############################
-#   INPUT ENHANCED PLUGINS  #
-#############################
-# {{{
 [[plugins]]
 repo = 'thinca/vim-quickrun'
 hook_add = '''
@@ -361,37 +277,14 @@ repo = 'tpope/vim-repeat'
 
 [[plugins]]
 repo = 'mhinz/vim-startify'
-hook_add = '''
-  let g:startify_change_to_vcs_root = 1
-'''
+hook_add = 'let g:startify_change_to_vcs_root = 1'
 
 [[plugins]]
 repo = 'ConradIrwin/vim-bracketed-paste'
 
 [[plugins]]
-repo = 'LeafCage/yankround.vim'
-hook_add = '''
-  nmap p <Plug>(yankround-p)
-  xmap p <Plug>(yankround-p)
-  nmap P <Plug>(yankround-P)
-  nmap gp <Plug>(yankround-gp)
-  xmap gp <Plug>(yankround-gp)
-  nmap gP <Plug>(yankround-gP)
-  nmap <C-p> <Plug>(yankround-prev)
-  nmap <C-n> <Plug>(yankround-next)
-'''
-
-[[plugins]]
-repo = 'junegunn/vim-easy-align'
-hook_add = '''
-    vmap <Enter> <Plug>(EasyAlign)
-'''
-
-[[plugins]]
 repo = 'Konfekt/FastFold'
-hook_add = '''
-  let g:fastfold_fold_command_suffixes = []
-'''
+hook_add = 'let g:fastfold_fold_command_suffixes = []'
 
 [[plugins]]
 repo = 'wincent/vim-clipper'
@@ -403,35 +296,6 @@ hook_add = '''
 
 [[plugins]]
 repo = 'roxma/vim-tmux-clipboard'
-
-[[plugins]]
-repo = 'terryma/vim-multiple-cursors'
-hook_add = '''
-  let g:multi_cursor_select_all_word_key = '<C-a>'
-
-  " Disable Deoplete when selecting multiple cursors starts
-  function! Multiple_cursors_before()
-    if exists('*deoplete#disable')
-      exe 'call deoplete#disable()'
-    elseif exists(':NeoCompleteLock') == 2
-      exe 'NeoCompleteLock'
-    endif
-  endfunction
-
-  " Enable Deoplete when selecting multiple cursors ends
-  function! Multiple_cursors_after()
-      if exists('*deoplete#toggle')
-        exe 'call deoplete#toggle()'
-      elseif exists(':NeoCompleteUnlock') == 2
-        exe 'NeoCompleteUnlock'
-      endif
-  endfunction
-'''
-
-[[plugins]]
-repo = 'raghur/fruzzy'
-hook_add = 'let g:fruzzy#sortonempty = 0'
-hook_post_update = 'call fruzzy#install()'
 # }}}
 
 #############################

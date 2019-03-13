@@ -1,9 +1,10 @@
 #############################
-#    COMPLETION PLUGINS     #
+#     DEOPLETE PLUGINS      #
 #############################
 # {{{
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
+depends = ['context_filetype.vim']
 on_event = 'InsertEnter'
 hook_source = '''
   " <TAB> and <S-TAB>: select items
@@ -53,11 +54,158 @@ repo = 'Shougo/neco-syntax'
 on_source = ['deoplete.nvim']
 
 [[plugins]]
+repo = 'tbodt/deoplete-tabnine'
+on_source = ['deoplete.nvim']
+build = './install.sh'
+
+[[plugins]]
+repo = 'Shougo/neosnippet'
+depends = ['neosnippet-snippets', 'context_filetype.vim']
+on_event = 'InsertCharPre'
+on_ft = 'snippet'
+hook_source = '''
+  imap <C-k> <Plug>(neosnippet_expand_or_jump)
+  smap <C-k> <Plug>(neosnippet_expand_or_jump)
+  xmap <C-k> <Plug>(neosnippet_expand_target)
+  if has('conceal')
+    set conceallevel=2 concealcursor=niv
+  endif
+'''
+
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+
+# }}}
+
+#############################
+#      DENITE PLUGINS       #
+#############################
+# {{{
+[[plugins]]
+repo = 'Shougo/denite.nvim'
+on_cmd = 'Denite'
+hook_source = '''
+  " default settings
+  call denite#custom#option('default', 'prompt', '>>>')
+  call denite#custom#option('default', 'statusline', v:false)
+
+  " use fd instead of find
+  if executable('fd')
+    call denite#custom#var('file_rec', 'command',
+      \ ['fd', '--type', 'file', '--hidden', '--ignore-file', expand('~/.ignore'), '.'])
+    call denite#custom#var('directory_rec', 'command',
+      \ ['fd', '--type', 'directory', '--hidden', '--no-ignore', '.'])
+  endif
+
+  " use rg intead of grep
+  if executable('rg')
+    call denite#custom#var('grep', 'command', ['rg'])
+    call denite#custom#var('grep', 'recursive_opts', [])
+    call denite#custom#var('grep', 'final_opts', [])
+    call denite#custom#var('grep', 'separator', ['--'])
+    call denite#custom#var('grep', 'default_opts', ['--vimgrep', '--no-heading'])
+  endif
+
+  " use custom matcher
+  call denite#custom#source('_', 'matchers', ['matcher/fruzzy'])
+
+  " replace with grep
+  function! DeniteGrepAllReplace(context)
+    let qflist = []
+    for target in a:context['targets']
+      if !has_key(target, 'action__path') | continue | endif
+      if !has_key(target, 'action__line') | continue | endif
+      if !has_key(target, 'action__text') | continue | endif
+
+      call add(qflist, {
+            \ 'filename': target['action__path'],
+            \ 'lnum': target['action__line'],
+            \ 'text': target['action__text']
+            \ })
+    endfor
+    call setqflist(qflist)
+    call qfreplace#start('')
+  endfunction
+  call denite#custom#action('file', 'replace', function('DeniteGrepAllReplace'))
+'''
+hook_add = '''
+  " shortcut setting
+  nnoremap <silent> <C-f>b :<C-u>Denite -winheight=15 buffer<CR>
+  nnoremap <silent> <C-f>g :<C-u>Denite -winheight=15 grep<CR>
+  nnoremap <silent> <C-f><C-g> :<C-u>Denite -winheight=15 grep:::!<CR>
+  nnoremap <silent> <C-f>r :<C-u>Denite -winheight=15 file_mru<CR>
+  nnoremap <silent> <C-f>f :<C-u>Denite -winheight=15 file_rec<CR>
+  nnoremap <silent> <C-f>d :<C-u>Denite -winheight=15 directory_rec<CR>
+  nnoremap <silent> <C-f><C-f> :<C-u>Denite -resume -mode=normal<CR>
+  nnoremap <silent> <C-f>/ :<C-u>Denite -winheight=15 -auto-highlight line<CR>
+  nnoremap <silent> <C-f>* :<C-u>DeniteCursorWord -winheight=15 -auto-highlight -mode=normal line<CR>
+'''
+
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+on_source = ['denite.nvim']
+
+[[plugins]]
+repo = 'raghur/fruzzy'
+on_source = ['denite.nvim']
+hook_add = 'let g:fruzzy#sortonempty = 0'
+hook_post_update = 'call fruzzy#install()'
+# }}}
+
+#############################
+#   INPUT ENHANCED PLUGINS  #
+#############################
+# {{{
+[[plugins]]
+repo = 'junegunn/vim-easy-align'
+on_map = '<Plug>(EasyAlign)'
+hook_add = 'vmap <Enter> <Plug>(EasyAlign)'
+
+[[plugins]]
+repo = 'LeafCage/yankround.vim'
+on_event = 'TextYankPost'
+hook_add = '''
+  nmap p <Plug>(yankround-p)
+  xmap p <Plug>(yankround-p)
+  nmap P <Plug>(yankround-P)
+  nmap gp <Plug>(yankround-gp)
+  xmap gp <Plug>(yankround-gp)
+  nmap gP <Plug>(yankround-gP)
+  nmap <C-p> <Plug>(yankround-prev)
+  nmap <C-n> <Plug>(yankround-next)
+'''
+
+[[plugins]]
 repo = 'Shougo/echodoc.vim'
 on_event = 'CompleteDone'
 hook_source = '''
   let g:echodoc#type = 'virtual'
   call echodoc#enable()
+'''
+
+[[plugins]]
+repo = 'terryma/vim-multiple-cursors'
+on_event = 'CursorMoved'
+hook_source = '''
+  let g:multi_cursor_select_all_word_key = '<C-a>'
+
+  " Disable Deoplete when selecting multiple cursors starts
+  function! Multiple_cursors_before()
+    if exists('*deoplete#disable')
+      exe 'call deoplete#disable()'
+    elseif exists(':NeoCompleteLock') == 2
+      exe 'NeoCompleteLock'
+    endif
+  endfunction
+
+  " Enable Deoplete when selecting multiple cursors ends
+  function! Multiple_cursors_after()
+      if exists('*deoplete#toggle')
+        exe 'call deoplete#toggle()'
+      elseif exists(':NeoCompleteUnlock') == 2
+        exe 'NeoCompleteUnlock'
+      endif
+  endfunction
 '''
 # }}}
 
@@ -67,6 +215,7 @@ hook_source = '''
 # {{{
 [[plugins]]
 repo = 'w0rp/ale'
+on_event = 'InsertEnter'
 hook_source = '''
   nmap <silent> <SPACE>j <Plug>(ale_next_wrap)
   nmap <silent> <SPACE>k <Plug>(ale_previous_wrap)
@@ -151,23 +300,4 @@ repo = 'Shougo/context_filetype.vim'
 repo = 'osyo-manga/vim-precious'
 depends = ['context_filetype.vim']
 on_ft = ['toml', 'markdown']
-# }}}
-
-#############################
-#      TESTER PLUGINS       #
-#############################
-# {{{
-[[plugins]]
-repo = 'tpope/vim-dispatch'
-
-[[plugins]]
-repo = 'aliev/vim-compiler-python'
-
-[[plugins]]
-repo = 'janko-m/vim-test'
-on_ft = 'python'
-depends = ['vim-dispatch', 'vim-compiler-python']
-hook_source = '''
-  let g:test#strategy = "dispatch"
-'''
 # }}}
