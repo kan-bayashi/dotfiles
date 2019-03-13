@@ -285,10 +285,10 @@ hook_add = '''
   call submode#enter_with('tabmove', 'n', '', 'th', 'gT')
   call submode#map('tabmove', 'n', '', 'l', 'gt')
   call submode#map('tabmove', 'n', '', 'h', 'gT')
-  call submode#enter_with('buffermove', 'n', '', 'bl', ':bnext<CR>')
-  call submode#enter_with('buffermove', 'n', '', 'bh', ':bNext<CR>')
-  call submode#map('buffermove', 'n', '', 'l', ':bnext<CR>')
-  call submode#map('buffermove', 'n', '', 'h', ':bNext<CR>')
+  call submode#enter_with('buffermove', 'n', '', 'bl', ':bnext<CR>:echo expand("%:p")<CR>')
+  call submode#enter_with('buffermove', 'n', '', 'bh', ':bNext<CR>:echo expand("%:p")<CR>')
+  call submode#map('buffermove', 'n', '', 'l', ':bnext<CR>:echo expand("%:p")<CR>')
+  call submode#map('buffermove', 'n', '', 'h', ':bNext<CR>:echo expand("%:p")<CR>')
 '''
 
 [[plugins]]
