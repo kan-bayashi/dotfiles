@@ -30,6 +30,9 @@ hook_source = '''
   let g:deoplete#omni#input_patterns.python = ''
   let g:deoplete#omni#functions = {}
   let g:deoplete#omni_patterns = {}
+
+  " use full fuzzy matching
+  call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
 '''
 
 # --- deoplete sources ---
