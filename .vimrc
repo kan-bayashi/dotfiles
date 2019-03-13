@@ -86,7 +86,7 @@ set noshowcmd    " do not show command in status line
 
 " cursor related
 set cursorline   " highlight cursor line
-set guicursor=
+set guicursor=   " not to change cursor
 
 " command line completion related
 set wildmenu      " enable completion in command mode
@@ -102,16 +102,11 @@ if (has("termguicolors"))
 endif
 colorscheme jellybeans " colorscheme
 
-" transpalent terminal
-highlight Normal guibg=NONE ctermbg=NONE
-highlight NonText guibg=NONE ctermbg=NONE
-highlight LineNr guibg=NONE ctermbg=NONE
-
 " custom highlight color related (does not work with hook in dein...)
 highlight ALEErrorSign guifg=#cb484c ctermfg=Red
-highlight GitGutterAdd guifg=#009900 guibg=NONE ctermfg=Green ctermbg=NONE
-highlight GitGutterChange guifg=#bbbb00 guibg=NONE ctermfg=Yellow ctermbg=NONE
-highlight GitGutterDelete guifg=#ff2222 guibg=NONE ctermfg=Red ctermbg=NONE
+highlight GitGutterAdd guifg=#009900 ctermfg=Green
+highlight GitGutterChange guifg=#bbbb00 ctermfg=Yellow
+highlight GitGutterDelete guifg=#ff2222 ctermfg=Red
 
 " other
 set foldmethod=marker " enable marker folding

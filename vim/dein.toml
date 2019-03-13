@@ -15,28 +15,6 @@ if = '''!has('nvim')'''
 # }}}
 
 #############################
-#        GIT PLUGINS        #
-#############################
-# {{{
-[[plugins]]
-repo = 'tpope/vim-fugitive'
-
-[[plugins]]
-repo = 'airblade/vim-gitgutter'
-hook_add = '''
-  nmap <Space>h :GitGutterLineHighlightsToggle<CR>
-  set signcolumn=yes
-  set updatetime=100
-  let g:gitgutter_sign_added = '+'
-  let g:gitgutter_sign_modified = '-'
-  let g:gitgutter_sign_removed = 'x'
-  if executable('rg')
-    let g:gitgutter_grep = 'rg'
-  endif
-'''
-# }}}
-
-#############################
 #    APPEARANCE PLUGINS     #
 #############################
 # {{{
@@ -218,16 +196,17 @@ hook_add = '''
 
 [[plugins]]
 repo = 'Yggdroot/indentLine'
-hook_add = '''
-  let g:indentLine_color_term = 239
-'''
+hook_add = 'let g:indentLine_color_term = 239'
 
 [[plugins]]
 repo = 'ryanoasis/vim-devicons'
+
+[[plugins]]
+repo = 'nanotech/jellybeans.vim'
 # }}}
 
 #############################
-#   INPUT ENHANCED PLUGINS  #
+#       OTHER PLUGINS       #
 #############################
 # {{{
 [[plugins]]
@@ -258,6 +237,9 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'tpope/vim-fugitive'
+
+[[plugins]]
 repo = 'bronson/vim-trailing-whitespace'
 
 [[plugins]]
@@ -277,7 +259,6 @@ repo = 'tpope/vim-repeat'
 
 [[plugins]]
 repo = 'mhinz/vim-startify'
-hook_add = 'let g:startify_change_to_vcs_root = 1'
 
 [[plugins]]
 repo = 'ConradIrwin/vim-bracketed-paste'
@@ -288,32 +269,40 @@ hook_add = 'let g:fastfold_fold_command_suffixes = []'
 
 [[plugins]]
 repo = 'wincent/vim-clipper'
-hook_add = '''
-  if $OS != "mac"
-    let g:ClipperLoaded = 1
-  endif
-'''
+if = '$OS == "mac"'
 
 [[plugins]]
 repo = 'roxma/vim-tmux-clipboard'
-# }}}
 
-#############################
-#       FILER PLUGINS       #
-#############################
-# {{{
 [[plugins]]
-repo = 'scrooloose/nerdtree'
+repo     = 'airblade/vim-rooter'
+hook_add = 'let g:rooter_silent_chdir = 1'
+
+[[plugins]]
+repo = 'w0rp/ale'
 hook_add = '''
-  nmap <silent> <SPACE>n :NERDTreeToggle<CR>
-  let g:NERDTreeShowHidden=1
-'''
-# }}}
+  " key mapping
+  nmap <silent> <SPACE>j <Plug>(ale_next_wrap)
+  nmap <silent> <SPACE>k <Plug>(ale_previous_wrap)
 
-#############################
-#         COLORSCHEMS       #
-#############################
-# {{{
-[[plugins]]
-repo = 'nanotech/jellybeans.vim'
+  " general settings
+  let g:ale_open_list = 0
+  let g:ale_list_window_size = 5
+  let g:ale_lint_delay = 1000
+  let g:ale_lint_on_enter = 0
+
+  " custom message and sign
+  let g:ale_echo_msg_error_str = '[ERROR]'
+  let g:ale_echo_msg_warning_str = '[WARNING]'
+  let g:ale_echo_msg_format = '%severity% %linter% - %s'
+  let g:ale_sign_error = "\uf41b"
+  let g:ale_sign_warning = "\uf420"
+
+  " linter setting
+  let g:ale_linters = {
+    \ 'python': ['flake8'],
+    \ 'sh': ['shellcheck'],
+    \ }
+  let g:ale_python_flake8_args="--max-line-length=120"
+'''
 # }}}
