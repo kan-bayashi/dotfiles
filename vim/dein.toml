@@ -129,7 +129,7 @@ hook_add = '''
   endfunction
 
   function! LightLineFugitive()
-    let l:git_master_symbol = "\uf402 "
+    let l:git_master_symbol = "\ue0a0 "
     let l:git_branch_symbol = "\uf418 "
     try
       if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')

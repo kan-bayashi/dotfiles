@@ -40,10 +40,12 @@ hook_source = '''
 [[plugins]]
 repo = 'kan-bayashi/deoplete-jedi'
 on_ft = 'python'
+on_source = ['deoplete.nvim']
 
 [[plugins]]
 repo = 'Shougo/neco-vim'
 on_ft = 'vim'
+on_source = ['deoplete.nvim']
 
 [[plugins]]
 repo = 'ujihisa/neco-look'
