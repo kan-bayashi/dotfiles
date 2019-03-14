@@ -206,7 +206,7 @@ hook_source = '''
 # }}}
 
 #############################
-#       SOURCE ON MAP       #
+#  SOURCE ON MAP & COMMAND  #
 #############################
 # {{{
 [[plugins]]
@@ -227,6 +227,11 @@ hook_add = '''
   nmap <C-p> <Plug>(yankround-prev)
   nmap <C-n> <Plug>(yankround-next)
 '''
+
+[[plugins]]
+repo = 'scrooloose/nerdtree'
+on_cmd = ['NERDTreeToggle', 'NERDTree']
+hook_add = 'map <Space><Space> :NERDTreeToggle<CR>'
 # }}}
 
 #############################
