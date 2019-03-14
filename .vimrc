@@ -75,14 +75,15 @@ set expandtab    " use space instead of tab
 set shiftwidth=4 " shift width in auto indent
 set autoindent   " enable auto indent
 set showmatch    " highlight corresponding parentheses
-set completeopt-=preview
+set completeopt-=preview " disable preview window in completion
 
 " status line realted
-set number       " show line number
-set laststatus=2 " always show status number
-set cmdheight=2  " command line height
-set noshowmode   " do not show mode in command line
-set noshowcmd    " do not show command in status line
+set number        " show line number
+set laststatus=2  " always show status number
+set showtabline=2 " always show tab
+set cmdheight=2   " command line height
+set noshowmode    " do not show mode in command line
+set noshowcmd     " do not show command in status line
 
 " cursor related
 set cursorline   " highlight cursor line
