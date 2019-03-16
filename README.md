@@ -19,20 +19,20 @@ Scripts are tested on following environments:
 2. If use iterm2, install `iterm2/jellybeans_like.itermcolors`
 3. Setup dotfiles and install software as follow
 
-```bash
-# clone this repository
-$ git clone https://github.com/kan-bayashi/dotfiles
-$ cd dotfiles
+  ```bash
+  # clone this repository
+  $ git clone https://github.com/kan-bayashi/dotfiles
+  $ cd dotfiles
 
-# setup dotfiles
-$ ./setup.sh
+  # setup dotfiles
+  $ ./setup.sh
 
-# install essential tools (required sudo)
-$ ./install.sh
+  # install essential tools (required sudo)
+  $ ./install.sh
 
-# enable zsh environment
-$ exec zsh -l
-```
+  # enable zsh environment
+  $ exec zsh -l
+  ```
 
 If you do not have sudo, please contact your administrator to install dependencies.
 
