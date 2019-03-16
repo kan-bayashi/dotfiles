@@ -146,6 +146,4 @@ nnoremap <C-w>\| :<C-u>vs<CR>
 
 " tab manipulation setting
 nnoremap <silent>tt :tabnew<CR>
-nnoremap <silent>th gT
-nnoremap <silent>tl gt
 " }}}
