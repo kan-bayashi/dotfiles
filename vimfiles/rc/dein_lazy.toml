@@ -39,12 +39,10 @@ hook_source = '''
 [[plugins]]
 repo = 'kan-bayashi/deoplete-jedi'
 on_ft = 'python'
-on_source = ['deoplete.nvim']
 
 [[plugins]]
 repo = 'Shougo/neco-vim'
 on_ft = 'vim'
-on_source = ['deoplete.nvim']
 
 [[plugins]]
 repo = 'Shougo/neco-syntax'
@@ -97,9 +95,6 @@ hook_source = '''
     call denite#custom#var('grep', 'default_opts', ['--vimgrep', '--no-heading'])
   endif
 
-  " use custom matcher
-  call denite#custom#source('_', 'matchers', ['matcher/fruzzy'])
-
   " replace with grep
   function! DeniteGrepAllReplace(context)
     let qflist = []
@@ -135,12 +130,6 @@ hook_add = '''
 [[plugins]]
 repo = 'Shougo/neomru.vim'
 on_source = ['denite.nvim']
-
-[[plugins]]
-repo = 'raghur/fruzzy'
-on_source = ['denite.nvim']
-hook_add = 'let g:fruzzy#sortonempty = 0'
-hook_post_update = 'call fruzzy#install()'
 # }}}
 
 #############################
