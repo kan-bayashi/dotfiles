@@ -105,7 +105,7 @@ set hidden            " change buffer without saving
 set mouse=a           " enable mouse
 
 " python path related
-let g:python3_host_prog = expand('~\') . 'AppData\Local\Programs\Python\Python35\python.exe'
+let g:python3_host_prog = expand('~\') . 'AppData\Local\Programs\Python\Python36\python.exe'
 " }}}
 
 "------------------------------------
