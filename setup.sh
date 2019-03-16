@@ -9,14 +9,14 @@ for f in .??*; do
     [[ "$f" == ".gitignore" ]] && continue
     [[ "$f" == ".DS_Store" ]] && continue
     [[ "$f" == ".travis.yml" ]] && continue
-    [ -e ~/"$f" ] && cp ~/"$f" ~/"$f".bak && rm -f ~/"$f"
+    [ -e ~/"$f" ] && rm -f ~/"$f".bak && mv ~/"$f" ~/"$f".bak
     ln -s "$PWD"/"$f" ~/
     echo "Made symlink of $f"
 done
 
 # make symbolic link of vim setting files
-[ -e ~/.vim ] && cp -r ~/.vim ~/.vim.bak && rm -rf ~/.vim
-[ -e ~/.config/nvim ] && cp -r ~/.config/nvim ~/.config/nvim.bak && rm -rf ~/.config/nvim
+[ -e ~/.vim ] && rm -rf ~/.vim.bak && mv ~/.vim ~/.vim.bak
+[ -e ~/.config/nvim ] && rm -rf ~/.config/nvim.bak && mv ~/.config/nvim ~/.config/nvim.bak
 [ ! -e ~/.vim/rc ] && mkdir -p ~/.vim/rc
 [ ! -e ~/.config ] && mkdir -p ~/.config
 ln -s "${PWD}"/vim/dein.toml ~/.vim/rc
@@ -27,12 +27,12 @@ echo "Made symlink of vim related files."
 
 # copy cool zsh theme
 [ -e ~/.zsh/themes/bullet-train.zsh-theme ] && \
-    cp ~/.zsh/themes/bullet-train.zsh-theme ~/.zsh/themes/bullet-train.zsh-theme.bak && rm -f ~/.zsh/themes/bullet-train.zsh-theme
+    rm -f ~/.zsh/themes/bullet-train.zsh-theme.bak && mv ~/.zsh/themes/bullet-train.zsh-theme ~/.zsh/themes/bullet-train.zsh-theme.bak
 [ ! -e ~/.zsh/themes ] && mkdir -p ~/.zsh/themes
 ln -s "$PWD"/themes/bullet-train.zsh-theme ~/.zsh/themes
 
 # make symbolic link of ipython setting file
-[ -e ~/.ipython/profile_default ] && cp -r ~/.ipython/profile_default ~/.ipython/profile_default.bak
+[ -e ~/.ipython/profile_default ] && rm -rf ~/.ipython/profile_default.bak && mv ~/.ipython/profile_default ~/.ipython/profile_default.bak
 [ ! -e ~/.ipython/profile_default/startup ] && mkdir -p ~/.ipython/profile_default/startup
 ln -s "${PWD}"/ipython/ipython_config.py ~/.ipython/profile_default
 ln -s "${PWD}"/ipython/startup/keybindings.py ~/.ipython/profile_default/startup
