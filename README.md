@@ -16,23 +16,21 @@ My dotfiles (zsh + tmux 2.6 + neovim)
 2. If use iterm2, install `iterm2/jellybeans_like.itermcolors`
 3. Setup dotfiles and install software as follow
 
-```bash
-# clone this repository
-$ git clone https://github.com/kan-bayashi/dotfiles
-$ cd dotfiles
+  ```bash
+  # clone this repository
+  $ git clone https://github.com/kan-bayashi/dotfiles -b mac
+  $ cd dotfiles
 
-# setup dotfiles
-$ ./setup.sh
+  # setup dotfiles
+  $ ./setup.sh
 
-# install denpendencies
-$ brew install python  # now default is python3
-$ pip3 install flake8 neovim jedi
-$ brew install ripgrep
-$ brew install fd
+  # install denpendencies
+  $ brew install ripgrep
+  $ brew install fd
 
-# install nvim
-$ brew install neovim
-```
+  # install nvim
+  $ brew install neovim
+  ```
 
 ## References
 
