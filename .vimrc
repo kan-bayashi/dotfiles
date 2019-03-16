@@ -52,7 +52,6 @@ set encoding=utf-8                              " default encoding
 set fileencodings=utf-8,iso-2022-jp,sjis,euc-jp " auto encoding select
 set ffs=unix,mac,dos                            " auto file format select "
 scriptencoding utf-8                            " setting for multi byte char
-set ambiwidth=single
 
 " search related
 set incsearch  " enable incremental search
@@ -76,23 +75,23 @@ set expandtab    " use space instead of tab
 set shiftwidth=4 " shift width in auto indent
 set autoindent   " enable auto indent
 set showmatch    " highlight corresponding parentheses
-set completeopt-=preview
+set completeopt-=preview " disable preview window in completion
 
 " status line realted
-set number       " show line number
-set laststatus=2 " always show status number
-set cmdheight=2  " command line height
-set noshowmode   " do not show mode in command line
-set noshowcmd    " do not show command in status line
+set number        " show line number
+set laststatus=2  " always show status number
+set showtabline=2 " always show tab
+set cmdheight=2   " command line height
+set noshowmode    " do not show mode in command line
+set noshowcmd     " do not show command in status line
 
 " cursor related
 set cursorline   " highlight cursor line
-set guicursor=
+set guicursor=   " not to change cursor
 
 " command line completion related
 set wildmenu      " enable completion in command mode
 set history=1000  " number of command history
-set clipboard+=unnamed
 
 " color related
 set t_Co=256           " terminal
@@ -103,15 +102,18 @@ if (has("termguicolors"))
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
 colorscheme jellybeans " colorscheme
-highlight ALEErrorSign ctermfg=Red guifg=#cb484c
-highlight Normal ctermbg=none guibg=none
-highlight NonText ctermbg=none guibg=none
-highlight LineNr ctermbg=none guibg=none
+
+" custom highlight color related (does not work with hook in dein...)
+highlight ALEErrorSign guifg=#cb484c ctermfg=Red
+highlight GitGutterAdd guifg=#009900 ctermfg=Green
+highlight GitGutterChange guifg=#bbbb00 ctermfg=Yellow
+highlight GitGutterDelete guifg=#ff2222 ctermfg=Red
 
 " other
-set foldmethod=marker " enable marker folding
-set hidden            " change buffer without saving
-set mouse=a           " enable mouse
+set foldmethod=marker  " enable marker folding
+set hidden             " change buffer without saving
+set mouse=a            " enable mouse
+set clipboard+=unnamed " share clipboard
 
 " python path related
 let g:python3_host_prog = '/usr/local/bin/python3'
@@ -155,6 +157,4 @@ nnoremap <C-w>\| :<C-u>vs<CR>
 
 " tab manipulation setting
 nnoremap <silent>tt :tabnew<CR>
-nnoremap <silent>th gT
-nnoremap <silent>tl gt
 " }}}
