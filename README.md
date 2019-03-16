@@ -15,9 +15,8 @@ Scripts are tested on following environments:
 
 1. Get Cica fonts <https://github.com/miiton/Cica>
 
-2. Install Python 3.6 [download](https://www.python.org/ftp/python/3.6.8/python-3.6.8-amd64.exe)
-
-> - DO NOT FORGET TO CHECK `Add Python 3.6 to PATH`
+2. Install Python 3.6 [download](https://www.python.org/ftp/python/3.6.8/python-3.6.8-amd64.exe)  
+   **DO NOT FORGET TO CHECK `Add Python 3.6 to PATH`**
 
 3. Install Git [download](https://github.com/git-for-windows/git/releases/latest)
 
@@ -26,7 +25,7 @@ Scripts are tested on following environments:
   ```bash
   # clone this repository
   $ cd C:\Users\<your_name>
-  $ git clone https://github.com/kan-bayashi/dotfiles
+  $ git clone https://github.com/kan-bayashi/dotfiles -b windows
   $ cd dotfiles
 
   # install python dependencies
