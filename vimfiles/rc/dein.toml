@@ -35,9 +35,6 @@ repo = 'Yggdroot/indentLine'
 hook_add = 'let g:indentLine_color_term = 239'
 
 [[plugins]]
-repo = 'ryanoasis/vim-devicons'
-
-[[plugins]]
 repo = 'nanotech/jellybeans.vim'
 # }}}
 

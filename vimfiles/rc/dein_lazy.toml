@@ -4,7 +4,6 @@
 # {{{
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
-depends = ['context_filetype.vim']
 on_event = 'InsertEnter'
 hook_source = '''
   " <TAB> and <S-TAB>: select items
@@ -48,21 +47,12 @@ on_ft = 'vim'
 on_source = ['deoplete.nvim']
 
 [[plugins]]
-repo = 'ujihisa/neco-look'
-on_source = ['deoplete.nvim']
-
-[[plugins]]
 repo = 'Shougo/neco-syntax'
 on_source = ['deoplete.nvim']
 
 [[plugins]]
-repo = 'tbodt/deoplete-tabnine'
-on_source = ['deoplete.nvim']
-build = './install.sh'
-
-[[plugins]]
 repo = 'Shougo/neosnippet'
-depends = ['neosnippet-snippets', 'context_filetype.vim']
+depends = ['neosnippet-snippets']
 on_event = 'InsertCharPre'
 on_ft = 'snippet'
 hook_source = '''
@@ -243,9 +233,6 @@ hook_add = 'map <Space><Space> :NERDTreeToggle<CR>'
 #############################
 # {{{
 [[plugins]]
-repo = 'Shougo/context_filetype.vim'
-
-[[plugins]]
 repo = 'tpope/vim-markdown'
 on_ft = 'markdown'
 hook_source = 'let g:markdown_syntax_conceal = 0'
@@ -286,9 +273,4 @@ hook_source = '''
   let g:jedi#rename_command = '<leader>m'
   let g:jedi#documentation_command = '<leader>k'
 '''
-
-[[plugins]]
-repo = 'osyo-manga/vim-precious'
-depends = ['context_filetype.vim']
-on_ft = ['toml', 'markdown']
 # }}}<Paste>
