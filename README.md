@@ -2,7 +2,7 @@
 
 My dotfiles for neovim in windows
 
-![](./sample/gvim.jpg)
+![](./sample/neovim-qt.jpg)
 
 ## Environment
 
@@ -11,7 +11,7 @@ Scripts are tested on following environments:
 - Windows 10 home edition
 - Windows 10 professional edition
 
-## How-to-install
+## Setup
 
 1. Get Cica fonts <https://github.com/miiton/Cica>
 
@@ -38,9 +38,11 @@ Scripts are tested on following environments:
   $ mklink C:\Users\<your_name>\AppData\Local\nvim\ginit.vim C:\Users\<your_name>\dotfiles\ginit.vim
   ```
 
-5. Download neovim [download](https://github.com/neovim/neovim/releases)
+5. Download neovim [download](https://github.com/neovim/neovim/releases) & locate somewhere
 
-6. Run `nvim-qt.exe`
+6. (Optional) Download ag [download](https://github.com/k-tanaka/the_silver_searcher-win32) & put `ag.exe` into `Neovim\bin` folder
+
+7. Run `nvim-qt.exe`
 
 > Require time for the first time to install plugins
 
