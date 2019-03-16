@@ -6,7 +6,9 @@ My dotfiles (zsh + tmux 2.6 + neovim)
 
 ## Requirements
 
-- Homebrew
+- zsh
+- git
+- brew
 
 ## Setup
 
