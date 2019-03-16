@@ -11,6 +11,11 @@ alias ll="ls -l"
 alias free="free -g"
 alias watch='watch '
 
+# ssh function
+function connect {
+    ssh -tX $1 "zsh -c 'OS=mac zsh;'"
+}
+
 # vim like movement
 bindkey -v
 bindkey -M viins ^o vi-cmd-mode
