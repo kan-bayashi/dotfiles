@@ -30,6 +30,7 @@ echo "Made symlink of vim related files."
     rm -f ~/.zsh/themes/bullet-train.zsh-theme.bak && mv ~/.zsh/themes/bullet-train.zsh-theme ~/.zsh/themes/bullet-train.zsh-theme.bak
 [ ! -e ~/.zsh/themes ] && mkdir -p ~/.zsh/themes
 ln -s "$PWD"/themes/bullet-train.zsh-theme ~/.zsh/themes
+echo "Made symlink of zsh theme file."
 
 # make symbolic link of ipython setting file
 [ -e ~/.ipython/profile_default ] && rm -rf ~/.ipython/profile_default.bak && mv ~/.ipython/profile_default ~/.ipython/profile_default.bak
@@ -74,7 +75,7 @@ if [ ! -e ~/.pyenv ];then
     export PATH=$HOME/.pyenv/bin:$PATH
     eval "$(pyenv init -)"
     env PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install 3.6.6
-    pyenv shell 3.6.6
+    pyenv global 3.6.6
     $HOME/.pyenv/shims/pip install --upgrade pip
     $HOME/.pyenv/shims/pip install -r requirements.txt
 fi
