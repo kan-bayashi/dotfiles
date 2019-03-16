@@ -1,12 +1,13 @@
 # Dotfiles
 
-My dotfiles for vim-kaoriya in windows
+My dotfiles for neovim in windows
 
 ![](./sample/gvim.jpg)
 
 ## Environment
 
 Scripts are tested on following environments:
+
 - Windows 10 home edition
 - Windows 10 professional edition
 
@@ -22,17 +23,25 @@ Scripts are tested on following environments:
 
 4. Run command prompt with administrator authorization & execute following commands
 
-```
-pip install pynvim jedi flake8 pycodestyle autopep8
-```
+  ```bash
+  # clone this repository
+  $ cd C:\Users\<your_name>
+  $ git clone https://github.com/kan-bayashi/dotfiles
+  $ cd dotfiles
 
-5. Copy `vimfiles` to `$HOME` (default `$HOME` is `C:\Users\<user_name>`)
+  # install python dependencies
+  $ pip install -r requirements.txt
 
-6. Copy `init.vim` and `ginit.vim` to `$HOME\AppData\Local\nvim` (if not exist, please make directory)
+  # make link for vim setting files
+  $ mklink C:\Users\<your_name>\vimfiles C:\Users\<your_name>\dotfiles\vimfiles
+  $ mkdir AppData\Local\nvim
+  $ mklink C:\Users\<your_name>\AppData\Local\nvim\init.vim C:\Users\<your_name>\dotfiles\init.vim
+  $ mklink C:\Users\<your_name>\AppData\Local\nvim\ginit.vim C:\Users\<your_name>\dotfiles\ginit.vim
+  ```
 
-7. Download neovim [download](http://vim-jp.org/redirects/koron/vim-kaoriya/latest/win64/)
+5. Download neovim [download](https://github.com/neovim/neovim/releases)
 
-8. Run `nvim-qt.exe`
+6. Run `nvim-qt.exe`
 
 > Require time for the first time to install plugins
 
