@@ -40,7 +40,7 @@ Scripts are tested on following environments:
 
 5. Download neovim [download](https://github.com/neovim/neovim/releases) & locate somewhere
 
-6. (Optional) Download ag [download](https://github.com/k-takata/the_silver_searcher-win32) & put `ag.exe` into `Neovim\bin` folder
+6. (Optional) Download ag [download](https://github.com/k-takata/the_silver_searcher-win32) & put `ag.exe` into `C:\Windows\System32` folder
 
 7. Run `nvim-qt.exe`
 

@@ -2,6 +2,7 @@
 colorscheme jellybeans
 set belloff=all
 set guifont=Hasklug\ NF:h14
+set guifontwide=Cica:h14
 set ambiwidth=single
 highlight SignColumn guibg=None
 
