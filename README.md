@@ -2,11 +2,11 @@
 
 [![Build Status](https://travis-ci.org/kan-bayashi/dotfiles.svg?branch=master)](https://travis-ci.org/kan-bayashi/dotfiles)
 
-My dotfiles (zsh + tmux 2.6 + vim 8 or nvim)
+My dotfiles (zsh + tmux 2.6 + vim 8 or neovim)
 
 ![](./sample/terminal.png)
 
-## Recommended environments
+## Environments
 
 Scripts are tested on following environments:
 
