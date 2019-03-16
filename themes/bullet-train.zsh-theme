@@ -99,6 +99,7 @@ if [ ! -n "${BULLETTRAIN_VIRTUALENV_FG+1}" ]; then
 fi
 if [ ! -n "${BULLETTRAIN_VIRTUALENV_PREFIX+1}" ]; then
   BULLETTRAIN_VIRTUALENV_PREFIX="\ue606"
+  BULLETTRAIN_CONDA_PREFIX="\ue606"
 fi
 
 # NVM
@@ -230,12 +231,12 @@ fi
 
 # GIT PROMPT
 if [ ! -n "${BULLETTRAIN_GIT_PREFIX+1}" ]; then
-  ZSH_THEME_GIT_PROMPT_MASTER_PREFIX="\uf402 "
+  ZSH_THEME_GIT_PROMPT_MASTER_PREFIX="\ue0a0 "
 else
   ZSH_THEME_GIT_PROMPT_MASTER_PREFIX=$BULLETTRAIN_GIT_PREFIX
 fi
 if [ ! -n "${BULLETTRAIN_GIT_PREFIX+1}" ]; then
-  ZSH_THEME_GIT_PROMPT_BRANCH_PREFIX="\uf418 "
+  ZSH_THEME_GIT_PROMPT_BRANCH_PREFIX="\ue0a0 "
 else
   ZSH_THEME_GIT_PROMPT_BRANCH_PREFIX=$BULLETTRAIN_GIT_PREFIX
 fi
@@ -559,7 +560,9 @@ prompt_virtualenv() {
   fi
 
   local virtualenv_path="$VIRTUAL_ENV"
-  if [[ -n $virtualenv_path && -n $VIRTUAL_ENV_DISABLE_PROMPT ]]; then
+  if [[ -n $CONDA_DEFAULT_ENV && -n $VIRTUAL_ENV_DISABLE_PROMPT ]]; then
+    prompt_segment $BULLETTRAIN_VIRTUALENV_BG $BULLETTRAIN_VIRTUALENV_FG $BULLETTRAIN_CONDA_PREFIX" $(basename $CONDA_DEFAULT_ENV)"
+  elif [[ -n $virtualenv_path && -n $VIRTUAL_ENV_DISABLE_PROMPT ]]; then
     prompt_segment $BULLETTRAIN_VIRTUALENV_BG $BULLETTRAIN_VIRTUALENV_FG $BULLETTRAIN_VIRTUALENV_PREFIX" $(basename $virtualenv_path)"
   elif which pyenv &> /dev/null; then
     prompt_segment $BULLETTRAIN_VIRTUALENV_BG $BULLETTRAIN_VIRTUALENV_FG $BULLETTRAIN_VIRTUALENV_PREFIX" $(pyenv version | sed -e 's/ (set.*$//' | tr '\n' ' ' | sed 's/.$//')"
