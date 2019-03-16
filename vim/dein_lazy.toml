@@ -192,7 +192,7 @@ hook_source = '''
 
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
-on_event = ['RooterChDir']
+on_event = ['InsertEnter']
 hook_source = '''
   nmap <Space>h :GitGutterLineHighlightsToggle<CR>
   set signcolumn=yes

@@ -1,14 +1,14 @@
 # Dotfiles
 
-My dotfiles (zsh + tmux 2.6 + vim 8 or nvim)
+My dotfiles (zsh + tmux 2.6 + neovim)
 
 ![](./sample/terminal.png)
 
 ## Requirements
 
-- zsh
+- Homebrew
 
-## How-to-install (for mac)
+## Setup
 
 1. Get Nerd fonts from <https://github.com/ryanoasis/nerd-fonts>
 2. If use iterm2, install `iterm2/jellybeans_like.itermcolors`
