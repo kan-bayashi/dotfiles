@@ -58,6 +58,18 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'christoomey/vim-tmux-navigator'
+hook_add = '''
+  " keymappig for terminal in vim
+  if has('terminal')
+    tmap <c-k> <c-w>:TmuxNavigateUp<cr>
+    tmap <c-j> <c-w>:TmuxNavigateDown<cr>
+    tmap <c-h> <c-w>:TmuxNavigateLeft<cr>
+    tmap <c-l> <c-w>:TmuxNavigateRight<cr>
+  endif
+'''
+
+[[plugins]]
 repo = 'tpope/vim-fugitive'
 
 [[plugins]]
@@ -110,6 +122,7 @@ hook_add = '''
   nmap <silent> <SPACE>k <Plug>(ale_previous_wrap)
 
   " general settings
+  set signcolumn=yes
   let g:ale_open_list = 0
   let g:ale_list_window_size = 5
   let g:ale_lint_delay = 1000

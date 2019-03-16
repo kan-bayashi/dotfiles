@@ -1,8 +1,9 @@
 " GUI basic settings
 colorscheme jellybeans
 set belloff=all
-set guifont=Cica:h14
-set ambiwidth=double
+set guifont=Hasklug\ NF:h14
+set ambiwidth=single
+highlight SignColumn guibg=None
 
 " Use TUI tab and popup in neovim-qt
 GuiTabline 0
