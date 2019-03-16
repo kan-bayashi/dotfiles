@@ -75,6 +75,7 @@ set expandtab    " use space instead of tab
 set shiftwidth=4 " shift width in auto indent
 set autoindent   " enable auto indent
 set showmatch    " highlight corresponding parentheses
+set completeopt-=preview " disable preview window in completion
 
 " status line realted
 set number       " show line number
