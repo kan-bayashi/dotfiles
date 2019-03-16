@@ -9,7 +9,8 @@ alias ls="ls -G"
 alias la="ls -a"
 alias ll="ls -l"
 alias free="free -g"
-alias watch='watch '
+alias watch="watch "
+alias vim="nvim"
 
 # ssh function
 function connect {
@@ -194,7 +195,8 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:
 #    extra settings    #
 ########################
 # add path
-export PATH=/Applications/MacVim.app/Contents/bin:$PATH
+export PATH=$HOME/.pyenv/bin:/Applications/MacVim.app/Contents/bin:$PATH
+eval "$(pyenv init -)"
 
 # compile zshrc
 if [ ~/.zshrc -nt ~/.zshrc.zwc ]; then

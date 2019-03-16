@@ -116,7 +116,7 @@ set mouse=a            " enable mouse
 set clipboard+=unnamed " share clipboard
 
 " python path related
-let g:python3_host_prog = '/usr/local/bin/python3'
+let g:python3_host_prog = '/Users/mo-chi/.pyenv/shims/python3'
 " }}}
 
 "------------------------------------

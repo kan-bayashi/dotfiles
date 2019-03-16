@@ -72,5 +72,21 @@ if [ ! -e ~/.fzf ];then
     cd ~/.fzf && ./install
 fi
 
+# install pyenv
+if [ ! -e ~/.pyenv ];then
+    echo "####################################################"
+    echo "#                 PYENV INSTALL                    #"
+    echo "####################################################"
+    git clone https://github.com/yyuu/pyenv.git ~/.pyenv
+
+    # install pyenv python3.6
+    export PATH=$HOME/.pyenv/bin:$PATH
+    eval "$(pyenv init -)"
+    env PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install 3.6.6
+    pyenv shell 3.6.6
+    $HOME/.pyenv/shims/pip install --upgrade pip
+    $HOME/.pyenv/shims/pip install -r requirements.txt
+fi
+
 # start zsh
 exec zsh -l
