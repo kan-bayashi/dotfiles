@@ -1,5 +1,4 @@
 " GUI basic settings
-colorscheme jellybeans
 set belloff=all
 set guifont=Hasklug\ NF:h14
 set guifontwide=Cica:h14
