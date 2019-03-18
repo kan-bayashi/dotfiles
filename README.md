@@ -32,10 +32,7 @@ Scripts are tested on following environments:
   $ pip install -r requirements.txt
 
   # make link for vim setting files
-  $ mklink C:\Users\<your_name>\vimfiles C:\Users\<your_name>\dotfiles\vimfiles
-  $ mkdir AppData\Local\nvim
-  $ mklink C:\Users\<your_name>\AppData\Local\nvim\init.vim C:\Users\<your_name>\dotfiles\init.vim
-  $ mklink C:\Users\<your_name>\AppData\Local\nvim\ginit.vim C:\Users\<your_name>\dotfiles\ginit.vim
+  $ setup.bat
   ```
 
 5. Download neovim [download](https://github.com/neovim/neovim/releases) & locate somewhere
