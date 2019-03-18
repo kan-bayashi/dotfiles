@@ -36,16 +36,15 @@ fi
 
 # install essential tools
 for tool in zsh fd ripgrep neovim tmux; do
-    if brew ls --versions ${tool} > /dev/null; then brew upgrade ${tool}; else brew install ${tool}; fi
+    ! brew ls --versions ${tool} > /dev/null && brew install ${tool}
 done
 
 # install pyenv python3.6
 if [ ! -e ~/.pyenv/versions/${PYTHON3_VERSION} ];then
     # install dependencies for pyenv python installation
     for tool in readline xz; do
-        if brew ls --versions ${tool} > /dev/null; then brew upgrade ${tool}; else brew install ${tool}; fi
+        ! brew ls --versions ${tool} > /dev/null && brew install ${tool}
     done
-    brew install --upgrade readline xz
     mac_version=$(sw_vers | grep ProductVersion | awk '{print $2}' | sed -e "s/\.[0-9]$//g")
     # need to install extra modules
     # https://github.com/pyenv/pyenv/wiki/common-build-problems
@@ -55,7 +54,7 @@ if [ ! -e ~/.pyenv/versions/${PYTHON3_VERSION} ];then
     # install python3 through pyenv
     export PATH=$HOME/.pyenv/bin:$PATH
     eval "$(pyenv init -)"
-    env PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install ${PYTHON3_VERSION}
+    env PYTHON_CONFIGURE_OPTS="--enable-framework" pyenv install ${PYTHON3_VERSION}
     pyenv global ${PYTHON3_VERSION}
     ~/.pyenv/shims/pip install --upgrade pip
     ~/.pyenv/shims/pip install -r requirements.txt
