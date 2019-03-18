@@ -60,3 +60,6 @@ if [ ! -e ~/.pyenv/versions/${PYTHON3_VERSION} ];then
     ~/.pyenv/shims/pip install --upgrade pip
     ~/.pyenv/shims/pip install -r requirements.txt
 fi
+
+echo "Sucessfully finished installation."
+echo "Please run exec zsh -l."

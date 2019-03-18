@@ -6,7 +6,6 @@ My dotfiles (zsh + tmux 2.6 + neovim)
 
 ## Requirements
 
-- zsh
 - git
 - brew
 
@@ -26,6 +25,9 @@ My dotfiles (zsh + tmux 2.6 + neovim)
 
   # install tools
   $ ./install.sh
+
+  # enable zsh environment
+  $ exec zsh -l
   ```
 
 ## References
