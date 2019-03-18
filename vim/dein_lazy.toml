@@ -233,6 +233,18 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'jpalardy/vim-slime'
+on_map = '<Plug>Slime'
+hook_add = '''
+  let g:slime_python_ipython = 1
+  let g:slime_dont_ask_default = 1
+  let g:slime_target = "tmux"
+  let g:slime_default_config = {"socket_name": "default", "target_pane": "1"}
+  xmap <C-c><C-c> <Plug>SlimeRegionSend
+  nmap <C-c><C-c> <Plug>SlimeParagraphSend
+'''
+
+[[plugins]]
 repo = 'scrooloose/nerdtree'
 on_cmd = ['NERDTreeToggle', 'NERDTree']
 hook_add = 'map <Space><Space> :NERDTreeToggle<CR>'
