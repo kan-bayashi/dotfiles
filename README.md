@@ -24,12 +24,8 @@ My dotfiles (zsh + tmux 2.6 + neovim)
   # setup dotfiles
   $ ./setup.sh
 
-  # install denpendencies
-  $ brew install ripgrep
-  $ brew install fd
-
-  # install nvim
-  $ brew install neovim
+  # install tools
+  $ ./install.sh
   ```
 
 ## References
