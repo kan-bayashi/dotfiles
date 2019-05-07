@@ -34,6 +34,18 @@ hook_source = '''
 
   " use full fuzzy matching
   call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
+
+  " tabnine setting
+  call deoplete#custom#source('tabnine', 'converters', [
+      \ 'converter_remove_overlap',
+      \ 'converter_truncate_info',
+      \ ])
+  call deoplete#custom#source('tabnine', 'rank', 300)
+  call deoplete#custom#source('tabnine', 'min_pattern_length', 2)
+  call deoplete#custom#var('tabnine', {
+        \ 'line_limit': 500,
+        \ 'max_num_results': 20,
+        \ })
 '''
 
 # --- deoplete sources ---
@@ -92,7 +104,7 @@ hook_source = '''
 
   " use fd instead of find
   if executable('fd')
-    call denite#custom#var('file_rec', 'command',
+    call denite#custom#var('file/rec', 'command',
       \ ['fd', '--type', 'file', '--hidden', '--ignore-file', expand('~/.ignore'), '.'])
     call denite#custom#var('directory_rec', 'command',
       \ ['fd', '--type', 'directory', '--hidden', '--no-ignore', '.'])
@@ -128,7 +140,7 @@ hook_source = '''
 '''
 hook_add = '''
   " shortcut setting
-  nnoremap <silent> <C-f>f :<C-u>Denite -winheight=15 file_rec<CR>
+  nnoremap <silent> <C-f>f :<C-u>Denite -winheight=15 file/rec<CR>
   nnoremap <silent> <C-f>r :<C-u>Denite -winheight=15 file_mru<CR>
   nnoremap <silent> <C-f>d :<C-u>Denite -winheight=15 directory_rec<CR>
   nnoremap <silent> <C-f>g :<C-u>Denite -winheight=15 grep<CR>
