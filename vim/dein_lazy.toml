@@ -107,9 +107,6 @@ hook_source = '''
     call denite#custom#var('grep', 'default_opts', ['--vimgrep', '--no-heading'])
   endif
 
-  " use custom matcher
-  call denite#custom#source('_', 'matchers', ['matcher/fruzzy'])
-
   " replace with grep
   function! DeniteGrepAllReplace(context)
     let qflist = []
