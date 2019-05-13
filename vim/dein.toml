@@ -238,6 +238,11 @@ hook_add = '''
 
 [[plugins]]
 repo = 'tpope/vim-fugitive'
+hook_add = '''
+  nnoremap <space>gs :Gstatus<CR>
+  nnoremap <space>ga :Gwrite<CR>
+  nnoremap <space>gc :Gcommit<CR>
+'''
 
 [[plugins]]
 repo = 'bronson/vim-trailing-whitespace'
