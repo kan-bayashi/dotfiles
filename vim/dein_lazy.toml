@@ -95,7 +95,8 @@ repo = 'Shougo/neosnippet-snippets'
 #############################
 # {{{
 [[plugins]]
-repo = 'kan-bayashi/denite.nvim'
+repo = 'Shougo/denite.nvim'
+rev = '2.1'
 on_cmd = 'Denite'
 hook_source = '''
   " default settings
