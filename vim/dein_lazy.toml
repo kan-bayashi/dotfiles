@@ -144,9 +144,9 @@ hook_add = '''
   nnoremap <silent> <C-f>r :<C-u>Denite -winheight=15 file_mru<CR>
   nnoremap <silent> <C-f>d :<C-u>Denite -winheight=15 directory_rec<CR>
   nnoremap <silent> <C-f>g :<C-u>Denite -winheight=15 grep<CR>
+  nnoremap <silent> <C-f>b :<C-u>Denite -winheight=15 buffer<CR>
   nnoremap <silent> <C-f><C-g> :<C-u>Denite -winheight=15 grep:::!<CR>
   nnoremap <silent> <C-f><C-f> :<C-u>Denite -resume -mode=normal<CR>
-  nnoremap <silent> <C-f>b :<C-u>Denite -winheight=15 -mode=normal buffer<CR>
   nnoremap <silent> <C-f>/ :<C-u>Denite -winheight=15 -auto-highlight line<CR>
   nnoremap <silent> <C-f>* :<C-u>DeniteCursorWord -winheight=15 -auto-highlight -mode=normal line<CR>
 '''
