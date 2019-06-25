@@ -4,6 +4,7 @@
 # {{{
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
+rev = '5.0'
 depends = ['context_filetype.vim']
 on_event = 'InsertEnter'
 hook_source = '''
@@ -155,12 +156,6 @@ hook_add = '''
 [[plugins]]
 repo = 'Shougo/neomru.vim'
 on_source = ['denite.nvim']
-
-[[plugins]]
-repo = 'raghur/fruzzy'
-on_source = ['denite.nvim']
-hook_add = 'let g:fruzzy#sortonempty = 0'
-hook_post_update = 'call fruzzy#install()'
 # }}}
 
 #############################
@@ -205,7 +200,9 @@ hook_source = '''
 repo = 'airblade/vim-gitgutter'
 on_event = ['RooterChDir']
 hook_add = '''
-  nmap <Space>h :GitGutterLineHighlightsToggle<CR>
+  nmap <Space>ht :GitGutterLineHighlightsToggle<CR>
+  nmap <Space>ha <Plug>GitGutterStageHunk
+  nmap <Space>hr <Plug>GitGutterUndoHunk
   set signcolumn=yes
   set updatetime=100
 '''
@@ -289,14 +286,6 @@ on_ft = 'python'
 [[plugins]]
 repo = 'Vimjas/vim-python-pep8-indent'
 on_ft = 'python'
-
-[[plugins]]
-repo = 'hdima/python-syntax'
-on_ft = 'python'
-hook_source = '''
-  let g:python_highlight_all = 1
-  let g:python_version_3 = 1
-'''
 
 [[plugins]]
 repo = 'davidhalter/jedi-vim'
