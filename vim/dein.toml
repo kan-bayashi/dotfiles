@@ -196,7 +196,10 @@ hook_add = '''
 
 [[plugins]]
 repo = 'Yggdroot/indentLine'
-hook_add = 'let g:indentLine_color_term = 239'
+hook_add = '''
+  let g:indentLine_color_term = 239
+  let g:indentLine_fileTypeExclude = ['help', 'nerdtree', 'startify']
+'''
 
 [[plugins]]
 repo = 'ryanoasis/vim-devicons'
@@ -246,6 +249,9 @@ hook_add = '''
 
 [[plugins]]
 repo = 'bronson/vim-trailing-whitespace'
+hook_add = '''
+  let g:extra_whitespace_ignored_filetypes = ['nerdtree', 'startify', 'help']
+'''
 
 [[plugins]]
 repo = 'thinca/vim-qfreplace'
@@ -264,6 +270,37 @@ repo = 'tpope/vim-repeat'
 
 [[plugins]]
 repo = 'mhinz/vim-startify'
+hook_add = '''
+  let s:startify_ascii_header = [
+    \ '                                              ..                                            ',
+    \ '                                          .::::.                                            ',
+    \ '                             ___________ :;;;;:`____________                                ',
+    \ '                             \_________/ ?????L \__________/                                ',
+    \ '                               |.....| ????????> :.......''                                  ',
+    \ '                               |:::::| $$$$$$"`.:::::::'' ,                                  ',
+    \ '                              ,|:::::| $$$$"`.:::::::'' .OOS.                                ',
+    \ '                            ,7D|;;;;;| $$"`.;;;;;;;'' .OOO888S.                              ',
+    \ '                          .GDDD|;;;;;| ?`.;;;;;;;'' .OO8DDDDDNNS.                            ',
+    \ '                           ''DDO|IIIII| .7IIIII7'' .DDDDDDDDNNNF`                             ',
+    \ '                             ''D|IIIIII7IIIII7'' .DDDDDDDDNNNF`                               ',
+    \ '                               |EEEEEEEEEE7'' .DDDDDDDNNNNF`                                 ',
+    \ '                               |EEEEEEEEZ'' .DDDDDDDDNNNF`                                   ',
+    \ '                               |888888Z'' .DDDDDDDDNNNF`                                     ',
+    \ '                               |8888Z'' ,DDDDDDDNNNNF`                                       ',
+    \ '                               |88Z''    "DNNNNNNN"                                          ',
+    \ '                               ''"''        "MMMM"                                            ',
+    \ '                                            ""                                              ',
+    \ '                                                                                            ',
+    \ '    ___    ____                                            __   _         _    ________  ___',
+    \ '   /   |  / / /  __  ______  __  __   ____  ___  ___  ____/ /  (_)____   | |  / /  _/  |/  /',
+    \ '  / /| | / / /  / / / / __ \/ / / /  / __ \/ _ \/ _ \/ __  /  / / ___/   | | / // // /|_/ / ',
+    \ ' / ___ |/ / /  / /_/ / /_/ / /_/ /  / / / /  __/  __/ /_/ /  / (__  )    | |/ // // /  / /  ',
+    \ '/_/  |_/_/_/   \__, /\____/\__,_/  /_/ /_/\___/\___/\__,_/  /_/____/     |___/___/_/  /_/   ',
+    \ '              /____/                                                                        ',
+    \ '',
+    \]
+  let g:startify_custom_header = map(s:startify_ascii_header, '"   ".v:val')
+'''
 
 [[plugins]]
 repo = 'ConradIrwin/vim-bracketed-paste'
