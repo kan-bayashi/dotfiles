@@ -105,6 +105,7 @@ colorscheme jellybeans " colorscheme
 
 " custom highlight color related (does not work with hook in dein...)
 highlight ALEErrorSign guifg=#cb484c ctermfg=Red
+highlight ALEWarningSign guifg=#fd9f4d ctermfg=Yellow
 highlight GitGutterAdd guifg=#009900 ctermfg=Green
 highlight GitGutterChange guifg=#bbbb00 ctermfg=Yellow
 highlight GitGutterDelete guifg=#ff2222 ctermfg=Red
