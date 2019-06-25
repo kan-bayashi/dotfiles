@@ -179,7 +179,8 @@ hook_source = '''
 repo = 'terryma/vim-multiple-cursors'
 on_event = 'CursorMoved'
 hook_source = '''
-  let g:multi_cursor_select_all_word_key = '<C-a>'
+  " key mapping
+  let g:multi_cursor_select_all_word_key = '<C-a><C-n>'
 
   " Disable Deoplete when selecting multiple cursors starts
   function! Multiple_cursors_before()
