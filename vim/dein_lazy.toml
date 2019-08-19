@@ -179,6 +179,9 @@ hook_source = '''
 
   " Disable Deoplete when selecting multiple cursors starts
   function! Multiple_cursors_before()
+    if exists(':ALEDisableBuffer')==2
+      exe 'ALEDisableBuffer'
+    endif
     if exists('*deoplete#disable')
       exe 'call deoplete#disable()'
     elseif exists(':NeoCompleteLock') == 2
@@ -188,11 +191,14 @@ hook_source = '''
 
   " Enable Deoplete when selecting multiple cursors ends
   function! Multiple_cursors_after()
-      if exists('*deoplete#toggle')
-        exe 'call deoplete#toggle()'
-      elseif exists(':NeoCompleteUnlock') == 2
-        exe 'NeoCompleteUnlock'
-      endif
+    if exists(':ALEEnableBuffer')==2
+        exe 'ALEEnableBuffer'
+    endif
+    if exists('*deoplete#toggle')
+      exe 'call deoplete#toggle()'
+    elseif exists(':NeoCompleteUnlock') == 2
+      exe 'NeoCompleteUnlock'
+    endif
   endfunction
 '''
 
