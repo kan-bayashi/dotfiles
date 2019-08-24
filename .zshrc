@@ -5,9 +5,18 @@
 LANG=en_US.UTF-8
 
 # alias settings
-alias ls="ls --color=auto"
+if which lsd > /dev/null; then
+    alias ls="lsd"
+else
+    alias ls="ls --color=auto"
+fi
+if which nvim > /dev/null; then
+    alias vim="nvim"
+fi
+alias ls="lsd"
 alias la="ls -a"
 alias ll="ls -l"
+alias lla="ls -la"
 alias free="free -g"
 alias watch='watch '
 
