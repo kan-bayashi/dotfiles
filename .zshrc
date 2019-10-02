@@ -4,22 +4,6 @@
 # language setting
 LANG=en_US.UTF-8
 
-# alias settings
-if which lsd > /dev/null; then
-    alias ls="lsd"
-else
-    alias ls="ls --color=auto"
-fi
-if which nvim > /dev/null; then
-    alias vim="nvim"
-fi
-alias ls="lsd"
-alias la="ls -a"
-alias ll="ls -l"
-alias lla="ls -la"
-alias free="free -g"
-alias watch='watch '
-
 # vim like movement
 bindkey -v
 bindkey -M viins ^o vi-cmd-mode
@@ -181,6 +165,21 @@ if [ -z "$TMUX" ];then
     export PATH=/usr/local/bin:$PATH
 fi
 eval "$(pyenv init -)"
+
+# alias settings
+if which lsd > /dev/null; then
+    alias ls="lsd"
+else
+    alias ls="ls --color=auto"
+fi
+if which nvim > /dev/null; then
+    alias vim="nvim"
+fi
+alias la="ls -a"
+alias ll="ls -l"
+alias lla="ls -la"
+alias free="free -g"
+alias watch='watch '
 
 # load environment dependent setting
 if [ `hostname | grep sp.m.is.nagoya-u.ac.jp` ];then
