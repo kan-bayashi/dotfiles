@@ -50,7 +50,7 @@ fi
 # install zplug
 if [ ! -e ~/.zplug ];then
     echo "Installing zplug..."
-    git clone https://github.com/zplug/zplug ~/.zplug
+    git clone https://github.com/zplug/zplug.git ~/.zplug
 fi
 
 # install tpm
