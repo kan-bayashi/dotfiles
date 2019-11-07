@@ -207,8 +207,8 @@ repo = 'airblade/vim-gitgutter'
 on_event = ['RooterChDir']
 hook_add = '''
   nmap <Space>ht :GitGutterLineHighlightsToggle<CR>
-  nmap <Space>ha <Plug>GitGutterStageHunk
-  nmap <Space>hr <Plug>GitGutterUndoHunk
+  nmap <Space>ha <Plug>(GitGutterStageHunk)
+  nmap <Space>hr <Plug>(GitGutterUndoHunk)
   set signcolumn=yes
   set updatetime=100
 '''
