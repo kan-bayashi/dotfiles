@@ -118,8 +118,6 @@ export FZF_DEFAULT_COMMAND="fd --no-ignore-vcs --ignore-file ~/.ignore --hidden 
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND='fd --type d --follow --hidden --no-ignore-vcs . $HOME'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-bindkey '^F' fzf-file-widget
-bindkey '^N' fzf-cd-widget
 
 # kill task with fxf
 fkill() {
