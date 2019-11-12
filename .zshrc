@@ -71,8 +71,12 @@ setopt prompt_subst
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 # make command completion stronger
 zplug "zsh-users/zsh-completions"
+# make command auto suggestion based on history
+zplug "zsh-users/zsh-autosuggestions"
 # command line syntax highlight
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
+# interative git commands
+zplug "wfxr/forgit", use:forgit.plugin.zsh
 # useful change directory
 zplug "b4b4r07/enhancd", use:init.sh
 # load theme from local
@@ -103,27 +107,22 @@ export FZF_DEFAULT_OPTS='
     --exit-0 --select-1
     --color fg:188,hl:103,fg+:222,bg+:234,hl+:104
     --color info:183,prompt:110,spinner:107,pointer:167,marker:215'
-export FZF_CTRL_T_OPTS="
-    --preview 'echo {}'
-    --preview-window down:2:wrap --bind '?:toggle-preview'"
-export FZF_ALT_C_OPTS="
-    --preview 'tree -C {} | head -100'
-    --preview-window down:10
-    --bind '?:toggle-preview'"
 export FZF_CTRL_R_OPTS="
+    --sort
     --preview 'echo {}'
     --preview-window down:3:hidden:wrap
     --bind '?:toggle-preview'"
 export FZF_DEFAULT_COMMAND="fd --no-ignore-vcs --ignore-file ~/.ignore --hidden --follow"
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_COMMAND='fd --type d --follow --hidden --no-ignore-vcs . $HOME'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# kill task with fxf
+# not to use ctrl + T and alt + C
+bindkey -r "^T"
+bindkey -r "\ec"
+
+# interactively kill task with fzf
 fkill() {
   local pid
   pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
-
   if [ "x$pid" != "x" ]; then
     echo $pid | xargs kill -${1:-9}
   fi
