@@ -4,7 +4,6 @@
 # {{{
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
-rev = '5.0'
 depends = ['context_filetype.vim']
 on_event = 'InsertEnter'
 hook_source = '''
@@ -44,8 +43,9 @@ hook_source = '''
   call deoplete#custom#source('tabnine', 'rank', 300)
   call deoplete#custom#source('tabnine', 'min_pattern_length', 2)
   call deoplete#custom#var('tabnine', {
-        \ 'line_limit': 500,
-        \ 'max_num_results': 20,
+        \ 'line_limit': 300,
+        \ 'max_num_results': 5,
+        \ 'markers': ['.git/'],
         \ })
 '''
 
