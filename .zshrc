@@ -14,7 +14,7 @@ alias vim="nvim"
 
 # ssh function
 function connect {
-    ssh -tX $1 "zsh -c 'OS=mac zsh;'"
+    ssh -t $1 "zsh -c 'OS=mac zsh;'"
 }
 
 # vim like movement
@@ -84,14 +84,16 @@ setopt prompt_subst
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 # make command completion stronger
 zplug "zsh-users/zsh-completions"
+# make command auto suggestion based on history
+zplug "zsh-users/zsh-autosuggestions"
 # command line syntax highlight
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
+# interative git commands
+zplug "wfxr/forgit", use:forgit.plugin.zsh
 # useful change directory
 zplug "b4b4r07/enhancd", use:init.sh
 # load theme from local
 zplug "~/.zsh/themes/", from:local, use:bullet-train.zsh-theme, defer:3
-# visual mode for zsh vim key binding
-zplug "b4b4r07/zsh-vimode-visual", defer:3
 
 # install check and then load
 zplug check || zplug install
@@ -117,55 +119,25 @@ export FZF_DEFAULT_OPTS='
     --exit-0 --select-1
     --color fg:188,bg:233,hl:103,fg+:222,bg+:234,hl+:104
     --color info:183,prompt:110,spinner:107,pointer:167,marker:215'
-export FZF_CTRL_T_OPTS="
-    --preview 'echo {}'
-    --preview-window down:2:wrap --bind '?:toggle-preview'"
-export FZF_ALT_C_OPTS="
-    --preview 'tree -C {} | head -100'
-    --preview-window down:10
-    --bind '?:toggle-preview'"
 export FZF_CTRL_R_OPTS="
+    --sort
     --preview 'echo {}'
     --preview-window down:3:hidden:wrap
     --bind '?:toggle-preview'"
 export FZF_DEFAULT_COMMAND="fd --no-ignore-vcs --ignore-file ~/.ignore --hidden --follow"
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_COMMAND='fd --type d --follow --hidden --no-ignore-vcs . $HOME'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-bindkey '^F' fzf-file-widget
-bindkey '^N' fzf-cd-widget
 
 # kill task with fxf
+bindkey -r "^T"
+bindkey -r "\ec"
+
+# interactively kill task with fzf
 fkill() {
   local pid
   pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
-
-  if [ "x$pid" != "x" ]
-  then
+  if [ "x$pid" != "x" ]; then
     echo $pid | xargs kill -${1:-9}
   fi
-}
-
-# show git log and then check diff via ctrl-d
-fshow() {
-  local out shas sha q k
-  while out=$(
-      git log --graph --color=always \
-          --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
-      fzf --ansi --multi --no-sort --reverse --query="$q" \
-          --print-query --expect=ctrl-d --toggle-sort=\`); do
-    q=$(head -1 <<< "$out")
-    k=$(head -2 <<< "$out" | tail -1)
-    shas=$(sed '1,2d;s/^[^a-z0-9]*//;/^$/d' <<< "$out" | awk '{print $1}')
-    [ -z "$shas" ] && continue
-    if [ "$k" = ctrl-d ]; then
-      git diff --color=always $shas | less -R
-    else
-      for sha in $shas; do
-        git show --color=always $sha | less -R
-      done
-    fi
-  done
 }
 
 #########################
