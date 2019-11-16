@@ -3,11 +3,12 @@
 # Dotfile install script
 # Copyright 2019 Tomoki Hayashi
 
-PYTHON3_VERSION=3.6.6
+PYTHON3_VERSION=3.6.8
 
 # check brew installation
 if ! command -v brew > /dev/null; then
     echo "brew is not installed. please run following command to install brew." 2>&1
+    # shellcheck disable=SC2016
     echo '/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"' 2>&1
     exit 1
 fi
@@ -26,7 +27,7 @@ fi
 if [ ! -e ~/.fzf ];then
     workdir=$(pwd)
     git clone https://github.com/junegunn/fzf.git ~/.fzf
-    cd ~/.fzf && ./install && cd ${workdir}
+    cd ~/.fzf && ./install && cd "${workdir}"
 fi
 
 # install pyenv
@@ -48,7 +49,7 @@ if [ ! -e ~/.pyenv/versions/${PYTHON3_VERSION} ];then
     mac_version=$(sw_vers | grep ProductVersion | awk '{print $2}' | sed -e "s/\.[0-9]$//g")
     # need to install extra modules
     # https://github.com/pyenv/pyenv/wiki/common-build-problems
-    [ $(echo "${mac_version} >= 10.14" | bc) -eq 1 ] && \
+    [ "$(echo "${mac_version} >= 10.14" | bc)" -eq 1 ] && \
         sudo installer -pkg /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg -target /
 
     # install python3 through pyenv
