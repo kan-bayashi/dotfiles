@@ -1,9 +1,20 @@
-neovim>=0.3.1
-greenlet==0.4.10
-jedi>=0.13.1
-hacking
+# for editor
+neovim
+pynvim
+greenlet
+jedi
+
+# basic library
+pandas
 numpy
 scipy
-ipython
 matplotlib
-pudb
+
+# for debug
+ipython
+pdbpp
+
+# for linter
+flake8
+flake8-docstrings
+hacking
