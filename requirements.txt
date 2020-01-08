@@ -13,6 +13,7 @@ matplotlib
 # for debug
 ipython
 pdbpp
+pytest
 
 # for linter
 flake8
