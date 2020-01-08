@@ -304,7 +304,7 @@ c.InteractiveShellApp.matplotlib = 'auto'
 c.TerminalInteractiveShell.editing_mode = 'vi'
 
 ## Set the editor used by IPython (default to $EDITOR/vi/notepad).
-#c.TerminalInteractiveShell.editor = 'vi'
+c.TerminalInteractiveShell.editor = 'nvim'
 
 ## Enable vi (v) or Emacs (C-X C-E) shortcuts to open an external editor. This is
 #  in addition to the F2 binding, which is always enabled.
@@ -316,7 +316,7 @@ c.TerminalInteractiveShell.editing_mode = 'vi'
 ## The name or class of a Pygments style to use for syntax
 #         highlighting:
 #  manni, igor, lovelace, xcode, vim, autumn, abap, vs, rrt, native, perldoc, borland, arduino, tango, emacs, friendly, monokai, paraiso-dark, colorful, murphy, bw, pastie, rainbow_dash, algol_nu, paraiso-light, trac, default, algol, fruity
-#c.TerminalInteractiveShell.highlighting_style = traitlets.Undefined
+#c.TerminalInteractiveShell.highlighting_style = "monokai"
 
 ## Override highlighting format for specific tokens
 #c.TerminalInteractiveShell.highlighting_style_overrides = {}
@@ -346,7 +346,7 @@ c.TerminalInteractiveShell.editing_mode = 'vi'
 ## Use 24bit colors instead of 256 colors in prompt highlighting. If your
 #  terminal supports true color, the following command should print 'TRUECOLOR'
 #  in orange: printf "\x1b[38;2;255;100;0mTRUECOLOR\x1b[0m\n"
-#c.TerminalInteractiveShell.true_color = False
+c.TerminalInteractiveShell.true_color = True
 
 #------------------------------------------------------------------------------
 # HistoryAccessor(HistoryAccessorBase) configuration
