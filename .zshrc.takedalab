@@ -16,3 +16,20 @@ fi
 # alias setting
 alias squeue='squeue -h -o "%.9i %.6P %.40j %.8u %.1t %.10M %.10R cpu:%.2C %.6b"'
 alias sqw='watch -n 1 -c "schecker -c;echo;squeue -h -o \"%.14i %.6P %.40j %.8u %.1t %.10M %.10R cpu:%.2C %.6b\""'
+
+# tensorboard wrapper
+tbd() {
+    if [ ${#} -le 1 ] || [ $1 = "--help" ] || [ $1 = "-h" ]; then
+        echo "Usage: tbd <port> <logdir_1> <logdir_2> ... <logdir_N>"
+        echo "e.g.: tbd 5901 exp/train_nodev_ljspeech_melgan.v1 exp/train_nodev_ljspeech_melgan.v2"
+        return 1
+    fi
+    port=$1
+    logdirs=
+    for logdir in ${@:2}; do
+        logdir_id=$(basename "${logdir}")
+        logdirs+="${logdir_id}:${logdir},"
+    done
+    echo "tensorboard --port ${port} --logdir=${logdirs:0:-1}"
+    tensorboard --port ${port} --logdir=${logdirs:0:-1}
+}
