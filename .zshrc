@@ -177,6 +177,9 @@ alias ll="ls -l"
 alias lla="ls -la"
 alias free="free -g"
 alias watch='watch '
+nless () {
+    nkf -Lw ${1} | less
+}
 
 # load environment dependent setting
 if [ `hostname | grep sp.m.is.nagoya-u.ac.jp` ];then
