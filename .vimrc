@@ -114,9 +114,6 @@ highlight GitGutterDelete guifg=#ff2222 ctermfg=Red
 set foldmethod=marker " enable marker folding
 set hidden            " change buffer without saving
 set mouse=a           " enable mouse
-if $OS != "mac"
-    set clipboard+=unnamedplus " share clipboard (work over ssh in neovim) (for mac, use clipper)
-endif
 
 " python path related
 let g:python2_host_prog = expand('~/.pyenv/versions/2.7.14/bin/python')
