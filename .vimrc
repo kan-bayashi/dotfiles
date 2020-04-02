@@ -158,4 +158,16 @@ nnoremap <C-w>\| :<C-u>vs<CR>
 
 " tab manipulation setting
 nnoremap <silent>tt :tabnew<CR>
+
+" copy to clipboard from vim over ssh with osc52
+" https://sunaku.github.io/tmux-yank-osc52.html
+function! Yank(text) abort
+  let escape = system('yank', a:text)
+  if v:shell_error
+    echoerr escape
+  else
+    call writefile([escape], '/dev/tty', 'b')
+  endif
+endfunction
+noremap <silent> <Leader>y y:<C-U>call Yank(@0)<CR>
 " }}}
