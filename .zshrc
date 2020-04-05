@@ -158,8 +158,8 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:
 if [ -z "$TMUX" ];then
     export PYENV_ROOT=$HOME/.pyenv
     export PATH=$PYENV_ROOT/bin:$PATH
-    export PATH=${HOME}/local/bin:$PATH
     export PATH=/usr/local/bin:$PATH
+    export PATH=$HOME/local/bin:$PATH
 fi
 eval "$(pyenv init -)"
 
