@@ -303,18 +303,11 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'ConradIrwin/vim-bracketed-paste'
+repo = 'roxma/vim-paste-easy'
 
 [[plugins]]
 repo = 'Konfekt/FastFold'
 hook_add = 'let g:fastfold_fold_command_suffixes = []'
-
-[[plugins]]
-repo = 'wincent/vim-clipper'
-if = '$OS == "mac"'
-
-[[plugins]]
-repo = 'roxma/vim-tmux-clipboard'
 
 [[plugins]]
 repo     = 'airblade/vim-rooter'
