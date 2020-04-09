@@ -121,9 +121,9 @@ let g:python3_host_prog = expand('~/.pyenv/versions/3.6.4/bin/python')
 
 " undo
 if has('persistent_undo')
-	let undo_path = expand('~/.vim/undo')
-	exe 'set undodir=' .. undo_path
-	set undofile
+  let undo_path = expand('~/.vim/undo')
+  exe 'set undodir=' .. undo_path
+  set undofile
 endif
 " }}}
 
