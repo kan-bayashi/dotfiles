@@ -118,6 +118,13 @@ set mouse=a           " enable mouse
 " python path related
 let g:python2_host_prog = expand('~/.pyenv/versions/2.7.14/bin/python')
 let g:python3_host_prog = expand('~/.pyenv/versions/3.6.4/bin/python')
+
+" undo
+if has('persistent_undo')
+	let undo_path = expand('~/.vim/undo')
+	exe 'set undodir=' .. undo_path
+	set undofile
+endif
 " }}}
 
 "------------------------------------
