@@ -27,6 +27,7 @@ setopt HIST_IGNORE_SPACE    # do not record cmd whose start char is space
 setopt HIST_FIND_NO_DUPS    # reduce deprecated cmd when finding
 setopt HIST_REDUCE_BLANKS   # remove blank
 setopt HIST_NO_STORE        # do not record history cmd
+setopt share_history        # share history among the tmux panes and windows
 
 # function to refresh tmux env
 if [ -n "$TMUX" ]; then

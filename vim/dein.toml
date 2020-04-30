@@ -321,10 +321,6 @@ hook_add = '''
   call submode#enter_with('tabmove', 'n', '', 'th', 'gT')
   call submode#map('tabmove', 'n', '', 'l', 'gt')
   call submode#map('tabmove', 'n', '', 'h', 'gT')
-  call submode#enter_with('buffermove', 'n', '', 'bl', ':bnext<CR>')
-  call submode#enter_with('buffermove', 'n', '', 'bh', ':bprev<CR>')
-  call submode#map('buffermove', 'n', '', 'l', ':bnext<CR>')
-  call submode#map('buffermove', 'n', '', 'h', ':bprev<CR>')
 '''
 
 [[plugins]]
