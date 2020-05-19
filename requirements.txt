@@ -17,6 +17,5 @@ pdbpp
 pytest
 
 # for linter
-flake8
-flake8-docstrings
 hacking
+flake8-docstrings
