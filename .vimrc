@@ -109,6 +109,7 @@ highlight ALEWarningSign guifg=#fd9f4d ctermfg=Yellow
 highlight GitGutterAdd guifg=#009900 ctermfg=Green
 highlight GitGutterChange guifg=#bbbb00 ctermfg=Yellow
 highlight GitGutterDelete guifg=#ff2222 ctermfg=Red
+highlight! link SignColumn LineNr
 
 " other
 set foldmethod=marker " enable marker folding
