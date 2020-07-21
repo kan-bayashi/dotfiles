@@ -228,6 +228,9 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'lambdalisue/gina.vim'
+
+[[plugins]]
 repo = 'christoomey/vim-tmux-navigator'
 hook_add = '''
   " keymappig for terminal in vim
