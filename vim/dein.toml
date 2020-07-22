@@ -228,10 +228,13 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'tpope/vim-fugitive'
+
+[[plugins]]
 repo = 'lambdalisue/gina.vim'
 hook_add = '''
   nnoremap <space>gs :Gina status<CR>
-  nnoremap <space>ga :Gina add .<CR>
+  nnoremap <space>ga :write<CR>
   nnoremap <space>gc :Gina commit<CR>
   call gina#custom#command#option('status', '--opener', &previewheight . 'split')
   call gina#custom#command#option('commit', '--opener', &previewheight . 'split')

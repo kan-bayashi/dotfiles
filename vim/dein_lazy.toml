@@ -14,23 +14,22 @@ hook_source = '''
 
   " basic setting
   let g:deoplete#enable_at_startup = 1
-  let g:deoplete#enable_smart_case = 1
-  let g:deoplete#enable_ignore_case = 0
-  let g:deoplete#enable_camel_case = 0
-  let g:deoplete#auto_complete_delay = 0
-  let g:deoplete#auto_complete_start_length = 1
-  let g:deoplete#min_pattern_length = 1
-  let g:deoplete#auto_refresh_delay = 10
-  let g:deoplete#enable_refresh_always = 0
-  let g:deoplete#sources#jedi#server_timeout = 60
+  call deoplete#custom#option('smart_case', v:true)
+  call deoplete#custom#option('ignore_case', v:false)
+  call deoplete#custom#option('camel_case', v:false)
+  call deoplete#custom#option('auto_complete_delay', 0)
+  call deoplete#custom#option('auto_refresh_delay', 10)
+  call deoplete#custom#option('min_pattern_length', 1)
+  call deoplete#custom#option('refresh_always', v:false)
+  call deoplete#custom#source('jedi', 'server_timeout', 60)
 
   " completion setting
-  let g:deoplete#keyword_patterns = {}
-  let g:deoplete#keyword_patterns._ = '[a-zA-Z_]\k*\(?'
-  let g:deoplete#omni#input_patterns = {}
-  let g:deoplete#omni#input_patterns.python = ''
-  let g:deoplete#omni#functions = {}
-  let g:deoplete#omni_patterns = {}
+  call deoplete#custom#option('keyword_patterns', {
+    \ '_': '[a-zA-Z_]\k*',
+    \})
+  call deoplete#custom#var('omni', 'input_patters', {
+    \ 'python': '',
+    \})
 
   " use full fuzzy matching
   call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])

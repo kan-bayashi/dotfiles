@@ -165,7 +165,7 @@ fi
 eval "$(pyenv init -)"
 
 # alias settings
-if which lsd > /dev/null; then
+if which lsd > /dev/null 2>&1; then
     alias ls="lsd"
 else
     alias ls="ls --color=auto"
@@ -185,6 +185,9 @@ nless () {
 # load environment dependent setting
 if [ `hostname | grep sp.m.is.nagoya-u.ac.jp` ];then
     [ -e ~/.zshrc.takedalab ] && source ~/.zshrc.takedalab
+fi
+if [ `hostname | grep flow` ];then
+    [ -e ~/.zshrc.flow ] && source ~/.zshrc.flow
 fi
 
 # compile zshrc
