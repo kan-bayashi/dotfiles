@@ -1,1 +1,1 @@
-[ -x /usr/bin/zsh ] && exec /bin/zsh -l
+[ -x /bin/zsh ] && exec /bin/zsh -l
