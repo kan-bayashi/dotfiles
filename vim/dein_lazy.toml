@@ -58,6 +58,9 @@ on_source = ['deoplete.nvim']
 [[plugins]]
 repo = 'ujihisa/neco-look'
 on_source = ['deoplete.nvim']
+hook_source = '''
+  let g:deoplete#look#words = expand('~/local/dict/words')
+'''
 
 [[plugins]]
 repo = 'Shougo/neco-syntax'
