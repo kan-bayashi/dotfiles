@@ -199,6 +199,8 @@ hook_source = '''
 
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
+# fix version since highlight of sign column does not work well
+rev = 'c27bfab8c51e77419ee0c4a9c4e3ba359dbc2ad4'
 on_event = ['RooterChDir']
 hook_add = '''
   nmap <Space>ht :GitGutterLineHighlightsToggle<CR>
