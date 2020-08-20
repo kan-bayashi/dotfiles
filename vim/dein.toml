@@ -132,7 +132,7 @@ hook_add = '''
     let l:git_master_symbol = "\ue0a0 "
     let l:git_branch_symbol = "\ue0a0 "
     try
-      if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
+      if &ft !~? 'vimfiler\|gundo'
         let _ = fugitive#head()
         if _ == 'master'
           return strlen(_) ? l:git_master_symbol ._ : ''
