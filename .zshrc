@@ -19,7 +19,7 @@ bindkey "^o^o" clear-prompt
 
 # command history setting
 HISTFILE=~/.zsh_history
-HISTSIZE=1000
+HISTSIZE=50000
 SAVEHIST=1000000
 setopt HIST_IGNORE_DUPS     # do not recode deprecated cmd
 setopt HIST_IGNORE_ALL_DUPS # do not recode deprecated cmd
