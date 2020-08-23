@@ -166,36 +166,8 @@ hook_source = '''
 '''
 
 [[plugins]]
-repo = 'terryma/vim-multiple-cursors'
+repo = 'mg979/vim-visual-multi'
 on_event = 'CursorMoved'
-hook_source = '''
-  " key mapping
-  let g:multi_cursor_select_all_word_key = '<C-a><C-n>'
-
-  " Disable Deoplete when selecting multiple cursors starts
-  function! Multiple_cursors_before()
-    if exists(':ALEDisableBuffer')==2
-      exe 'ALEDisableBuffer'
-    endif
-    if exists('*deoplete#disable')
-      exe 'call deoplete#disable()'
-    elseif exists(':NeoCompleteLock') == 2
-      exe 'NeoCompleteLock'
-    endif
-  endfunction
-
-  " Enable Deoplete when selecting multiple cursors ends
-  function! Multiple_cursors_after()
-    if exists(':ALEEnableBuffer')==2
-        exe 'ALEEnableBuffer'
-    endif
-    if exists('*deoplete#toggle')
-      exe 'call deoplete#toggle()'
-    elseif exists(':NeoCompleteUnlock') == 2
-      exe 'NeoCompleteUnlock'
-    endif
-  endfunction
-'''
 
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
