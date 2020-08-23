@@ -13,6 +13,7 @@ if [ -e /etc/lsb-release ];then
     installed_packages=$(COLUMNS=200 dpkg -l | awk '{print $2}' | sed -e "s/\:.*$//g")
     for package in ${required_packages}; do
         echo -n "check ${package}..."
+        # shellcheck disable=SC2086
         if echo "${installed_packages}" | grep -xq ${package}; then
             echo "OK."
         else
@@ -20,8 +21,9 @@ if [ -e /etc/lsb-release ];then
             install_packages="${install_packages} ${package}"
         fi
     done
-    if [ ! -z "${install_packages}" ]; then
+    if [ -n "${install_packages}" ]; then
         echo "following packages will be installed: ${install_packages}"
+        # shellcheck disable=SC2086
         sudo apt install -y ${install_packages}
     fi
 elif [ -e /etc/redhat-release ]; then
@@ -32,6 +34,7 @@ elif [ -e /etc/redhat-release ]; then
     installed_packages=$(yum list installed | awk '{print $1}' | sed -e "s/\..*$//g")
     for package in ${required_packages}; do
         echo -n "check ${package}..."
+        # shellcheck disable=SC2086
         if echo "${installed_packages}" | grep -xq ${package}; then
             echo "OK."
         else
@@ -39,8 +42,9 @@ elif [ -e /etc/redhat-release ]; then
             install_packages="${install_packages} ${package}"
         fi
     done
-    if [ ! -z "${install_packages}" ]; then
+    if [ -n "${install_packages}" ]; then
         echo "following packages will be installed: ${install_packages}"
+        # shellcheck disable=SC2086
         sudo yum install -y ${install_packages}
     fi
 else
@@ -70,7 +74,7 @@ if [ ! -e ~/.fzf ];then
     echo "Installing fzf..."
     git clone https://github.com/junegunn/fzf.git ~/.fzf
     workdir=${PWD}
-    cd ~/.fzf && ./install --key-bindings --no-completion --no-update-rc && cd ${workdir}
+    cd ~/.fzf && ./install --key-bindings --no-completion --no-update-rc && cd "${workdir}"
 fi
 
 # pyenv init
@@ -116,7 +120,7 @@ pip3 install -r requirements.txt
 # install vim
 ROOTDIR=$PWD
 TMPDIR=$(mktemp -d /tmp/XXXXX)
-if [ ! -e ${HOME}/local/bin/vim ]; then
+if [ ! -e "${HOME}"/local/bin/vim ]; then
     echo "installing vim 8..."
     cd "$TMPDIR"
     git clone https://github.com/vim/vim.git
@@ -136,9 +140,9 @@ if [ ! -e ${HOME}/local/bin/vim ]; then
 fi
 
 # install nvim
-if [ ! -e ${HOME}/local/bin/nvim ]; then
+if [ ! -e "${HOME}"/local/bin/nvim ]; then
     echo "installing neovim..."
-    cd ${HOME}/local/bin
+    cd "${HOME}"/local/bin
     wget https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
     chmod u+x nvim.appimage
     if ./nvim.appimage --version >& /dev/null; then
@@ -152,7 +156,7 @@ if [ ! -e ${HOME}/local/bin/nvim ]; then
 fi
 
 # install tmux
-if [ ! -e ${HOME}/local/bin/tmux ]; then
+if [ ! -e "${HOME}"/local/bin/tmux ]; then
     echo "installing tmux..."
     cd "$TMPDIR"
     wget https://github.com/tmux/tmux/releases/download/2.6/tmux-2.6.tar.gz
@@ -171,10 +175,10 @@ echo "installing vim plugins..."
 export PATH=${HOME}/local/bin:$PATH
 [ ! -e ~/.cache/dein/repos/github.com/Shougo/dein.vim ] && \
     git clone https://github.com/Shougo/dein.vim ~/.cache/dein/repos/github.com/Shougo/dein.vim
-vim -c "try | call dein#install() | finally | qall! | endtry" -N -u ${HOME}/.vimrc -V1 -es
-vim -c "try | call dein#update() | finally | qall! | endtry" -N -u ${HOME}/.vimrc -V1 -es
-nvim -c "try | call dein#install() | finally | qall! | endtry" -N -u ${HOME}/.vim/init.vim -V1 -es
-nvim -c "try | call dein#update() | finally | qall! | endtry" -N -u ${HOME}/.vim/init.vim -V1 -es
+vim -c "try | call dein#install() | finally | qall! | endtry" -N -u "${HOME}"/.vimrc -V1 -es
+vim -c "try | call dein#update() | finally | qall! | endtry" -N -u "${HOME}"/.vimrc -V1 -es
+nvim -c "try | call dein#install() | finally | qall! | endtry" -N -u "${HOME}"/.vim/init.vim -V1 -es
+nvim -c "try | call dein#update() | finally | qall! | endtry" -N -u "${HOME}"/.vim/init.vim -V1 -es
 
 echo ""
 echo "Sucessfully installed essential tools."
