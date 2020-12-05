@@ -59,6 +59,7 @@ set hlsearch   " highlight search result
 set ignorecase " do not care about catital char in search
 set smartcase  " if query includes captial char, discriminate them
 set wrapscan   " if search finished, re-search from the beginning
+set inccommand=nosplit  " incremental substitute
 
 " backup file realted
 set noswapfile " do not make swap file
