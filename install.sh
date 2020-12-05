@@ -95,7 +95,7 @@ fi
 
 # set python
 pyenv shell --unset
-pyenv global 2.7.14 3.6.4
+pyenv global 3.6.4
 
 # check python version
 python2_version=$(python --version 2>&1)
