@@ -217,6 +217,12 @@ repo = 'Shougo/vimproc.vim'
 build = 'make'
 
 [[plugins]]
+repo = 'lambdalisue/suda.vim'
+
+[[plugins]]
+repo = 'machakann/vim-highlightedyank'
+
+[[plugins]]
 repo = 'thinca/vim-quickrun'
 hook_add = '''
   set splitbelow
