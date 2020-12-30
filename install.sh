@@ -36,9 +36,20 @@ if [ ! -e ~/.pyenv ];then
 fi
 
 # install essential tools
-for tool in zsh fd ripgrep neovim tmux; do
+for tool in zsh fd ripgrep tmux; do
     ! brew ls --versions ${tool} > /dev/null && brew install ${tool}
 done
+
+if [ ! -e ~/local/bin/nvim ];then
+    mkdir -p ~/local/bin
+    cwd=$(pwd)
+    cd ~/local
+    wget wget https://github.com/neovim/neovim/releases/download/v0.4.4/nvim-macos.tar.gz
+    tar xzvf nvim-macos.tar.gz
+    cd ~/local/bin
+    ln -s ../nvim-osx64/bin/nvim .
+    cd "${cwd}"
+fi
 
 # install pyenv python3.6
 if [ ! -e ~/.pyenv/versions/${PYTHON3_VERSION} ];then
