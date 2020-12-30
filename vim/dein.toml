@@ -132,7 +132,7 @@ hook_add = '''
     let l:git_master_symbol = "\ue0a0 "
     let l:git_branch_symbol = "\ue0a0 "
     try
-      if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
+      if &ft !~? 'vimfiler\|gundo'
         let _ = fugitive#head()
         if _ == 'master'
           return strlen(_) ? l:git_master_symbol ._ : ''
@@ -217,6 +217,12 @@ repo = 'Shougo/vimproc.vim'
 build = 'make'
 
 [[plugins]]
+repo = 'lambdalisue/suda.vim'
+
+[[plugins]]
+repo = 'machakann/vim-highlightedyank'
+
+[[plugins]]
 repo = 'thinca/vim-quickrun'
 hook_add = '''
   set splitbelow
@@ -225,6 +231,14 @@ hook_add = '''
    \         "runner" : "vimproc",
    \         "runner/vimproc/updatetime" : 40 }
    \ }
+'''
+
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+hook_add = '''
+  nnoremap <space>gs :Gstatus<CR>
+  nnoremap <space>ga :Gwrite<CR>
+  nnoremap <space>gc :Gcommit<CR>
 '''
 
 [[plugins]]
@@ -237,14 +251,6 @@ hook_add = '''
     tmap <c-h> <c-w>:TmuxNavigateLeft<cr>
     tmap <c-l> <c-w>:TmuxNavigateRight<cr>
   endif
-'''
-
-[[plugins]]
-repo = 'tpope/vim-fugitive'
-hook_add = '''
-  nnoremap <space>gs :Gstatus<CR>
-  nnoremap <space>ga :Gwrite<CR>
-  nnoremap <space>gc :Gcommit<CR>
 '''
 
 [[plugins]]
@@ -276,19 +282,19 @@ hook_add = '''
     \ '                                          .::::.                                            ',
     \ '                             ___________ :;;;;:`____________                                ',
     \ '                             \_________/ ?????L \__________/                                ',
-    \ '                               |.....| ????????> :.......''                                  ',
-    \ '                               |:::::| $$$$$$"`.:::::::'' ,                                  ',
-    \ '                              ,|:::::| $$$$"`.:::::::'' .OOS.                                ',
-    \ '                            ,7D|;;;;;| $$"`.;;;;;;;'' .OOO888S.                              ',
-    \ '                          .GDDD|;;;;;| ?`.;;;;;;;'' .OO8DDDDDNNS.                            ',
-    \ '                           ''DDO|IIIII| .7IIIII7'' .DDDDDDDDNNNF`                             ',
-    \ '                             ''D|IIIIII7IIIII7'' .DDDDDDDDNNNF`                               ',
-    \ '                               |EEEEEEEEEE7'' .DDDDDDDNNNNF`                                 ',
-    \ '                               |EEEEEEEEZ'' .DDDDDDDDNNNF`                                   ',
-    \ '                               |888888Z'' .DDDDDDDDNNNF`                                     ',
-    \ '                               |8888Z'' ,DDDDDDDNNNNF`                                       ',
-    \ '                               |88Z''    "DNNNNNNN"                                          ',
-    \ '                               ''"''        "MMMM"                                            ',
+    \ '                               |.....| ????????> :.......''                                 ',
+    \ '                               |:::::| $$$$$$"`.:::::::'' ,                                 ',
+    \ '                              ,|:::::| $$$$"`.:::::::'' .OOS.                               ',
+    \ '                            ,7D|;;;;;| $$"`.;;;;;;;'' .OOO888S.                             ',
+    \ '                          .GDDD|;;;;;| ?`.;;;;;;;'' .OO8DDDDDNNS.                           ',
+    \ '                           ''DDO|IIIII| .7IIIII7'' .DDDDDDDDNNNF`                           ',
+    \ '                             ''D|IIIIII7IIIII7'' .DDDDDDDDNNNF`                             ',
+    \ '                               |EEEEEEEEEE7'' .DDDDDDDNNNNF`                                ',
+    \ '                               |EEEEEEEEZ'' .DDDDDDDDNNNF`                                  ',
+    \ '                               |888888Z'' .DDDDDDDDNNNF`                                    ',
+    \ '                               |8888Z'' ,DDDDDDDNNNNF`                                      ',
+    \ '                               |88Z''    "DNNNNNNN"                                         ',
+    \ '                               ''"''        "MMMM"                                          ',
     \ '                                            ""                                              ',
     \ '                                                                                            ',
     \ '    ___    ____                                            __   _         _    ________  ___',
@@ -303,18 +309,11 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'ConradIrwin/vim-bracketed-paste'
+repo = 'roxma/vim-paste-easy'
 
 [[plugins]]
 repo = 'Konfekt/FastFold'
 hook_add = 'let g:fastfold_fold_command_suffixes = []'
-
-[[plugins]]
-repo = 'wincent/vim-clipper'
-if = '$OS == "mac"'
-
-[[plugins]]
-repo = 'roxma/vim-tmux-clipboard'
 
 [[plugins]]
 repo     = 'airblade/vim-rooter'
@@ -328,10 +327,6 @@ hook_add = '''
   call submode#enter_with('tabmove', 'n', '', 'th', 'gT')
   call submode#map('tabmove', 'n', '', 'l', 'gt')
   call submode#map('tabmove', 'n', '', 'h', 'gT')
-  call submode#enter_with('buffermove', 'n', '', 'bl', ':bnext<CR>')
-  call submode#enter_with('buffermove', 'n', '', 'bh', ':bprev<CR>')
-  call submode#map('buffermove', 'n', '', 'l', ':bnext<CR>')
-  call submode#map('buffermove', 'n', '', 'h', ':bprev<CR>')
 '''
 
 [[plugins]]
