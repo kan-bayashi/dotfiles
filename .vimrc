@@ -59,6 +59,7 @@ set hlsearch   " highlight search result
 set ignorecase " do not care about catital char in search
 set smartcase  " if query includes captial char, discriminate them
 set wrapscan   " if search finished, re-search from the beginning
+set inccommand=nosplit  " incremental substitute
 
 " backup file realted
 set noswapfile " do not make swap file
@@ -104,19 +105,26 @@ endif
 colorscheme jellybeans " colorscheme
 
 " custom highlight color related (does not work with hook in dein...)
-highlight ALEErrorSign guifg=#cb484c ctermfg=Red
-highlight GitGutterAdd guifg=#009900 ctermfg=Green
-highlight GitGutterChange guifg=#bbbb00 ctermfg=Yellow
-highlight GitGutterDelete guifg=#ff2222 ctermfg=Red
+highlight ALEErrorSign ctermfg=Red guifg=#cb484c guibg=#161515
+highlight GitGutterAdd ctermfg=Green guifg=#009900 guibg=#161515
+highlight GitGutterChange ctermfg=Yellow guifg=#bbbb00 guibg=#161515
+highlight GitGutterDelete ctermfg=Red guifg=#ff2222 guibg=#161515
+highlight SignColumn guibg=#161515
+highlight link SignColumn LineNr
 
 " other
 set foldmethod=marker  " enable marker folding
 set hidden             " change buffer without saving
 set mouse=a            " enable mouse
-set clipboard+=unnamed " share clipboard
 
 " python path related
-let g:python3_host_prog = expand('~/.pyenv/versions/3.6.6/bin/python')
+let g:python3_host_prog = expand('/usr/bin/python3')
+" undo
+if has('persistent_undo')
+  let undo_path = expand('~/.vim/undo')
+  exe 'set undodir=' .. undo_path
+  set undofile
+endif
 " }}}
 
 "------------------------------------
@@ -157,4 +165,16 @@ nnoremap <C-w>\| :<C-u>vs<CR>
 
 " tab manipulation setting
 nnoremap <silent>tt :tabnew<CR>
+
+" copy to clipboard from vim over ssh with osc52
+" https://sunaku.github.io/tmux-yank-osc52.html
+function! Yank(text) abort
+  let escape = system('yank', a:text)
+  if v:shell_error
+    echoerr escape
+  else
+    call writefile([escape], '/dev/tty', 'b')
+  endif
+endfunction
+noremap <silent> <Leader>y y:<C-U>call Yank(@0)<CR>
 " }}}
