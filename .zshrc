@@ -4,19 +4,6 @@
 # language setting
 LANG=en_US.UTF-8
 
-# alias settings
-alias ls="ls -G"
-alias la="ls -a"
-alias ll="ls -l"
-alias free="free -g"
-alias watch="watch "
-alias vim="nvim"
-
-# ssh function
-function connect {
-    ssh -t $1 "zsh -c 'OS=mac zsh;'"
-}
-
 # vim like movement
 bindkey -v
 bindkey -M viins ^o vi-cmd-mode
@@ -32,7 +19,7 @@ bindkey "^o^o" clear-prompt
 
 # command history setting
 HISTFILE=~/.zsh_history
-HISTSIZE=1000
+HISTSIZE=50000
 SAVEHIST=1000000
 setopt HIST_IGNORE_DUPS     # do not recode deprecated cmd
 setopt HIST_IGNORE_ALL_DUPS # do not recode deprecated cmd
@@ -167,9 +154,26 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:
 #    extra settings    #
 ########################
 # add path
-export PATH=$HOME/.pyenv/bin:/Applications/MacVim.app/Contents/bin:$PATH
+export PATH=/opt/homebrew/bin:${HOME}/local/bin:$HOME/.pyenv/bin:$PATH
 eval "$(pyenv init -)"
 
+# alias settings
+if which lsd > /dev/null; then
+    alias ls="lsd"
+else
+    alias ls="ls --color=auto"
+fi
+if which nvim > /dev/null; then
+    alias vim="nvim"
+fi
+alias la="ls -a"
+alias ll="ls -l"
+alias lla="ls -la"
+alias free="free -g"
+alias watch='watch '
+nless () {
+    nkf -Lw ${1} | less
+}
 # compile zshrc
 if [ ~/.zshrc -nt ~/.zshrc.zwc ]; then
     zcompile ~/.zshrc
