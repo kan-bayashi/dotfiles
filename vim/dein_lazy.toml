@@ -34,6 +34,11 @@ hook_source = '''
   " use full fuzzy matching
   call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
 
+  " use dictionaary in git commit
+  call deoplete#custom#option('sources', {
+    \ 'gitcommit': ['look'],
+    \})
+
   " NOTE: does not work in M1 mac
   " " tabnine setting
   " call deoplete#custom#source('tabnine', 'rank', 100)
