@@ -34,14 +34,15 @@ hook_source = '''
   " use full fuzzy matching
   call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
 
-  " tabnine setting
-  call deoplete#custom#source('tabnine', 'rank', 100)
-  call deoplete#custom#source('tabnine', 'min_pattern_length', 2)
-  call deoplete#custom#var('tabnine', {
-        \ 'line_limit': 500,
-        \ 'max_num_results': 10,
-        \ 'markers': ['.git/'],
-        \ })
+  " NOTE: does not work in M1 mac
+  " " tabnine setting
+  " call deoplete#custom#source('tabnine', 'rank', 100)
+  " call deoplete#custom#source('tabnine', 'min_pattern_length', 2)
+  " call deoplete#custom#var('tabnine', {
+  "       \ 'line_limit': 500,
+  "       \ 'max_num_results': 10,
+  "       \ 'markers': ['.git/'],
+  "       \ })
 '''
 
 # --- deoplete sources ---
@@ -63,10 +64,11 @@ on_source = ['deoplete.nvim']
 repo = 'Shougo/neco-syntax'
 on_source = ['deoplete.nvim']
 
-[[plugins]]
-repo = 'tbodt/deoplete-tabnine'
-on_source = ['deoplete.nvim']
-build = './install.sh'
+# NOTE: does not work in M1 mac
+# [[plugins]]
+# repo = 'tbodt/deoplete-tabnine'
+# on_source = ['deoplete.nvim']
+# build = './install.sh'
 
 [[plugins]]
 repo = 'Shougo/neosnippet'
