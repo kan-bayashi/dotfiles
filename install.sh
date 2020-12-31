@@ -36,7 +36,7 @@ if [ ! -e ~/.pyenv ];then
 fi
 
 # install essential tools
-for tool in zsh fd ripgrep tmux; do
+for tool in zsh fd ripgrep tmux lsd bat; do
     ! brew ls --versions ${tool} > /dev/null && brew install ${tool}
 done
 
@@ -51,26 +51,25 @@ if [ ! -e ~/local/bin/nvim ];then
     cd "${cwd}"
 fi
 
-# install pyenv python3.6
-if [ ! -e ~/.pyenv/versions/${PYTHON3_VERSION} ];then
-    # install dependencies for pyenv python installation
-    for tool in readline xz; do
-        ! brew ls --versions ${tool} > /dev/null && brew install ${tool}
-    done
-    mac_version=$(sw_vers | grep ProductVersion | awk '{print $2}' | sed -e "s/\.[0-9]$//g")
-    # need to install extra modules
-    # https://github.com/pyenv/pyenv/wiki/common-build-problems
-    [ "$(echo "${mac_version} >= 10.14" | bc)" -eq 1 ] && \
-        sudo installer -pkg /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg -target /
+# install neovim
+sudo pip3 install neovim
 
-    # install python3 through pyenv
-    export PATH=$HOME/.pyenv/bin:$PATH
-    eval "$(pyenv init -)"
-    env PYTHON_CONFIGURE_OPTS="--enable-framework" pyenv install ${PYTHON3_VERSION}
-    pyenv global ${PYTHON3_VERSION}
-    ~/.pyenv/shims/pip install --upgrade pip
-    ~/.pyenv/shims/pip install -r requirements.txt
-fi
+# FIXME: Cannot install in M1 mac
+# # install pyenv python3.6
+# if [ ! -e ~/.pyenv/versions/${PYTHON3_VERSION} ];then
+#     # install dependencies for pyenv python installation
+#     for tool in readline xz; do
+#         ! brew ls --versions ${tool} > /dev/null && brew install ${tool}
+#     done
+#
+#     # install python3 through pyenv
+#     export PATH=$HOME/.pyenv/bin:$PATH
+#     eval "$(pyenv init -)"
+#     env PYTHON_CONFIGURE_OPTS="--enable-framework" pyenv install ${PYTHON3_VERSION}
+#     pyenv global ${PYTHON3_VERSION}
+#     ~/.pyenv/shims/pip install --upgrade pip
+#     ~/.pyenv/shims/pip install -r requirements.txt
+# fi
 
 echo "Sucessfully finished installation."
 echo "Please run exec zsh -l."
