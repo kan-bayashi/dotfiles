@@ -177,4 +177,10 @@ function! Yank(text) abort
   endif
 endfunction
 noremap <silent> <Leader>y y:<C-U>call Yank(@0)<CR>
+
+" enable spell check
+augroup GitSpellCheck
+    autocmd!
+    autocmd FileType gitcommit setlocal spell
+augroup END
 " }}}
