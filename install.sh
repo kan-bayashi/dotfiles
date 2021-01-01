@@ -36,7 +36,7 @@ if [ ! -e ~/.pyenv ];then
 fi
 
 # install essential tools
-for tool in zsh fd ripgrep neovim tmux; do
+for tool in zsh fd ripgrep neovim tmux bat lsd; do
     ! brew ls --versions ${tool} > /dev/null && brew install ${tool}
 done
 
