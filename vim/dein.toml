@@ -242,6 +242,28 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'rhysd/committia.vim'
+hook_add='''
+  let g:committia_open_only_vim_starting = 0
+  let g:committia_hooks = {}
+  function! g:committia_hooks.edit_open(info)
+    " additional settings
+    setlocal spell
+    setlocal spelllang+=cjk
+
+    " if no commit message, start with insert mode
+    if a:info.vcs ==# 'git' && getline(1) ==# ''
+      startinsert
+    end
+
+    " scroll the diff window from insert mode
+    " map <c-n> and <c-p>
+    imap <buffer><C-n> <Plug>(committia-scroll-diff-down-half)
+    imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
+  endfunction
+'''
+
+[[plugins]]
 repo = 'christoomey/vim-tmux-navigator'
 hook_add = '''
   " keymappig for terminal in vim
