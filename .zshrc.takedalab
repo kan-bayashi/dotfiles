@@ -14,7 +14,7 @@ if [ -z "$TMUX" ];then
 fi
 
 # alias setting
-alias squeue='squeue -h -o "%.9i %.5P %.35j %.10u %.1t %.11M %.9R cpu:%.1C %.5b"'
+alias squeue='squeue -h -o "%.9i %.5P %.35j %.10u %.1t %.11M %.9R cpu:%.2C %.5b"'
 alias sqw='watch -n 1 -c "schecker -c;echo;squeue -h -o \"%.14i %.6P %.40j %.8u %.1t %.10M %.10R cpu:%.2C %.6b\""'
 
 # tensorboard wrapper
