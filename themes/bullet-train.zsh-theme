@@ -172,7 +172,8 @@ function my_git_prompt_info() {
 }
 
 if [ ! -n "${BULLETTRAIN_GIT_SHOW+1}" ]; then
-  BULLETTRAIN_GIT_SHOW=true
+  # BULLETTRAIN_GIT_SHOW=true
+  BULLETTRAIN_GIT_SHOW=false
 fi
 if [ ! -n "${BULLETTRAIN_GIT_COLORIZE_DIRTY+1}" ]; then
   BULLETTRAIN_GIT_COLORIZE_DIRTY=false
