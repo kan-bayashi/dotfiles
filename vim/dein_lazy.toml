@@ -34,14 +34,14 @@ hook_source = '''
   " use full fuzzy matching
   call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
 
-  " tabnine setting
-  call deoplete#custom#source('tabnine', 'rank', 100)
-  call deoplete#custom#source('tabnine', 'min_pattern_length', 2)
-  call deoplete#custom#var('tabnine', {
-        \ 'line_limit': 500,
-        \ 'max_num_results': 10,
-        \ 'markers': ['.git/'],
-        \ })
+  " " tabnine setting
+  " call deoplete#custom#source('tabnine', 'rank', 100)
+  " call deoplete#custom#source('tabnine', 'min_pattern_length', 2)
+  " call deoplete#custom#var('tabnine', {
+  "       \ 'line_limit': 500,
+  "       \ 'max_num_results': 10,
+  "       \ 'markers': ['.git/'],
+  "       \ })
 '''
 
 # --- deoplete sources ---
@@ -58,18 +58,15 @@ on_source = ['deoplete.nvim']
 [[plugins]]
 repo = 'ujihisa/neco-look'
 on_source = ['deoplete.nvim']
-hook_source = '''
-  let g:deoplete#look#words = expand('~/local/dict/words')
-'''
 
 [[plugins]]
 repo = 'Shougo/neco-syntax'
 on_source = ['deoplete.nvim']
 
-[[plugins]]
-repo = 'tbodt/deoplete-tabnine'
-on_source = ['deoplete.nvim']
-build = './install.sh'
+# [[plugins]]
+# repo = 'tbodt/deoplete-tabnine'
+# on_source = ['deoplete.nvim']
+# build = './install.sh'
 
 [[plugins]]
 repo = 'Shougo/neosnippet'
@@ -169,39 +166,13 @@ hook_source = '''
 '''
 
 [[plugins]]
-repo = 'terryma/vim-multiple-cursors'
+repo = 'mg979/vim-visual-multi'
 on_event = 'CursorMoved'
-hook_source = '''
-  " key mapping
-  let g:multi_cursor_select_all_word_key = '<C-a><C-n>'
-
-  " Disable Deoplete when selecting multiple cursors starts
-  function! Multiple_cursors_before()
-    if exists(':ALEDisableBuffer')==2
-      exe 'ALEDisableBuffer'
-    endif
-    if exists('*deoplete#disable')
-      exe 'call deoplete#disable()'
-    elseif exists(':NeoCompleteLock') == 2
-      exe 'NeoCompleteLock'
-    endif
-  endfunction
-
-  " Enable Deoplete when selecting multiple cursors ends
-  function! Multiple_cursors_after()
-    if exists(':ALEEnableBuffer')==2
-        exe 'ALEEnableBuffer'
-    endif
-    if exists('*deoplete#toggle')
-      exe 'call deoplete#toggle()'
-    elseif exists(':NeoCompleteUnlock') == 2
-      exe 'NeoCompleteUnlock'
-    endif
-  endfunction
-'''
 
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
+# fix version since highlight of sign column does not work well
+rev = 'c27bfab8c51e77419ee0c4a9c4e3ba359dbc2ad4'
 on_event = ['RooterChDir']
 hook_add = '''
   nmap <Space>ht :GitGutterLineHighlightsToggle<CR>
@@ -267,6 +238,14 @@ hook_add = 'map <Space><Space> :NERDTreeToggle<CR>'
 #############################
 # {{{
 [[plugins]]
+repo = 'heavenshell/vim-pydocstring'
+on_ft = 'python'
+build = 'make install'
+hook_source = '''
+  let g:pydocstring_formatter = 'google'
+'''
+
+[[plugins]]
 repo = 'Shougo/context_filetype.vim'
 
 [[plugins]]
@@ -293,6 +272,7 @@ on_ft = 'python'
 
 [[plugins]]
 repo = 'psf/black'
+rev = '19.10b0'
 on_ft = 'python'
 
 [[plugins]]
