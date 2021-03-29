@@ -341,16 +341,6 @@ repo     = 'airblade/vim-rooter'
 hook_add = 'let g:rooter_silent_chdir = 1'
 
 [[plugins]]
-repo = 'kana/vim-submode'
-hook_add = '''
-  let g:submode_keep_leaving_key = 1
-  call submode#enter_with('tabmove', 'n', '', 'tl', 'gt')
-  call submode#enter_with('tabmove', 'n', '', 'th', 'gT')
-  call submode#map('tabmove', 'n', '', 'l', 'gt')
-  call submode#map('tabmove', 'n', '', 'h', 'gT')
-'''
-
-[[plugins]]
 repo = 'w0rp/ale'
 hook_add = '''
   " key mapping
