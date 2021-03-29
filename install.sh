@@ -143,7 +143,7 @@ fi
 if [ ! -e "${HOME}"/local/bin/nvim ]; then
     echo "installing neovim..."
     cd "${HOME}"/local/bin
-    wget https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
+    wget https://github.com/neovim/neovim/releases/download/v0.4.4/nvim.appimage
     chmod u+x nvim.appimage
     if ./nvim.appimage --version >& /dev/null; then
         ln -s ./nvim.appimage nvim
