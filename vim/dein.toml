@@ -19,8 +19,11 @@ if = '''!has('nvim')'''
 #############################
 # {{{
 [[plugins]]
+repo = 'josa42/vim-lightline-coc'
+
+[[plugins]]
 repo = 'itchyny/lightline.vim'
-depends = ['vim-fugitive', 'vim-gitgutter', 'ale']
+depends = ['vim-fugitive', 'vim-gitgutter']
 hook_add = '''
   let g:lightline = {
     \ 'colorscheme': 'jellybeans',
@@ -35,7 +38,7 @@ hook_add = '''
     \             ['gitguitter'],
     \             ['filename'],
     \           ],
-    \   'right': [ ['linter_ok', 'linter_errors', 'linter_warnings'],
+    \   'right': [ ['linter_ok', 'linter_errors', 'linter_warnings', 'linter_info'],
     \              ['percent'],
     \              ['fileformat', 'fileencoding', 'filetype'],
     \            ]
@@ -46,54 +49,58 @@ hook_add = '''
     \   'filename': 'LightLineFilename',
     \   'filetype': 'LightLineFiletype',
     \   'fileformat': 'LightLineFileformat',
-    \   'gitguitter': 'LightLineGitGutter',
-    \   'linter_warnings': 'LightLineLinterWarnings',
-    \   'linter_errors': 'LightLineLinterErrors',
-    \   'linter_ok': 'LightLineLinterOK'
+    \   'gitguitter': 'LightLineGitGutter'
     \ },
     \ 'component_expand': {
-    \   'linter_warnings': 'LightLineLinterWarnings',
-    \   'linter_errors': 'LightLineLinterErrors',
-    \   'linter_ok': 'LightLineLinterOK'
+    \   'linter_info': 'lightline#coc#info',
+    \   'linter_warnings': 'lightline#coc#warnings',
+    \   'linter_errors': 'lightline#coc#errors',
+    \   'linter_ok': 'lightline#coc#ok'
     \ },
     \ 'component_type': {
+    \   'linter_info': 'info',
     \   'linter_warnings': 'warning',
     \   'linter_errors': 'error',
     \   'linter_ok': 'ok'
     \ }
     \ }
 
-  let g:lightline_error_symbol = "\uf41b "
-  let g:lightline_warn_symbol = "\uf420 "
-  let g:lightline_ok_symbol = "\uf42e "
+  let g:lightline#coc#indicator_info = "\uf449 "
+  let g:lightline#coc#indicator_errors = "\uf41b "
+  let g:lightline#coc#indicator_warnings = "\uf420 "
+  let g:lightline#coc#indicater_ok = "\uf42e "
 
-  function! LightLineLinterWarnings() abort
-    let l:counts = ale#statusline#Count(bufnr(''))
-    let l:all_errors = l:counts.error + l:counts.style_error
-    let l:all_non_errors = l:counts.total - l:all_errors
-    return l:counts.total == 0 ? '' : printf('%d '. g:lightline_warn_symbol, all_non_errors)
-  endfunction
+  " let g:lightline_error_symbol = "\uf41b "
+  " let g:lightline_warn_symbol = "\uf420 "
+  " let g:lightline_ok_symbol = "\uf42e "
 
-  function! LightLineLinterErrors() abort
-    let l:counts = ale#statusline#Count(bufnr(''))
-    let l:all_errors = l:counts.error + l:counts.style_error
-    let l:all_non_errors = l:counts.total - l:all_errors
-    return l:counts.total == 0 ? '' : printf('%d '. g:lightline_error_symbol, all_errors)
-  endfunction
-
-  function! LightLineLinterOK() abort
-    let l:counts = ale#statusline#Count(bufnr(''))
-    let l:all_errors = l:counts.error + l:counts.style_error
-    let l:all_non_errors = l:counts.total - l:all_errors
-    return l:counts.total == 0 ? g:lightline_ok_symbol : ''
-  endfunction
-
-  augroup LightLineLinter
-    autocmd!
-    autocmd User ALEJobStarted call lightline#update()
-    autocmd User ALELintPost call lightline#update()
-    autocmd User ALEFixPost call lightline#update()
-  augroup END
+  " function! LightLineLinterWarnings() abort
+  "   let l:counts = ale#statusline#Count(bufnr(''))
+  "   let l:all_errors = l:counts.error + l:counts.style_error
+  "   let l:all_non_errors = l:counts.total - l:all_errors
+  "   return l:counts.total == 0 ? '' : printf('%d '. g:lightline_warn_symbol, all_non_errors)
+  " endfunction
+  "
+  " function! LightLineLinterErrors() abort
+  "   let l:counts = ale#statusline#Count(bufnr(''))
+  "   let l:all_errors = l:counts.error + l:counts.style_error
+  "   let l:all_non_errors = l:counts.total - l:all_errors
+  "   return l:counts.total == 0 ? '' : printf('%d '. g:lightline_error_symbol, all_errors)
+  " endfunction
+  "
+  " function! LightLineLinterOK() abort
+  "   let l:counts = ale#statusline#Count(bufnr(''))
+  "   let l:all_errors = l:counts.error + l:counts.style_error
+  "   let l:all_non_errors = l:counts.total - l:all_errors
+  "   return l:counts.total == 0 ? g:lightline_ok_symbol : ''
+  " endfunction
+  "
+  " augroup LightLineLinter
+  "   autocmd!
+  "   autocmd User ALEJobStarted call lightline#update()
+  "   autocmd User ALELintPost call lightline#update()
+  "   autocmd User ALEFixPost call lightline#update()
+  " augroup END
 
   function! LightLineMode()
     return  &ft == 'unite' ? 'Unite' :
@@ -344,6 +351,7 @@ hook_add = 'let g:rooter_silent_chdir = 1'
 #############################
 #        LSP PLUGINS        #
 #############################
+# {{{
 [[plugins]]
 repo = 'neoclide/coc.nvim'
 rev = 'release'
@@ -393,3 +401,4 @@ function! s:show_documentation()
   endif
 endfunction
 '''
+# }}}
