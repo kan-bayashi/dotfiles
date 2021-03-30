@@ -167,6 +167,8 @@ nnoremap <C-w>\| :<C-u>vs<CR>
 
 " tab manipulation setting
 nnoremap <silent>tt :tabnew<CR>
+nnoremap <silent>tl :tabnext<CR>
+nnoremap <silent>th :tabprevious<CR>
 
 " copy to clipboard from vim over ssh with osc52
 " https://sunaku.github.io/tmux-yank-osc52.html
