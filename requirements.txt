@@ -1,7 +1,6 @@
 # for editor
 neovim
-# deoplete with 0.4.0 is not work in CentOS
-pynvim<=0.3.2
+pynvim>=0.4.3
 greenlet
 jedi
 
