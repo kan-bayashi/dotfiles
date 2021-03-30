@@ -1,7 +1,7 @@
 # export environment setting
 if [ -z "$TMUX" ];then
     # cuda related setting
-    export CUDA_ROOT=/usr/local/cuda-10.0
+    export CUDA_ROOT=/usr/local/cuda-11.0
     export CUDA_HOME=$CUDA_ROOT
     export CUDA_PATH=$CUDA_ROOT
     export PATH=$CUDA_ROOT/bin:$PATH
