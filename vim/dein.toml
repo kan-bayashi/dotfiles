@@ -358,9 +358,6 @@ rev = 'release'
 hook_add = '''
 " Default install packages
 let g:coc_global_extensions = ['coc-json', 'coc-pyright', 'coc-diagnostic']
-let g:coc_node_args = ['--max-old-space-size=8192']
-
-highlight CocFloating ctermfg=White ctermbg=242 guifg=#bbb5b5 guibg=#1f1f1f
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
