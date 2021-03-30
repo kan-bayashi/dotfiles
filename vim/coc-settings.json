@@ -9,6 +9,8 @@
     "sh": "shellcheck"
   },
   // nerdfont icons
+  "suggest.maxPreviewWidth": 100,
+  "suggest.maxCompleteItemCount": 100,
   "suggest.completionItemKindLabels": {
     "function": "\uf794",
     "method": "\uf6a6",
