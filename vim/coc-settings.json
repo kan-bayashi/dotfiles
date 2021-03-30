@@ -37,7 +37,11 @@
     "default": "\uf29c"
   },
   // pyright setting
+  "python.analysis.autoSearchPaths": false,
+  "python.analysis.useLibraryCodeForTypes": false,
   "python.analysis.diagnosticMode": "openFilesOnly",
   "python.linting.flake8Enabled": true,
-  "python.formatting.provider": "black"
+  "python.formatting.provider": "black",
+  // do not use pyright diagnostic
+  "pyright.disableDiagnostics": true
 }
