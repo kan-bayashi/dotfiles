@@ -3,6 +3,9 @@
 # Pyenv-pythons, Vim8, Neovim, and Tmux installation script
 # Copyright 2019 Tomoki Hayashi
 
+PYTHON2_VERSION=2.7.14
+PYTHON3_VERSION=3.7.10
+
 # check and install dependencies
 if [ -e /etc/lsb-release ];then
     required_packages="build-essential libssl-dev zlib1g-dev libbz2-dev
@@ -82,31 +85,31 @@ export PATH=${HOME}/.pyenv/bin:$PATH
 eval "$(pyenv init -)"
 
 # install enable-shared python using pyenv
-if [ ! -e "${HOME}"/.pyenv/versions/2.7.14 ];then
-    CONFIGURE_OPTS="--enable-shared" pyenv install 2.7.14
+if [ ! -e "${HOME}"/.pyenv/versions/${PYTHON2_VERSION} ];then
+    CONFIGURE_OPTS="--enable-shared" pyenv install ${PYTHON2_VERSION}
 else
-    echo "Python 2.7.14 is already installed."
+    echo "Python ${PYTHON2_VERSION} is already installed."
 fi
-if [ ! -e "${HOME}"/.pyenv/versions/3.6.4 ];then
-    CONFIGURE_OPTS="--enable-shared" pyenv install 3.6.4
+if [ ! -e "${HOME}"/.pyenv/versions/${PYTHON3_VERSION} ];then
+    CONFIGURE_OPTS="--enable-shared" pyenv install ${PYTHON3_VERSION}
 else
-    echo "Python 3.6.4 is already installed."
+    echo "Python ${PYTHON3_VERSION} is already installed."
 fi
 
 # set python
 pyenv shell --unset
-pyenv global 3.6.4
+pyenv global ${PYTHON2_VERSION} ${PYTHON3_VERSION}
 
 # check python version
 python2_version=$(python --version 2>&1)
 python3_version=$(python3 --version 2>&1)
-if [ "${python2_version}" = "Python 2.7.14" ];then
+if [ "${python2_version}" = "Python ${PYTHON2_VERSION}" ];then
     echo Python 2 version check is OK.
 else
     echo Python 2 version check is failed.
     exit 1
 fi
-if [ "${python3_version}" = "Python 3.6.4" ];then
+if [ "${python3_version}" = "Python ${PYTHON3_VERSION}" ];then
     echo Python 3 version check is OK.
 else
     echo Python 3 version check is failed.
@@ -114,7 +117,8 @@ else
 fi
 
 # install python libraries
-pip install -r requirements.txt
+pip3 install -U pip
+pip3 install -U setuptools
 pip3 install -r requirements.txt
 
 # install vim
@@ -125,7 +129,7 @@ if [ ! -e "${HOME}"/local/bin/vim ]; then
     cd "$TMPDIR"
     git clone https://github.com/vim/vim.git
     cd vim
-    LDFLAGS="-Wl,-rpath=${HOME}/.pyenv/versions/2.7.14/lib:${HOME}/.pyenv/versions/3.6.4/lib" \
+    LDFLAGS="-Wl,-rpath=${HOME}/.pyenv/versions/${PYTHON2_VERSION}/lib:${HOME}/.pyenv/versions/${PYTHON3_VERSION}/lib" \
         ./configure \
         --enable-fail-if-missing \
         --enable-pythoninterp=dynamic \
