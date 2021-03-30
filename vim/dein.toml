@@ -339,31 +339,57 @@ hook_add = 'let g:fastfold_fold_command_suffixes = []'
 [[plugins]]
 repo     = 'airblade/vim-rooter'
 hook_add = 'let g:rooter_silent_chdir = 1'
-
-[[plugins]]
-repo = 'w0rp/ale'
-hook_add = '''
-  " key mapping
-  nmap <silent> <SPACE>j <Plug>(ale_next_wrap)
-  nmap <silent> <SPACE>k <Plug>(ale_previous_wrap)
-
-  " general settings
-  let g:ale_open_list = 0
-  let g:ale_list_window_size = 5
-  let g:ale_lint_delay = 1000
-  let g:ale_lint_on_enter = 0
-
-  " custom message and sign
-  let g:ale_echo_msg_error_str = '[ERROR]'
-  let g:ale_echo_msg_warning_str = '[WARNING]'
-  let g:ale_sign_error = "\uf41b"
-  let g:ale_sign_warning = "\uf420"
-
-  " linter setting
-  let g:ale_linters = {
-    \ 'python': ['flake8'],
-    \ 'sh': ['shellcheck'],
-    \ }
-  let g:ale_python_flake8_args="--max-line-length=120"
-'''
 # }}}
+
+#############################
+#        LSP PLUGINS        #
+#############################
+[[plugins]]
+repo = 'neoclide/coc.nvim'
+rev = 'release'
+hook_add = '''
+" Default install packages
+let g:coc_global_extensions = ['coc-json', 'coc-pyright', 'coc-diagnostic']
+let g:coc_node_args = ['--max-old-space-size=8192']
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" GoTo code navigation.
+nmap <silent> <space>d <Plug>(coc-definition)
+
+" Symbol renaming.
+nmap <space>r <Plug>(coc-rename)
+
+" Symbol renaming.
+nmap <space>f <Plug>(coc-format)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+'''
