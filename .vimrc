@@ -76,6 +76,7 @@ set shiftwidth=4 " shift width in auto indent
 set autoindent   " enable auto indent
 set showmatch    " highlight corresponding parentheses
 set completeopt-=preview " disable preview window in completion
+set shortmess+=c
 
 " status line realted
 set number        " show line number
@@ -100,6 +101,7 @@ if (has("termguicolors"))
   set termguicolors
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set pumblend=10
 endif
 colorscheme jellybeans " colorscheme
 
@@ -110,6 +112,8 @@ highlight GitGutterAdd guifg=#009900 ctermfg=Green
 highlight GitGutterChange guifg=#bbbb00 ctermfg=Yellow
 highlight GitGutterDelete guifg=#ff2222 ctermfg=Red
 highlight! link SignColumn LineNr
+highlight CocFloating ctermfg=White ctermbg=242 guifg=#bbb5b5 guibg=#1f1f1f
+
 
 " other
 set foldmethod=marker " enable marker folding
@@ -117,7 +121,7 @@ set hidden            " change buffer without saving
 set mouse=a           " enable mouse
 
 " python path related
-let g:python3_host_prog = expand('~/.pyenv/versions/3.6.4/bin/python')
+let g:python3_host_prog = expand('~/.pyenv/versions/3.7.10/bin/python')
 
 " undo
 if has('persistent_undo')
@@ -165,6 +169,8 @@ nnoremap <C-w>\| :<C-u>vs<CR>
 
 " tab manipulation setting
 nnoremap <silent>tt :tabnew<CR>
+nnoremap <silent>tl :tabnext<CR>
+nnoremap <silent>th :tabprevious<CR>
 
 " copy to clipboard from vim over ssh with osc52
 " https://sunaku.github.io/tmux-yank-osc52.html
@@ -177,4 +183,10 @@ function! Yank(text) abort
   endif
 endfunction
 noremap <silent> <Leader>y y:<C-U>call Yank(@0)<CR>
+
+" enable spell check
+augroup GitSpellCheck
+    autocmd!
+    autocmd FileType gitcommit setlocal spell
+augroup END
 " }}}
