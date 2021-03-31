@@ -43,5 +43,5 @@
   "python.analysis.diagnosticMode": "openFilesOnly",
   "python.linting.flake8Enabled": true,
   "python.formatting.provider": "black",
-  "pyright.disableDiagnostics": false
+  "pyright.disableDiagnostics": true
 }

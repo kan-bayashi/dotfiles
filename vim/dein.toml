@@ -70,38 +70,6 @@ hook_add = '''
   let g:lightline#coc#indicator_warnings = "\uf420 "
   let g:lightline#coc#indicater_ok = "\uf42e "
 
-  " let g:lightline_error_symbol = "\uf41b "
-  " let g:lightline_warn_symbol = "\uf420 "
-  " let g:lightline_ok_symbol = "\uf42e "
-
-  " function! LightLineLinterWarnings() abort
-  "   let l:counts = ale#statusline#Count(bufnr(''))
-  "   let l:all_errors = l:counts.error + l:counts.style_error
-  "   let l:all_non_errors = l:counts.total - l:all_errors
-  "   return l:counts.total == 0 ? '' : printf('%d '. g:lightline_warn_symbol, all_non_errors)
-  " endfunction
-  "
-  " function! LightLineLinterErrors() abort
-  "   let l:counts = ale#statusline#Count(bufnr(''))
-  "   let l:all_errors = l:counts.error + l:counts.style_error
-  "   let l:all_non_errors = l:counts.total - l:all_errors
-  "   return l:counts.total == 0 ? '' : printf('%d '. g:lightline_error_symbol, all_errors)
-  " endfunction
-  "
-  " function! LightLineLinterOK() abort
-  "   let l:counts = ale#statusline#Count(bufnr(''))
-  "   let l:all_errors = l:counts.error + l:counts.style_error
-  "   let l:all_non_errors = l:counts.total - l:all_errors
-  "   return l:counts.total == 0 ? g:lightline_ok_symbol : ''
-  " endfunction
-  "
-  " augroup LightLineLinter
-  "   autocmd!
-  "   autocmd User ALEJobStarted call lightline#update()
-  "   autocmd User ALELintPost call lightline#update()
-  "   autocmd User ALEFixPost call lightline#update()
-  " augroup END
-
   function! LightLineMode()
     return  &ft == 'unite' ? 'Unite' :
           \ &ft == 'vimfiler' ? 'VimFiler' :
@@ -429,6 +397,5 @@ command! -nargs=0 Format :call CocAction('format')
 
 " Add `:OR` command for organize imports of the current buffer.
 command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
-
 '''
 # }}}
