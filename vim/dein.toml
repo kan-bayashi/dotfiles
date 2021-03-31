@@ -23,7 +23,7 @@ repo = 'josa42/vim-lightline-coc'
 
 [[plugins]]
 repo = 'itchyny/lightline.vim'
-depends = ['vim-fugitive', 'vim-gitgutter']
+depends = ['vim-fugitive', 'vim-gitgutter', 'vim-lightline-coc']
 hook_add = '''
   let g:lightline = {
     \ 'colorscheme': 'jellybeans',
@@ -353,11 +353,32 @@ hook_add = 'let g:rooter_silent_chdir = 1'
 #############################
 # {{{
 [[plugins]]
+repo = 'SirVer/ultisnips'
+hook_add = '''
+  let g:UltiSnipsExpandTrigger = "<nop>"
+'''
+
+[[plugins]]
+repo = 'honza/vim-snippets'
+
+[[plugins]]
 repo = 'neoclide/coc.nvim'
 rev = 'release'
 hook_add = '''
 " Default install packages
-let g:coc_global_extensions = ['coc-json', 'coc-pyright', 'coc-diagnostic']
+let g:coc_global_extensions = [
+      \ 'coc-json',
+      \ 'coc-pyright',
+      \ 'coc-diagnostic',
+      \ 'coc-word',
+      \ 'coc-syntax',
+      \ 'coc-snippets',
+      \ ]
+
+" Use <C-k> for trigger snippet expand.
+imap <C-k> <Plug>(coc-snippets-expand)
+let g:coc_snippet_next = '<C-n>'
+let g:coc_snippet_prev = '<C-p>'
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
@@ -367,16 +388,7 @@ inoremap <silent><expr> <TAB>
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" Make <CR> auto-select the first completion item and notify coc.nvim to
-" format on enter, <cr> could be remapped by other vim plugin
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
