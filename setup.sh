@@ -21,6 +21,7 @@ done
 [ ! -e ~/.config ] && mkdir -p ~/.config
 ln -s "${PWD}"/vim/dein.toml ~/.vim/rc
 ln -s "${PWD}"/vim/dein_lazy.toml ~/.vim/rc
+ln -s "${PWD}"/vim/coc-settings.json ~/.vim
 ln -s ~/.vim ~/.config/nvim
 ln -s ~/.vimrc ~/.config/nvim/init.vim
 echo "Made symlink of vim related files."
