@@ -50,7 +50,6 @@ hook_source = '''
 hook_add = '''
   " shortcut setting
   nnoremap <silent> <C-f>f :<C-u>Denite -winheight=15 file/rec<CR>
-  nnoremap <silent> <C-f>r :<C-u>Denite -winheight=15 file_mru<CR>
   nnoremap <silent> <C-f>d :<C-u>Denite -winheight=15 directory_rec<CR>
   nnoremap <silent> <C-f>g :<C-u>Denite -winheight=15 grep<CR>
   nnoremap <silent> <C-f>b :<C-u>Denite -winheight=15 buffer<CR>
@@ -59,10 +58,6 @@ hook_add = '''
   nnoremap <silent> <C-f>/ :<C-u>Denite -winheight=15 -auto-highlight line<CR>
   nnoremap <silent> <C-f>* :<C-u>DeniteCursorWord -winheight=15 -auto-highlight -mode=normal line<CR>
 '''
-
-[[plugins]]
-repo = 'Shougo/neomru.vim'
-on_source = ['denite.nvim']
 # }}}
 
 #############################
