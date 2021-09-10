@@ -30,6 +30,6 @@ tbd() {
         logdir_id=$(basename "${logdir}")
         logdirs+="${logdir_id}:${logdir},"
     done
-    echo "tensorboard --port ${port} --logdir=${logdirs:0:-1}"
-    tensorboard --port ${port} --logdir=${logdirs:0:-1}
+    echo "tensorboard --port ${port} --logdir_spec=${logdirs:0:-1}"
+    tensorboard --port ${port} --logdir_spec=${logdirs:0:-1}
 }

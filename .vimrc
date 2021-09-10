@@ -156,6 +156,9 @@ noremap! <C-o> <ESC>
 nnoremap <C-f> <Nop>
 nnoremap <C-b> <Nop>
 
+" disable shift + J for many typo
+nnoremap <S-j> <Nop>
+
 " reopen current buffer file
 nnoremap <leader>e :e!<CR>
 
