@@ -40,5 +40,11 @@ ln -s "${PWD}"/ipython/ipython_config.py ~/.ipython/profile_default
 ln -s "${PWD}"/ipython/startup/keybindings.py ~/.ipython/profile_default/startup
 echo "Made symlink of ipython setting files."
 
+# make symlink to bin
+[ ! -e ~/local/bin ] && mkdir ~/local/bin
+for bin in "${PWD}"/bin/* ;do
+    ln -s "${bin}" ~/local/bin/
+done
+
 echo "Sucessfully setup dotfiles."
 echo "Next, please run install.sh to install essential tools."

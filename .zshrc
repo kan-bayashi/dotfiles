@@ -28,6 +28,7 @@ setopt HIST_FIND_NO_DUPS    # reduce deprecated cmd when finding
 setopt HIST_REDUCE_BLANKS   # remove blank
 setopt HIST_NO_STORE        # do not record history cmd
 setopt share_history        # share history among the tmux panes and windows
+unsetopt auto_remove_slash
 
 # function to refresh tmux env
 if [ -n "$TMUX" ]; then
@@ -157,12 +158,9 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:
 ########################
 # path setting
 if [ -z "$TMUX" ];then
-    export PYENV_ROOT=$HOME/.pyenv
-    export PATH=$PYENV_ROOT/bin:$PATH
     export PATH=/usr/local/bin:$PATH
     export PATH=$HOME/local/bin:$PATH
 fi
-eval "$(pyenv init -)"
 
 # alias settings
 if which lsd > /dev/null; then

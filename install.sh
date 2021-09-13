@@ -1,9 +1,8 @@
 #!/bin/bash -e
 
-# Pyenv-pythons, Vim8, Neovim, and Tmux installation script
+# Pyenv-pythons, Neovim, and Tmux installation script
 # Copyright 2019 Tomoki Hayashi
 
-PYTHON2_VERSION=2.7.14
 PYTHON3_VERSION=3.7.10
 
 # check and install dependencies
@@ -69,7 +68,7 @@ fi
 # install pyenv
 if [ ! -e ~/.pyenv ];then
     echo "Installing pyenv..."
-    git clone https://github.com/yyuu/pyenv.git ~/.pyenv
+    git clone https://github.com/yyuu/pyenv.git -b v2.0.6 ~/.pyenv
 fi
 
 # install fzf
@@ -85,11 +84,6 @@ export PATH=${HOME}/.pyenv/bin:$PATH
 eval "$(pyenv init -)"
 
 # install enable-shared python using pyenv
-if [ ! -e "${HOME}"/.pyenv/versions/${PYTHON2_VERSION} ];then
-    CONFIGURE_OPTS="--enable-shared" pyenv install ${PYTHON2_VERSION}
-else
-    echo "Python ${PYTHON2_VERSION} is already installed."
-fi
 if [ ! -e "${HOME}"/.pyenv/versions/${PYTHON3_VERSION} ];then
     CONFIGURE_OPTS="--enable-shared" pyenv install ${PYTHON3_VERSION}
 else
@@ -98,17 +92,10 @@ fi
 
 # set python
 pyenv shell --unset
-pyenv global ${PYTHON2_VERSION} ${PYTHON3_VERSION}
+pyenv global ${PYTHON3_VERSION}
 
 # check python version
-python2_version=$(python --version 2>&1)
 python3_version=$(python3 --version 2>&1)
-if [ "${python2_version}" = "Python ${PYTHON2_VERSION}" ];then
-    echo Python 2 version check is OK.
-else
-    echo Python 2 version check is failed.
-    exit 1
-fi
 if [ "${python3_version}" = "Python ${PYTHON3_VERSION}" ];then
     echo Python 3 version check is OK.
 else
@@ -124,24 +111,6 @@ pip3 install -r requirements.txt
 # install vim
 ROOTDIR=$PWD
 TMPDIR=$(mktemp -d /tmp/XXXXX)
-if [ ! -e "${HOME}"/local/bin/vim ]; then
-    echo "installing vim 8..."
-    cd "$TMPDIR"
-    git clone https://github.com/vim/vim.git
-    cd vim
-    LDFLAGS="-Wl,-rpath=${HOME}/.pyenv/versions/${PYTHON2_VERSION}/lib:${HOME}/.pyenv/versions/${PYTHON3_VERSION}/lib" \
-        ./configure \
-        --enable-fail-if-missing \
-        --enable-pythoninterp=dynamic \
-        --enable-python3interp=dynamic \
-        --with-features=huge \
-        --enable-luainterp \
-        --enable-cscope \
-        --enable-fontset \
-        --enable-multibyte \
-        --prefix="${HOME}"/local
-    make -j && make install
-fi
 
 # install nvim
 if [ ! -e "${HOME}"/local/bin/nvim ]; then
@@ -179,8 +148,6 @@ echo "installing vim plugins..."
 export PATH=${HOME}/local/bin:$PATH
 [ ! -e ~/.cache/dein/repos/github.com/Shougo/dein.vim ] && \
     git clone https://github.com/Shougo/dein.vim ~/.cache/dein/repos/github.com/Shougo/dein.vim
-vim -c "try | call dein#install() | finally | qall! | endtry" -N -u "${HOME}"/.vimrc -V1 -es
-vim -c "try | call dein#update() | finally | qall! | endtry" -N -u "${HOME}"/.vimrc -V1 -es
 nvim -c "try | call dein#install() | finally | qall! | endtry" -N -u "${HOME}"/.vim/init.vim -V1 -es
 nvim -c "try | call dein#update() | finally | qall! | endtry" -N -u "${HOME}"/.vim/init.vim -V1 -es
 
