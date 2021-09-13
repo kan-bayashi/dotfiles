@@ -192,6 +192,9 @@ repo = 'Shougo/vimproc.vim'
 build = 'make'
 
 [[plugins]]
+repo = 'lambdalisue/suda.vim'
+
+[[plugins]]
 repo = 'machakann/vim-highlightedyank'
 
 [[plugins]]
@@ -208,9 +211,9 @@ hook_add = '''
 [[plugins]]
 repo = 'tpope/vim-fugitive'
 hook_add = '''
-  nnoremap <space>gs :Gstatus<CR>
+  nnoremap <space>gs :Git<CR>
   nnoremap <space>ga :Gwrite<CR>
-  nnoremap <space>gc :Gcommit<CR>
+  nnoremap <space>gc :Git commit<CR>
 '''
 
 [[plugins]]
@@ -354,6 +357,11 @@ inoremap <silent><expr> <TAB>
       \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.

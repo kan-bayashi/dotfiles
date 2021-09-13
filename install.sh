@@ -1,7 +1,9 @@
 #!/bin/bash -e
 
-# Pyenv-pythons, Vim8, Neovim, and Tmux installation script
+# Pyenv-pythons, Neovim, and Tmux installation script
 # Copyright 2019 Tomoki Hayashi
+
+PYTHON3_VERSION=3.7.10
 
 # install zplug
 if [ ! -e ~/.zplug ];then
@@ -18,7 +20,7 @@ fi
 # install pyenv
 if [ ! -e ~/.pyenv ];then
     echo "Installing pyenv..."
-    git clone https://github.com/yyuu/pyenv.git ~/.pyenv
+    git clone https://github.com/yyuu/pyenv.git -b v2.0.6 ~/.pyenv
 fi
 
 # install fzf
@@ -26,27 +28,27 @@ if [ ! -e ~/.fzf ];then
     echo "Installing fzf..."
     git clone https://github.com/junegunn/fzf.git ~/.fzf
     workdir=${PWD}
-    cd ~/.fzf && ./install --key-bindings --no-completion --no-update-rc && cd ${workdir}
+    cd ~/.fzf && ./install --key-bindings --no-completion --no-update-rc && cd "${workdir}"
 fi
 
 # pyenv init
 export PATH=${HOME}/.pyenv/bin:$PATH
-eval "$(pyenv init -)"
+eval "$(pyenv init --path)"
 
 # install enable-shared python using pyenv
-if [ ! -e "${HOME}"/.pyenv/versions/3.6.4 ];then
-    CONFIGURE_OPTS="--enable-shared" pyenv install 3.6.4
+if [ ! -e "${HOME}"/.pyenv/versions/${PYTHON3_VERSION} ];then
+    pyenv install ${PYTHON3_VERSION}
 else
-    echo "Python 3.6.4 is already installed."
+    echo "Python ${PYTHON3_VERSION} is already installed."
 fi
 
 # set python
 pyenv shell --unset
-pyenv global 3.6.4
+pyenv global ${PYTHON3_VERSION}
 
 # check python version
 python3_version=$(python3 --version 2>&1)
-if [ "${python3_version}" = "Python 3.6.4" ];then
+if [ "${python3_version}" = "Python ${PYTHON3_VERSION}" ];then
     echo Python 3 version check is OK.
 else
     echo Python 3 version check is failed.
@@ -54,14 +56,15 @@ else
 fi
 
 # install python libraries
+pip3 install -U pip
+pip3 install -U setuptools
 pip3 install -r requirements.txt
 
 # install nvim
-mkdir -p ${HOME}/local/bin
-if [ ! -e ${HOME}/local/bin/nvim ]; then
+if [ ! -e "${HOME}"/local/bin/nvim ]; then
     echo "installing neovim..."
-    cd ${HOME}/local/bin
-    wget https://github.com/neovim/neovim/releases/download/v0.4.3/nvim.appimage
+    cd "${HOME}"/local/bin
+    wget https://github.com/neovim/neovim/releases/download/v0.4.4/nvim.appimage
     chmod u+x nvim.appimage
     if ./nvim.appimage --version >& /dev/null; then
         ln -s ./nvim.appimage nvim
@@ -101,8 +104,8 @@ echo "installing vim plugins..."
 export PATH=${HOME}/local/bin:$PATH
 [ ! -e ~/.cache/dein/repos/github.com/Shougo/dein.vim ] && \
     git clone https://github.com/Shougo/dein.vim ~/.cache/dein/repos/github.com/Shougo/dein.vim
-nvim -c "try | call dein#install() | finally | qall! | endtry" -N -u ${HOME}/.vim/init.vim -V1 -es
-nvim -c "try | call dein#update() | finally | qall! | endtry" -N -u ${HOME}/.vim/init.vim -V1 -es
+nvim -c "try | call dein#install() | finally | qall! | endtry" -N -u "${HOME}"/.vim/init.vim -V1 -es
+nvim -c "try | call dein#update() | finally | qall! | endtry" -N -u "${HOME}"/.vim/init.vim -V1 -es
 
 echo ""
 echo "Sucessfully installed essential tools."
