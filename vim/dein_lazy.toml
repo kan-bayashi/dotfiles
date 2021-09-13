@@ -3,8 +3,8 @@
 #############################
 # {{{
 [[plugins]]
-repo = 'Shougo/denite.nvim'
-rev = '2.1'
+repo = 'kan-bayashi/denite.nvim'
+rev = '2.2'
 on_cmd = 'Denite'
 hook_source = '''
   " default settings
