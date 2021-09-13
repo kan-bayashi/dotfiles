@@ -314,6 +314,44 @@ hook_add = 'let g:fastfold_fold_command_suffixes = []'
 [[plugins]]
 repo     = 'airblade/vim-rooter'
 hook_add = 'let g:rooter_silent_chdir = 1'
+
+[[plugins]]
+repo = 'gelguy/wilder.nvim'
+hook_add = '''
+call wilder#setup({'modes': [':', '/', '?']})
+call wilder#set_option('renderer', wilder#popupmenu_renderer(wilder#popupmenu_border_theme({
+      \ 'highlighter': wilder#basic_highlighter(),
+      \ 'highlights': {
+      \   'accent': wilder#make_hl('WilderAccent', 'Pmenu', [{}, {}, {'foreground': '#ffc400'}]),
+      \ },
+      \ 'max_height': '40%',
+      \ 'border': 'rounded',
+      \ 'empty_message': wilder#popupmenu_empty_message_with_spinner(),
+      \ 'left': [
+      \   ' ',
+      \   wilder#popupmenu_devicons(),
+      \   wilder#popupmenu_buffer_flags({
+      \     'flags': ' a + ',
+      \     'icons': {'+': '', 'a': '', 'h': ''},
+      \   }),
+      \ ],
+      \ 'right': [
+      \   ' ',
+      \   wilder#popupmenu_scrollbar(),
+      \ ],
+      \ })))
+call wilder#set_option('pipeline', [
+      \   wilder#branch(
+      \     wilder#python_file_finder_pipeline({
+      \       'file_command': ['fd', '--type', 'file', '--ignore-file', expand('~/.ignore'), '.'],
+      \       'dir_command': ['fd', '--type', 'directory', '--hidden', '--no-ignore', '.'],
+      \       'filters': ['fuzzy_filter', 'difflib_sorter'],
+      \     }),
+      \     wilder#cmdline_pipeline(),
+      \     wilder#python_search_pipeline(),
+      \   ),
+      \ ])
+'''
 # }}}
 
 #############################
