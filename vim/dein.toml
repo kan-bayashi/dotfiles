@@ -214,6 +214,7 @@ hook_add = '''
   nnoremap <space>gs :Git<CR>
   nnoremap <space>ga :Gwrite<CR>
   nnoremap <space>gc :Git commit<CR>
+  autocmd FileType fugitive nmap <buffer> q gq
 '''
 
 [[plugins]]
@@ -351,6 +352,12 @@ call wilder#set_option('pipeline', [
       \     wilder#python_search_pipeline(),
       \   ),
       \ ])
+'''
+
+[[plugins]]
+repo = 'skanehira/translate.vim'
+hook_add = '''
+  let g:translate_popup_window = 1
 '''
 # }}}
 
