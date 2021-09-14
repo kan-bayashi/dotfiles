@@ -22,4 +22,4 @@ pytest
 hacking
 flake8-docstrings
 black
-autopep8
+isort
