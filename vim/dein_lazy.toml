@@ -77,8 +77,8 @@ hook_add = '''
   nmap <Space>ht :GitGutterLineHighlightsToggle<CR>
   nmap <Space>ha <Plug>(GitGutterStageHunk)
   nmap <Space>hu <Plug>(GitGutterUndoHunk)
-  nmap hn <Plug>(GitGutterNextHunk)
-  nmap hp <Plug>(GitGutterPrevHunk)
+  nmap <Space>hn <Plug>(GitGutterNextHunk)
+  nmap <Space>hp <Plug>(GitGutterPrevHunk)
   set signcolumn=yes
   set updatetime=100
 '''
