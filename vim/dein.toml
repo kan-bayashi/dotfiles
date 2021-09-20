@@ -211,9 +211,9 @@ hook_add = '''
 [[plugins]]
 repo = 'tpope/vim-fugitive'
 hook_add = '''
-  nnoremap <space>gs :Gstatus<CR>
+  nnoremap <space>gs :Git<CR>
   nnoremap <space>ga :Gwrite<CR>
-  nnoremap <space>gc :Gcommit<CR>
+  nnoremap <space>gc :Git commit<CR>
 '''
 
 [[plugins]]
@@ -331,7 +331,7 @@ call wilder#set_option('renderer', wilder#popupmenu_renderer(wilder#popupmenu_bo
       \   ' ',
       \   wilder#popupmenu_devicons(),
       \   wilder#popupmenu_buffer_flags({
-      \     'flags': ' a + ',
+      \     'flags': ' a+ ',
       \     'icons': {'+': '', 'a': '', 'h': ''},
       \   }),
       \ ],
@@ -343,7 +343,7 @@ call wilder#set_option('renderer', wilder#popupmenu_renderer(wilder#popupmenu_bo
 call wilder#set_option('pipeline', [
       \   wilder#branch(
       \     wilder#python_file_finder_pipeline({
-      \       'file_command': ['fd', '--type', 'file', '--ignore-file', expand('~/.ignore'), '.'],
+      \       'file_command': ['fd', '--type', 'file', '-H', '--ignore-file', expand('~/.ignore'), '.'],
       \       'dir_command': ['fd', '--type', 'directory', '--hidden', '--no-ignore', '.'],
       \       'filters': ['fuzzy_filter', 'difflib_sorter'],
       \     }),
@@ -351,6 +351,12 @@ call wilder#set_option('pipeline', [
       \     wilder#python_search_pipeline(),
       \   ),
       \ ])
+'''
+
+[[plugins]]
+repo = 'skanehira/translate.vim'
+hook_add = '''
+  let g:translate_popup_window = 1
 '''
 # }}}
 

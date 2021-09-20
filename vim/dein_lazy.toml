@@ -76,7 +76,9 @@ on_event = ['RooterChDir']
 hook_add = '''
   nmap <Space>ht :GitGutterLineHighlightsToggle<CR>
   nmap <Space>ha <Plug>(GitGutterStageHunk)
-  nmap <Space>hr <Plug>(GitGutterUndoHunk)
+  nmap <Space>hu <Plug>(GitGutterUndoHunk)
+  nmap <Space>hn <Plug>(GitGutterNextHunk)
+  nmap <Space>hp <Plug>(GitGutterPrevHunk)
   set signcolumn=yes
   set updatetime=100
 '''
@@ -112,18 +114,6 @@ hook_add = '''
   nmap gP <Plug>(yankround-gP)
   nmap <C-p> <Plug>(yankround-prev)
   nmap <C-n> <Plug>(yankround-next)
-'''
-
-[[plugins]]
-repo = 'jpalardy/vim-slime'
-on_map = '<Plug>Slime'
-hook_add = '''
-  let g:slime_python_ipython = 1
-  let g:slime_dont_ask_default = 1
-  let g:slime_target = "tmux"
-  let g:slime_default_config = {"socket_name": "default", "target_pane": "1"}
-  xmap <C-c><C-c> <Plug>SlimeRegionSend
-  nmap <C-c><C-c> <Plug>SlimeParagraphSend
 '''
 
 [[plugins]]
