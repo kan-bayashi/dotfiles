@@ -43,5 +43,9 @@
   "python.analysis.diagnosticMode": "openFilesOnly",
   "python.linting.flake8Enabled": true,
   "python.formatting.provider": "black",
+  "python.formatting.blackArgs": ["--experimental-string-processing"],
+  "python.sortImports.path": "isort",
+  "python.sortImports.args": ["--lbt", "1", "--sl", "--sort-order", "native"],
+  "pyright.organizeimports.provider": "isort",
   "pyright.disableDiagnostics": true
 }

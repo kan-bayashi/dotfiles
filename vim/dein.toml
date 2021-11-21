@@ -214,6 +214,7 @@ hook_add = '''
   nnoremap <space>gs :Git<CR>
   nnoremap <space>ga :Gwrite<CR>
   nnoremap <space>gc :Git commit<CR>
+  autocmd FileType fugitive nmap <buffer> q gq
 '''
 
 [[plugins]]
@@ -322,7 +323,7 @@ call wilder#setup({'modes': [':', '/', '?']})
 call wilder#set_option('renderer', wilder#popupmenu_renderer(wilder#popupmenu_border_theme({
       \ 'highlighter': wilder#basic_highlighter(),
       \ 'highlights': {
-      \   'accent': wilder#make_hl('WilderAccent', 'Pmenu', [{}, {}, {'foreground': '#ffc400'}]),
+      \   'accent': wilder#make_hl('WilderAccent', 'Pmenu', [{}, {}, {'background': '#ffc400', 'bold': 1, 'underline': 1}]),
       \ },
       \ 'max_height': '40%',
       \ 'border': 'rounded',

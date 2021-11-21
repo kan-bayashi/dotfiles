@@ -189,3 +189,6 @@ fi
 if [ ~/.zshrc -nt ~/.zshrc.zwc ]; then
     zcompile ~/.zshrc
 fi
+
+# activate pyenv
+eval "$(pyenv init -)"
