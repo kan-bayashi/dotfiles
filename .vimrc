@@ -118,7 +118,8 @@ set hidden             " change buffer without saving
 set mouse=a            " enable mouse
 
 " python path related
-let g:python3_host_prog = expand('/usr/bin/python3')
+let g:python3_host_prog = expand('~/.pyenv/versions/3.8.12/bin/python3')
+
 " undo
 if has('persistent_undo')
   let undo_path = expand('~/.vim/undo')
