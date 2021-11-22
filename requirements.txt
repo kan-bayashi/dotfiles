@@ -1,9 +1,10 @@
 neovim>=0.3.1
-greenlet==0.4.10
+greenlet
 jedi>=0.13.1
 hacking
-numpy
-scipy
+isort
+black
+pdbpp
 ipython
+numpy
 matplotlib
-pudb
