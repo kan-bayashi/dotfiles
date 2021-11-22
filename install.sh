@@ -3,7 +3,7 @@
 # Dotfile install script
 # Copyright 2019 Tomoki Hayashi
 
-PYTHON3_VERSION=3.6.8
+PYTHON3_VERSION=3.8.12
 
 # check brew installation
 if ! command -v brew > /dev/null; then
@@ -30,21 +30,45 @@ if [ ! -e ~/.fzf ];then
     cd ~/.fzf && ./install && cd "${workdir}"
 fi
 
-# install pyenv
-if [ ! -e ~/.pyenv ];then
-    git clone https://github.com/yyuu/pyenv.git ~/.pyenv
-fi
-
 # install essential tools
-for tool in zsh fd ripgrep tmux lsd bat; do
+for tool in pyenv zsh fd ripgrep tmux lsd bat; do
     ! brew ls --versions ${tool} > /dev/null && brew install ${tool}
 done
+
+# pyenv init
+export PATH=/opt/homebrew/bin:$PATH
+eval "$(pyenv init --path)"
+
+# install enable-shared python using pyenv
+if [ ! -e "${HOME}"/.pyenv/versions/${PYTHON3_VERSION} ];then
+    pyenv install ${PYTHON3_VERSION}
+else
+    echo "Python ${PYTHON3_VERSION} is already installed."
+fi
+
+# set python
+pyenv shell --unset
+pyenv global ${PYTHON3_VERSION}
+
+# check python version
+python3_version=$(python3 --version 2>&1)
+if [ "${python3_version}" = "Python ${PYTHON3_VERSION}" ];then
+    echo Python 3 version check is OK.
+else
+    echo Python 3 version check is failed.
+    exit 1
+fi
+
+# install python libraries
+python -m pip install -U pip
+python -m pip install -U setuptools
+python -m pip install -r requirements.txt
 
 if [ ! -e ~/local/bin/nvim ];then
     mkdir -p ~/local/bin
     cwd=$(pwd)
     cd ~/local
-    wget wget https://github.com/neovim/neovim/releases/download/v0.4.4/nvim-macos.tar.gz
+    wget wget https://github.com/neovim/neovim/releases/download/v0.5.1/nvim-macos.tar.gz
     tar xzvf nvim-macos.tar.gz
     cd ~/local/bin
     ln -s ../nvim-osx64/bin/nvim .
@@ -52,24 +76,5 @@ if [ ! -e ~/local/bin/nvim ];then
 fi
 
 # install neovim
-sudo pip3 install neovim
-
-# FIXME: Cannot install in M1 mac
-# # install pyenv python3.6
-# if [ ! -e ~/.pyenv/versions/${PYTHON3_VERSION} ];then
-#     # install dependencies for pyenv python installation
-#     for tool in readline xz; do
-#         ! brew ls --versions ${tool} > /dev/null && brew install ${tool}
-#     done
-#
-#     # install python3 through pyenv
-#     export PATH=$HOME/.pyenv/bin:$PATH
-#     eval "$(pyenv init -)"
-#     env PYTHON_CONFIGURE_OPTS="--enable-framework" pyenv install ${PYTHON3_VERSION}
-#     pyenv global ${PYTHON3_VERSION}
-#     ~/.pyenv/shims/pip install --upgrade pip
-#     ~/.pyenv/shims/pip install -r requirements.txt
-# fi
-
 echo "Sucessfully finished installation."
 echo "Please run exec zsh -l."

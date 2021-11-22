@@ -10,7 +10,7 @@ for f in .??*; do
     [[ "$f" == ".DS_Store" ]] && continue
     [[ "$f" == ".travis.yml" ]] && continue
     [ -e ~/"$f" ] && rm -f ~/"$f".bak && mv ~/"$f" ~/"$f".bak
-    ln -s "$PWD"/"$f" ~/
+    ln -s "${PWD}"/"$f" ~/
     echo "Made symlink of $f"
 done
 
