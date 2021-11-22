@@ -1,0 +1,11 @@
+{
+  "include": [
+      "**/*"
+  ],
+  "exclude": [
+      "**/__pycache__",
+      ".git"
+  ],
+  // "venvPath": "",
+  // "venv": ""
+}

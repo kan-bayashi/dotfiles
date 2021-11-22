@@ -19,8 +19,11 @@ if = '''!has('nvim')'''
 #############################
 # {{{
 [[plugins]]
+repo = 'josa42/vim-lightline-coc'
+
+[[plugins]]
 repo = 'itchyny/lightline.vim'
-depends = ['vim-fugitive', 'vim-gitgutter', 'ale']
+depends = ['vim-fugitive', 'vim-gitgutter', 'vim-lightline-coc']
 hook_add = '''
   let g:lightline = {
     \ 'colorscheme': 'jellybeans',
@@ -35,7 +38,7 @@ hook_add = '''
     \             ['gitguitter'],
     \             ['filename'],
     \           ],
-    \   'right': [ ['linter_ok', 'linter_errors', 'linter_warnings'],
+    \   'right': [ ['linter_ok', 'linter_errors', 'linter_warnings', 'linter_info'],
     \              ['percent'],
     \              ['fileformat', 'fileencoding', 'filetype'],
     \            ]
@@ -46,54 +49,26 @@ hook_add = '''
     \   'filename': 'LightLineFilename',
     \   'filetype': 'LightLineFiletype',
     \   'fileformat': 'LightLineFileformat',
-    \   'gitguitter': 'LightLineGitGutter',
-    \   'linter_warnings': 'LightLineLinterWarnings',
-    \   'linter_errors': 'LightLineLinterErrors',
-    \   'linter_ok': 'LightLineLinterOK'
+    \   'gitguitter': 'LightLineGitGutter'
     \ },
     \ 'component_expand': {
-    \   'linter_warnings': 'LightLineLinterWarnings',
-    \   'linter_errors': 'LightLineLinterErrors',
-    \   'linter_ok': 'LightLineLinterOK'
+    \   'linter_info': 'lightline#coc#info',
+    \   'linter_warnings': 'lightline#coc#warnings',
+    \   'linter_errors': 'lightline#coc#errors',
+    \   'linter_ok': 'lightline#coc#ok'
     \ },
     \ 'component_type': {
+    \   'linter_info': 'info',
     \   'linter_warnings': 'warning',
     \   'linter_errors': 'error',
     \   'linter_ok': 'ok'
     \ }
     \ }
 
-  let g:lightline_error_symbol = "\uf41b "
-  let g:lightline_warn_symbol = "\uf420 "
-  let g:lightline_ok_symbol = "\uf42e "
-
-  function! LightLineLinterWarnings() abort
-    let l:counts = ale#statusline#Count(bufnr(''))
-    let l:all_errors = l:counts.error + l:counts.style_error
-    let l:all_non_errors = l:counts.total - l:all_errors
-    return l:counts.total == 0 ? '' : printf('%d '. g:lightline_warn_symbol, all_non_errors)
-  endfunction
-
-  function! LightLineLinterErrors() abort
-    let l:counts = ale#statusline#Count(bufnr(''))
-    let l:all_errors = l:counts.error + l:counts.style_error
-    let l:all_non_errors = l:counts.total - l:all_errors
-    return l:counts.total == 0 ? '' : printf('%d '. g:lightline_error_symbol, all_errors)
-  endfunction
-
-  function! LightLineLinterOK() abort
-    let l:counts = ale#statusline#Count(bufnr(''))
-    let l:all_errors = l:counts.error + l:counts.style_error
-    let l:all_non_errors = l:counts.total - l:all_errors
-    return l:counts.total == 0 ? g:lightline_ok_symbol : ''
-  endfunction
-
-  augroup LightLineLinter
-    autocmd!
-    autocmd User ALEJobStarted call lightline#update()
-    autocmd User ALELintPost call lightline#update()
-    autocmd User ALEFixPost call lightline#update()
-  augroup END
+  let g:lightline#coc#indicator_info = "\uf449 "
+  let g:lightline#coc#indicator_errors = "\uf41b "
+  let g:lightline#coc#indicator_warnings = "\uf420 "
+  let g:lightline#coc#indicater_ok = "\uf42e "
 
   function! LightLineMode()
     return  &ft == 'unite' ? 'Unite' :
@@ -236,15 +211,15 @@ hook_add = '''
 [[plugins]]
 repo = 'tpope/vim-fugitive'
 hook_add = '''
-  nnoremap <space>gs :Gstatus<CR>
+  nnoremap <space>gs :Git<CR>
   nnoremap <space>ga :Gwrite<CR>
-  nnoremap <space>gc :Gcommit<CR>
+  nnoremap <space>gc :Git commit<CR>
+  autocmd FileType fugitive nmap <buffer> q gq
 '''
 
 [[plugins]]
 repo = 'rhysd/committia.vim'
 hook_add='''
-  let g:committia_open_only_vim_starting = 0
   let g:committia_hooks = {}
   function! g:committia_hooks.edit_open(info)
     " additional settings
@@ -342,39 +317,135 @@ repo     = 'airblade/vim-rooter'
 hook_add = 'let g:rooter_silent_chdir = 1'
 
 [[plugins]]
-repo = 'kana/vim-submode'
+repo = 'gelguy/wilder.nvim'
 hook_add = '''
-  let g:submode_keep_leaving_key = 1
-  call submode#enter_with('tabmove', 'n', '', 'tl', 'gt')
-  call submode#enter_with('tabmove', 'n', '', 'th', 'gT')
-  call submode#map('tabmove', 'n', '', 'l', 'gt')
-  call submode#map('tabmove', 'n', '', 'h', 'gT')
+call wilder#setup({'modes': [':', '/', '?']})
+call wilder#set_option('renderer', wilder#popupmenu_renderer(wilder#popupmenu_border_theme({
+      \ 'highlighter': wilder#basic_highlighter(),
+      \ 'highlights': {
+      \   'accent': wilder#make_hl('WilderAccent', 'Pmenu', [{}, {}, {'background': '#ffc400', 'bold': 1, 'underline': 1}]),
+      \ },
+      \ 'max_height': '40%',
+      \ 'border': 'rounded',
+      \ 'empty_message': wilder#popupmenu_empty_message_with_spinner(),
+      \ 'left': [
+      \   ' ',
+      \   wilder#popupmenu_devicons(),
+      \   wilder#popupmenu_buffer_flags({
+      \     'flags': ' a+ ',
+      \     'icons': {'+': '', 'a': '', 'h': ''},
+      \   }),
+      \ ],
+      \ 'right': [
+      \   ' ',
+      \   wilder#popupmenu_scrollbar(),
+      \ ],
+      \ })))
+call wilder#set_option('pipeline', [
+      \   wilder#branch(
+      \     wilder#python_file_finder_pipeline({
+      \       'file_command': ['fd', '--type', 'file', '-H', '--ignore-file', expand('~/.ignore'), '.'],
+      \       'dir_command': ['fd', '--type', 'directory', '--hidden', '--no-ignore', '.'],
+      \       'filters': ['fuzzy_filter', 'difflib_sorter'],
+      \     }),
+      \     wilder#cmdline_pipeline(),
+      \     wilder#python_search_pipeline(),
+      \   ),
+      \ ])
 '''
 
 [[plugins]]
-repo = 'w0rp/ale'
+repo = 'skanehira/translate.vim'
 hook_add = '''
-  " key mapping
-  nmap <silent> <SPACE>j <Plug>(ale_next_wrap)
-  nmap <silent> <SPACE>k <Plug>(ale_previous_wrap)
+  let g:translate_popup_window = 1
+'''
+# }}}
 
-  " general settings
-  let g:ale_open_list = 0
-  let g:ale_list_window_size = 5
-  let g:ale_lint_delay = 1000
-  let g:ale_lint_on_enter = 0
+#############################
+#        LSP PLUGINS        #
+#############################
+# {{{
+[[plugins]]
+repo = 'SirVer/ultisnips'
+hook_add = '''
+  let g:UltiSnipsExpandTrigger = "<nop>"
+'''
 
-  " custom message and sign
-  let g:ale_echo_msg_error_str = '[ERROR]'
-  let g:ale_echo_msg_warning_str = '[WARNING]'
-  let g:ale_sign_error = "\uf41b"
-  let g:ale_sign_warning = "\uf420"
+[[plugins]]
+repo = 'honza/vim-snippets'
 
-  " linter setting
-  let g:ale_linters = {
-    \ 'python': ['flake8'],
-    \ 'sh': ['shellcheck'],
-    \ }
-  let g:ale_python_flake8_args="--max-line-length=120"
+[[plugins]]
+repo = 'neoclide/coc.nvim'
+rev = 'release'
+hook_add = '''
+" Default install packages
+let g:coc_global_extensions = [
+      \ 'coc-json',
+      \ 'coc-pyright',
+      \ 'coc-diagnostic',
+      \ 'coc-word',
+      \ 'coc-syntax',
+      \ 'coc-snippets',
+      \ ]
+
+" Use <C-k> for trigger snippet expand.
+imap <C-k> <Plug>(coc-snippets-expand)
+let g:coc_snippet_next = '<C-n>'
+let g:coc_snippet_prev = '<C-p>'
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> <space>d <Plug>(coc-definition)
+
+" Symbol renaming.
+nmap <space>r <Plug>(coc-rename)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
 '''
 # }}}
