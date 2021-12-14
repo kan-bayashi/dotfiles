@@ -165,6 +165,9 @@ nnoremap <leader>R :source ~/.vimrc<CR>
 " D like yank function
 nnoremap Y y$
 
+" For US keyboard
+map ; :
+
 " intuitive pane dividing
 nnoremap <C-w>- :<C-u>sp<CR>
 nnoremap <C-w>\| :<C-u>vs<CR>
