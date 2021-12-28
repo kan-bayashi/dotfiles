@@ -79,6 +79,13 @@ set showmatch    " highlight corresponding parentheses
 set completeopt-=preview " disable preview window in completion
 set shortmess+=c
 
+" file type specific setting
+augroup fileTypeIndent
+    autocmd!
+    autocmd BufNewFile,BufRead *.yaml setlocal tabstop=2 softtabstop=2 shiftwidth=2
+    autocmd BufNewFile,BufRead *.yml setlocal tabstop=2 softtabstop=2 shiftwidth=2
+augroup END
+
 " status line realted
 set number        " show line number
 set laststatus=2  " always show status number

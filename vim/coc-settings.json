@@ -47,5 +47,7 @@
   "python.sortImports.path": "isort",
   "python.sortImports.args": ["--lbt", "1", "--sl", "--sort-order", "native"],
   "pyright.organizeimports.provider": "isort",
-  "pyright.disableDiagnostics": true
+  "pyright.disableDiagnostics": true,
+  // yaml setting
+  "yaml.format.enable": true
 }
