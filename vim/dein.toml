@@ -257,7 +257,7 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'thinca/vim-qfreplace'
+repo = 'stefandtw/quickfix-reflector.vim'
 
 [[plugins]]
 repo = 'tomtom/tcomment_vim'
