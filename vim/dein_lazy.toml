@@ -40,10 +40,10 @@ require("telescope").setup{
     mappings = {
       n = {
         ["t"] = actions.select_tab,
-        ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
-        ["<S-q>"] = actions.send_to_qflist + actions.open_qflist,
         ["q"] = actions.close,
         ["dd"] = actions.delete_buffer,
+        ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+        ["<S-q>"] = actions.send_to_qflist + actions.open_qflist,
       },
       i = {
         ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
@@ -147,9 +147,40 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'scrooloose/nerdtree'
-on_cmd = ['NERDTreeToggle', 'NERDTree']
-hook_add = 'map <Space><Space> :NERDTreeToggle<CR>'
+repo = 'kyazdani42/nvim-tree.lua'
+on_cmd = ['NvimTreeToggle']
+hook_source = '''
+  lua << EOF
+require('nvim-tree').setup {}
+EOF
+'''
+hook_add = '''
+  let g:nvim_tree_icons = {
+    \ 'default': '',
+    \ 'symlink': '',
+    \ 'git': {
+    \   'unstaged': "✗",
+    \   'staged': "✓",
+    \   'unmerged': "",
+    \   'renamed': "➜",
+    \   'untracked': "★",
+    \   'deleted': "",
+    \   'ignored': "◌"
+    \   },
+    \ 'folder': {
+    \   'arrow_open': "",
+    \   'arrow_closed': "",
+    \   'default': "",
+    \   'open': "",
+    \   'empty': "",
+    \   'empty_open': "",
+    \   'symlink': "",
+    \   'symlink_open': "",
+    \   }
+    \ }
+  nnoremap <Space><Space> :NvimTreeToggle<CR>
+'''
+
 # }}}
 
 #############################
