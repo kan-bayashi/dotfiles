@@ -449,4 +449,18 @@ command! -nargs=0 Format :call CocAction('format')
 " Add `:OR` command for organize imports of the current buffer.
 command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
 '''
+
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter'
+hook_add = '''
+lua << EOF
+require('nvim-treesitter.configs').setup {
+  highlight = {
+    enable = true,
+  },
+  ensure_installed = 'maintained',
+  additional_vim_regex_highlighting = false,
+}
+EOF
+'''
 # }}}
