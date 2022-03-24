@@ -1,6 +1,7 @@
 #############################
 #       FILER PLUGINS       #
 #############################
+# {{{
 [[plugins]]
 repo = 'nvim-lua/plenary.nvim'
 
@@ -81,6 +82,7 @@ hook_add = '''
   nnoremap <silent> <C-f>/ :lua require("telescope.builtin").live_grep({search_dirs={vim.fn.expand("%:p")}, previewer=false})<CR>
   nnoremap <silent> <C-f><C-f> <cmd>Telescope resume<CR>
 '''
+# }}}
 
 #############################
 #      SOURCE ON EVENT      #
