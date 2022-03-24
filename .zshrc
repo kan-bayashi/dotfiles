@@ -158,7 +158,6 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:
 ########################
 # path setting
 if [ -z "$TMUX" ];then
-    export PATH=/usr/local/bin:$PATH
     export PATH=$HOME/local/bin:$PATH
 fi
 
