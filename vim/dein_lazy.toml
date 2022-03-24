@@ -16,9 +16,12 @@ repo = 'nvim-telescope/telescope-fzf-native.nvim'
 build = 'make'
 
 [[plugins]]
+repo = 'fannheyward/telescope-coc.nvim'
+
+[[plugins]]
 repo = 'nvim-telescope/telescope.nvim'
 on_cmd = 'Telescope'
-depends = ['plenary.nvim', 'telescope-emoji.nvim', 'nvim-web-devicons', 'telescope-fzf-native.nvim']
+depends = ['plenary.nvim', 'telescope-emoji.nvim', 'nvim-web-devicons', 'telescope-fzf-native.nvim', 'telescope-coc.nvim']
 hook_source = '''
   lua << EOF
 -- Import
@@ -32,6 +35,7 @@ require("telescope").setup{
     selection_caret = "  ",
     shorten_path = true,
     color_devicons = true,
+    winblend = 10,
     set_env = {['COLORTERM'] = 'truecolor'},
     mappings = {
       n = {
@@ -48,12 +52,12 @@ require("telescope").setup{
     },
   },
   pickers = {
-    find_files = themes.get_dropdown({ winblend = 10, layout_config = {height = 15, width = 100}, hidden = true}),
-    live_grep = themes.get_dropdown({ winblend = 10, layout_config = {height = 15, width = 100}}),
-    buffers = themes.get_dropdown({ winblend = 10, layout_config = {height = 15, width = 100}, initial_mode = 'normal'}),
-    git_status = themes.get_dropdown({ winblend = 10, layout_config = {height = 15, width = 100}}),
-    emoji = themes.get_dropdown({ winblend = 10, layout_config = {height = 15, width = 100}}),
-    grep_string = themes.get_dropdown({ winblend = 10, layout_config = {height = 15, width = 100}}),
+    find_files = themes.get_dropdown({ layout_config = {height = 15, width = 100}, hidden = true}),
+    live_grep = themes.get_dropdown({ layout_config = {height = 15, width = 100}}),
+    buffers = themes.get_dropdown({ layout_config = {height = 15, width = 100}, initial_mode = 'normal'}),
+    git_status = themes.get_dropdown({ layout_config = {height = 15, width = 100}}),
+    emoji = themes.get_dropdown({ layout_config = {height = 15, width = 120}}),
+    grep_string = themes.get_dropdown({ layout_config = {height = 15, width = 100}}),
   },
   extensions = {
     fzf = {
@@ -68,6 +72,7 @@ require("telescope").setup{
 -- Add extentions
 require('telescope').load_extension('fzf')
 require("telescope").load_extension("emoji")
+require("telescope").load_extension("coc")
 
 EOF
 '''
@@ -78,6 +83,7 @@ hook_add = '''
   nnoremap <silent> <C-f><C-g> <cmd>Telescope live_grep<CR>
   nnoremap <silent> <C-f>b <cmd>Telescope buffers<CR>
   nnoremap <silent> <C-f>e <cmd>Telescope emoji<CR>
+  nnoremap <silent> <C-f>q <cmd>Telescope coc diagnostics theme=dropdown layout_config={"height":15,"width":120}<CR>
   nnoremap <silent> <C-f>* <cmd>Telescope grep_string<CR>
   nnoremap <silent> <C-f>/ :lua require("telescope.builtin").live_grep({search_dirs={vim.fn.expand("%:p")}, previewer=false})<CR>
   nnoremap <silent> <C-f><C-f> <cmd>Telescope resume<CR>
@@ -189,4 +195,8 @@ repo = 'Shougo/context_filetype.vim'
 repo = 'osyo-manga/vim-precious'
 depends = ['context_filetype.vim']
 on_ft = ['toml', 'markdown']
+
+[[plugins]]
+repo = 'thinca/vim-qfreplace'
+on_ft = ['qf']
 # }}}
