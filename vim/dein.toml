@@ -251,9 +251,9 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'bronson/vim-trailing-whitespace'
+repo = 'ntpeters/vim-better-whitespace'
 hook_add = '''
-  let g:extra_whitespace_ignored_filetypes = ['nerdtree', 'startify', 'help']
+  let g:better_whitespace_filetypes_blacklist = ['nerdtree', 'startify', 'help']
 '''
 
 [[plugins]]
