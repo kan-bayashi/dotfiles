@@ -180,7 +180,11 @@ hook_add = '''
 repo = 'ryanoasis/vim-devicons'
 
 [[plugins]]
-repo = 'nanotech/jellybeans.vim'
+repo = 'rktjmp/lush.nvim'
+
+[[plugins]]
+repo = 'kan-bayashi/nvim-jellybeans'
+depends = ['lush.nvim']
 # }}}
 
 #############################
@@ -190,9 +194,6 @@ repo = 'nanotech/jellybeans.vim'
 [[plugins]]
 repo = 'Shougo/vimproc.vim'
 build = 'make'
-
-[[plugins]]
-repo = 'lambdalisue/suda.vim'
 
 [[plugins]]
 repo = 'machakann/vim-highlightedyank'
