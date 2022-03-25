@@ -166,7 +166,7 @@ nmap <C-n> <Plug>(yankround-next)
 
 [[plugins]]
 repo = 'kyazdani42/nvim-tree.lua'
-on_event = ['NvimTreeToggle']
+on_cmd = ['NvimTreeToggle']
 hook_source = '''
 lua << EOF
 require('nvim-tree').setup {}
@@ -219,10 +219,6 @@ let g:pydocstring_formatter = 'google'
 [[plugins]]
 repo  = 'masukomi/vim-markdown-folding'
 on_ft = 'markdown'
-
-[[plugins]]
-repo  = 'cespare/vim-toml'
-on_ft = 'toml'
 
 [[plugins]]
 repo        = 'elzr/vim-json'
