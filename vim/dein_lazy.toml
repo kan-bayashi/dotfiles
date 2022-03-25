@@ -58,6 +58,7 @@ require("telescope").setup{
     git_status = themes.get_dropdown({ layout_config = {height = 15, width = 100}}),
     emoji = themes.get_dropdown({ layout_config = {height = 15, width = 120}}),
     grep_string = themes.get_dropdown({ layout_config = {height = 15, width = 100}}),
+    oldfiles = themes.get_dropdown({ layout_config = {height = 15, width = 100}}),
   },
   extensions = {
     fzf = {
@@ -79,6 +80,7 @@ EOF
 hook_add = '''
   " shortcut setting
   nnoremap <silent> <C-f>f <cmd>Telescope find_files<CR>
+  nnoremap <silent> <C-f>r <cmd>Telescope oldfiles<CR>
   nnoremap <silent> <C-f>g <cmd>Telescope git_status<CR>
   nnoremap <silent> <C-f><C-g> <cmd>Telescope live_grep<CR>
   nnoremap <silent> <C-f>b <cmd>Telescope buffers<CR>
