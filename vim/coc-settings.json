@@ -49,5 +49,7 @@
   "pyright.organizeimports.provider": "isort",
   "pyright.disableDiagnostics": true,
   // yaml setting
-  "yaml.format.enable": true
+  "yaml.format.enable": true,
+  "toml.formatter.reorderKeys": false,
+  "toml.formatter.alignEntries": true
 }
