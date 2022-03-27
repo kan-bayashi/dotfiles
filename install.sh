@@ -97,9 +97,9 @@ pyenv global ${PYTHON3_VERSION}
 # check python version
 python3_version=$(python3 --version 2>&1)
 if [ "${python3_version}" = "Python ${PYTHON3_VERSION}" ];then
-    echo Python 3 version check is OK.
+    echo "Python 3 version check is OK."
 else
-    echo Python 3 version check is failed.
+    echo "Python 3 version check is failed."
     exit 1
 fi
 
