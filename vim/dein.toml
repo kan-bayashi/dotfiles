@@ -277,33 +277,17 @@ repo = 'glepnir/dashboard-nvim'
 hook_add = '''
 let g:dashboard_default_executive ='telescope'
 let g:dashboard_custom_header = [
-  \ '                                              ..                                            ',
-  \ '                                          .::::.                                            ',
-  \ '                             ___________ :;;;;:`____________                                ',
-  \ '                             \_________/ ?????L \__________/                                ',
-  \ '                               |.....| ????????> :.......''                                 ',
-  \ '                               |:::::| $$$$$$"`.:::::::'' ,                                 ',
-  \ '                              ,|:::::| $$$$"`.:::::::'' .OOS.                               ',
-  \ '                            ,7D|;;;;;| $$"`.;;;;;;;'' .OOO888S.                             ',
-  \ '                          .GDDD|;;;;;| ?`.;;;;;;;'' .OO8DDDDDNNS.                           ',
-  \ '                           ''DDO|IIIII| .7IIIII7'' .DDDDDDDDNNNF`                           ',
-  \ '                             ''D|IIIIII7IIIII7'' .DDDDDDDDNNNF`                             ',
-  \ '                               |EEEEEEEEEE7'' .DDDDDDDNNNNF`                                ',
-  \ '                               |EEEEEEEEZ'' .DDDDDDDDNNNF`                                  ',
-  \ '                               |888888Z'' .DDDDDDDDNNNF`                                    ',
-  \ '                               |8888Z'' ,DDDDDDDNNNNF`                                      ',
-  \ '                               |88Z''    "DNNNNNNN"                                         ',
-  \ '                               ''"''        "MMMM"                                          ',
-  \ '                                            ""                                              ',
-  \ '                                                                                            ',
-  \ '    ___    ____                                            __   _         _    ________  ___',
-  \ '   /   |  / / /  __  ______  __  __   ____  ___  ___  ____/ /  (_)____   | |  / /  _/  |/  /',
-  \ '  / /| | / / /  / / / / __ \/ / / /  / __ \/ _ \/ _ \/ __  /  / / ___/   | | / // // /|_/ / ',
-  \ ' / ___ |/ / /  / /_/ / /_/ / /_/ /  / / / /  __/  __/ /_/ /  / (__  )    | |/ // // /  / /  ',
-  \ '/_/  |_/_/_/   \__, /\____/\__,_/  /_/ /_/\___/\___/\__,_/  /_/____/     |___/___/_/  /_/   ',
-  \ '              /____/                                                                        ',
-  \ '',
-  \]
+\ '',
+\ '',
+\ '',
+\ ' ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗',
+\ ' ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║',
+\ ' ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║',
+\ ' ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║',
+\ ' ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║',
+\ ' ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝',
+\ '',
+\]
 '''
 
 [[plugins]]
@@ -435,14 +419,17 @@ function! s:show_documentation()
   endif
 endfunction
 
-" Remap <C-f> and <C-b> for scroll float windows/popups.
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Remap <C-d> and <C-u> for scroll float windows/popups.
 if has('nvim-0.4.0') || has('patch-8.2.0750')
-  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  nnoremap <silent><nowait><expr> <C-d> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-u> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-d> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-u> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-d> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-u> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 endif
 
 " Add `:Format` command to format current buffer.
@@ -460,7 +447,7 @@ require('nvim-treesitter.configs').setup {
   highlight = {
     enable = true,
   },
-  ensure_installed = 'maintained',
+  -- ensure_installed = 'maintained',
   additional_vim_regex_highlighting = false,
 }
 EOF
