@@ -31,7 +31,7 @@ if [ ! -e ~/.fzf ];then
 fi
 
 # install essential tools
-for tool in pyenv zsh fd ripgrep tmux lsd bat; do
+for tool in pyenv zsh fd ripgrep tmux lsd bat shellcheck fzf; do
     ! brew ls --versions ${tool} > /dev/null && brew install ${tool}
 done
 

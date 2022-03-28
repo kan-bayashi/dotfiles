@@ -77,6 +77,14 @@ set shiftwidth=4 " shift width in auto indent
 set autoindent   " enable auto indent
 set showmatch    " highlight corresponding parentheses
 set completeopt-=preview " disable preview window in completion
+set shortmess+=c
+
+" file type specific setting
+augroup fileTypeIndent
+    autocmd!
+    autocmd BufNewFile,BufRead *.yaml setlocal tabstop=2 softtabstop=2 shiftwidth=2
+    autocmd BufNewFile,BufRead *.yml setlocal tabstop=2 softtabstop=2 shiftwidth=2
+augroup END
 
 " status line realted
 set number        " show line number
@@ -101,24 +109,25 @@ if (has("termguicolors"))
   set termguicolors
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set pumblend=10
 endif
 colorscheme jellybeans " colorscheme
 
 " custom highlight color related (does not work with hook in dein...)
-highlight ALEErrorSign ctermfg=Red guifg=#cb484c guibg=#161515
-highlight GitGutterAdd ctermfg=Green guifg=#009900 guibg=#161515
-highlight GitGutterChange ctermfg=Yellow guifg=#bbbb00 guibg=#161515
-highlight GitGutterDelete ctermfg=Red guifg=#ff2222 guibg=#161515
-highlight SignColumn guibg=#161515
-highlight link SignColumn LineNr
+highlight GitGutterAdd guifg=#009900 ctermfg=Green
+highlight GitGutterChange guifg=#bbbb00 ctermfg=Yellow
+highlight GitGutterDelete guifg=#ff2222 ctermfg=Red
+highlight! link SignColumn LineNr
+highlight CocFloating ctermfg=White ctermbg=242 guifg=#bbb5b5 guibg=#1f1f1f
 
 " other
-set foldmethod=marker  " enable marker folding
-set hidden             " change buffer without saving
-set mouse=a            " enable mouse
+set foldmethod=marker " enable marker folding
+set hidden            " change buffer without saving
+set mouse=a           " enable mouse
 
 " python path related
-let g:python3_host_prog = expand('~/.pyenv/versions/3.8.12/bin/python3')
+" let g:python2_host_prog = expand('~/.pyenv/versions/2.7.14/bin/python')
+let g:python3_host_prog = expand('~/.pyenv/versions/3.7.10/bin/python')
 
 " undo
 if has('persistent_undo')
@@ -151,6 +160,9 @@ noremap! <C-o> <ESC>
 nnoremap <C-f> <Nop>
 nnoremap <C-b> <Nop>
 
+" disable shift + J for many typo
+nnoremap <S-j> <Nop>
+
 " reopen current buffer file
 nnoremap <leader>e :e!<CR>
 
@@ -160,12 +172,17 @@ nnoremap <leader>R :source ~/.vimrc<CR>
 " D like yank function
 nnoremap Y y$
 
+" For US keyboard
+map ; :
+
 " intuitive pane dividing
 nnoremap <C-w>- :<C-u>sp<CR>
 nnoremap <C-w>\| :<C-u>vs<CR>
 
 " tab manipulation setting
 nnoremap <silent>tt :tabnew<CR>
+nnoremap <silent>tl :tabnext<CR>
+nnoremap <silent>th :tabprevious<CR>
 
 " copy to clipboard from vim over ssh with osc52
 " https://sunaku.github.io/tmux-yank-osc52.html
