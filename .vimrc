@@ -81,9 +81,11 @@ set shortmess+=c
 
 " file type specific setting
 augroup fileTypeIndent
-    autocmd!
-    autocmd BufNewFile,BufRead *.yaml setlocal tabstop=2 softtabstop=2 shiftwidth=2
-    autocmd BufNewFile,BufRead *.yml setlocal tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd!
+  autocmd BufNewFile,BufRead *.yaml setlocal tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd BufNewFile,BufRead *.yml setlocal tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd BufNewFile,BufRead *.tf setlocal tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd Filetype vim setlocal tabstop=2 softtabstop=2 shiftwidth=2
 augroup END
 
 " status line realted
@@ -198,7 +200,7 @@ noremap <silent> <Leader>y y:<C-U>call Yank(@0)<CR>
 
 " enable spell check
 augroup GitSpellCheck
-    autocmd!
-    autocmd FileType gitcommit setlocal spell
+  autocmd!
+  autocmd FileType gitcommit setlocal spell
 augroup END
 " }}}

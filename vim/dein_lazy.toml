@@ -23,7 +23,7 @@ repo = 'TC72/telescope-tele-tabby.nvim'
 
 [[plugins]]
 repo = 'nvim-telescope/telescope.nvim'
-on_event = ['Telescope']
+on_event = ['BufRead']
 depends = [
   'plenary.nvim',
   'telescope-emoji.nvim',
