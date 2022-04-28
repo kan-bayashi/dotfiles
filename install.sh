@@ -3,55 +3,8 @@
 # Pyenv-pythons, Neovim, and Tmux installation script
 # Copyright 2019 Tomoki Hayashi
 
-PYTHON3_VERSION=3.7.10
-
-# check and install dependencies
-if [ -e /etc/lsb-release ];then
-    required_packages="build-essential libssl-dev zlib1g-dev libbz2-dev
-        libreadline-dev libsqlite3-dev llvm libncurses5-dev libncursesw5-dev
-        xz-utils tk-dev liblzma-dev python-openssl lua5.2 liblua5.2-dev luajit libevent-dev
-        make git zsh wget curl xclip xsel gawk"
-    install_packages=""
-    installed_packages=$(COLUMNS=200 dpkg -l | awk '{print $2}' | sed -e "s/\:.*$//g")
-    for package in ${required_packages}; do
-        echo -n "check ${package}..."
-        # shellcheck disable=SC2086
-        if echo "${installed_packages}" | grep -xq ${package}; then
-            echo "OK."
-        else
-            echo "Not installed."
-            install_packages="${install_packages} ${package}"
-        fi
-    done
-    if [ -n "${install_packages}" ]; then
-        echo "following packages will be installed: ${install_packages}"
-        # shellcheck disable=SC2086
-        sudo apt install -y ${install_packages}
-    fi
-elif [ -e /etc/redhat-release ]; then
-    required_packages="gcc zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel
-        openssl-devel xz xz-devel findutils lua-devel luajit-devel ncurses-devel perl-ExtUtils-Embed
-        ncurses-devel libevent-devel make git zsh wget curl xclip xsel"
-    install_packages=""
-    installed_packages=$(yum list installed | awk '{print $1}' | sed -e "s/\..*$//g")
-    for package in ${required_packages}; do
-        echo -n "check ${package}..."
-        # shellcheck disable=SC2086
-        if echo "${installed_packages}" | grep -xq ${package}; then
-            echo "OK."
-        else
-            echo "Not installed."
-            install_packages="${install_packages} ${package}"
-        fi
-    done
-    if [ -n "${install_packages}" ]; then
-        echo "following packages will be installed: ${install_packages}"
-        # shellcheck disable=SC2086
-        sudo yum install -y ${install_packages}
-    fi
-else
-    echo "WARNING: It seems that your environment is not tested."
-fi
+MINICONDA_VERSION=miniconda3-latest
+PYTHON3_VERSION=3.8.10
 
 # install zplug
 if [ ! -e ~/.zplug ];then
@@ -84,15 +37,19 @@ export PATH=${HOME}/.pyenv/bin:$PATH
 eval "$(pyenv init -)"
 
 # install enable-shared python using pyenv
-if [ ! -e "${HOME}"/.pyenv/versions/${PYTHON3_VERSION} ];then
-    CONFIGURE_OPTS="--enable-shared" pyenv install ${PYTHON3_VERSION}
+if [ ! -e "${HOME}"/.pyenv/versions/${MINICONDA_VERSION} ];then
+    pyenv install ${MINICONDA_VERSION}
 else
-    echo "Python ${PYTHON3_VERSION} is already installed."
+    echo "${MINICONDA_VERSION} is already installed."
 fi
 
 # set python
 pyenv shell --unset
-pyenv global ${PYTHON3_VERSION}
+pyenv global ${MINICONDA_VERSION}
+
+# install python via conda
+conda install -y python=${PYTHON3_VERSION}
+conda install -y pip setuptools numpy
 
 # check python version
 python3_version=$(python3 --version 2>&1)
@@ -104,9 +61,10 @@ else
 fi
 
 # install python libraries
-pip3 install -U pip
-pip3 install -U setuptools
 pip3 install -r requirements.txt
+
+# install other libraries
+conda install lua nodejs
 
 # install vim
 ROOTDIR=$PWD
@@ -116,7 +74,7 @@ TMPDIR=$(mktemp -d /tmp/XXXXX)
 if [ ! -e "${HOME}"/local/bin/nvim ]; then
     echo "installing neovim..."
     cd "${HOME}"/local/bin
-    wget https://github.com/neovim/neovim/releases/download/v0.6.1/nvim.appimage
+    wget https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
     chmod u+x nvim.appimage
     if ./nvim.appimage --version >& /dev/null; then
         ln -s ./nvim.appimage nvim
@@ -128,16 +86,16 @@ if [ ! -e "${HOME}"/local/bin/nvim ]; then
     fi
 fi
 
-# install tmux
-if [ ! -e "${HOME}"/local/bin/tmux ]; then
-    echo "installing tmux..."
-    cd "$TMPDIR"
-    wget https://github.com/tmux/tmux/releases/download/2.6/tmux-2.6.tar.gz
-    tar -xvf tmux-2.6.tar.gz
-    cd tmux-2.6
-    ./configure --prefix="${HOME}"/local
-    make -j && make install
-fi
+# # install tmux
+# if [ ! -e "${HOME}"/local/bin/tmux ]; then
+#     echo "installing tmux..."
+#     cd "$TMPDIR"
+#     wget https://github.com/tmux/tmux/releases/download/2.6/tmux-2.6.tar.gz
+#     tar -xvf tmux-2.6.tar.gz
+#     cd tmux-2.6
+#     ./configure --prefix="${HOME}"/local
+#     make -j && make install
+# fi
 
 # clean up
 cd "$ROOTDIR"
