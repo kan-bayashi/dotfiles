@@ -4,7 +4,7 @@
 # Copyright 2019 Tomoki Hayashi
 
 MINICONDA_VERSION=miniconda3-latest
-PYTHON3_VERSION=3.8.10
+PYTHON3_VERSION=3.8.2
 
 # install zplug
 if [ ! -e ~/.zplug ];then
@@ -64,11 +64,7 @@ fi
 pip3 install -r requirements.txt
 
 # install other libraries
-conda install lua nodejs
-
-# install vim
-ROOTDIR=$PWD
-TMPDIR=$(mktemp -d /tmp/XXXXX)
+conda install -y lua nodejs
 
 # install nvim
 if [ ! -e "${HOME}"/local/bin/nvim ]; then
@@ -85,29 +81,6 @@ if [ ! -e "${HOME}"/local/bin/nvim ]; then
         rm nvim.appimage
     fi
 fi
-
-# # install tmux
-# if [ ! -e "${HOME}"/local/bin/tmux ]; then
-#     echo "installing tmux..."
-#     cd "$TMPDIR"
-#     wget https://github.com/tmux/tmux/releases/download/2.6/tmux-2.6.tar.gz
-#     tar -xvf tmux-2.6.tar.gz
-#     cd tmux-2.6
-#     ./configure --prefix="${HOME}"/local
-#     make -j && make install
-# fi
-
-# clean up
-cd "$ROOTDIR"
-[ -e "$TMPDIR" ] && rm -fr "$TMPDIR"
-
-# install vim plugins
-echo "installing vim plugins..."
-export PATH=${HOME}/local/bin:$PATH
-[ ! -e ~/.cache/dein/repos/github.com/Shougo/dein.vim ] && \
-    git clone https://github.com/Shougo/dein.vim ~/.cache/dein/repos/github.com/Shougo/dein.vim
-nvim -c "try | call dein#install() | finally | qall! | endtry" -N -u "${HOME}"/.vim/init.vim -V1 -es
-nvim -c "try | call dein#update() | finally | qall! | endtry" -N -u "${HOME}"/.vim/init.vim -V1 -es
 
 echo ""
 echo "Sucessfully installed essential tools."
