@@ -43,9 +43,10 @@
   "python.analysis.diagnosticMode": "openFilesOnly",
   "python.linting.flake8Enabled": true,
   "python.formatting.provider": "black",
-  "python.formatting.blackArgs": ["--experimental-string-processing"],
+  "python.formatting.blackPath": "~/.pyenv/shims/black",
+  "python.formatting.blackArgs": ["--preview"],
   "python.sortImports.path": "isort",
-  "python.sortImports.args": ["--lbt", "1", "--sl", "--sort-order", "native"],
+  "python.sortImports.args": ["--profile", "black"],
   "pyright.organizeimports.provider": "isort",
   "pyright.disableDiagnostics": true,
   // yaml setting

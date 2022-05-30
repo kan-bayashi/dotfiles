@@ -23,14 +23,13 @@ repo = 'TC72/telescope-tele-tabby.nvim'
 
 [[plugins]]
 repo = 'nvim-telescope/telescope.nvim'
-on_event = ['Telescope']
+on_event = ['BufRead']
 depends = [
   'plenary.nvim',
   'telescope-emoji.nvim',
   'nvim-web-devicons',
   'telescope-fzf-native.nvim',
   'telescope-coc.nvim',
-  'telescope-tele-tabby.nvim',
 ]
 hook_source = '''
 lua << EOF
@@ -84,7 +83,6 @@ require("telescope").setup{
 require('telescope').load_extension('fzf')
 require("telescope").load_extension("emoji")
 require("telescope").load_extension("coc")
-require('telescope').load_extension("tele_tabby")
 EOF
 '''
 hook_add = '''
@@ -99,7 +97,6 @@ nnoremap <silent> <C-f>q <cmd>Telescope coc diagnostics theme=dropdown layout_co
 nnoremap <silent> <C-f>* <cmd>Telescope grep_string<CR>
 nnoremap <silent> <C-f>/ :lua require("telescope.builtin").live_grep({search_dirs={vim.fn.expand("%:p")}, previewer=false, path_display={shorten=1}})<CR>
 nnoremap <silent> <C-f><C-f> <cmd>Telescope resume<CR>
-nnoremap <silent> <C-f>t <cmd>Telescope tele_tabby list theme=dropdown layout_config={"height":15,"width":100} initial_mode=normal <CR>
 '''
 # }}}
 
