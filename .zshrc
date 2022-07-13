@@ -153,13 +153,17 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:
 ########################
 #    extra settings    #
 ########################
+# add path
+export PATH=/opt/homebrew/bin:${HOME}/local/bin:$HOME/.pyenv/bin:$PATH
+eval "$(pyenv init -)"
+
 # alias settings
-if which lsd > /dev/null; then
+if command -v lsd > /dev/null; then
     alias ls="lsd"
 else
     alias ls="ls --color=auto"
 fi
-if which nvim > /dev/null; then
+if command -v nvim > /dev/null; then
     alias vim="nvim"
 fi
 alias la="ls -a"
@@ -170,19 +174,8 @@ alias watch='watch '
 nless () {
     nkf -Lw ${1} | less
 }
+
 # compile zshrc
 if [ ~/.zshrc -nt ~/.zshrc.zwc ]; then
     zcompile ~/.zshrc
 fi
-
-# add path
-export PATH=/opt/homebrew/bin:${HOME}/local/bin:$HOME/.pyenv/bin:$PATH
-eval "$(pyenv init -)"
-
-# add iterm2 path
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
-# add nvm path
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
