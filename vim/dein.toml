@@ -173,7 +173,7 @@ hook_add = '''
 repo = 'Yggdroot/indentLine'
 hook_add = '''
   let g:indentLine_color_term = 239
-  let g:indentLine_fileTypeExclude = ['help', 'nerdtree', 'startify']
+  let g:indentLine_fileTypeExclude = ['help', 'nerdtree', 'dashboard']
 '''
 
 [[plugins]]
@@ -251,13 +251,13 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'bronson/vim-trailing-whitespace'
+repo = 'ntpeters/vim-better-whitespace'
 hook_add = '''
-  let g:extra_whitespace_ignored_filetypes = ['nerdtree', 'startify', 'help']
+  let g:better_whitespace_filetypes_blacklist = ['nerdtree', 'dashboard', 'help']
 '''
 
 [[plugins]]
-repo = 'thinca/vim-qfreplace'
+repo = 'stefandtw/quickfix-reflector.vim'
 
 [[plugins]]
 repo = 'tomtom/tcomment_vim'
@@ -272,9 +272,10 @@ repo = 'tpope/vim-surround'
 repo = 'tpope/vim-repeat'
 
 [[plugins]]
-repo = 'mhinz/vim-startify'
+repo = 'glepnir/dashboard-nvim'
 hook_add = '''
-  let s:startify_ascii_header = [
+  let g:dashboard_default_executive ='telescope'
+  let g:dashboard_custom_header = [
     \ '                                              ..                                            ',
     \ '                                          .::::.                                            ',
     \ '                             ___________ :;;;;:`____________                                ',
@@ -302,7 +303,6 @@ hook_add = '''
     \ '              /____/                                                                        ',
     \ '',
     \]
-  let g:startify_custom_header = map(s:startify_ascii_header, '"   ".v:val')
 '''
 
 [[plugins]]
@@ -386,6 +386,7 @@ let g:coc_global_extensions = [
       \ 'coc-word',
       \ 'coc-syntax',
       \ 'coc-snippets',
+      \ 'coc-yaml',
       \ ]
 
 " Use <C-k> for trigger snippet expand.
@@ -447,5 +448,19 @@ command! -nargs=0 Format :call CocAction('format')
 
 " Add `:OR` command for organize imports of the current buffer.
 command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
+'''
+
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter'
+hook_add = '''
+lua << EOF
+require('nvim-treesitter.configs').setup {
+  highlight = {
+    enable = true,
+  },
+  -- ensure_installed = 'maintained',
+  additional_vim_regex_highlighting = false,
+}
+EOF
 '''
 # }}}

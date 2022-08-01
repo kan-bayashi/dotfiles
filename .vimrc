@@ -59,6 +59,7 @@ set hlsearch   " highlight search result
 set ignorecase " do not care about catital char in search
 set smartcase  " if query includes captial char, discriminate them
 set wrapscan   " if search finished, re-search from the beginning
+set inccommand=nosplit  " incremental substitute
 
 " backup file realted
 set noswapfile " do not make swap file
@@ -77,6 +78,13 @@ set autoindent   " enable auto indent
 set showmatch    " highlight corresponding parentheses
 set completeopt-=preview " disable preview window in completion
 set shortmess+=c
+
+" file type specific setting
+augroup fileTypeIndent
+    autocmd!
+    autocmd BufNewFile,BufRead *.yaml setlocal tabstop=2 softtabstop=2 shiftwidth=2
+    autocmd BufNewFile,BufRead *.yml setlocal tabstop=2 softtabstop=2 shiftwidth=2
+augroup END
 
 " status line realted
 set number        " show line number
@@ -118,6 +126,7 @@ set hidden            " change buffer without saving
 set mouse=a           " enable mouse
 
 " python path related
+" let g:python2_host_prog = expand('~/.pyenv/versions/2.7.14/bin/python')
 let g:python3_host_prog = expand('~/.pyenv/versions/3.7.10/bin/python')
 
 " undo
@@ -125,11 +134,6 @@ if has('persistent_undo')
   let undo_path = expand('~/.vim/undo')
   exe 'set undodir=' .. undo_path
   set undofile
-endif
-
-" folding
-if has("autocmd")
-  filetype plugin indent on
 endif
 " }}}
 
@@ -167,6 +171,9 @@ nnoremap <leader>R :source ~/.vimrc<CR>
 
 " D like yank function
 nnoremap Y y$
+
+" For US keyboard
+map ; :
 
 " intuitive pane dividing
 nnoremap <C-w>- :<C-u>sp<CR>
