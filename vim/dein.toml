@@ -211,6 +211,7 @@ let g:quickrun_config = {
 
 [[plugins]]
 repo = 'tpope/vim-fugitive'
+rev = '321328c'
 hook_add = '''
 nnoremap <space>gs :Git<CR>
 nnoremap <space>ga :Gwrite<CR>
@@ -274,6 +275,7 @@ repo = 'tpope/vim-repeat'
 
 [[plugins]]
 repo = 'glepnir/dashboard-nvim'
+rev = '21ba482'
 hook_add = '''
 let g:dashboard_default_executive ='telescope'
 let g:dashboard_custom_header = [
@@ -373,6 +375,7 @@ let g:coc_global_extensions = [
       \ 'coc-snippets',
       \ 'coc-yaml',
       \ 'coc-toml',
+      \ 'coc-tsserver',
       \ ]
 
 " Use <C-k> for trigger snippet expand.
@@ -441,13 +444,25 @@ command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport
 
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter'
+rev = '6390eff'
 hook_add = '''
 lua << EOF
 require('nvim-treesitter.configs').setup {
   highlight = {
     enable = true,
   },
-  ensure_installed = 'maintained',
+  ensure_installed = {
+    "python",
+    "bash",
+    "json",
+    "toml",
+    "yaml",
+    "typescript",
+    "javascript",
+    "tsx",
+    "make",
+    "markdown",
+  },
   additional_vim_regex_highlighting = false,
 }
 EOF

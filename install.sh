@@ -10,7 +10,7 @@ if [ -e /etc/lsb-release ];then
     required_packages="build-essential libssl-dev zlib1g-dev libbz2-dev
         libreadline-dev libsqlite3-dev llvm libncurses5-dev libncursesw5-dev
         xz-utils tk-dev liblzma-dev python-openssl lua5.2 liblua5.2-dev luajit libevent-dev
-        make git zsh wget curl xclip xsel gawk"
+        make git zsh wget curl xclip xsel gawk fd-find ripgrep"
     install_packages=""
     installed_packages=$(COLUMNS=200 dpkg -l | awk '{print $2}' | sed -e "s/\:.*$//g")
     for package in ${required_packages}; do
@@ -26,6 +26,7 @@ if [ -e /etc/lsb-release ];then
     if [ -n "${install_packages}" ]; then
         echo "following packages will be installed: ${install_packages}"
         # shellcheck disable=SC2086
+        sudo apt update -y
         sudo apt install -y ${install_packages}
     fi
 elif [ -e /etc/redhat-release ]; then
@@ -79,6 +80,12 @@ if [ ! -e ~/.fzf ];then
     cd ~/.fzf && ./install --key-bindings --no-completion --no-update-rc && cd "${workdir}"
 fi
 
+# install volta
+if [ ! -e ~/.volta ];then
+    echo "Installing volta..."
+    curl https://get.volta.sh | bash
+fi
+
 # pyenv init
 export PATH=${HOME}/.pyenv/bin:$PATH
 eval "$(pyenv init -)"
@@ -116,7 +123,7 @@ TMPDIR=$(mktemp -d /tmp/XXXXX)
 if [ ! -e "${HOME}"/local/bin/nvim ]; then
     echo "installing neovim..."
     cd "${HOME}"/local/bin
-    wget https://github.com/neovim/neovim/releases/download/v0.6.1/nvim.appimage
+    wget https://github.com/neovim/neovim/releases/download/v0.7.2/nvim.appimage
     chmod u+x nvim.appimage
     if ./nvim.appimage --version >& /dev/null; then
         ln -s ./nvim.appimage nvim
