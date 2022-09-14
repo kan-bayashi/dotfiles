@@ -80,6 +80,12 @@ if [ ! -e ~/.fzf ];then
     cd ~/.fzf && ./install --key-bindings --no-completion --no-update-rc && cd "${workdir}"
 fi
 
+# install volta
+if [ ! -e ~/.volta ];then
+    echo "Installing volta..."
+    curl https://get.volta.sh | bash
+fi
+
 # pyenv init
 export PATH=${HOME}/.pyenv/bin:$PATH
 eval "$(pyenv init -)"

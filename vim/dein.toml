@@ -275,7 +275,7 @@ repo = 'tpope/vim-repeat'
 
 [[plugins]]
 repo = 'glepnir/dashboard-nvim'
-rev = 'ba98ab8'
+rev = '21ba482'
 hook_add = '''
 let g:dashboard_default_executive ='telescope'
 let g:dashboard_custom_header = [
@@ -450,7 +450,18 @@ require('nvim-treesitter.configs').setup {
   highlight = {
     enable = true,
   },
-  ensure_installed = 'maintained',
+  ensure_installed = {
+    "python",
+    "bash",
+    "json",
+    "toml",
+    "yaml",
+    "typescript",
+    "javascript",
+    "tsx",
+    "make",
+    "markdown",
+  },
   additional_vim_regex_highlighting = false,
 }
 EOF
