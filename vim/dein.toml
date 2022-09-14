@@ -211,6 +211,7 @@ let g:quickrun_config = {
 
 [[plugins]]
 repo = 'tpope/vim-fugitive'
+rev = '321328c'
 hook_add = '''
 nnoremap <space>gs :Git<CR>
 nnoremap <space>ga :Gwrite<CR>
