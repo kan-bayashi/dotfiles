@@ -15,7 +15,7 @@ for f in .??*; do
 done
 
 # make symbolic link of vim setting files
-[ -e ~/local/bin ] && mkdir -p ~/local/bin
+[ ! -e ~/local/bin ] && mkdir -p ~/local/bin
 [ -e ~/.vim ] && rm -rf ~/.vim.bak && mv ~/.vim ~/.vim.bak
 [ -e ~/.config/nvim ] && rm -rf ~/.config/nvim.bak && mv ~/.config/nvim ~/.config/nvim.bak
 [ ! -e ~/.vim/rc ] && mkdir -p ~/.vim/rc
