@@ -116,7 +116,7 @@ TMPDIR=$(mktemp -d /tmp/XXXXX)
 if [ ! -e "${HOME}"/local/bin/nvim ]; then
     echo "installing neovim..."
     cd "${HOME}"/local/bin
-    wget https://github.com/neovim/neovim/releases/download/v0.6.1/nvim.appimage
+    wget https://github.com/neovim/neovim/releases/download/v0.7.2/nvim.appimage
     chmod u+x nvim.appimage
     if ./nvim.appimage --version >& /dev/null; then
         ln -s ./nvim.appimage nvim

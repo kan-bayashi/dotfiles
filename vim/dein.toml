@@ -274,6 +274,7 @@ repo = 'tpope/vim-repeat'
 
 [[plugins]]
 repo = 'glepnir/dashboard-nvim'
+rev = 'ba98ab8'
 hook_add = '''
 let g:dashboard_default_executive ='telescope'
 let g:dashboard_custom_header = [
@@ -441,6 +442,7 @@ command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport
 
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter'
+rev = '6390eff'
 hook_add = '''
 lua << EOF
 require('nvim-treesitter.configs').setup {
