@@ -85,6 +85,7 @@ augroup fileTypeIndent
   autocmd BufNewFile,BufRead *.yaml setlocal tabstop=2 softtabstop=2 shiftwidth=2
   autocmd BufNewFile,BufRead *.yml setlocal tabstop=2 softtabstop=2 shiftwidth=2
   autocmd BufNewFile,BufRead *.tf setlocal tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd BufNewFile,BufRead *.json setlocal conceallevel=0
   autocmd Filetype vim setlocal tabstop=2 softtabstop=2 shiftwidth=2
 augroup END
 
@@ -129,7 +130,7 @@ set mouse=a           " enable mouse
 
 " python path related
 " let g:python2_host_prog = expand('~/.pyenv/versions/2.7.14/bin/python')
-let g:python3_host_prog = expand('~/.pyenv/versions/3.7.10/bin/python')
+let g:python3_host_prog = expand('~/.pyenv/shimes/python3')
 
 " undo
 if has('persistent_undo')

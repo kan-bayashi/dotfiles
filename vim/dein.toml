@@ -375,6 +375,7 @@ let g:coc_global_extensions = [
       \ 'coc-snippets',
       \ 'coc-yaml',
       \ 'coc-toml',
+      \ 'coc-tsserver',
       \ ]
 
 " Use <C-k> for trigger snippet expand.
