@@ -47,5 +47,8 @@ for bin in "${PWD}"/bin/* ;do
     ln -s "${bin}" ~/local/bin/
 done
 
+# install terminfo
+tic ./terminfo/xterm-256color-italic.terminfo
+
 echo "Sucessfully setup dotfiles."
 echo "Next, please run install.sh to install essential tools."
