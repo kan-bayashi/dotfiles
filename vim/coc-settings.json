@@ -39,6 +39,7 @@
     "typeParameter": "\uf278",
     "default": "\ue79b"
   },
+  "suggest.noselect": true,
   // pyright setting
   "python.analysis.diagnosticMode": "openFilesOnly",
   "python.linting.flake8Enabled": true,
