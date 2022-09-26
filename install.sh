@@ -3,14 +3,14 @@
 # Pyenv-pythons, Neovim, and Tmux installation script
 # Copyright 2019 Tomoki Hayashi
 
-PYTHON3_VERSION=3.7.10
+PYTHON3_VERSION=3.9.10
 
 # check and install dependencies
 if [ -e /etc/lsb-release ];then
     required_packages="build-essential libssl-dev zlib1g-dev libbz2-dev
         libreadline-dev libsqlite3-dev llvm libncurses5-dev libncursesw5-dev
         xz-utils tk-dev liblzma-dev python-openssl lua5.2 liblua5.2-dev luajit libevent-dev
-        make git zsh wget curl xclip xsel gawk fd-find ripgrep"
+        make git zsh wget curl xclip xsel gawk fd-find ripgrep nkf jq"
     install_packages=""
     installed_packages=$(COLUMNS=200 dpkg -l | awk '{print $2}' | sed -e "s/\:.*$//g")
     for package in ${required_packages}; do
@@ -25,8 +25,8 @@ if [ -e /etc/lsb-release ];then
     done
     if [ -n "${install_packages}" ]; then
         echo "following packages will be installed: ${install_packages}"
-        # shellcheck disable=SC2086
         sudo apt update -y
+        # shellcheck disable=SC2086
         sudo apt install -y ${install_packages}
     fi
 elif [ -e /etc/redhat-release ]; then
