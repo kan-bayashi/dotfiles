@@ -10,7 +10,6 @@ numpy
 scipy
 matplotlib
 soundfile
-librosa
 sklearn
 
 # for debug
@@ -18,7 +17,8 @@ ipython
 pdbpp
 pytest
 
-# for linter
+# for linter and formatter
 hacking
 flake8-docstrings
 black
+isort

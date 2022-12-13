@@ -3,7 +3,7 @@
 # Pyenv-pythons, Neovim, and Tmux installation script
 # Copyright 2019 Tomoki Hayashi
 
-PYTHON3_VERSION=3.9.10
+PYTHON3_VERSION=3.8.10
 
 # check and install dependencies
 if [ -e /etc/lsb-release ];then
@@ -111,9 +111,9 @@ else
 fi
 
 # install python libraries
-pip3 install -U pip
-pip3 install -U setuptools
-pip3 install -r requirements.txt
+python3 -m pip install -U pip
+python3 -m pip install -U setuptools
+python3 -m pip install -r requirements.txt
 
 # install vim
 ROOTDIR=$PWD

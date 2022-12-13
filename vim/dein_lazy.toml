@@ -213,14 +213,14 @@ hook_source = '''
 let g:pydocstring_formatter = 'google'
 '''
 
-[[plugins]]
-repo  = 'masukomi/vim-markdown-folding'
-on_ft = 'markdown'
+# [[plugins]]
+# repo  = 'masukomi/vim-markdown-folding'
+# on_ft = 'markdown'
 
-[[plugins]]
-repo        = 'elzr/vim-json'
-on_ft       = 'json'
-hook_add    = 'let g:vim_json_syntax_conceal = 0'
+# [[plugins]]
+# repo        = 'elzr/vim-json'
+# on_ft       = 'json'
+# hook_add    = 'let g:vim_json_syntax_conceal = 0'
 
 [[plugins]]
 repo  = 'tmhedberg/SimpylFold'

@@ -122,7 +122,7 @@ bindkey -r "^T"
 bindkey -r "\ec"
 
 # interactively kill task with fzf
-fkill() {
+fkill () {
   local pid
   pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
   if [ "x$pid" != "x" ]; then
@@ -182,6 +182,28 @@ nless () {
     nkf -Lw ${1} | less
 }
 
+function show {
+    clear
+    convert -resize 512x512 $1 - | imgcat
+}
+compdef _files show
+
+function git_merge_one_file {
+    if [ $# -ne 4 ]; then
+        echo -e "Usage : $0 ./path/to/file our_branch base_branch theirs_branch "
+    else
+        file_name=$1
+        ours=$2
+        base=$3
+        theirs=$4
+        git show ${ours}:${file_name} > ${file_name}.ours
+        git show ${base}:${file_name} > ${file_name}.base
+        git show ${theirs}:${file_name} > ${file_name}.theirs
+        git merge-file -p ${file_name}.ours ${file_name}.base ${file_name}.theirs > ${file_name}
+        rm ${file_name}.ours ${file_name}.base ${file_name}.theirs
+    fi
+}
+
 # load environment dependent setting
 if [ `hostname | grep sp.m.is.nagoya-u.ac.jp` ];then
     [ -e ~/.zshrc.takedalab ] && source ~/.zshrc.takedalab
@@ -199,3 +221,5 @@ eval "$(pyenv init -)"
 [[ $SSH_AUTH_SOCK != $HOME/.ssh/sock && -S $SSH_AUTH_SOCK ]] \
     && ln -snf "$SSH_AUTH_SOCK" "$HOME/.ssh/sock" \
     && export SSH_AUTH_SOCK="$HOME/.ssh/sock"
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
