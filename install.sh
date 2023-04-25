@@ -3,7 +3,7 @@
 # Dotfile install script
 # Copyright 2019 Tomoki Hayashi
 
-PYTHON3_VERSION=3.8.12
+PYTHON3_VERSION=3.10.5
 
 # check brew installation
 if ! command -v brew > /dev/null; then

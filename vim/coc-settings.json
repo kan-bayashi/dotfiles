@@ -9,6 +9,7 @@
   "diagnostic.warningSign": "\uf420",
   "diagnostic.infoSign": "\uf449",
   "diagnostic.hintSign": "\uf441",
+  "suggest.noselect": false,
   // nerdfont icons
   "suggest.maxPreviewWidth": 100,
   "suggest.maxCompleteItemCount": 100,
@@ -43,13 +44,15 @@
   "python.analysis.diagnosticMode": "openFilesOnly",
   "python.linting.flake8Enabled": true,
   "python.formatting.provider": "black",
-  "python.formatting.blackArgs": ["--experimental-string-processing"],
+  // "python.formatting.blackArgs": ["--preview"],
   "python.sortImports.path": "isort",
-  "python.sortImports.args": ["--lbt", "1", "--sl", "--sort-order", "native"],
+  "python.sortImports.args": ["--profile", "black"],
   "pyright.organizeimports.provider": "isort",
-  "pyright.disableDiagnostics": true,
+  // "pyright.disableDiagnostics": true,
   // yaml setting
   "yaml.format.enable": true,
   "toml.formatter.reorderKeys": false,
-  "toml.formatter.alignEntries": true
+  "toml.formatter.alignEntries": true,
+  "coc.source.OmniSharp.enable" : true,
+  "coc.source.OmniSharp.triggerCharacters": "."
 }

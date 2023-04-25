@@ -174,6 +174,7 @@ repo = 'Yggdroot/indentLine'
 hook_add = '''
 let g:indentLine_color_term = 239
 let g:indentLine_fileTypeExclude = ['help', 'nerdtree', 'dashboard']
+let g:indentLine_conceallevel = 0
 '''
 
 [[plugins]]
@@ -211,6 +212,7 @@ let g:quickrun_config = {
 
 [[plugins]]
 repo = 'tpope/vim-fugitive'
+rev = '321328c'
 hook_add = '''
 nnoremap <space>gs :Git<CR>
 nnoremap <space>ga :Gwrite<CR>
@@ -249,6 +251,7 @@ if has('terminal')
   tmap <c-h> <c-w>:TmuxNavigateLeft<cr>
   tmap <c-l> <c-w>:TmuxNavigateRight<cr>
 endif
+let g:tmux_navigator_disable_when_zoomed = 1
 '''
 
 [[plugins]]
@@ -274,6 +277,7 @@ repo = 'tpope/vim-repeat'
 
 [[plugins]]
 repo = 'glepnir/dashboard-nvim'
+rev = '21ba482'
 hook_add = '''
 let g:dashboard_default_executive ='telescope'
 let g:dashboard_custom_header = [
@@ -361,7 +365,7 @@ repo = 'honza/vim-snippets'
 
 [[plugins]]
 repo = 'neoclide/coc.nvim'
-rev = 'release'
+rev = '6adfb13aa16733aa5ede483f428750ce03954c4d'
 hook_add = '''
 " Default install packages
 let g:coc_global_extensions = [
@@ -373,6 +377,8 @@ let g:coc_global_extensions = [
       \ 'coc-snippets',
       \ 'coc-yaml',
       \ 'coc-toml',
+      \ 'coc-tsserver',
+      \ 'coc-prettier',
       \ ]
 
 " Use <C-k> for trigger snippet expand.
@@ -381,16 +387,22 @@ let g:coc_snippet_next = '<C-n>'
 let g:coc_snippet_prev = '<C-p>'
 
 " Use tab for trigger completion with characters ahead and navigate.
+" NOTE: There's always complete item selected by default, you may want to enable
+" no select by `"suggest.noselect": true` in your configuration file.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
-function! s:check_back_space() abort
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function! CheckBackspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
@@ -437,19 +449,243 @@ command! -nargs=0 Format :call CocAction('format')
 
 " Add `:OR` command for organize imports of the current buffer.
 command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
+
+" Formatting selected code
+xmap <space>f  <Plug>(coc-format-selected)
+nmap <space>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s)
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
 '''
 
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter'
 hook_add = '''
 lua << EOF
-require('nvim-treesitter.configs').setup {
+require('nvim-treesitter.configs').setup({
   highlight = {
     enable = true,
   },
-  ensure_installed = 'maintained',
+  ensure_installed = {
+    "python",
+    "bash",
+    "json",
+    "toml",
+    "yaml",
+    "typescript",
+    "javascript",
+    "tsx",
+    "make",
+    "markdown",
+    "vim",
+    "lua",
+  },
   additional_vim_regex_highlighting = false,
-}
+})
 EOF
 '''
 # }}}
+
+##############################
+#    FUZZY FINDER PLUGINS    #
+##############################
+# {{{
+[[plugins]]
+repo = 'xiyaowong/telescope-emoji.nvim'
+
+[[plugins]]
+repo = 'kyazdani42/nvim-web-devicons'
+
+[[plugins]]
+repo  = 'nvim-telescope/telescope-fzf-native.nvim'
+build = 'make'
+
+[[plugins]]
+repo = 'fannheyward/telescope-coc.nvim'
+
+[[plugins]]
+repo = 'TC72/telescope-tele-tabby.nvim'
+
+[[plugins]]
+repo = 'MunifTanjim/nui.nvim'
+
+[[plugins]]
+repo = 'nvim-lua/plenary.nvim'
+
+[[plugins]]
+repo = 'nvim-telescope/telescope.nvim'
+rev = 'v0.1.1'
+depends = [
+  'plenary.nvim',
+  'telescope-emoji.nvim',
+  'nvim-web-devicons',
+  'telescope-fzf-native.nvim',
+  'telescope-coc.nvim',
+]
+hook_add = '''
+lua << EOF
+-- Import
+local themes = require("telescope.themes")
+local actions = require("telescope.actions")
+
+-- General configuration
+require("telescope").setup{
+  defaults = {
+    prompt_prefix = ">>> ",
+    selection_caret = "  ",
+    shorten_path = true,
+    color_devicons = true,
+    winblend = 1,
+    set_env = {['COLORTERM'] = 'truecolor'},
+    mappings = {
+      n = {
+        ["t"] = actions.select_tab,
+        ["q"] = actions.close,
+        ["dd"] = actions.delete_buffer,
+        ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+        ["<S-q>"] = actions.send_to_qflist + actions.open_qflist,
+      },
+      i = {
+        ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+        ["<S-q>"] = actions.send_to_qflist + actions.open_qflist,
+      },
+    },
+  },
+  pickers = {
+    find_files = themes.get_dropdown({ layout_config = {height = 0.25, width = 0.8 }, hidden = true}),
+    live_grep = themes.get_dropdown({ layout_config = {height = 0.25, width = 0.8 }}),
+    buffers = themes.get_dropdown({ layout_config = {height = 0.25, width = 0.8 }}),
+    git_status = themes.get_dropdown({ layout_config = {height = 0.25, width = 0.8 }}),
+    emoji = themes.get_dropdown({ layout_config = {height = 0.25, width = 0.8 }}),
+    grep_string = themes.get_dropdown({ layout_config = {height = 0.25, width = 0.8 }}),
+    oldfiles = themes.get_dropdown({ layout_config = {height = 0.25, width = 0.8 }}),
+  },
+  extensions = {
+    fzf = {
+      fuzzy = true,
+      override_generic_sorter = false,
+      override_file_sorter = true,
+      case_mode = "smart_case",
+    }
+  }
+}
+
+-- Add extentions
+-- require('telescope').load_extension('fzf')
+require("telescope").load_extension("emoji")
+require("telescope").load_extension("coc")
+EOF
+
+" shortcut setting
+autocmd User TelescopePreviewerLoaded setlocal number
+nnoremap <silent> <C-f>f <cmd>Telescope find_files<CR>
+nnoremap <silent> <C-f>r <cmd>Telescope oldfiles<CR>
+nnoremap <silent> <C-f>g <cmd>Telescope git_status<CR>
+nnoremap <silent> <C-f><C-g> <cmd>Telescope live_grep<CR>
+nnoremap <silent> <C-f>b <cmd>Telescope buffers<CR>
+nnoremap <silent> <C-f>e <cmd>Telescope emoji<CR>
+nnoremap <silent> <C-f>q <cmd>Telescope coc diagnostics theme=dropdown layout_config={"height":0.2,"width":0.8}<CR>
+nnoremap <silent> <C-f>* <cmd>Telescope grep_string<CR>
+nnoremap <silent> <C-f>/ :lua require("telescope.builtin").live_grep({search_dirs={vim.fn.expand("%:p")}, previewer=false, path_display={shorten=1}})<CR>
+nnoremap <silent> <C-f><C-f> <cmd>Telescope resume<CR>
+'''
+
+[[plugins]]
+repo = 'jackMort/ChatGPT.nvim'
+if   = '''!empty($OPENAI_API_KEY)'''
+depends = ['telescope.nvim', 'nui.nvim', 'plenary.nvim']
+hook_add = '''
+lua << EOF
+require('chatgpt').setup({
+  loading_text = "loading",
+  question_sign = "", -- you can use emoji if you want e.g. 🙂
+  answer_sign = "ﮧ", -- 🤖
+  max_line_length = 120,
+  yank_register = "+",
+  chat_layout = {
+    relative = "editor",
+    position = "50%",
+    size = {
+      height = "70%",
+      width = "80%",
+
+    },
+  },
+  settings_window = {
+    border = {
+      style = "rounded",
+      text = {
+        top = " Settings ",
+      },
+    },
+  },
+  chat_window = {
+    filetype = "chatgpt",
+    border = {
+      highlight = "FloatBorder",
+      style = "rounded",
+      text = {
+        top = " ChatGPT ",
+      },
+    },
+  },
+  chat_input = {
+    prompt = " >>> ",
+    border = {
+      highlight = "FloatBorder",
+      style = "rounded",
+      text = {
+        top_align = "center",
+        top = " Prompt ",
+      },
+    },
+  },
+  openai_params = {
+    model = "gpt-3.5-turbo",
+    frequency_penalty = 0,
+    presence_penalty = 0,
+    max_tokens = 512,
+    temperature = 0,
+    top_p = 1,
+    n = 1,
+  },
+  openai_edit_params = {
+    model = "code-davinci-edit-001",
+    temperature = 0,
+    top_p = 1,
+    n = 1,
+  },
+  keymaps = {
+    close = { "<C-c>" },
+    submit = "<C-a>",
+    yank_last = "<C-y>",
+    yank_last_code = "<C-k>",
+    scroll_up = "<C-u>",
+    scroll_down = "<C-d>",
+    toggle_settings = "<C-s>",
+    new_session = "<C-n>",
+    cycle_windows = "<Tab>",
+    -- in the Sessions pane
+    select_session = "<Space>",
+    rename_session = "r",
+    delete_session = "d",
+  },
+})
+EOF
+'''
+# }}}
+
+[[plugins]]
+repo = 'github/copilot.vim'
+hook_add = '''
+imap <silent><script><expr> <C-]> copilot#Accept("\<CR>")
+let g:copilot_no_tab_map = v:true
+'''
+
+[[plugins]]
+repo = 'OmniSharp/omnisharp-vim'
