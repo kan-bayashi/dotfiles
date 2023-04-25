@@ -205,9 +205,7 @@ function git_merge_one_file {
 }
 
 # load environment dependent setting
-if [ `hostname | grep sp.m.is.nagoya-u.ac.jp` ];then
-    [ -e ~/.zshrc.takedalab ] && source ~/.zshrc.takedalab
-fi
+[ -e ~/.zshrc.takedalab ] && source ~/.zshrc.takedalab
 
 # compile zshrc
 if [ ~/.zshrc -nt ~/.zshrc.zwc ]; then

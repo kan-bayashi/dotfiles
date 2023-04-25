@@ -49,7 +49,9 @@
   "python.sortImports.path": "isort",
   "python.sortImports.args": ["--profile", "black"],
   "pyright.organizeimports.provider": "isort",
-  "pyright.disableDiagnostics": true,
+  "pyright.disableDiagnostics": false,
+  "pyright.inlayHints.functionReturnTypes": false,
+  "pyright.inlayHints.variableTypes": false,
   // yaml setting
   "yaml.format.enable": true,
   "toml.formatter.reorderKeys": false,

@@ -85,7 +85,7 @@ augroup fileTypeIndent
   autocmd BufNewFile,BufRead *.yaml setlocal tabstop=2 softtabstop=2 shiftwidth=2
   autocmd BufNewFile,BufRead *.yml setlocal tabstop=2 softtabstop=2 shiftwidth=2
   autocmd BufNewFile,BufRead *.tf setlocal tabstop=2 softtabstop=2 shiftwidth=2
-  autocmd BufNewFile,BufRead *.json setlocal conceallevel=0
+  autocmd BufNewFile,BufRead *.json set conceallevel=0
   autocmd Filetype vim setlocal tabstop=2 softtabstop=2 shiftwidth=2
 augroup END
 
@@ -122,6 +122,7 @@ highlight GitGutterChange guifg=#bbbb00 ctermfg=Yellow
 highlight GitGutterDelete guifg=#ff2222 ctermfg=Red
 highlight! link SignColumn LineNr
 highlight CocFloating ctermfg=White ctermbg=242 guifg=#bbb5b5 guibg=#1f1f1f
+highlight NormalFloat ctermfg=LightGrey
 
 " other
 set foldmethod=marker " enable marker folding
