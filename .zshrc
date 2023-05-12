@@ -105,16 +105,16 @@ export LESS="-i -R -M"
 #      fzf settings     #
 #########################
 export FZF_DEFAULT_OPTS='
-    --height=40% --reverse --border
+    --reverse
     --exit-0 --select-1
-    --color fg:188,hl:103,fg+:222,bg+:234,hl+:104
-    --color info:183,prompt:110,spinner:107,pointer:167,marker:215'
+    --color fg:-1,bg:-1,hl:230,fg+:3,bg+:233,hl+:229
+    --color info:150,prompt:110,spinner:150,pointer:167,marker:174'
 export FZF_CTRL_R_OPTS="
     --sort
     --preview 'echo {}'
-    --preview-window down:3:hidden:wrap
+    --preview-window down:10:hidden:wrap
     --bind '?:toggle-preview'"
-export FZF_DEFAULT_COMMAND="fd --no-ignore-vcs --ignore-file ~/.ignore --hidden --follow"
+export FZF_DEFAULT_COMMAND="fd -d 2 --no-ignore-vcs --ignore-file ~/.ignore --hidden --follow"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # not to use ctrl + T and alt + C
@@ -178,31 +178,6 @@ alias ll="ls -l"
 alias lla="ls -la"
 alias free="free -g"
 alias watch='watch '
-nless () {
-    nkf -Lw ${1} | less
-}
-
-function show {
-    clear
-    convert -resize 512x512 $1 - | imgcat
-}
-compdef _files show
-
-function git_merge_one_file {
-    if [ $# -ne 4 ]; then
-        echo -e "Usage : $0 ./path/to/file our_branch base_branch theirs_branch "
-    else
-        file_name=$1
-        ours=$2
-        base=$3
-        theirs=$4
-        git show ${ours}:${file_name} > ${file_name}.ours
-        git show ${base}:${file_name} > ${file_name}.base
-        git show ${theirs}:${file_name} > ${file_name}.theirs
-        git merge-file -p ${file_name}.ours ${file_name}.base ${file_name}.theirs > ${file_name}
-        rm ${file_name}.ours ${file_name}.base ${file_name}.theirs
-    fi
-}
 
 # load environment dependent setting
 [ -e ~/.zshrc.takedalab ] && source ~/.zshrc.takedalab
