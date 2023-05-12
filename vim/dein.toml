@@ -215,17 +215,6 @@ build = 'make'
 repo = 'machakann/vim-highlightedyank'
 
 [[plugins]]
-repo = 'thinca/vim-quickrun'
-hook_add = '''
-set splitbelow
-let g:quickrun_config = {
- \ "_" : { "outputter/buffer/split" : ":botright 10",
- \         "runner" : "vimproc",
- \         "runner/vimproc/updatetime" : 40 }
- \ }
-'''
-
-[[plugins]]
 repo = 'tpope/vim-fugitive'
 rev = '321328c'
 hook_add = '''
@@ -323,7 +312,9 @@ hook_add = 'let g:rooter_silent_chdir = 1'
 [[plugins]]
 repo = 'gelguy/wilder.nvim'
 hook_add = '''
-call wilder#setup({'modes': [':', '/', '?']})
+call wilder#setup({
+      \ 'modes': [':', '/', '?']
+      \ })
 call wilder#set_option('renderer', wilder#popupmenu_renderer(wilder#popupmenu_border_theme({
       \ 'highlighter': wilder#basic_highlighter(),
       \ 'highlights': {
@@ -552,6 +543,7 @@ lua << EOF
 -- Import
 local themes = require("telescope.themes")
 local actions = require("telescope.actions")
+local fb_actions = require("telescope._extensions.file_browser.actions")
 
 -- General configuration
 require("telescope").setup{
@@ -560,12 +552,13 @@ require("telescope").setup{
     selection_caret = "  ",
     shorten_path = true,
     color_devicons = true,
-    winblend = 0,
+    winblend = 10,
     set_env = {['COLORTERM'] = 'truecolor'},
     mappings = {
       n = {
         ["t"] = actions.select_tab,
         ["q"] = actions.close,
+        ["<C-o>"] = actions.close,
         ["dd"] = actions.delete_buffer,
         ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
         ["<S-q>"] = actions.send_to_qflist + actions.open_qflist,
@@ -577,23 +570,26 @@ require("telescope").setup{
     },
   },
   pickers = {
-    find_files = themes.get_dropdown({ layout_config = {height = 0.25, width = 0.8 }, hidden = true}),
-    live_grep = themes.get_dropdown({ layout_config = {height = 0.25, width = 0.8 }}),
-    buffers = themes.get_dropdown({ layout_config = {height = 0.25, width = 0.8 }}),
-    git_status = themes.get_dropdown({ layout_config = {height = 0.25, width = 0.8 }}),
-    emoji = themes.get_dropdown({ layout_config = {height = 0.25, width = 0.8 }}),
-    grep_string = themes.get_dropdown({ layout_config = {height = 0.25, width = 0.8 }}),
-    oldfiles = themes.get_dropdown({ layout_config = {height = 0.25, width = 0.8 }}),
+    find_files = themes.get_dropdown({ layout_config = { height = 0.25, width = 0.85 }, hidden = true}),
+    live_grep = themes.get_dropdown({ layout_config = { height = 0.25, width = 0.85 }}),
+    buffers = themes.get_dropdown({ layout_config = { height = 0.25, width = 0.85 }}),
+    git_status = themes.get_dropdown({ layout_config = { height = 0.25, width = 0.85 }}),
+    emoji = themes.get_dropdown({ layout_config = { height = 0.25, width = 0.85 }}),
+    grep_string = themes.get_dropdown({ layout_config = { height = 0.25, width = 0.85 }}),
   },
-  extentions = {
+  extensions = {
     file_browser = {
-      hijack_netrw = true,
+      theme = "ivy",
       cwd_to_path = true,
-      grouped = true,
       files = true,
-      auto_depth = 2,
-      git_status = true,
-    }
+      hidden = { file_browser = true, folder_browser = true },
+      mappings = {
+        ["i"] = {
+          ["<C-o>"] = false,
+          ["<bs>"] = false,
+        },
+      },
+    },
   }
 }
 -- Add extentions
@@ -609,8 +605,9 @@ nnoremap <silent> <C-f>f <cmd>Telescope find_files<CR>
 nnoremap <silent> <C-f>g <cmd>Telescope git_status<CR>
 nnoremap <silent> <C-f><C-g> <cmd>Telescope live_grep<CR>
 nnoremap <silent> <C-f>b <cmd>Telescope buffers<CR>
+nnoremap <silent> <C-f><Space> <cmd>Telescope file_browser<CR>
 nnoremap <silent> <C-f>e <cmd>Telescope emoji<CR>
-nnoremap <silent> <C-f>q <cmd>Telescope coc diagnostics theme=dropdown layout_config={"height":0.2,"width":0.8}<CR>
+nnoremap <silent> <C-f>q <cmd>Telescope coc diagnostics theme=dropdown layout_config={"height":0.25,"width":0.85}<CR>
 nnoremap <silent> <C-f>* <cmd>Telescope grep_string<CR>
 nnoremap <silent> <C-f>/ :lua require("telescope.builtin").live_grep({search_dirs={vim.fn.expand("%:p")}, previewer=false, path_display={shorten=1}})<CR>
 nnoremap <silent> <C-f><C-f> <cmd>Telescope resume<CR>
