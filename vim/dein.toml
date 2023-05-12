@@ -12,12 +12,27 @@ if   = '''!has('nvim')'''
 [[plugins]]
 repo = 'roxma/vim-hug-neovim-rpc'
 if   = '''!has('nvim')'''
+
+[[plugins]]
+repo = 'MunifTanjim/nui.nvim'
+
+[[plugins]]
+repo = 'nvim-lua/plenary.nvim'
+
 # }}}
 
 #############################
 #    APPEARANCE PLUGINS     #
 #############################
 # {{{
+[[plugins]]
+repo = 'petertriho/nvim-scrollbar'
+hook_add = '''
+lua << EOF
+require("scrollbar").setup()
+EOF
+'''
+
 [[plugins]]
 repo = 'josa42/vim-lightline-coc'
 
@@ -489,6 +504,13 @@ require('nvim-treesitter.configs').setup({
 })
 EOF
 '''
+
+[[plugins]]
+repo = 'github/copilot.vim'
+hook_add = '''
+imap <silent><script><expr> <C-]> copilot#Accept("\<CR>")
+let g:copilot_no_tab_map = v:true
+'''
 # }}}
 
 ##############################
@@ -502,8 +524,7 @@ repo = 'xiyaowong/telescope-emoji.nvim'
 repo = 'kyazdani42/nvim-web-devicons'
 
 [[plugins]]
-repo  = 'nvim-telescope/telescope-fzf-native.nvim'
-build = 'make'
+repo  = 'natecraddock/telescope-zf-native.nvim'
 
 [[plugins]]
 repo = 'fannheyward/telescope-coc.nvim'
@@ -512,27 +533,25 @@ repo = 'fannheyward/telescope-coc.nvim'
 repo = 'TC72/telescope-tele-tabby.nvim'
 
 [[plugins]]
-repo = 'MunifTanjim/nui.nvim'
-
-[[plugins]]
-repo = 'nvim-lua/plenary.nvim'
+repo = 'nvim-telescope/telescope-file-browser.nvim'
+depends = ['telescope.nvim']
 
 [[plugins]]
 repo = 'nvim-telescope/telescope.nvim'
 rev = 'v0.1.1'
 depends = [
-  'plenary.nvim',
-  'telescope-emoji.nvim',
-  'nvim-web-devicons',
-  'telescope-fzf-native.nvim',
+  'telescope-zf-native.nvim',
+  'telescope-file-browser.nvim',
   'telescope-coc.nvim',
+  'telescope-emoji.nvim',
+  'plenary.nvim',
+  'nvim-web-devicons',
 ]
 hook_add = '''
 lua << EOF
 -- Import
 local themes = require("telescope.themes")
 local actions = require("telescope.actions")
-
 
 -- General configuration
 require("telescope").setup{
@@ -541,7 +560,7 @@ require("telescope").setup{
     selection_caret = "  ",
     shorten_path = true,
     color_devicons = true,
-    winblend = 1,
+    winblend = 0,
     set_env = {['COLORTERM'] = 'truecolor'},
     mappings = {
       n = {
@@ -566,26 +585,27 @@ require("telescope").setup{
     grep_string = themes.get_dropdown({ layout_config = {height = 0.25, width = 0.8 }}),
     oldfiles = themes.get_dropdown({ layout_config = {height = 0.25, width = 0.8 }}),
   },
-  extensions = {
-    fzf = {
-      fuzzy = true,
-      override_generic_sorter = false,
-      override_file_sorter = true,
-      case_mode = "smart_case",
+  extentions = {
+    file_browser = {
+      hijack_netrw = true,
+      cwd_to_path = true,
+      grouped = true,
+      files = true,
+      auto_depth = 2,
+      git_status = true,
     }
   }
 }
 -- Add extentions
--- require('telescope').load_extension('fzf')
 require("telescope").load_extension("emoji")
 require("telescope").load_extension("coc")
-
+require("telescope").load_extension("zf-native")
+require("telescope").load_extension("file_browser")
 EOF
 
 " shortcut setting
 autocmd User TelescopePreviewerLoaded setlocal number
 nnoremap <silent> <C-f>f <cmd>Telescope find_files<CR>
-nnoremap <silent> <C-f>r <cmd>Telescope oldfiles<CR>
 nnoremap <silent> <C-f>g <cmd>Telescope git_status<CR>
 nnoremap <silent> <C-f><C-g> <cmd>Telescope live_grep<CR>
 nnoremap <silent> <C-f>b <cmd>Telescope buffers<CR>
@@ -596,10 +616,3 @@ nnoremap <silent> <C-f>/ :lua require("telescope.builtin").live_grep({search_dir
 nnoremap <silent> <C-f><C-f> <cmd>Telescope resume<CR>
 '''
 # }}}
-
-[[plugins]]
-repo = 'github/copilot.vim'
-hook_add = '''
-imap <silent><script><expr> <C-]> copilot#Accept("\<CR>")
-let g:copilot_no_tab_map = v:true
-'''

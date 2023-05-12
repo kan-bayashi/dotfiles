@@ -1,6 +1,7 @@
 {
   // basic coc.nvim setting
-  "coc.preferences.jumpCommand": "tabe",
+  "suggest.noselect": true,
+  // "coc.preferences.jumpCommand": "tabe",
   // diagnostic-languageserver
   "diagnostic-languageserver.filetypes": {
     "sh": "shellcheck"
@@ -39,7 +40,6 @@
     "typeParameter": "\uf278",
     "default": "\ue79b"
   },
-  "suggest.noselect": true,
   // pyright setting
   "python.analysis.diagnosticMode": "openFilesOnly",
   "python.linting.flake8Enabled": true,
@@ -49,7 +49,7 @@
   "python.sortImports.path": "isort",
   "python.sortImports.args": ["--profile", "black"],
   "pyright.organizeimports.provider": "isort",
-  "pyright.disableDiagnostics": false,
+  "pyright.disableDiagnostics": true,
   "pyright.inlayHints.functionReturnTypes": false,
   "pyright.inlayHints.variableTypes": false,
   // yaml setting

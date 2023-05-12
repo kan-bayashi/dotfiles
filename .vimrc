@@ -156,6 +156,12 @@ nnoremap k gk
 nnoremap n nzz
 nnoremap N Nzz
 
+" remap <C-o> & <C-i>
+nnoremap <C-p> <C-o>
+nnoremap <C-n> <C-i>
+nnoremap <C-o> <Nop>
+nnoremap <C-i> <Nop>
+
 " instead of esc
 noremap <C-o> <ESC>
 noremap! <C-o> <ESC>

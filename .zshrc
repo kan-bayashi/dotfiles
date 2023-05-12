@@ -88,6 +88,8 @@ zplug "~/.zsh/themes/", from:local, use:bullet-train.zsh-theme, defer:3
 zplug check || zplug install
 zplug load
 
+bindkey '^]' autosuggest-accept
+
 #########################
 #   enhancd settings    #
 #########################
