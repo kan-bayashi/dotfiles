@@ -75,8 +75,6 @@ zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions"
 # command line syntax highlight
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
-# interative git commands
-zplug "wfxr/forgit", use:forgit.plugin.zsh
 # useful change directory
 zplug "b4b4r07/enhancd", use:init.sh
 # load theme from local
@@ -85,6 +83,8 @@ zplug "~/.zsh/themes/", from:local, use:bullet-train.zsh-theme, defer:3
 # install check and then load
 zplug check || zplug install
 zplug load
+
+bindkey '^]' autosuggest-accept
 
 #########################
 #   enhancd settings    #
