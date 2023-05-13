@@ -66,6 +66,7 @@ vim.g.maplocalleader = " "
 -- Escape
 keymap("!", "<C-o>", "<Esc>", keymap_opts)
 keymap("v", "<C-o>", "<Esc>", keymap_opts)
+keymap("x", "<C-o>", "<Esc>", keymap_opts)
 
 -- Remap jump
 keymap("n", "<Leader>]", "<C-i>", keymap_opts)

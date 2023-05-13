@@ -109,7 +109,6 @@ return require('packer').startup(function(use)
       require('alpha').setup(dashboard.config)
     end
   })
-  use { 'machakann/vim-highlightedyank' }
   use {
     'kevinhwang91/nvim-hlslens',
     requires = "petertriho/nvim-scrollbar",
@@ -536,6 +535,18 @@ return require('packer').startup(function(use)
       })
       -- You probably also want to set a keymap to toggle aerial
       vim.keymap.set('n', '<leader>a', '<cmd>AerialToggle<CR>')
+    end
+  }
+  use {
+    "gbprod/yanky.nvim",
+    config = function()
+      require("yanky").setup()
+      vim.keymap.set({"n","x"}, "p", "<Plug>(YankyPutAfter)")
+      vim.keymap.set({"n","x"}, "P", "<Plug>(YankyPutBefore)")
+      vim.keymap.set({"n","x"}, "gp", "<Plug>(YankyGPutAfter)")
+      vim.keymap.set({"n","x"}, "gP", "<Plug>(YankyGPutBefore)")
+      vim.keymap.set("n", "<c-p>", "<Plug>(YankyCycleForward)")
+      vim.keymap.set("n", "<c-n>", "<Plug>(YankyCycleBackward)")
     end
   }
   -- }}}
