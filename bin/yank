@@ -2,7 +2,7 @@
 #
 # Usage: yank [FILE...]
 #
-# Copies the contents of the given files (or stdin if no files are given) to
+# Copies the contents of the given files (or stdin, if no files are given) to
 # the terminal that runs this program.  If this program is run inside tmux(1),
 # then it also copies the given contents into tmux's current clipboard buffer.
 # If this program is run inside X11, then it also copies to the X11 clipboard.
@@ -24,24 +24,26 @@
 # Written in 2014 by Suraj N. Kurapati <https://github.com/sunaku>
 # Also documented at https://sunaku.github.io/tmux-yank-osc52.html
 
-put() {
+input=$( cat "$@" )
+input() { printf %s "$input" ;}
+known() { command -v "$1" >/dev/null ;}
+maybe() { known "$1" && input | "$@" ;}
+alive() { known "$1" && "$@" >/dev/null 2>&1 ;}
+
+# # copy to tmux
+# test -n "$TMUX" && maybe tmux load-buffer -
+#
+# # copy via X11
+# test -n "$DISPLAY" && alive xhost && {
+#   maybe xsel -i -b || maybe xclip -sel c
+# }
+
+# copy via OSC 52
+printf_escape() {
   esc=$1
   test -n "$TMUX" -o -z "${TERM##screen*}" && esc="\033Ptmux;\033$esc\033\\"
   printf "$esc"
 }
-
-# NOTE: KiTTY always appends to the clipboard, so clear it first
-#   See https://sw.kovidgoyal.net/kitty/protocol-extensions.html#pasting-to-clipboard
-# put "\033]52;c;!\a"
-
-# copy via OSC 52
-buf=$( cat "$@" )
-len=$( printf %s "$buf" | wc -c ) max=74994
+len=$( input | wc -c ) max=74994
 test $len -gt $max && echo "$0: input is $(( len - max )) bytes too long" >&2
-put "\033]52;c;$( printf %s "$buf" | head -c $max | base64 | tr -d '\r\n' )\a"
-
-# # also copy to tmux
-# test -n "$TMUX" && tmux set-buffer "$buf" ||:
-#
-# # also copy via X11
-# test -n "$DISPLAY" && printf %s "$buf" | { xsel -i -b || xclip -sel c ;} ||:
+printf_escape "\033]52;c;$( input | head -c $max | base64 | tr -d '\r\n' )\a"
