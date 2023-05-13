@@ -68,8 +68,8 @@ keymap("!", "<C-o>", "<Esc>", keymap_opts)
 keymap("v", "<C-o>", "<Esc>", keymap_opts)
 
 -- Remap jump
-keymap("n", "<C-n>", "<C-i>", keymap_opts)
-keymap("n", "<C-p>", "<C-o>", keymap_opts)
+keymap("n", "<Leader>]", "<C-i>", keymap_opts)
+keymap("n", "<Leader>[", "<C-o>", keymap_opts)
 keymap("n", "<C-i>", "<Nop>", keymap_opts)
 keymap("n", "<C-o>", "<Nop>", keymap_opts)
 
