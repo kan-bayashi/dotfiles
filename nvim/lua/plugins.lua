@@ -44,6 +44,7 @@ return require('packer').startup(function(use)
               symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
             }
           },
+          lualine_c = {{'filename', path = 1}},
         },
         tabline = {},
       })
