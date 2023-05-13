@@ -94,35 +94,63 @@ return require('packer').startup(function(use)
     'goolord/alpha-nvim',
     requires = { 'nvim-tree/nvim-web-devicons' },
     config = function()
-      local dashboard = require('alpha.themes.dashboard')
-      dashboard.section.header.val = {
-        [[                                                          ]],
-        [[                                                          ]],
-        [[  ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗  ]],
-        [[  ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║  ]],
-        [[  ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║  ]],
-        [[  ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║  ]],
-        [[  ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║  ]],
-        [[  ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝  ]],
-        [[                                                          ]],
+      local startify = require('alpha.themes.startify')
+      startify.section.header.val = {
+        [[                                                                                       ]],
+        [[                                                                                       ]],
+        [[                ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗                 ]],
+        [[                ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║                 ]],
+        [[                ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║                 ]],
+        [[                ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║                 ]],
+        [[                ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║                 ]],
+        [[                ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝                 ]],
+        [[                                                                                       ]],
       }
-      require('alpha').setup(dashboard.config)
+      require('alpha').setup(startify.config)
     end
   })
-  use { 'machakann/vim-highlightedyank' }
   use {
     'kevinhwang91/nvim-hlslens',
     requires = "petertriho/nvim-scrollbar",
     config = function()
+      require('hlslens').setup({
+        override_lens = function(render, posList, nearest, idx, relIdx)
+          local sfw = vim.v.searchforward == 1
+          local indicator, text, chunks
+          local absRelIdx = math.abs(relIdx)
+          if absRelIdx > 1 then
+            indicator = ('%d%s'):format(absRelIdx, sfw ~= (relIdx > 1) and '▲' or '▼')
+          elseif absRelIdx == 1 then
+            indicator = sfw ~= (relIdx == 1) and '▲' or '▼'
+          else
+            indicator = ''
+          end
+
+          local lnum, col = unpack(posList[idx])
+          if nearest then
+            local cnt = #posList
+            if indicator ~= '' then
+              text = ('[%s %d/%d]'):format(indicator, idx, cnt)
+            else
+              text = ('[%d/%d]'):format(idx, cnt)
+            end
+            chunks = { { ' ', 'Ignore' }, { text, 'HlSearchLensNear' } }
+          else
+            text = ('[%s %d]'):format(indicator, idx)
+            chunks = { { ' ', 'Ignore' }, { text, 'HlSearchLens' } }
+          end
+          render.setVirt(0, lnum - 1, col - 1, chunks, nearest)
+        end
+      })
       require("scrollbar.handlers.search").setup()
 
       local kopts = { noremap = true, silent = true }
 
       vim.api.nvim_set_keymap('n', 'n',
-        [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
+        [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>zz]],
         kopts)
       vim.api.nvim_set_keymap('n', 'N',
-        [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
+        [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>zz]],
         kopts)
       vim.api.nvim_set_keymap('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
       vim.api.nvim_set_keymap('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
@@ -338,14 +366,14 @@ return require('packer').startup(function(use)
     'gelguy/wilder.nvim',
     config = function()
       local wilder = require('wilder')
-      wilder.setup({modes = {':', '/', '?'}})
+      wilder.setup({ modes = { ':', '/', '?' } })
       wilder.set_option('renderer', wilder.popupmenu_renderer(
         wilder.popupmenu_border_theme({
           border = 'rounded',
           highlights = { boader = 'Normal' },
           highlighter = wilder.basic_highlighter(),
-          left = {' ', wilder.popupmenu_devicons()},
-          right = {' ', wilder.popupmenu_scrollbar()},
+          left = { ' ', wilder.popupmenu_devicons() },
+          right = { ' ', wilder.popupmenu_scrollbar() },
         })
       ))
     end,
@@ -494,6 +522,11 @@ return require('packer').startup(function(use)
         let g:VM_maps = {}
         let g:VM_maps['Find Under'] = '<space>n'
         let g:VM_maps['Find Subword Under'] = '<space>n'
+        aug VMlens
+          au!
+          au User visual_multi_start lua require('vmlens').start()
+          au User visual_multi_exit lua require('vmlens').exit()
+        aug END
       ]])
     end
   }
@@ -505,14 +538,43 @@ return require('packer').startup(function(use)
     end
   }
   use {
-      'numToStr/Comment.nvim',
-      config = function()
-          require('Comment').setup()
-      end
+    'numToStr/Comment.nvim',
+    config = function()
+      require('Comment').setup()
+    end
+  }
+  use {
+    'stevearc/aerial.nvim',
+    config = function()
+      require('aerial').setup({
+        layout = {
+          -- Determines the default direction to open the aerial window. The 'prefer'
+          -- options will open the window in the other direction *if* there is a
+          -- different buffer in the way of the preferred direction
+          -- Enum: prefer_right, prefer_left, right, left, float
+          default_direction = "float",
+          placement = "edge",
+        },
+      })
+      -- You probably also want to set a keymap to toggle aerial
+      vim.keymap.set('n', '<leader>a', '<cmd>AerialToggle<CR>')
+    end
+  }
+  use {
+    "gbprod/yanky.nvim",
+    config = function()
+      require("yanky").setup()
+      vim.keymap.set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
+      vim.keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
+      vim.keymap.set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
+      vim.keymap.set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
+      vim.keymap.set("n", "<c-p>", "<Plug>(YankyCycleForward)")
+      vim.keymap.set("n", "<c-n>", "<Plug>(YankyCycleBackward)")
+    end
   }
   use {
     'tpope/vim-fugitive',
-    config = function ()
+    config = function()
       vim.api.nvim_set_keymap('n', '<leader>gs', ':Git<CR><C-w>J', { noremap = true, silent = true })
       vim.api.nvim_set_keymap('n', '<leader>ga', ':Gwrite<CR>', { noremap = true, silent = true })
       vim.api.nvim_set_keymap('n', '<leader>gc', ':Git commit<CR>', { noremap = true, silent = true })
@@ -520,6 +582,12 @@ return require('packer').startup(function(use)
         pattern = "fugitive",
         command = "nmap <buffer> q gq",
       })
+    end
+  }
+  use {
+    'norcalli/nvim-colorizer.lua',
+    config = function ()
+      require('colorizer').setup()
     end
   }
   -- }}}
