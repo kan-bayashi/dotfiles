@@ -30,8 +30,6 @@
   "signature.floatConfig.winblend": 20,
   "signature.floatConfig.borderhighlight": "CocBorder",
 
-  "coc.floatingFactory.mode": "normal",
-
   // nerdfont icon settings
   "suggest.completionItemKindLabels": {
     "function": "󰡱",
