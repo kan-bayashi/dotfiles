@@ -126,7 +126,7 @@ return require('packer').startup(function(use)
             indicator = ''
           end
 
-          local lnum, col = unpack(posList[idx])
+          local lnum, col = table.unpack(posList[idx])
           if nearest then
             local cnt = #posList
             if indicator ~= '' then
@@ -544,18 +544,6 @@ return require('packer').startup(function(use)
     end
   }
   use {
-    'tpope/vim-fugitive',
-    config = function()
-      vim.api.nvim_set_keymap('n', '<leader>gs', ':Git<CR><C-w>J', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>ga', ':Gwrite<CR>', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>gc', ':Git commit<CR>', { noremap = true, silent = true })
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = "fugitive",
-        command = "nmap <buffer> q gq",
-      })
-    end
-  }
-  use {
     'stevearc/aerial.nvim',
     config = function()
       require('aerial').setup({
@@ -581,6 +569,18 @@ return require('packer').startup(function(use)
       vim.keymap.set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
       vim.keymap.set("n", "<c-p>", "<Plug>(YankyCycleForward)")
       vim.keymap.set("n", "<c-n>", "<Plug>(YankyCycleBackward)")
+    end
+  }
+  use {
+    'tpope/vim-fugitive',
+    config = function()
+      vim.api.nvim_set_keymap('n', '<leader>gs', ':Git<CR><C-w>J', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>ga', ':Gwrite<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>gc', ':Git commit<CR>', { noremap = true, silent = true })
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "fugitive",
+        command = "nmap <buffer> q gq",
+      })
     end
   }
   -- }}}
