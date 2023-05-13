@@ -94,8 +94,8 @@ return require('packer').startup(function(use)
     'goolord/alpha-nvim',
     requires = { 'nvim-tree/nvim-web-devicons' },
     config = function()
-      local dashboard = require('alpha.themes.dashboard')
-      dashboard.section.header.val = {
+      local startify = require('alpha.themes.startify')
+      startify.section.header.val = {
         [[                                                          ]],
         [[                                                          ]],
         [[  ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗  ]],
@@ -106,7 +106,7 @@ return require('packer').startup(function(use)
         [[  ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝  ]],
         [[                                                          ]],
       }
-      require('alpha').setup(dashboard.config)
+      require('alpha').setup(startify.config)
     end
   })
   use {
@@ -126,7 +126,7 @@ return require('packer').startup(function(use)
             indicator = ''
           end
 
-          local lnum, col = table.unpack(posList[idx])
+          local lnum, col = unpack(posList[idx])
           if nearest then
             local cnt = #posList
             if indicator ~= '' then
@@ -552,7 +552,8 @@ return require('packer').startup(function(use)
           -- options will open the window in the other direction *if* there is a
           -- different buffer in the way of the preferred direction
           -- Enum: prefer_right, prefer_left, right, left, float
-          default_direction = "prefer_left",
+          default_direction = "float",
+          placement = "edge",
         },
       })
       -- You probably also want to set a keymap to toggle aerial

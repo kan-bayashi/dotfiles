@@ -11,7 +11,6 @@
   "diagnostic.infoSign": "\uf449",
   "diagnostic.hintSign": "\uf441",
   // nerdfont icons
-  "suggest.maxPreviewWidth": 100,
   "suggest.maxCompleteItemCount": 100,
   "suggest.completionItemKindLabels": {
     "function": "\uf794",
@@ -56,4 +55,5 @@
   "yaml.format.enable": true,
   "snippets.ultisnips.pythonPrompt": false,
   "sumneko-lua.enableNvimLuaDev": true,
+  "Lua.runtime.version": "Lua 5.1"
 }
