@@ -54,6 +54,6 @@
   "pyright.inlayHints.variableTypes": false,
   // yaml setting
   "yaml.format.enable": true,
-  "toml.formatter.reorderKeys": false,
-  "toml.formatter.alignEntries": true
+  "snippets.ultisnips.pythonPrompt": false,
+  "sumneko-lua.enableNvimLuaDev": true,
 }
