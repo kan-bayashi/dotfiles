@@ -44,7 +44,15 @@ return require('packer').startup(function(use)
               symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
             }
           },
-          lualine_c = {{'filename', path = 1}},
+          lualine_c = {
+            {
+              'filename',
+              path = 1,
+              newfile_status = true,
+              shorting_target = 24,
+              symbols = { modified = '_󰷥', readonly = ' ', newfile = '󰄛' },
+            }
+          },
         },
         tabline = {},
       })
