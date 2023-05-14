@@ -59,8 +59,8 @@ keymap("v", "<C-o>", "<Esc>", keymap_opts)
 keymap("x", "<C-o>", "<Esc>", keymap_opts)
 
 -- Remap jump
-keymap("n", "<Leader>]", "<C-i>", keymap_opts)
-keymap("n", "<Leader>[", "<C-o>", keymap_opts)
+keymap("n", "{", "<C-o>", keymap_opts)
+keymap("n", "}", "<C-i>", keymap_opts)
 keymap("n", "<C-i>", "<Nop>", keymap_opts)
 keymap("n", "<C-o>", "<Nop>", keymap_opts)
 
@@ -105,7 +105,7 @@ keymap("", "<Leader>y", "y:<C-u>call Yank(@0)<CR>", keymap_opts)
 
 -- Autocommands
 -- {{{
-local autocmd = vim.api.nvim_create_autocmd -- Create autocommand
+local autocmd = vim.api.nvim_create_autocmd
 autocmd("BufNewFile,BufRead", {
   pattern = "*.yaml",
   command = "setlocal tabstop=2 softtabstop=2 shiftwidth=2",
