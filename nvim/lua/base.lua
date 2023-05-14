@@ -86,6 +86,9 @@ keymap("n", "<C-w>|", ":vs<CR>", keymap_opts)
 -- Tab and buffer navigation
 keymap("n", "tt", ":tabnew<CR>", keymap_opts)
 
+-- Reload file
+keymap("n", "<Leader>e", ":e!<CR>", keymap_opts)
+
 -- Copy to clipboard
 vim.cmd([[
   function! Yank(text) abort
