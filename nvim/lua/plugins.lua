@@ -16,20 +16,40 @@ return require('packer').startup(function(use)
 
   -- Unitility for plugins
   use { 'MunifTanjim/nui.nvim' }
-  use({ 'nvim-lua/plenary.nvim' })
-  use({ 'nvim-tree/nvim-web-devicons' })
+  use { 'nvim-lua/plenary.nvim' }
 
   -- ColorScheme
-  use({ 'rktjmp/lush.nvim' })
-  use({
+  use {
     'kan-bayashi/nvim-jellybeans',
     requires = { 'rktjmp/lush.nvim' },
-  })
+    config = function()
+      vim.cmd [[colorscheme jellybeans]]
+    end
+  }
 
   -- Apperaence {{{
   use({
+    'goolord/alpha-nvim',
+    requires = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      local startify = require('alpha.themes.startify')
+      startify.section.header.val = {
+        [[                                                                                       ]],
+        [[                                                                                       ]],
+        [[                ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗                 ]],
+        [[                ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║                 ]],
+        [[                ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║                 ]],
+        [[                ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║                 ]],
+        [[                ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║                 ]],
+        [[                ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝                 ]],
+        [[                                                                                       ]],
+      }
+      require('alpha').setup(startify.config)
+    end
+  })
+  use {
     'nvim-lualine/lualine.nvim',
-    requires = { 'nvim-tree/nvim-web-devicons', opt = true },
+    requires = { 'nvim-tree/nvim-web-devicons' },
     config = function()
       require('lualine').setup({
         options = {
@@ -57,11 +77,11 @@ return require('packer').startup(function(use)
         tabline = {},
       })
     end,
-  })
-  use({
+  }
+  use {
     'akinsho/bufferline.nvim',
     tag = "*",
-    requires = 'nvim-tree/nvim-web-devicons',
+    requires = { 'nvim-tree/nvim-web-devicons' },
     config = function()
       require('bufferline').setup({
         options = {
@@ -79,9 +99,10 @@ return require('packer').startup(function(use)
       vim.api.nvim_set_keymap("n", "tl", ":BufferLineCycleNext<CR>", { noremap = true, silent = true })
       vim.api.nvim_set_keymap("n", "th", ":BufferLineCyclePrev<CR>", { noremap = true, silent = true })
     end,
-  })
+  }
   use({
     "lukas-reineke/indent-blankline.nvim",
+    event = { "BufRead", "BufNewFile" },
     config = function()
       vim.opt.list = true
       vim.opt.listchars:append "eol:↴"
@@ -90,28 +111,27 @@ return require('packer').startup(function(use)
       }
     end
   })
-  use({
-    'goolord/alpha-nvim',
-    requires = { 'nvim-tree/nvim-web-devicons' },
+  use {
+    "petertriho/nvim-scrollbar",
+    event = {
+      "BufWinEnter",
+      "CmdwinLeave",
+      "TabEnter",
+      "TermEnter",
+      "TextChanged",
+      "VimResized",
+      "WinEnter",
+      "WinScrolled",
+    },
     config = function()
-      local startify = require('alpha.themes.startify')
-      startify.section.header.val = {
-        [[                                                                                       ]],
-        [[                                                                                       ]],
-        [[                ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗                 ]],
-        [[                ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║                 ]],
-        [[                ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║                 ]],
-        [[                ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║                 ]],
-        [[                ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║                 ]],
-        [[                ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝                 ]],
-        [[                                                                                       ]],
-      }
-      require('alpha').setup(startify.config)
+      require("scrollbar").setup()
     end
-  })
+  }
   use {
     'kevinhwang91/nvim-hlslens',
-    requires = "petertriho/nvim-scrollbar",
+    event = { "BufRead", "BufNewFile" },
+    requires = { "petertriho/nvim-scrollbar", opt = true },
+    wants = { "nvim-scrollbar" },
     config = function()
       require('hlslens').setup({
         override_lens = function(render, posList, nearest, idx, relIdx)
@@ -161,7 +181,9 @@ return require('packer').startup(function(use)
   }
   use {
     'lewis6991/gitsigns.nvim',
-    requires = "petertriho/nvim-scrollbar",
+    event = { "BufRead", "BufNewFile" },
+    requires = { "petertriho/nvim-scrollbar", opt = true },
+    wants = { "nvim-scrollbar" },
     config = function()
       require('gitsigns').setup({
         on_attach = function(bufnr)
@@ -197,26 +219,20 @@ return require('packer').startup(function(use)
       require("scrollbar.handlers.gitsigns").setup()
     end
   }
-  use {
-    "petertriho/nvim-scrollbar",
-    config = function()
-      require("scrollbar").setup()
-    end
-  }
   -- }}}
 
   -- LSP {{{
-  use({ 'honza/vim-snippets' })
-  use({
-    'SirVer/ultisnips',
-    config = function()
-      vim.g.UltiSnipsExpandTrigger = '<Nop>'
-    end
-  })
   use({
     "neoclide/coc.nvim",
     branch = "release",
-    config = function() --  {{{
+    event = { "InsertEnter" },
+    requires = {
+      { "honza/vim-snippets", event = "InsertEnter" },
+      { "SirVer/ultisnips",   event = "InsertEnter" },
+    },
+    wants = { "vim-snippets", "ultisnips" },
+    config = function()                      --  {{{
+      vim.g.UltiSnipsExpandTrigger = '<Nop>' -- Disable UltiSnips expansion
       vim.g.coc_global_extensions = {
         'coc-json',
         'coc-pyright',
@@ -329,6 +345,7 @@ return require('packer').startup(function(use)
   })
   use({
     'github/copilot.vim',
+    event = { "InsertEnter" },
     config = function()
       vim.api.nvim_set_keymap('i', '<c-]>', 'copilot#Accept("<CR>")', { silent = true, expr = true })
       vim.g.copilot_no_tab_map = true
@@ -364,6 +381,7 @@ return require('packer').startup(function(use)
   -- Fuzzy finder {{{
   use {
     'gelguy/wilder.nvim',
+    event = { "CmdLineEnter" },
     config = function()
       local wilder = require('wilder')
       wilder.setup({ modes = { ':', '/', '?' } })
@@ -372,8 +390,8 @@ return require('packer').startup(function(use)
           border = "rounded",
           pumblend = 10,
           highlights = { border = "CocBorder", default = "CocFloating" },
-          left = {' ', wilder.popupmenu_devicons()},
-          right = {' ', wilder.popupmenu_scrollbar()},
+          left = { ' ', wilder.popupmenu_devicons() },
+          right = { ' ', wilder.popupmenu_scrollbar() },
         })
       ))
     end,
@@ -381,14 +399,41 @@ return require('packer').startup(function(use)
   use {
     'nvim-telescope/telescope.nvim',
     tag = "*",
+    cmd = { "Telescope" },
+    module = { "telescope" },
     requires = {
-      { 'nvim-lua/plenary.nvim' },
-      { 'nvim-tree/nvim-web-devicons' },
-      { 'fannheyward/telescope-coc.nvim' },
-      { 'nvim-telescope/telescope-file-browser.nvim' },
-      { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+      { 'nvim-lua/plenary.nvim',                      opt = true },
+      { 'nvim-tree/nvim-web-devicons',                opt = true },
+      { 'fannheyward/telescope-coc.nvim',             opt = true },
+      { 'nvim-telescope/telescope-file-browser.nvim', opt = true },
+      { 'nvim-telescope/telescope-fzf-native.nvim',   run = 'make', opt = true },
     },
-    config = function() -- {{{
+    wants = {
+      'plenary.nvim',
+      'nvim-web-devicons',
+      'telescope-coc.nvim',
+      'telescope-file-browser.nvim',
+      'telescope-fzf-native.nvim'
+    },
+    setup = function()
+      -- Keybindings
+      local keymap = vim.api.nvim_set_keymap
+      local keymap_opts = { noremap = true, silent = true }
+      keymap("n", "<C-f>f", "<cmd>Telescope find_files<CR>", keymap_opts)
+      keymap("n", "<C-f>g", "<cmd>Telescope git_status<CR>", keymap_opts)
+      keymap("n", "<C-f><C-g>", "<cmd>Telescope live_grep<CR>", keymap_opts)
+      keymap("n", "<C-f>b", "<cmd>Telescope buffers<CR>", keymap_opts)
+      keymap("n", "<C-f><Space>", "<cmd>Telescope file_browser<CR>", keymap_opts)
+      keymap("n", "<C-f>e", "<cmd>Telescope emoji<CR>", keymap_opts)
+      keymap("n", "<C-f>q",
+        '<cmd>Telescope coc diagnostics theme=dropdown layout_config={"height":0.25,"width":0.85}<CR>', keymap_opts)
+      keymap("n", "<C-f>*", "<cmd>Telescope grep_string<CR>", keymap_opts)
+      keymap("n", "<C-f>/",
+        ':lua require("telescope.builtin").live_grep({search_dirs={vim.fn.expand("%:p")}, previewer=false, path_display={shorten=1}})<CR>',
+        keymap_opts)
+      keymap("n", "<C-f><C-f>", "<cmd>Telescope resume<CR>", keymap_opts)
+    end,
+    config = function()
       -- General configuration
       local themes = require("telescope.themes")
       local actions = require("telescope.actions")
@@ -405,6 +450,7 @@ return require('packer').startup(function(use)
               ["t"] = actions.select_tab,
               ["q"] = actions.close,
               ["<C-o>"] = actions.close,
+              ["<C-c>"] = actions.close,
               ["dd"] = actions.delete_buffer,
               ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
               ["<S-q>"] = actions.send_to_qflist + actions.open_qflist,
@@ -441,28 +487,14 @@ return require('packer').startup(function(use)
       require("telescope").load_extension("coc")
       require("telescope").load_extension("fzf")
       require("telescope").load_extension("file_browser")
-
-      -- Keybindings
-      local keymap = vim.api.nvim_set_keymap
-      local keymap_opts = { noremap = true, silent = true }
-      keymap("n", "<C-f>f", "<cmd>Telescope find_files<CR>", keymap_opts)
-      keymap("n", "<C-f>g", "<cmd>Telescope git_status<CR>", keymap_opts)
-      keymap("n", "<C-f><C-g>", "<cmd>Telescope live_grep<CR>", keymap_opts)
-      keymap("n", "<C-f>b", "<cmd>Telescope buffers<CR>", keymap_opts)
-      keymap("n", "<C-f><Space>", "<cmd>Telescope file_browser<CR>", keymap_opts)
-      keymap("n", "<C-f>e", "<cmd>Telescope emoji<CR>", keymap_opts)
-      keymap("n", "<C-f>q",
-        '<cmd>Telescope coc diagnostics theme=dropdown layout_config={"height":0.25,"width":0.85}<CR>', keymap_opts)
-      keymap("n", "<C-f>*", "<cmd>Telescope grep_string<CR>", keymap_opts)
-      keymap("n", "<C-f>/", ':lua require("telescope.builtin").live_grep({search_dirs={vim.fn.expand("%:p")}, previewer=false, path_display={shorten=1}})<CR>', keymap_opts)
-      keymap("n", "<C-f><C-f>", "<cmd>Telescope resume<CR>", keymap_opts)
-    end -- }}}
+    end
   }
   -- }}}
 
   -- Others {{{
   use({
     'ntpeters/vim-better-whitespace',
+    event = { "InsertEnter" },
     setup = function()
       vim.g.better_whitespace_filetypes_blacklist = { 'dashboard', 'help' }
     end
@@ -474,45 +506,61 @@ return require('packer').startup(function(use)
     end,
   })
 
-  use { 'tpope/vim-surround' }
-  use { 'tpope/vim-repeat' }
-  use { 'tomtom/tcomment_vim' }
+  use {
+    'tpope/vim-repeat',
+    event = { "InsertEnter" },
+  }
   use {
     'Konfekt/FastFold',
-    config = function()
+    event = { "BufReadPre", "BufNewFile" },
+    setup = function()
       vim.g.fastfold_fold_command_suffixes = {}
     end
   }
   use {
     'andymass/vim-matchup',
+    event = { "InsertEnter" },
     setup = function()
       vim.g.matchup_matchparen_offscreen = { method = "popup" }
     end
   }
   use {
     "windwp/nvim-autopairs",
+    event = { "InsertEnter" },
     config = function()
       require("nvim-autopairs").setup()
     end
   }
   use {
     "ahmedkhalf/project.nvim",
+    event = { "BufRead", "BufNewFile" },
     config = function()
       require("project_nvim").setup()
     end
   }
-  use { 'tmhedberg/SimpylFold' }
+  use {
+    'tmhedberg/SimpylFold',
+    event = { "BufReadPre", "BufNewFile" },
+  }
   use {
     'gabrielpoca/replacer.nvim',
-    config = function()
+    module = { 'replacer' },
+    setup = function()
       vim.api.nvim_create_user_command('QFReplace', 'lua require("replacer").run()', {})
     end
   }
-  use { 'stefandtw/quickfix-reflector.vim' }
-  use { 'roxma/vim-paste-easy' }
+  use {
+    'stefandtw/quickfix-reflector.vim',
+    event = { "InsertEnter" },
+  }
+  use {
+    'roxma/vim-paste-easy',
+    event = { "InsertEnter" },
+  }
   use {
     'mg979/vim-visual-multi',
-    config = function()
+    event = { "InsertEnter" },
+    setup = function()
       vim.cmd([[
         let g:VM_maps = {}
         let g:VM_maps['Find Under'] = '<space>n'
@@ -527,6 +575,7 @@ return require('packer').startup(function(use)
   }
   use {
     "kylechui/nvim-surround",
+    event = { "InsertEnter" },
     tag = "*",
     config = function()
       require("nvim-surround").setup()
@@ -534,12 +583,17 @@ return require('packer').startup(function(use)
   }
   use {
     'numToStr/Comment.nvim',
+    event = { "InsertEnter" },
     config = function()
       require('Comment').setup()
     end
   }
   use {
     'stevearc/aerial.nvim',
+    cmd = { "AerialToggle" },
+    setup = function ()
+      vim.keymap.set('n', '<leader>a', '<cmd>AerialToggle<CR>')
+    end,
     config = function()
       require('aerial').setup({
         layout = {
@@ -551,20 +605,28 @@ return require('packer').startup(function(use)
           placement = "edge",
         },
       })
-      -- You probably also want to set a keymap to toggle aerial
-      vim.keymap.set('n', '<leader>a', '<cmd>AerialToggle<CR>')
     end
   }
   use {
     "gbprod/yanky.nvim",
-    config = function()
-      require("yanky").setup()
+    keys = {
+      "<Plug>(YankyCycleForward)",
+      "<Plug>(YankyCycleBackward)",
+      "<Plug>(YankyPutAfter)",
+      "<Plug>(YankyPutBefore)",
+      "<Plug>(YankyGPutAfter)",
+      "<Plug>(YankyGPutBefore)"
+    },
+    setup = function ()
       vim.keymap.set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
       vim.keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
       vim.keymap.set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
       vim.keymap.set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
       vim.keymap.set("n", "<c-p>", "<Plug>(YankyCycleForward)")
       vim.keymap.set("n", "<c-n>", "<Plug>(YankyCycleBackward)")
+    end,
+    config = function()
+      require("yanky").setup()
     end
   }
   use {
