@@ -1,5 +1,4 @@
 -- Basic options
--- {{{
 local opt = vim.opt
 opt.encoding = "utf-8"
 opt.fileencoding = "utf-8"
@@ -41,10 +40,8 @@ opt.hidden = true
 opt.mouse = "a"
 opt.shortmess = "c"
 opt.signcolumn = "yes"
--- }}}
 
 -- Keymaps
--- {{{
 local keymap_opts = { noremap = true, silent = true }
 local keymap = vim.api.nvim_set_keymap
 
@@ -101,10 +98,8 @@ vim.cmd([[
   endfunction
 ]])
 keymap("", "<Leader>y", "y:<C-u>call Yank(@0)<CR>", keymap_opts)
--- }}}
 
 -- Autocommands
--- {{{
 local autocmd = vim.api.nvim_create_autocmd
 autocmd("BufNewFile,BufRead", {
   pattern = "*.yaml",
@@ -134,4 +129,3 @@ autocmd("Filetype", {
   pattern = "gitcommit",
   command = "setlocal spell",
 })
--- }}}

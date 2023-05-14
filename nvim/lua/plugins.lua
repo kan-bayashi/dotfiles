@@ -376,6 +376,7 @@ return require('packer').startup(function(use)
       })
       vim.opt.foldmethod = 'expr'
       vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+      vim.opt.foldlevel = 99
       vim.opt.foldnestmax = 2
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "sh",
