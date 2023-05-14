@@ -85,6 +85,15 @@ keymap("n", "tt", ":tabnew<CR>", keymap_opts)
 -- Reload file
 keymap("n", "<Leader>e", ":e!<CR>", keymap_opts)
 
+-- Save file
+keymap("n", "<Leader>w", ":w<CR>", keymap_opts)
+
+-- Close buffer
+keymap("n", "<Leader>q", ":bdel<CR>", keymap_opts)
+
+-- Preserve annoying pop
+keymap("n", "q:", ":q<CR>", keymap_opts)
+
 -- Copy to clipboard
 vim.cmd([[
   function! Yank(text) abort
