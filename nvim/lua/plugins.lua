@@ -346,9 +346,9 @@ return require('packer').startup(function(use)
   use({
     'github/copilot.vim',
     event = { "InsertEnter" },
-    config = function()
-      vim.api.nvim_set_keymap('i', '<c-]>', 'copilot#Accept("<CR>")', { silent = true, expr = true })
+    setup = function()
       vim.g.copilot_no_tab_map = true
+      vim.api.nvim_set_keymap('i', '<c-]>', 'copilot#Accept("<CR>")', { silent = true, expr = true })
     end
   })
 
@@ -540,7 +540,8 @@ return require('packer').startup(function(use)
   }
   use {
     'tmhedberg/SimpylFold',
-    event = { "BufReadPre", "BufNewFile" },
+    -- NOTE(kan-bayashi): Not sure but delayed loading causes no syntax highlight
+    -- event = { "BufReadPre", "BufNewFile" },
   }
   use {
     'gabrielpoca/replacer.nvim',
@@ -551,10 +552,6 @@ return require('packer').startup(function(use)
   }
   use {
     'stefandtw/quickfix-reflector.vim',
-    event = { "InsertEnter" },
-  }
-  use {
-    'roxma/vim-paste-easy',
     event = { "InsertEnter" },
   }
   use {
@@ -601,32 +598,22 @@ return require('packer').startup(function(use)
           -- options will open the window in the other direction *if* there is a
           -- different buffer in the way of the preferred direction
           -- Enum: prefer_right, prefer_left, right, left, float
-          default_direction = "float",
-          placement = "edge",
+          default_direction = "prefer_left",
         },
       })
     end
   }
   use {
     "gbprod/yanky.nvim",
-    keys = {
-      "<Plug>(YankyCycleForward)",
-      "<Plug>(YankyCycleBackward)",
-      "<Plug>(YankyPutAfter)",
-      "<Plug>(YankyPutBefore)",
-      "<Plug>(YankyGPutAfter)",
-      "<Plug>(YankyGPutBefore)"
-    },
-    setup = function ()
+    event = { "BufRead", "BufNewFile" },
+    config = function()
+      require("yanky").setup()
       vim.keymap.set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
       vim.keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
       vim.keymap.set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
       vim.keymap.set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
       vim.keymap.set("n", "<c-p>", "<Plug>(YankyCycleForward)")
       vim.keymap.set("n", "<c-n>", "<Plug>(YankyCycleBackward)")
-    end,
-    config = function()
-      require("yanky").setup()
     end
   }
   use {
@@ -643,6 +630,7 @@ return require('packer').startup(function(use)
   }
   use {
     'norcalli/nvim-colorizer.lua',
+    event = { "BufRead", "BufNewFile" },
     config = function()
       require('colorizer').setup()
     end
