@@ -355,7 +355,6 @@ return require('packer').startup(function(use)
   use {
     'nvim-treesitter/nvim-treesitter',
     requires = {
-      'nvim-treesitter/nvim-treesitter-context',
       'David-Kunz/treesitter-unit'
     },
     run = ':TSUpdate',
@@ -377,9 +376,6 @@ return require('packer').startup(function(use)
           "lua",
         },
         additional_vim_regex_highlighting = false,
-      })
-      require('treesitter-context').setup({
-        enable = true,
       })
       vim.opt.foldmethod = 'expr'
       vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
