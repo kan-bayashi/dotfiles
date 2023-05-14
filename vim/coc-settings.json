@@ -15,19 +15,19 @@
   // floating window settings
   "suggest.floatConfig.border": true,
   "suggest.floatConfig.rounded": true,
-  "suggest.floatConfig.winblend": 20,
+  "suggest.floatConfig.winblend": 10,
   "suggest.floatConfig.borderhighlight": "CocBorder",
   "diagnostic.floatConfig.border": true,
   "diagnostic.floatConfig.rounded": true,
-  "diagnostic.floatConfig.winblend": 20,
+  "diagnostic.floatConfig.winblend": 10,
   "diagnostic.floatConfig.borderhighlight": "CocBorder",
   "hover.floatConfig.border": true,
   "hover.floatConfig.rounded": true,
-  "hover.floatConfig.winblend": 20,
+  "hover.floatConfig.winblend": 10,
   "hover.floatConfig.borderhighlight": "CocBorder",
   "signature.floatConfig.border": true,
   "signature.floatConfig.rounded": true,
-  "signature.floatConfig.winblend": 20,
+  "signature.floatConfig.winblend": 10,
   "signature.floatConfig.borderhighlight": "CocBorder",
 
   // nerdfont icon settings

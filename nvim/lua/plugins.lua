@@ -369,18 +369,15 @@ return require('packer').startup(function(use)
       wilder.setup({ modes = { ':', '/', '?' } })
       wilder.set_option('renderer', wilder.popupmenu_renderer(
         wilder.popupmenu_border_theme({
-          border = 'rounded',
-          highlights = { boader = 'Normal' },
-          highlighter = wilder.basic_highlighter(),
-          left = { ' ', wilder.popupmenu_devicons() },
-          right = { ' ', wilder.popupmenu_scrollbar() },
+          border = "rounded",
+          pumblend = 10,
+          highlights = { border = "CocBorder", default = "CocFloating" },
+          left = {' ', wilder.popupmenu_devicons()},
+          right = {' ', wilder.popupmenu_scrollbar()},
         })
       ))
     end,
   }
-  use { 'fannheyward/telescope-coc.nvim' }
-  use { 'nvim-telescope/telescope-file-browser.nvim' }
-  use { 'natecraddock/telescope-zf-native.nvim' }
   use {
     'nvim-telescope/telescope.nvim',
     tag = "*",
@@ -389,7 +386,7 @@ return require('packer').startup(function(use)
       { 'nvim-tree/nvim-web-devicons' },
       { 'fannheyward/telescope-coc.nvim' },
       { 'nvim-telescope/telescope-file-browser.nvim' },
-      { 'natecraddock/telescope-zf-native.nvim' },
+      { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
     },
     config = function() -- {{{
       -- General configuration
@@ -442,7 +439,7 @@ return require('packer').startup(function(use)
       }
       -- Add extentions
       require("telescope").load_extension("coc")
-      require("telescope").load_extension("zf-native")
+      require("telescope").load_extension("fzf")
       require("telescope").load_extension("file_browser")
 
       -- Keybindings
@@ -457,9 +454,7 @@ return require('packer').startup(function(use)
       keymap("n", "<C-f>q",
         '<cmd>Telescope coc diagnostics theme=dropdown layout_config={"height":0.25,"width":0.85}<CR>', keymap_opts)
       keymap("n", "<C-f>*", "<cmd>Telescope grep_string<CR>", keymap_opts)
-      keymap("n", "<C-f>/",
-        'builtin.live_grep({search_dirs={vim.fn.expand("%:p")}, previewer=false, path_display={shorten=1}})<CR>',
-        keymap_opts)
+      keymap("n", "<C-f>/", ':lua require("telescope.builtin").live_grep({search_dirs={vim.fn.expand("%:p")}, previewer=false, path_display={shorten=1}})<CR>', keymap_opts)
       keymap("n", "<C-f><C-f>", "<cmd>Telescope resume<CR>", keymap_opts)
     end -- }}}
   }
@@ -586,7 +581,7 @@ return require('packer').startup(function(use)
   }
   use {
     'norcalli/nvim-colorizer.lua',
-    config = function ()
+    config = function()
       require('colorizer').setup()
     end
   }
