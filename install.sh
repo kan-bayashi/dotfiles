@@ -123,7 +123,7 @@ TMPDIR=$(mktemp -d /tmp/XXXXX)
 if [ ! -e "${HOME}"/local/bin/nvim ]; then
     echo "installing neovim..."
     cd "${HOME}"/local/bin
-    wget https://github.com/neovim/neovim/releases/download/v0.7.2/nvim.appimage
+    wget https://github.com/neovim/neovim/releases/download/v0.8.3/nvim.appimage
     chmod u+x nvim.appimage
     if ./nvim.appimage --version >& /dev/null; then
         ln -s ./nvim.appimage nvim
@@ -150,13 +150,7 @@ fi
 cd "$ROOTDIR"
 [ -e "$TMPDIR" ] && rm -fr "$TMPDIR"
 
-# install vim plugins
-echo "installing vim plugins..."
 export PATH=${HOME}/local/bin:$PATH
-[ ! -e ~/.cache/dein/repos/github.com/Shougo/dein.vim ] && \
-    git clone https://github.com/Shougo/dein.vim ~/.cache/dein/repos/github.com/Shougo/dein.vim
-nvim -c "try | call dein#install() | finally | qall! | endtry" -N -u "${HOME}"/.vim/init.vim -V1 -es
-nvim -c "try | call dein#update() | finally | qall! | endtry" -N -u "${HOME}"/.vim/init.vim -V1 -es
 
 echo ""
 echo "Sucessfully installed essential tools."
