@@ -1,50 +1,46 @@
 -- Basic options
--- {{{
-local opt = vim.opt
-opt.encoding = "utf-8"
-opt.fileencoding = "utf-8"
-opt.fileformat = "unix"
-opt.syntax = "on"
-opt.incsearch = true
-opt.hlsearch = true
-opt.ignorecase = true
-opt.smartcase = true
-opt.wrapscan = true
-opt.swapfile = false
-opt.backup = false
-opt.writebackup = false
-opt.updatetime = 300
-opt.undofile = true
-opt.undodir = vim.fn.expand("~/.cache/nvim/undo")
-opt.ttimeoutlen = 10
-opt.backspace = { "indent", "eol", "start" }
-opt.tabstop = 4
-opt.expandtab = true
-opt.shiftwidth = 4
-opt.autoindent = true
-opt.showmatch = true
-opt.completeopt = { "menuone", "noinsert", "noselect" }
-opt.number = true
-opt.laststatus = 3
-opt.showtabline = 2
-opt.cmdheight = 2
-opt.showmode = false
-opt.showcmd = false
-opt.cursorline = true
-opt.wildmenu = true
-opt.history = 1000
-opt.background = "dark"
-opt.termguicolors = true
-opt.pumheight = 10
-opt.foldmethod = "marker"
-opt.hidden = true
-opt.mouse = "a"
-opt.shortmess = "c"
-opt.signcolumn = "yes"
--- }}}
+vim.opt.encoding = "utf-8"
+vim.opt.fileencoding = "utf-8"
+vim.opt.fileformat = "unix"
+vim.opt.syntax = "on"
+vim.opt.incsearch = true
+vim.opt.hlsearch = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.wrapscan = true
+vim.opt.swapfile = false
+vim.opt.backup = false
+vim.opt.writebackup = false
+vim.opt.updatetime = 300
+vim.opt.undofile = true
+vim.opt.undodir = vim.fn.expand("~/.cache/nvim/undo")
+vim.opt.ttimeoutlen = 10
+vim.opt.backspace = { "indent", "eol", "start" }
+vim.opt.tabstop = 4
+vim.opt.expandtab = true
+vim.opt.shiftwidth = 4
+vim.opt.autoindent = true
+vim.opt.showmatch = true
+vim.opt.completeopt = { "menuone", "noinsert", "noselect" }
+vim.opt.number = true
+vim.opt.laststatus = 3
+vim.opt.showtabline = 2
+vim.opt.cmdheight = 2
+vim.opt.showmode = false
+vim.opt.showcmd = false
+vim.opt.cursorline = true
+vim.opt.wildmenu = true
+vim.opt.history = 1000
+vim.opt.background = "dark"
+vim.opt.termguicolors = true
+vim.opt.pumheight = 10
+vim.opt.foldmethod = "marker"
+vim.opt.hidden = true
+vim.opt.mouse = "a"
+vim.opt.shortmess = "c"
+vim.opt.signcolumn = "yes"
 
 -- Keymaps
--- {{{
 local keymap_opts = { noremap = true, silent = true }
 local keymap = vim.api.nvim_set_keymap
 
@@ -89,6 +85,15 @@ keymap("n", "tt", ":tabnew<CR>", keymap_opts)
 -- Reload file
 keymap("n", "<Leader>e", ":e!<CR>", keymap_opts)
 
+-- Save file
+keymap("n", "<Leader>w", ":w<CR>", keymap_opts)
+
+-- Close buffer
+keymap("n", "<Leader>q", ":bdel<CR>", keymap_opts)
+
+-- Preserve annoying pop
+keymap("n", "q:", ":q<CR>", keymap_opts)
+
 -- Copy to clipboard
 vim.cmd([[
   function! Yank(text) abort
@@ -101,10 +106,8 @@ vim.cmd([[
   endfunction
 ]])
 keymap("", "<Leader>y", "y:<C-u>call Yank(@0)<CR>", keymap_opts)
--- }}}
 
 -- Autocommands
--- {{{
 local autocmd = vim.api.nvim_create_autocmd
 autocmd("BufNewFile,BufRead", {
   pattern = "*.yaml",
@@ -134,4 +137,3 @@ autocmd("Filetype", {
   pattern = "gitcommit",
   command = "setlocal spell",
 })
--- }}}

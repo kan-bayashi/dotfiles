@@ -106,7 +106,7 @@ return require('packer').startup(function(use)
     config = function()
       require('bufferline').setup({
         options = {
-          mode = 'tabs',
+          -- mode = 'tabs',
           numbers = 'none',
           diagnostics = 'coc',
           show_buffer_close_icons = false,
@@ -354,6 +354,9 @@ return require('packer').startup(function(use)
   -- Better syntax highlighting
   use {
     'nvim-treesitter/nvim-treesitter',
+    requires = {
+      'David-Kunz/treesitter-unit'
+    },
     run = ':TSUpdate',
     config = function()
       require('nvim-treesitter.configs').setup({
@@ -376,11 +379,20 @@ return require('packer').startup(function(use)
       })
       vim.opt.foldmethod = 'expr'
       vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+      vim.opt.foldlevel = 99
       vim.opt.foldnestmax = 2
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "sh",
         command = "setlocal foldmethod=marker",
       })
+      vim.api.nvim_set_keymap('x', 'iu', ':lua require"treesitter-unit".select()<CR>',
+        { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('x', 'au', ':lua require"treesitter-unit".select(true)<CR>',
+        { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('o', 'iu', ':<c-u>lua require"treesitter-unit".select()<CR>',
+        { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('o', 'au', ':<c-u>lua require"treesitter-unit".select(true)<CR>',
+        { noremap = true, silent = true })
     end
   }
 
@@ -573,14 +585,7 @@ return require('packer').startup(function(use)
   }
 
   -- Surround text objects
-  use {
-    "kylechui/nvim-surround",
-    event = { "InsertEnter" },
-    tag = "*",
-    config = function()
-      require("nvim-surround").setup()
-    end
-  }
+  use { 'machakann/vim-sandwich', event = { "InsertEnter" } }
 
   -- Better commenting
   use {
@@ -662,20 +667,27 @@ return require('packer').startup(function(use)
   use {
     'phaazon/hop.nvim',
     event = { "BufRead", "BufNewFile" },
+    requires = { 'mfussenegger/nvim-treehopper', opt = true },
+    wants = { 'nvim-treehopper' },
     config = function()
       require('hop').setup({ keys = 'etovxqpdygfblzhckisuran' })
       local hop = require('hop')
       local directions = require('hop.hint').HintDirection
       vim.keymap.set('', 'f', function()
-        hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = false })
-      end, {remap=true})
+        hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
+      end, { remap = true })
       vim.keymap.set('', 'F', function()
-        hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = false })
-      end, {remap=true})
-      vim.keymap.set('n', '<Leader><Leader>', function()
+        hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
+      end, { remap = true })
+      vim.keymap.set('', '<Leader><Leader>', function()
         hop.hint_words()
-      end, { noremap=true })
+      end, { noremap = true })
+      vim.keymap.set('o', 'm', ':<C-U>lua require("tsht").nodes()<CR>', { silent = true })
+      vim.keymap.set('x', 'm', ':lua require("tsht").nodes()<CR>', { silent = true })
     end
+  }
+  use {
+    'David-Kunz/treesitter-unit',
   }
 
   -- Automatically set up your configuration after cloning packer.nvim
