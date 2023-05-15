@@ -2,11 +2,6 @@
   // basic coc.nvim setting
   "suggest.noselect": true,
   "suggest.maxCompleteItemCount": 100,
-
-  // diagnostic language server settings
-  "diagnostic-languageserver.filetypes": {
-    "sh": "shellcheck"
-  },
   "diagnostic.errorSign": "",
   "diagnostic.warningSign": "",
   "diagnostic.infoSign": "",
@@ -57,6 +52,20 @@
     "reference": "󰍻",
     "typeParameter": "",
     "default": ""
+  },
+
+  // bash setting
+  "diagnostic-languageserver.filetypes": {
+    "sh": "shellcheck"
+  },
+  "diagnostic-languageserver.formatFiletypes": {
+    "sh": "shfmt"
+  },
+  "diagnostic-languageserver.formatters": {
+    "shfmt": {
+      "command": "shfmt",
+      "args": ["-i", "4", "-ci", "-sr"]
+    }
   },
 
   // pyright setting
