@@ -124,14 +124,10 @@ return require('packer').startup(function(use)
 
   -- Show indent line
   use {
-    "lukas-reineke/indent-blankline.nvim",
-    event = { "BufRead", "BufNewFile" },
-    config = function()
-      vim.opt.list = true
-      vim.opt.listchars:append "eol:↴"
-      require("indent_blankline").setup {
-        show_end_of_line = true,
-      }
+    'echasnovski/mini.indentscope',
+    branch = 'stable',
+    config = function ()
+      require('mini.indentscope').setup()
     end
   }
 
@@ -184,6 +180,7 @@ return require('packer').startup(function(use)
     wants = { "nvim-scrollbar" },
     config = function()
       require('gitsigns').setup({
+        attach_to_untracked = false,
         on_attach = function(bufnr)
           local gs = package.loaded.gitsigns
 
@@ -355,10 +352,12 @@ return require('packer').startup(function(use)
   use {
     'nvim-treesitter/nvim-treesitter',
     requires = {
-      'David-Kunz/treesitter-unit'
+      'David-Kunz/treesitter-unit',
+      'm-demare/hlargs.nvim',
     },
     run = ':TSUpdate',
     config = function()
+      -- Tree-sitter
       require('nvim-treesitter.configs').setup({
         highlight = { enable = true },
         ensure_installed = {
@@ -385,6 +384,8 @@ return require('packer').startup(function(use)
         pattern = "sh",
         command = "setlocal foldmethod=marker",
       })
+
+      -- Treesitter-unit
       vim.api.nvim_set_keymap('x', 'iu', ':lua require"treesitter-unit".select()<CR>',
         { noremap = true, silent = true })
       vim.api.nvim_set_keymap('x', 'au', ':lua require"treesitter-unit".select(true)<CR>',
@@ -393,6 +394,9 @@ return require('packer').startup(function(use)
         { noremap = true, silent = true })
       vim.api.nvim_set_keymap('o', 'au', ':<c-u>lua require"treesitter-unit".select(true)<CR>',
         { noremap = true, silent = true })
+
+      -- HLargs
+      require('hlargs').setup()
     end
   }
 
@@ -686,8 +690,11 @@ return require('packer').startup(function(use)
       vim.keymap.set('x', 'm', ':lua require("tsht").nodes()<CR>', { silent = true })
     end
   }
+
+  -- Automatically add appropriate indent when writing a new line
   use {
-    'David-Kunz/treesitter-unit',
+    'Vimjas/vim-python-pep8-indent',
+    event = { "BufRead", "BufNewFile" },
   }
 
   -- Automatically set up your configuration after cloning packer.nvim
