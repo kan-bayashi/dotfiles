@@ -352,10 +352,12 @@ return require('packer').startup(function(use)
   use {
     'nvim-treesitter/nvim-treesitter',
     requires = {
-      'David-Kunz/treesitter-unit'
+      'David-Kunz/treesitter-unit',
+      'm-demare/hlargs.nvim',
     },
     run = ':TSUpdate',
     config = function()
+      -- Tree-sitter
       require('nvim-treesitter.configs').setup({
         highlight = { enable = true },
         ensure_installed = {
@@ -382,6 +384,8 @@ return require('packer').startup(function(use)
         pattern = "sh",
         command = "setlocal foldmethod=marker",
       })
+
+      -- Treesitter-unit
       vim.api.nvim_set_keymap('x', 'iu', ':lua require"treesitter-unit".select()<CR>',
         { noremap = true, silent = true })
       vim.api.nvim_set_keymap('x', 'au', ':lua require"treesitter-unit".select(true)<CR>',
@@ -390,6 +394,9 @@ return require('packer').startup(function(use)
         { noremap = true, silent = true })
       vim.api.nvim_set_keymap('o', 'au', ':<c-u>lua require"treesitter-unit".select(true)<CR>',
         { noremap = true, silent = true })
+
+      -- HLargs
+      require('hlargs').setup()
     end
   }
 
