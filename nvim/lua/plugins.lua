@@ -126,8 +126,10 @@ return require('packer').startup(function(use)
   use {
     'echasnovski/mini.indentscope',
     branch = 'stable',
-    config = function ()
-      require('mini.indentscope').setup()
+    config = function()
+      require('mini.indentscope').setup({
+        symbol = "▏",
+      })
     end
   }
 
@@ -164,11 +166,8 @@ return require('packer').startup(function(use)
       vim.api.nvim_set_keymap('n', 'N',
         [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>zz]],
         kopts)
-      vim.api.nvim_set_keymap('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
-      vim.api.nvim_set_keymap('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
-      vim.api.nvim_set_keymap('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
-      vim.api.nvim_set_keymap('n', 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
       vim.api.nvim_set_keymap('n', '<Esc><Esc>', '<Cmd>noh<CR>', kopts)
+      vim.api.nvim_set_keymap('n', '<C-o><C-o>', '<Cmd>noh<CR>', kopts)
     end
   }
 
@@ -678,10 +677,16 @@ return require('packer').startup(function(use)
       local hop = require('hop')
       local directions = require('hop.hint').HintDirection
       vim.keymap.set('', 'f', function()
-        hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
+        hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = false })
       end, { remap = true })
       vim.keymap.set('', 'F', function()
-        hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
+        hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = false })
+      end, { remap = true })
+      vim.keymap.set('', 't', function()
+        hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = false, hint_offset = -1 })
+      end, { remap = true })
+      vim.keymap.set('', 'T', function()
+        hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = false, hint_offset = 1 })
       end, { remap = true })
       vim.keymap.set('', '<Leader><Leader>', function()
         hop.hint_words()
@@ -695,6 +700,51 @@ return require('packer').startup(function(use)
   use {
     'Vimjas/vim-python-pep8-indent',
     event = { "BufRead", "BufNewFile" },
+  }
+
+  -- Emphasize TODO comments
+  use {
+    "folke/todo-comments.nvim",
+    event = { "BufRead", "BufNewFile" },
+    requires = "nvim-lua/plenary.nvim",
+    config = function()
+      require("todo-comments").setup {
+        highlight = {
+          before = "",
+          keyword = "bg",
+          after = "fg",
+          pattern = [[.*<(KEYWORDS)(\([^\)]*\))?:]],
+          comments_only = true,
+          max_line_len = 400,
+          exclude = {},
+        },
+        search = {
+          command = "rg",
+          args = {
+            "--color=never",
+            "--no-heading",
+            "--with-filename",
+            "--line-number",
+            "--column",
+          },
+          pattern = [[\b(KEYWORDS)(\([^\)]*\))?:]],
+        },
+      }
+    end
+  }
+
+  -- Stop at the end of line with w & b
+  use {
+    'yutkat/wb-only-current-line.nvim',
+    event = { "BufRead", "BufNewFile" },
+  }
+
+  use {
+    'haya14busa/vim-asterisk',
+    setup = function()
+      vim.cmd [[let g:asterisk#keeppos = 1]]
+      vim.keymap.set('', '*', '<Plug>(asterisk-z*)', { noremap = true })
+    end
   }
 
   -- Automatically set up your configuration after cloning packer.nvim
