@@ -91,6 +91,9 @@ keymap("n", "<Leader>w", ":w<CR>", keymap_opts)
 -- Close buffer
 keymap("n", "<Leader>q", ":bdel<CR>", keymap_opts)
 
+-- Force close buffer
+keymap("n", "<Leader>Q", ":bdel!<CR>", keymap_opts)
+
 -- Preserve annoying pop
 keymap("n", "q:", ":q<CR>", keymap_opts)
 

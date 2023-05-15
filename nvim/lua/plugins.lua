@@ -124,14 +124,10 @@ return require('packer').startup(function(use)
 
   -- Show indent line
   use {
-    "lukas-reineke/indent-blankline.nvim",
-    event = { "BufRead", "BufNewFile" },
-    config = function()
-      vim.opt.list = true
-      vim.opt.listchars:append "eol:↴"
-      require("indent_blankline").setup {
-        show_end_of_line = true,
-      }
+    'echasnovski/mini.indentscope',
+    branch = 'stable',
+    config = function ()
+      require('mini.indentscope').setup()
     end
   }
 
@@ -686,8 +682,11 @@ return require('packer').startup(function(use)
       vim.keymap.set('x', 'm', ':lua require("tsht").nodes()<CR>', { silent = true })
     end
   }
+
+  -- Automatically add appropriate indent when writing a new line
   use {
-    'David-Kunz/treesitter-unit',
+    'Vimjas/vim-python-pep8-indent',
+    event = { "BufRead", "BufNewFile" },
   }
 
   -- Automatically set up your configuration after cloning packer.nvim
