@@ -14,10 +14,13 @@ local packer_bootstrap = ensure_packer()
 return require('packer').startup(function(use)
   use { 'wbthomason/packer.nvim' }
 
-  -- Unitility for other plugins
+  -- Library for other plugins
   use { 'MunifTanjim/nui.nvim' }
   use { 'nvim-lua/plenary.nvim' }
 
+  ---------------------------------
+  --    Looks related plugins   --
+  ---------------------------------
   -- ColorScheme
   use {
     'kan-bayashi/nvim-jellybeans',
@@ -26,7 +29,6 @@ return require('packer').startup(function(use)
       vim.cmd [[colorscheme jellybeans]]
     end
   }
-
   -- Start screen
   use {
     'goolord/alpha-nvim',
@@ -64,7 +66,6 @@ return require('packer').startup(function(use)
       require('alpha').setup(startify.config)
     end
   }
-
   -- Status line
   use {
     'nvim-lualine/lualine.nvim',
@@ -97,7 +98,6 @@ return require('packer').startup(function(use)
       })
     end,
   }
-
   -- Tab line
   use {
     'akinsho/bufferline.nvim',
@@ -121,17 +121,17 @@ return require('packer').startup(function(use)
       vim.api.nvim_set_keymap("n", "th", ":BufferLineCyclePrev<CR>", { noremap = true, silent = true })
     end,
   }
-
   -- Show indent line
   use {
     'echasnovski/mini.indentscope',
     branch = 'stable',
-    config = function ()
-      require('mini.indentscope').setup()
+    config = function()
+      require('mini.indentscope').setup({
+        symbol = "▏",
+      })
     end
   }
-
-  -- Shor scrollbar
+  -- Show scrollbar
   use {
     "petertriho/nvim-scrollbar",
     event = {
@@ -148,8 +148,7 @@ return require('packer').startup(function(use)
       require("scrollbar").setup()
     end
   }
-
-  -- Show counts of hit items
+  -- Show counts of searched items
   use {
     'kevinhwang91/nvim-hlslens',
     event = { "BufRead", "BufNewFile" },
@@ -164,14 +163,10 @@ return require('packer').startup(function(use)
       vim.api.nvim_set_keymap('n', 'N',
         [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>zz]],
         kopts)
-      vim.api.nvim_set_keymap('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
-      vim.api.nvim_set_keymap('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
-      vim.api.nvim_set_keymap('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
-      vim.api.nvim_set_keymap('n', 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
       vim.api.nvim_set_keymap('n', '<Esc><Esc>', '<Cmd>noh<CR>', kopts)
+      vim.api.nvim_set_keymap('n', '<C-o><C-o>', '<Cmd>noh<CR>', kopts)
     end
   }
-
   -- Show git modification status in columns
   use {
     'lewis6991/gitsigns.nvim',
@@ -214,7 +209,28 @@ return require('packer').startup(function(use)
       require("scrollbar.handlers.gitsigns").setup()
     end
   }
+  -- Cute command line UI
+  use {
+    'gelguy/wilder.nvim',
+    event = { "CmdLineEnter" },
+    config = function()
+      local wilder = require('wilder')
+      wilder.setup({ modes = { ':', '/', '?' } })
+      wilder.set_option('renderer', wilder.popupmenu_renderer(
+        wilder.popupmenu_border_theme({
+          border = "rounded",
+          pumblend = 10,
+          highlights = { border = "CocBorder", default = "CocFloating" },
+          left = { ' ', wilder.popupmenu_devicons() },
+          right = { ' ', wilder.popupmenu_scrollbar() },
+        })
+      ))
+    end,
+  }
 
+  ---------------------------------
+  --     LSP related plugins     --
+  ---------------------------------
   -- LSP
   use {
     "neoclide/coc.nvim",
@@ -337,7 +353,6 @@ return require('packer').startup(function(use)
       vim.api.nvim_create_user_command("OR", "call CocActionAsync('runCommand', 'editor.action.organizeImport')", {})
     end
   }
-
   -- AI completion
   use {
     'github/copilot.vim',
@@ -348,6 +363,9 @@ return require('packer').startup(function(use)
     end
   }
 
+  ---------------------------------
+  -- Treesitter related plugins  --
+  ---------------------------------
   -- Better syntax highlighting
   use {
     'nvim-treesitter/nvim-treesitter',
@@ -400,25 +418,9 @@ return require('packer').startup(function(use)
     end
   }
 
-  -- Cute command line UI
-  use {
-    'gelguy/wilder.nvim',
-    event = { "CmdLineEnter" },
-    config = function()
-      local wilder = require('wilder')
-      wilder.setup({ modes = { ':', '/', '?' } })
-      wilder.set_option('renderer', wilder.popupmenu_renderer(
-        wilder.popupmenu_border_theme({
-          border = "rounded",
-          pumblend = 10,
-          highlights = { border = "CocBorder", default = "CocFloating" },
-          left = { ' ', wilder.popupmenu_devicons() },
-          right = { ' ', wilder.popupmenu_scrollbar() },
-        })
-      ))
-    end,
-  }
-
+  ---------------------------------
+  -- FuzzyFinder related plugins --
+  ---------------------------------
   -- Fuzzy finder
   use {
     'nvim-telescope/telescope.nvim',
@@ -514,62 +516,9 @@ return require('packer').startup(function(use)
     end
   }
 
-  -- Visualize and clean trailing whitespaces
-  use {
-    'ntpeters/vim-better-whitespace',
-    event = { "InsertEnter" },
-    setup = function()
-      vim.g.better_whitespace_filetypes_blacklist = { 'dashboard', 'help' }
-    end
-  }
-
-  -- Seemless navigation between tmux panes and vim splits
-  use {
-    'christoomey/vim-tmux-navigator',
-    setup = function()
-      vim.g.tmux_navigator_disable_when_zoomed = 1
-    end,
-  }
-
-  -- Smart repeat
-  use {
-    'tpope/vim-repeat',
-    event = { "InsertEnter" },
-  }
-
-  -- Show matched pairs and smart move with %
-  use {
-    'andymass/vim-matchup',
-    event = { "InsertEnter" },
-    setup = function()
-      vim.g.matchup_matchparen_offscreen = { method = "popup" }
-    end
-  }
-
-  -- Auto close pairs
-  use {
-    "windwp/nvim-autopairs",
-    event = { "InsertEnter" },
-    config = function()
-      require("nvim-autopairs").setup()
-    end
-  }
-
-  -- Replace lines in quickfix
-  use {
-    'gabrielpoca/replacer.nvim',
-    module = { 'replacer' },
-    setup = function()
-      vim.api.nvim_create_user_command('QFReplace', 'lua require("replacer").run()', {})
-    end
-  }
-
-  -- Reflect quickfix changes in buffer
-  use {
-    'stefandtw/quickfix-reflector.vim',
-    event = { "InsertEnter" },
-  }
-
+  ---------------------------------
+  --  op & obj related plugins   --
+  ---------------------------------
   -- Multiple cursor support
   use {
     'mg979/vim-visual-multi',
@@ -587,19 +536,156 @@ return require('packer').startup(function(use)
       ]])
     end
   }
-
-  -- Surround text objects
-  use { 'machakann/vim-sandwich', event = { "InsertEnter" } }
-
+  -- Smart repeat
+  use {
+    'tpope/vim-repeat',
+    event = { "InsertEnter" },
+  }
+  -- Auto close pairs
+  use {
+    "windwp/nvim-autopairs",
+    event = { "InsertEnter" },
+    config = function()
+      require("nvim-autopairs").setup()
+    end
+  }
   -- Better commenting
   use {
     'numToStr/Comment.nvim',
-    event = { "InsertEnter" },
+    event = { "BufRead", "BufNewFile" },
     config = function()
       require('Comment').setup()
     end
   }
+  -- Surround text objects
+  use { 'machakann/vim-sandwich', event = { "InsertEnter" } }
+  -- Next level movement
+  use {
+    'phaazon/hop.nvim',
+    event = { "BufRead", "BufNewFile" },
+    requires = { 'mfussenegger/nvim-treehopper', opt = true },
+    wants = { 'nvim-treehopper' },
+    config = function()
+      require('hop').setup({ keys = 'etovxqpdygfblzhckisuran' })
+      local hop = require('hop')
+      local directions = require('hop.hint').HintDirection
+      vim.keymap.set('', 'f', function()
+        hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = false })
+      end, { remap = true })
+      vim.keymap.set('', 'F', function()
+        hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = false })
+      end, { remap = true })
+      vim.keymap.set('', 't', function()
+        hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = false, hint_offset = -1 })
+      end, { remap = true })
+      vim.keymap.set('', 'T', function()
+        hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = false, hint_offset = 1 })
+      end, { remap = true })
+      vim.keymap.set('', '<Leader><Leader>', function()
+        hop.hint_words()
+      end, { noremap = true })
+      vim.keymap.set('o', 'm', ':<C-U>lua require("tsht").nodes()<CR>', { silent = true })
+      vim.keymap.set('x', 'm', ':lua require("tsht").nodes()<CR>', { silent = true })
+    end
+  }
+  -- Better asterisk
+  use {
+    'haya14busa/vim-asterisk',
+    setup = function()
+      vim.cmd [[let g:asterisk#keeppos = 1]]
+      vim.keymap.set('', '*', '<Plug>(asterisk-z*)', { noremap = true })
+    end
+  }
+  -- Stop at the end of line with w & b
+  use {
+    'yutkat/wb-only-current-line.nvim',
+    event = { "BufRead", "BufNewFile" },
+  }
+  -- Show matched pairs and smart move with %
+  use {
+    'andymass/vim-matchup',
+    event = { "InsertEnter" },
+    setup = function()
+      vim.g.matchup_matchparen_offscreen = { method = "popup" }
+    end
+  }
 
+  ---------------------------------
+  --      Git related plugins    --
+  ---------------------------------
+  -- Git integration
+  use {
+    'tpope/vim-fugitive',
+    event = { "VimEnter" },
+    config = function()
+      vim.api.nvim_set_keymap('n', '<leader>gs', ':Git<CR><C-w>J', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>ga', ':Gwrite<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>gc', ':Git commit<CR>', { noremap = true, silent = true })
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "fugitive",
+        command = "nmap <buffer> q gq",
+      })
+    end
+  }
+  -- Change direcotry by detecting git files
+  use {
+    "ahmedkhalf/project.nvim",
+    event = { "BufRead", "BufNewFile" },
+    config = function()
+      require("project_nvim").setup()
+    end
+  }
+
+  ---------------------------------
+  --  Filetype specific plugins  --
+  ---------------------------------
+  -- Good folding for python
+  use { 'tmhedberg/SimpylFold', ft = { 'python' } }
+  -- Automatically add appropriate indent when writing a new line
+  use { 'Vimjas/vim-python-pep8-indent', ft = { 'python' } }
+
+  ---------------------------------
+  --        Other plugins        --
+  ---------------------------------
+  -- Visualize and clean trailing whitespaces
+  use {
+    'ntpeters/vim-better-whitespace',
+    event = { "InsertEnter" },
+    setup = function()
+      vim.g.better_whitespace_filetypes_blacklist = { 'dashboard', 'help' }
+    end
+  }
+  -- Replace lines in quickfix
+  use {
+    'gabrielpoca/replacer.nvim',
+    module = { 'replacer' },
+    setup = function()
+      vim.api.nvim_create_user_command('QFReplace', 'lua require("replacer").run()', {})
+    end
+  }
+  -- Reflect quickfix changes in buffer
+  use {
+    'stefandtw/quickfix-reflector.vim',
+    event = { "InsertEnter" },
+  }
+  -- Yank with history
+  use {
+    "gbprod/yanky.nvim",
+    event = { "BufRead", "BufNewFile" },
+    config = function()
+      require("yanky").setup({
+        system_clipboard = {
+          sync_with_ring = false,
+        },
+      })
+      vim.keymap.set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
+      vim.keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
+      vim.keymap.set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
+      vim.keymap.set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
+      vim.keymap.set("n", "<c-p>", "<Plug>(YankyCycleForward)")
+      vim.keymap.set("n", "<c-n>", "<Plug>(YankyCycleBackward)")
+    end
+  }
   -- Show the list of objects in the current buffer
   use {
     'stevearc/aerial.nvim',
@@ -619,45 +705,13 @@ return require('packer').startup(function(use)
       })
     end
   }
-
-  -- Yank with history
+  -- Seemless navigation between tmux panes and vim splits
   use {
-    "gbprod/yanky.nvim",
-    event = { "BufRead", "BufNewFile" },
-    config = function()
-      require("yanky").setup()
-      vim.keymap.set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
-      vim.keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
-      vim.keymap.set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
-      vim.keymap.set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
-      vim.keymap.set("n", "<c-p>", "<Plug>(YankyCycleForward)")
-      vim.keymap.set("n", "<c-n>", "<Plug>(YankyCycleBackward)")
-    end
+    'christoomey/vim-tmux-navigator',
+    setup = function()
+      vim.g.tmux_navigator_disable_when_zoomed = 1
+    end,
   }
-
-  -- Change direcotry by detecting git files
-  use {
-    "ahmedkhalf/project.nvim",
-    event = { "BufRead", "BufNewFile" },
-    config = function()
-      require("project_nvim").setup()
-    end
-  }
-
-  -- Git integration
-  use {
-    'tpope/vim-fugitive',
-    config = function()
-      vim.api.nvim_set_keymap('n', '<leader>gs', ':Git<CR><C-w>J', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>ga', ':Gwrite<CR>', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>gc', ':Git commit<CR>', { noremap = true, silent = true })
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = "fugitive",
-        command = "nmap <buffer> q gq",
-      })
-    end
-  }
-
   -- Show color or color code in buffer
   use {
     'norcalli/nvim-colorizer.lua',
@@ -666,36 +720,43 @@ return require('packer').startup(function(use)
       require('colorizer').setup()
     end
   }
-
-  -- Next level movement
+  -- Make folding faster
   use {
-    'phaazon/hop.nvim',
+    'Konfekt/FastFold',
     event = { "BufRead", "BufNewFile" },
-    requires = { 'mfussenegger/nvim-treehopper', opt = true },
-    wants = { 'nvim-treehopper' },
+  }
+  -- Emphasize TODO comments
+  use {
+    "folke/todo-comments.nvim",
+    event = { "BufRead", "BufNewFile" },
+    requires = "nvim-lua/plenary.nvim",
     config = function()
-      require('hop').setup({ keys = 'etovxqpdygfblzhckisuran' })
-      local hop = require('hop')
-      local directions = require('hop.hint').HintDirection
-      vim.keymap.set('', 'f', function()
-        hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
-      end, { remap = true })
-      vim.keymap.set('', 'F', function()
-        hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
-      end, { remap = true })
-      vim.keymap.set('', '<Leader><Leader>', function()
-        hop.hint_words()
-      end, { noremap = true })
-      vim.keymap.set('o', 'm', ':<C-U>lua require("tsht").nodes()<CR>', { silent = true })
-      vim.keymap.set('x', 'm', ':lua require("tsht").nodes()<CR>', { silent = true })
+      require("todo-comments").setup {
+        highlight = {
+          before = "",
+          keyword = "bg",
+          after = "fg",
+          pattern = [[.*<(KEYWORDS)(\([^\)]*\))?:]],
+          comments_only = true,
+          max_line_len = 400,
+          exclude = {},
+        },
+        search = {
+          command = "rg",
+          args = {
+            "--color=never",
+            "--no-heading",
+            "--with-filename",
+            "--line-number",
+            "--column",
+          },
+          pattern = [[\b(KEYWORDS)(\([^\)]*\))?:]],
+        },
+      }
     end
   }
-
-  -- Automatically add appropriate indent when writing a new line
-  use {
-    'Vimjas/vim-python-pep8-indent',
-    event = { "BufRead", "BufNewFile" },
-  }
+  -- Automatic :noh
+  use { 'romainl/vim-cool', event = { "BufRead", "BufNewFile" } }
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
