@@ -673,7 +673,11 @@ return require('packer').startup(function(use)
     "gbprod/yanky.nvim",
     event = { "BufRead", "BufNewFile" },
     config = function()
-      require("yanky").setup()
+      require("yanky").setup({
+        system_clipboard = {
+          sync_with_ring = false,
+        },
+      })
       vim.keymap.set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
       vim.keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
       vim.keymap.set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
