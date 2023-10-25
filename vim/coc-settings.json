@@ -71,6 +71,7 @@
   // pyright setting
   "python.analysis.diagnosticMode": "openFilesOnly",
   "python.linting.flake8Enabled": true,
+  "python.linting.flake8Path": "pflake8",
   "python.formatting.provider": "black",
   "python.formatting.blackPath": "~/.pyenv/shims/black",
   "python.formatting.blackArgs": ["--preview"],
