@@ -1,6 +1,7 @@
 {
   // basic coc.nvim setting
   "suggest.noselect": true,
+  "suggest.labelMaxLength": 512,
   "suggest.maxCompleteItemCount": 100,
   "diagnostic.errorSign": "",
   "diagnostic.warningSign": "",
@@ -74,7 +75,7 @@
   "python.linting.flake8Path": "pflake8",
   "python.formatting.provider": "black",
   "python.formatting.blackPath": "~/.pyenv/shims/black",
-  "python.formatting.blackArgs": ["--preview"],
+  // "python.formatting.blackArgs": ["--preview"],
   "python.sortImports.path": "isort",
   "python.sortImports.args": ["--profile", "black"],
   "pyright.organizeimports.provider": "isort",

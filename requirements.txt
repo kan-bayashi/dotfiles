@@ -10,7 +10,7 @@ numpy
 scipy
 matplotlib
 soundfile
-sklearn
+scikit-learn
 
 # for debug
 ipython
