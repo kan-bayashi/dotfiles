@@ -111,6 +111,7 @@ else
 fi
 
 # install python libraries
+pyenv shell ${PYTHON3_VERSION}
 python3 -m pip install -U pip
 python3 -m pip install -U setuptools
 python3 -m pip install -r requirements.txt
@@ -123,7 +124,7 @@ TMPDIR=$(mktemp -d /tmp/XXXXX)
 if [ ! -e "${HOME}"/local/bin/nvim ]; then
     echo "installing neovim..."
     cd "${HOME}"/local/bin
-    wget https://github.com/neovim/neovim/releases/download/v0.8.3/nvim.appimage
+    wget https://github.com/neovim/neovim/releases/download/v0.9.4/nvim.appimage
     chmod u+x nvim.appimage
     if ./nvim.appimage --version >& /dev/null; then
         ln -s ./nvim.appimage nvim

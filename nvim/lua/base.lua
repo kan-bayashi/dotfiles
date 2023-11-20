@@ -112,20 +112,16 @@ keymap("", "<Leader>y", "y:<C-u>call Yank(@0)<CR>", keymap_opts)
 
 -- Autocommands
 local autocmd = vim.api.nvim_create_autocmd
-autocmd("BufNewFile,BufRead", {
-  pattern = "*.yaml",
+autocmd("Filetype", {
+  pattern = "yaml",
   command = "setlocal tabstop=2 softtabstop=2 shiftwidth=2",
 })
-autocmd("BufNewFile,BufRead", {
-  pattern = "*.yml",
+autocmd("Filetype", {
+  pattern = "tf",
   command = "setlocal tabstop=2 softtabstop=2 shiftwidth=2",
 })
-autocmd("BufNewFile,BufRead", {
-  pattern = "*.tf",
-  command = "setlocal tabstop=2 softtabstop=2 shiftwidth=2",
-})
-autocmd("BufNewFile,BufRead", {
-  pattern = "*.json",
+autocmd("Filetype", {
+  pattern = "json",
   command = "set conceallevel=0",
 })
 autocmd("Filetype", {
