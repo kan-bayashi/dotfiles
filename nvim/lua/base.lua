@@ -98,41 +98,53 @@ keymap("n", "<Leader>Q", ":bdel!<CR>", keymap_opts)
 keymap("n", "q:", ":q<CR>", keymap_opts)
 
 -- Copy to clipboard
-vim.cmd([[
-  function! Yank(text) abort
-    let escape = system('yank', a:text)
-    if v:shell_error
-      echoerr escape
-    else
-      call writefile([escape], '/dev/tty', 'b')
-    endif
-  endfunction
-]])
-keymap("", "<Leader>y", "y:<C-u>call Yank(@0)<CR>", keymap_opts)
+-- NOTE(kan-bayashi): Does not work with neovim 0.9+
+-- vim.cmd([[
+--   function! Yank(text) abort
+--     let escape = system('yank', a:text)
+--     if v:shell_error
+--       echoerr escape
+--     else
+--       call writefile([escape], '/dev/tty', 'b')
+--     endif
+--   endfunction
+-- ]])
+-- keymap("", "<Leader>y", "y:<C-u>call Yank(@0)<CR>", keymap_opts)
+-- NOTE(kan-bayashi): Workaround for neovim 0.9+
+-- https://neovim.discourse.group/t/writefile-to-dev-tty-stopped-working-in-nvim-0-9/3784/6
+Yank = function(reg)
+    local f = io.popen('yank', 'w')
+    if f ~= nil then
+        f:write(vim.fn.getreg(reg))
+        f:close()
+    end
+end
+keymap('n', '<Leader>y', [[mzV"0y`z:lua Yank(0)<cr>]], keymap_opts)
+keymap('v', '<Leader>y', [["0y:lua Yank(0)<cr>]], keymap_opts)
 
 -- Autocommands
 local autocmd = vim.api.nvim_create_autocmd
 autocmd("Filetype", {
-  pattern = "yaml",
-  command = "setlocal tabstop=2 softtabstop=2 shiftwidth=2",
+    pattern = "yaml",
+    command = "setlocal tabstop=2 softtabstop=2 shiftwidth=2",
 })
 autocmd("Filetype", {
-  pattern = "tf",
-  command = "setlocal tabstop=2 softtabstop=2 shiftwidth=2",
+    pattern = "tf",
+    command = "setlocal tabstop=2 softtabstop=2 shiftwidth=2",
 })
 autocmd("Filetype", {
-  pattern = "json",
-  command = "set conceallevel=0",
+    pattern = "json",
+    command = "set conceallevel=0",
 })
 autocmd("Filetype", {
-  pattern = "vim",
-  command = "setlocal tabstop=2 softtabstop=2 shiftwidth=2",
+    pattern = "vim",
+    command = "setlocal tabstop=2 softtabstop=2 shiftwidth=2",
 })
 autocmd("Filetype", {
-  pattern = "lua",
-  command = "setlocal tabstop=2 softtabstop=2 shiftwidth=2",
+    pattern = "lua",
+    command = "setlocal tabstop=2 softtabstop=2 shiftwidth=2",
 })
 autocmd("Filetype", {
-  pattern = "gitcommit",
-  command = "setlocal spell",
+    pattern = "gitcommit",
+    command = "setlocal spell",
 })
