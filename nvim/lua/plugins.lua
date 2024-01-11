@@ -756,7 +756,7 @@ return require('packer').startup(function(use)
     end
   }
   -- Automatic :noh
-  use { 'romainl/vim-cool', event = { "BufRead", "BufNewFile" } }
+  -- use { 'romainl/vim-cool', event = { "BufRead", "BufNewFile" } }
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
