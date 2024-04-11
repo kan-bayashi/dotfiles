@@ -3,14 +3,14 @@
 # Pyenv-pythons, Neovim, and Tmux installation script
 # Copyright 2019 Tomoki Hayashi
 
-PYTHON3_VERSION=3.8.10
+PYTHON3_VERSION=3.9.5
 
 # check and install dependencies
 if [ -e /etc/lsb-release ];then
     required_packages="build-essential libssl-dev zlib1g-dev libbz2-dev
         libreadline-dev libsqlite3-dev llvm libncurses5-dev libncursesw5-dev
         xz-utils tk-dev liblzma-dev python-openssl lua5.2 liblua5.2-dev luajit libevent-dev
-        make git zsh wget curl xclip xsel gawk fd-find ripgrep nkf jq"
+        make git zsh wget curl fd-find ripgrep nkf jq"
     install_packages=""
     installed_packages=$(COLUMNS=200 dpkg -l | awk '{print $2}' | sed -e "s/\:.*$//g")
     for package in ${required_packages}; do
@@ -69,7 +69,7 @@ fi
 # install pyenv
 if [ ! -e ~/.pyenv ];then
     echo "Installing pyenv..."
-    git clone https://github.com/yyuu/pyenv.git -b v2.0.6 ~/.pyenv
+    git clone https://github.com/yyuu/pyenv.git -b v2.3.9 ~/.pyenv
 fi
 
 # install fzf
@@ -121,9 +121,9 @@ ROOTDIR=$PWD
 TMPDIR=$(mktemp -d /tmp/XXXXX)
 
 # install nvim
-if [ ! -e "${HOME}"/local/bin/nvim ]; then
+if [ ! -e "${HOME}"/.local/bin/nvim ]; then
     echo "installing neovim..."
-    cd "${HOME}"/local/bin
+    cd "${HOME}"/.local/bin
     wget https://github.com/neovim/neovim/releases/download/v0.9.4/nvim.appimage
     chmod u+x nvim.appimage
     if ./nvim.appimage --version >& /dev/null; then
@@ -137,13 +137,13 @@ if [ ! -e "${HOME}"/local/bin/nvim ]; then
 fi
 
 # install tmux
-if [ ! -e "${HOME}"/local/bin/tmux ]; then
+if [ ! -e "${HOME}"/.local/bin/tmux ]; then
     echo "installing tmux..."
     cd "$TMPDIR"
     wget https://github.com/tmux/tmux/releases/download/2.6/tmux-2.6.tar.gz
     tar -xvf tmux-2.6.tar.gz
     cd tmux-2.6
-    ./configure --prefix="${HOME}"/local
+    ./configure --prefix="${HOME}"/.local
     make -j && make install
 fi
 
@@ -151,7 +151,7 @@ fi
 cd "$ROOTDIR"
 [ -e "$TMPDIR" ] && rm -fr "$TMPDIR"
 
-export PATH=${HOME}/local/bin:$PATH
+export PATH=${HOME}/.local/bin:$PATH
 
 echo ""
 echo "Sucessfully installed essential tools."
