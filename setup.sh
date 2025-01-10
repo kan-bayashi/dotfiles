@@ -28,7 +28,7 @@ ln -s "${PWD}"/nvim ~/.config/nvim
 echo "Made symlink of vim related files."
 
 # copy cool zsh theme
-[ -e ~/.zsh/themes/bullet-train.zsh-theme ] && \
+[ -e ~/.zsh/themes/bullet-train.zsh-theme ] &&
     rm -f ~/.zsh/themes/bullet-train.zsh-theme.bak && mv ~/.zsh/themes/bullet-train.zsh-theme ~/.zsh/themes/bullet-train.zsh-theme.bak
 [ ! -e ~/.zsh/themes ] && mkdir -p ~/.zsh/themes
 ln -s "$PWD"/themes/bullet-train.zsh-theme ~/.zsh/themes
@@ -43,7 +43,7 @@ echo "Made symlink of ipython setting files."
 
 # make symlink to bin
 [ ! -e ~/.local/bin ] && mkdir ~/.local/bin
-for bin in "${PWD}"/bin/* ;do
+for bin in "${PWD}"/bin/*; do
     ln -s "${bin}" ~/local/bin/
 done
 

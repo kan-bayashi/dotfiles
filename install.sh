@@ -6,7 +6,7 @@
 PYTHON3_VERSION=3.9.5
 
 # check and install dependencies
-if [ -e /etc/lsb-release ];then
+if [ -e /etc/lsb-release ]; then
     required_packages="build-essential libssl-dev zlib1g-dev libbz2-dev
         libreadline-dev libsqlite3-dev llvm libncurses5-dev libncursesw5-dev
         xz-utils tk-dev liblzma-dev python-openssl lua5.2 liblua5.2-dev luajit libevent-dev
@@ -55,25 +55,25 @@ else
 fi
 
 # install zplug
-if [ ! -e ~/.zplug ];then
+if [ ! -e ~/.zplug ]; then
     echo "Installing zplug..."
     git clone https://github.com/zplug/zplug.git ~/.zplug
 fi
 
 # install tpm
-if [ ! -e ~/.tmux/plugins/tpm ];then
+if [ ! -e ~/.tmux/plugins/tpm ]; then
     echo "Installing tpm..."
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
 
 # install pyenv
-if [ ! -e ~/.pyenv ];then
+if [ ! -e ~/.pyenv ]; then
     echo "Installing pyenv..."
     git clone https://github.com/yyuu/pyenv.git -b v2.3.9 ~/.pyenv
 fi
 
 # install fzf
-if [ ! -e ~/.fzf ];then
+if [ ! -e ~/.fzf ]; then
     echo "Installing fzf..."
     git clone https://github.com/junegunn/fzf.git ~/.fzf
     workdir=${PWD}
@@ -81,7 +81,7 @@ if [ ! -e ~/.fzf ];then
 fi
 
 # install volta
-if [ ! -e ~/.volta ];then
+if [ ! -e ~/.volta ]; then
     echo "Installing volta..."
     curl https://get.volta.sh | bash
 fi
@@ -91,7 +91,7 @@ export PATH=${HOME}/.pyenv/bin:$PATH
 eval "$(pyenv init -)"
 
 # install enable-shared python using pyenv
-if [ ! -e "${HOME}"/.pyenv/versions/${PYTHON3_VERSION} ];then
+if [ ! -e "${HOME}"/.pyenv/versions/${PYTHON3_VERSION} ]; then
     CONFIGURE_OPTS="--enable-shared" pyenv install ${PYTHON3_VERSION}
 else
     echo "Python ${PYTHON3_VERSION} is already installed."
@@ -103,7 +103,7 @@ pyenv global ${PYTHON3_VERSION}
 
 # check python version
 python3_version=$(python3 --version 2>&1)
-if [ "${python3_version}" = "Python ${PYTHON3_VERSION}" ];then
+if [ "${python3_version}" = "Python ${PYTHON3_VERSION}" ]; then
     echo "Python 3 version check is OK."
 else
     echo "Python 3 version check is failed."
@@ -124,9 +124,9 @@ TMPDIR=$(mktemp -d /tmp/XXXXX)
 if [ ! -e "${HOME}"/.local/bin/nvim ]; then
     echo "installing neovim..."
     cd "${HOME}"/.local/bin
-    wget https://github.com/neovim/neovim/releases/download/v0.9.4/nvim.appimage
+    wget https://github.com/neovim/neovim/releases/download/v0.10.3/nvim.appimage
     chmod u+x nvim.appimage
-    if ./nvim.appimage --version >& /dev/null; then
+    if ./nvim.appimage --version >&/dev/null; then
         ln -s ./nvim.appimage nvim
     else
         ./nvim.appimage --appimage-extract
