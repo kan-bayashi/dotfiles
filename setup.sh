@@ -15,7 +15,7 @@ for f in .??*; do
 done
 
 # make symbolic link of vim setting files
-[ ! -e ~/local/bin ] && mkdir -p ~/local/bin
+[ ! -e ~/.local/bin ] && mkdir -p ~/.local/bin
 [ -e ~/.vim ] && rm -rf ~/.vim.bak && mv ~/.vim ~/.vim.bak
 [ -e ~/.config/nvim ] && rm -rf ~/.config/nvim.bak && mv ~/.config/nvim ~/.config/nvim.bak
 [ ! -e ~/.vim/rc ] && mkdir -p ~/.vim/rc
@@ -28,7 +28,7 @@ ln -s "${PWD}"/nvim ~/.config/nvim
 echo "Made symlink of vim related files."
 
 # copy cool zsh theme
-[ -e ~/.zsh/themes/bullet-train.zsh-theme ] && \
+[ -e ~/.zsh/themes/bullet-train.zsh-theme ] &&
     rm -f ~/.zsh/themes/bullet-train.zsh-theme.bak && mv ~/.zsh/themes/bullet-train.zsh-theme ~/.zsh/themes/bullet-train.zsh-theme.bak
 [ ! -e ~/.zsh/themes ] && mkdir -p ~/.zsh/themes
 ln -s "$PWD"/themes/bullet-train.zsh-theme ~/.zsh/themes
@@ -42,8 +42,8 @@ ln -s "${PWD}"/ipython/startup/keybindings.py ~/.ipython/profile_default/startup
 echo "Made symlink of ipython setting files."
 
 # make symlink to bin
-[ ! -e ~/local/bin ] && mkdir ~/local/bin
-for bin in "${PWD}"/bin/* ;do
+[ ! -e ~/.local/bin ] && mkdir ~/.local/bin
+for bin in "${PWD}"/bin/*; do
     ln -s "${bin}" ~/local/bin/
 done
 
