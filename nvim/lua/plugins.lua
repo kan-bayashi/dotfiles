@@ -445,7 +445,6 @@ return require("packer").startup(function(use)
   -- Fuzzy finder
   use({
     "nvim-telescope/telescope.nvim",
-    tag = "*",
     cmd = { "Telescope" },
     module = { "telescope" },
     requires = {
