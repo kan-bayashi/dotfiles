@@ -250,7 +250,7 @@ return require("packer").startup(function(use)
 			})
 		end,
 	})
-  -- LSP installer
+	-- LSP installer
 	use({
 		"williamboman/mason.nvim",
 		requires = {
@@ -284,7 +284,7 @@ return require("packer").startup(function(use)
 			})
 		end,
 	})
-  -- Cool LSP UI
+	-- Cool LSP UI
 	use({
 		"nvimdev/lspsaga.nvim",
 		after = "nvim-lspconfig",
@@ -303,7 +303,7 @@ return require("packer").startup(function(use)
 			})
 		end,
 	})
-  -- Signature help
+	-- Signature help
 	use({
 		"ray-x/lsp_signature.nvim",
 		config = function()
@@ -317,7 +317,7 @@ return require("packer").startup(function(use)
 			})
 		end,
 	})
-  -- Formmater
+	-- Formmater
 	use({
 		"stevearc/conform.nvim",
 		config = function()
@@ -618,8 +618,8 @@ return require("packer").startup(function(use)
 		event = { "BufRead", "BufNewFile" },
 		config = function()
 			require("project_nvim").setup({
-        patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "package.json" },
-      })
+				patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "package.json" },
+			})
 		end,
 	})
 
