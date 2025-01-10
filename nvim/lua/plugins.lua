@@ -279,6 +279,18 @@ return require("packer").startup(function(use)
           },
         },
       })
+      require("lspconfig").pyright.setup({
+        -- Disable hint level diagnostics
+        capabilities = {
+          textDocument = {
+            publishDiagnostics = {
+              tagSupport = {
+                valueSet = { 2 },
+              },
+            },
+          },
+        },
+      })
     end,
   })
   -- Cool LSP UI
