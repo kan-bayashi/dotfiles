@@ -232,25 +232,12 @@ return require("packer").startup(function(use)
 	use({ "hrsh7th/cmp-buffer" })
 	use({ "hrsh7th/cmp-path" })
 	use({ "hrsh7th/vim-vsnip" })
+	use({ "rafamadriz/friendly-snippets" })
 	use({ "hrsh7th/cmp-vsnip" })
 	use({ "hrsh7th/cmp-cmdline" })
+	use({ "hrsh7th/cmp-nvim-lsp-signature-help" })
 	use({ "onsails/lspkind.nvim" })
-	use({
-		"neovim/nvim-lspconfig",
-		config = function()
-			require("lspconfig").lua_ls.setup({
-				settings = {
-					Lua = {
-						-- Disable global vim warning
-						diagnostics = {
-							globals = { "vim" },
-						},
-					},
-				},
-			})
-		end,
-	})
-	-- LSP installer
+	use({ "neovim/nvim-lspconfig" })
 	use({
 		"williamboman/mason.nvim",
 		requires = {
@@ -282,6 +269,16 @@ return require("packer").startup(function(use)
 					})
 				end,
 			})
+			require("lspconfig").lua_ls.setup({
+				settings = {
+					Lua = {
+						-- Disable global vim warning
+						diagnostics = {
+							globals = { "vim" },
+						},
+					},
+				},
+			})
 		end,
 	})
 	-- Cool LSP UI
@@ -300,20 +297,10 @@ return require("packer").startup(function(use)
 					scroll_down = "<C-d>",
 					scroll_up = "<C-u>",
 				},
-			})
-		end,
-	})
-	-- Signature help
-	use({
-		"ray-x/lsp_signature.nvim",
-		config = function()
-			require("lsp_signature").setup({
-				bind = true,
-				floating_window = true,
-				hint_enable = false,
-				doc_lines = 0,
-				transparency = 5,
-				max_width = 80,
+				ui = {
+					border = "rounded",
+					title = true,
+				},
 			})
 		end,
 	})
@@ -357,6 +344,10 @@ return require("packer").startup(function(use)
 			end, { range = true })
 		end,
 	})
+
+	---------------------------------
+	--     LSP related plugins     --
+	---------------------------------
 	-- AI completion
 	use({
 		"github/copilot.vim",
@@ -366,6 +357,12 @@ return require("packer").startup(function(use)
 			vim.api.nvim_set_keymap("i", "<c-]>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
 		end,
 	})
+	-- use({
+	-- 	"sourcegraph/sg.nvim",
+	-- 	config = function()
+	-- 		require("sg").setup()
+	-- 	end,
+	-- })
 
 	---------------------------------
 	-- Treesitter related plugins  --
