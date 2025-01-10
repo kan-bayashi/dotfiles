@@ -172,6 +172,10 @@ autocmd("Filetype", {
   command = "setlocal tabstop=2 softtabstop=2 shiftwidth=2",
 })
 autocmd("Filetype", {
+  pattern = "typescriptreact",
+  command = "setlocal tabstop=2 softtabstop=2 shiftwidth=2",
+})
+autocmd("Filetype", {
   pattern = "gitcommit",
   command = "setlocal spell",
 })
