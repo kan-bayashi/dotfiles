@@ -109,13 +109,13 @@ cmp.setup({
     completion = {
       border = "rounded",
       scrollbar = true,
-      winblend = 5,
+      winblend = 10,
       winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
     },
     documentation = {
       border = "rounded",
       winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,Search:None",
-      winblend = 5,
+      winblend = 10,
     },
   },
   formatting = {

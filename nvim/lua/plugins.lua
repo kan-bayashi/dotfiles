@@ -69,7 +69,10 @@ return require("packer").startup(function(use)
   -- Status line
   use({
     "nvim-lualine/lualine.nvim",
-    requires = { "nvim-tree/nvim-web-devicons" },
+    requires = {
+      "nvim-tree/nvim-web-devicons",
+      "pnx/lualine-lsp-status",
+    },
     config = function()
       require("lualine").setup({
         options = {
@@ -92,6 +95,7 @@ return require("packer").startup(function(use)
               shorting_target = 24,
               symbols = { modified = "_󰷥", readonly = " ", newfile = "󰄛" },
             },
+            { "lsp-status" },
           },
         },
         tabline = {},
@@ -638,9 +642,35 @@ return require("packer").startup(function(use)
   --  Filetype specific plugins  --
   ---------------------------------
   -- Good folding for python
-  use({ "tmhedberg/SimpylFold", ft = { "python" } })
+  use({
+    "tmhedberg/SimpylFold",
+    -- ft = { "python" },
+  })
   -- Automatically add appropriate indent when writing a new line
-  use({ "Vimjas/vim-python-pep8-indent", ft = { "python" } })
+  use({
+    "Vimjas/vim-python-pep8-indent",
+    -- ft = { "python" },
+  })
+  -- Markdown preview in normal mode
+  use({
+    "MeanderingProgrammer/render-markdown.nvim",
+    -- ft = { "markdown" },
+    after = { "nvim-treesitter" },
+    requires = { "echasnovski/mini.icons", opt = true },
+    config = function()
+      require("render-markdown").setup({
+        anti_conceal = { enabled = false },
+      })
+    end,
+  })
+  -- CSV viewer
+  use({
+    "hat0uma/csvview.nvim",
+    ft = { "csv" },
+    config = function()
+      require("csvview").setup()
+    end,
+  })
 
   ---------------------------------
   --        Other plugins        --
