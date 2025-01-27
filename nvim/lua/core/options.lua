@@ -46,9 +46,32 @@ vim.fn.sign_define("DiagnosticSignWarn", { text = "" })
 vim.fn.sign_define("DiagnosticSignInfo", { text = "" })
 vim.fn.sign_define("DiagnosticSignHint", { text = "" })
 
--- Disable virtual_text
+-- Diagnostic setting
 vim.diagnostic.config({
   virtual_text = false,
+  severity_sort = true,
+  float = {
+    border = "rounded",
+    title = "󰋡 Diagnostics",
+    header = {},
+    suffix = {},
+    prefix = {},
+    format = function(diag)
+      if diag.code then
+        return string.format("  [%s](%s): %s ", diag.source, diag.code, diag.message)
+      else
+        return string.format("  [%s]: %s ", diag.source, diag.message)
+      end
+    end,
+  },
+})
+
+-- Show diagnostics on cursor hold
+vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+  group = vim.api.nvim_create_augroup("float_diagnostic", { clear = true }),
+  callback = function()
+    vim.diagnostic.open_float(nil, { focus = false })
+  end,
 })
 
 -- Copy to clipboard via osc52
