@@ -2,16 +2,16 @@ return {
   -- Cmp
   { "hrsh7th/nvim-cmp",
     dependencies = {
+      "neovim/nvim-lspconfig",
+      "onsails/lspkind.nvim",
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
-      "hrsh7th/vim-vsnip",
-      "rafamadriz/friendly-snippets",
       "hrsh7th/cmp-vsnip",
       "hrsh7th/cmp-cmdline",
       "hrsh7th/cmp-nvim-lsp-signature-help",
-      "onsails/lspkind.nvim",
-      "neovim/nvim-lspconfig",
+      "hrsh7th/vim-vsnip",
+      "rafamadriz/friendly-snippets",
     },
     config = function()
       -- Completion settings
@@ -122,9 +122,9 @@ return {
         }),
       })
 
-      -- LSP handlers
-      vim.lsp.handlers["textDocument/publishDiagnostics"] =
-        vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = false })
+      -- Key mapping
+      vim.keymap.set("n", "<Space>d", "<cmd>lua vim.lsp.buf.definition()<CR>")
+      vim.keymap.set("n", "<Space>t", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
     end
   },
   -- Mason
@@ -180,13 +180,23 @@ return {
             },
           },
         },
+        settings = {
+          python = {
+            analysis = {
+              typeCheckingMode = "off",
+              diagnosticMode = "openFilesOnly",
+            },
+          },
+        },
       })
     end,
   },
   -- Cool LSP UI
   {
     "nvimdev/lspsaga.nvim",
-    after = "nvim-lspconfig",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+    },
     config = function()
       require("lspsaga").setup({
         lightbulb = {
@@ -207,30 +217,10 @@ return {
 
       -- LSP key mapping settings
       vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>")
-      vim.keymap.set("n", "<Space>d", "<cmd>lua vim.lsp.buf.definition()<CR>")
       vim.keymap.set("n", "<Space>r", "<cmd>Lspsaga rename<CR>")
-      vim.keymap.set("n", "<Space>t", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
       vim.keymap.set("n", "<Space>a", "<cmd>Lspsaga code_action<CR>")
       vim.keymap.set("n", "<Space>]", "<cmd>Lspsaga diagnostic_jump_next<CR>")
       vim.keymap.set("n", "<Space>[", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
-      vim.keymap.set("n", "<Space>f", "<cmd>Format<CR>")
-
-      -- Show diagnostic on hover
-      local function on_cursor_hold()
-        vim.cmd("Lspsaga show_line_diagnostics ++unfocus")
-      end
-      local diagnostic_hover_augroup = vim.api.nvim_create_augroup("lspconfig-diagnostic", { clear = true })
-      vim.api.nvim_create_autocmd("LspAttach", {
-        group = diagnostic_hover_augroup,
-        callback = function(args)
-          local bufnr = args.buf
-          vim.api.nvim_create_autocmd("CursorHold", {
-            group = diagnostic_hover_augroup,
-            buffer = bufnr,
-            callback = on_cursor_hold,
-          })
-        end,
-      })
     end,
   },
   -- Formmater
@@ -263,6 +253,8 @@ return {
           javascript = { "prettierd", "prettier", stop_after_first = true },
         },
       })
+
+      -- Key mapping
       vim.api.nvim_create_user_command("Format", function(args)
         local range = nil
         if args.count ~= -1 then
@@ -274,6 +266,8 @@ return {
         end
         require("conform").format({ async = true, lsp_format = "fallback", range = range })
       end, { range = true })
+
+      vim.keymap.set("n", "<Space>f", "<cmd>Format<CR>")
     end,
   },
 
