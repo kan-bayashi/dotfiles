@@ -58,9 +58,9 @@ vim.diagnostic.config({
     prefix = {},
     format = function(diag)
       if diag.code then
-        return string.format("  [%s](%s): %s ", diag.source, diag.code, diag.message)
+        return string.format(" [%s](%s): %s ", diag.source, diag.code, diag.message)
       else
-        return string.format("  [%s]: %s ", diag.source, diag.message)
+        return string.format(" [%s]: %s ", diag.source, diag.message)
       end
     end,
   },

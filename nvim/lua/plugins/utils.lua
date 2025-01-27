@@ -155,12 +155,13 @@ return {
           sync_with_ring = false,
         },
       })
-      vim.keymap.set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
-      vim.keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
-      vim.keymap.set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
-      vim.keymap.set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
-      vim.keymap.set("n", "<c-p>", "<Plug>(YankyCycleForward)")
-      vim.keymap.set("n", "<c-n>", "<Plug>(YankyCycleBackward)")
+      -- 2025/01/27 Does not work with neovim OSC52
+      -- vim.keymap.set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
+      -- vim.keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
+      -- vim.keymap.set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
+      -- vim.keymap.set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
+      -- vim.keymap.set("n", "<c-p>", "<Plug>(YankyCycleForward)")
+      -- vim.keymap.set("n", "<c-n>", "<Plug>(YankyCycleBackward)")
     end,
   },
   -- Seemless navigation between tmux panes and vim splits

@@ -22,6 +22,12 @@ return {
       keymap("n", "<C-f>*", "<cmd>Telescope grep_string<CR>", keymap_opts)
       keymap(
         "n",
+        "<C-f>p",
+        "<cmd>Telescope yank_history theme=dropdown layout_config={height=0.25,width=0.85}<CR>",
+        keymap_opts
+      )
+      keymap(
+        "n",
         "<C-f>/",
         ':lua require("telescope.builtin").live_grep({search_dirs={vim.fn.expand("%:p")}, previewer=false, path_display={shorten=1}})<CR>',
         keymap_opts
