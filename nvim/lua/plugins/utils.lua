@@ -79,11 +79,18 @@ return {
   },
   -- Change direcotry by detecting git files
   {
+    "akinsho/git-conflict.nvim",
+    version = "*",
+    config = true,
+    event = { "BufRead", "BufNewFile" },
+  },
+  {
     "ahmedkhalf/project.nvim",
     event = { "BufRead", "BufNewFile" },
     config = function()
       require("project_nvim").setup({
         patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "package.json" },
+        detection_methods = { "pattern" },
       })
     end,
   },
@@ -146,6 +153,14 @@ return {
   {
     "stefandtw/quickfix-reflector.vim",
     event = { "InsertEnter" },
+  },
+  -- Quickfix preview
+  {
+    "kevinhwang91/nvim-bqf",
+    ft = "qf",
+    config = function()
+      require("bqf").setup()
+    end,
   },
   -- Yank with history
   {
