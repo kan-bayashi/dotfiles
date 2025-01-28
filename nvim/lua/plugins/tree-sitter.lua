@@ -6,6 +6,7 @@ return {
       "m-demare/hlargs.nvim",
       "nvim-treesitter/playground",
     },
+    event = { "BufRead", "BufNewFile" },
     build = ":TSUpdate",
     config = function()
       -- Tree-sitter

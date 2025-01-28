@@ -48,6 +48,7 @@ return {
   -- Better asterisk
   {
     "haya14busa/vim-asterisk",
+    event = { "BufRead", "BufNewFile" },
     init = function()
       vim.cmd([[let g:asterisk#keeppos = 1]])
       vim.keymap.set("", "*", "<Plug>(asterisk-z*)", { noremap = true })
@@ -135,6 +136,7 @@ return {
   -- Replace lines in quickfix
   {
     "gabrielpoca/replacer.nvim",
+    event = { "InsertEnter" },
     module = { "replacer" },
     init = function()
       vim.api.nvim_create_user_command("QFReplace", 'lua require("replacer").run()', {})

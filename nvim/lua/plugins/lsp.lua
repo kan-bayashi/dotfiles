@@ -13,6 +13,7 @@ return {
       "hrsh7th/vim-vsnip",
       "rafamadriz/friendly-snippets",
     },
+    event = { "InsertEnter" },
     config = function()
       -- Completion settings
       local lspkind = require("lspkind")
@@ -136,6 +137,7 @@ return {
       "neovim/nvim-lspconfig",
       "hrsh7th/nvim-cmp",
     },
+    event = { "InsertEnter" },
     config = function()
       require("mason").setup()
       require("mason-tool-installer").setup({
@@ -197,6 +199,7 @@ return {
     dependencies = {
       "neovim/nvim-lspconfig",
     },
+    event = { "InsertEnter" },
     config = function()
       require("lspsaga").setup({
         lightbulb = {
@@ -226,6 +229,7 @@ return {
   -- Formmater
   {
     "stevearc/conform.nvim",
+    event = { "InsertEnter" },
     config = function()
       require("conform").setup({
         formatters = {

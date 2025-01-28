@@ -7,6 +7,7 @@ return {
       { "nvim-telescope/telescope-file-browser.nvim" },
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     },
+    cmd = "Telescope",
     init = function()
       -- Keybindings
       local keymap = vim.api.nvim_set_keymap
@@ -41,7 +42,7 @@ return {
       require("telescope").setup({
         defaults = {
           prompt_prefix = ">>> ",
-          selection_caret = "  ",
+          selection_caret = " ",
           shorten_path = true,
           color_devicons = true,
           winblend = 10,
