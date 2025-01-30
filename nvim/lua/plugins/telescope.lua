@@ -17,7 +17,6 @@ return {
       keymap("n", "<C-f><C-g>", "<cmd>Telescope live_grep<CR>", keymap_opts)
       keymap("n", "<C-f>b", "<cmd>Telescope buffers<CR>", keymap_opts)
       keymap("n", "<C-f><Space>", "<cmd>Telescope file_browser<CR>", keymap_opts)
-      keymap("n", "<C-f>e", "<cmd>Telescope emoji<CR>", keymap_opts)
       keymap("n", "<C-f>d", "<cmd>Telescope diagnostics bufnr=0 severity_bound=ERROR<CR>", keymap_opts)
       keymap("n", "<C-f><C-d>", "<cmd>Telescope diagnostics severity_bound=ERROR<CR>", keymap_opts)
       keymap("n", "<C-f>*", "<cmd>Telescope grep_string<CR>", keymap_opts)
@@ -45,7 +44,7 @@ return {
           selection_caret = " ",
           shorten_path = true,
           color_devicons = true,
-          winblend = 10,
+          winblend = 5,
           set_env = { ["COLORTERM"] = "truecolor" },
           mappings = {
             n = {
