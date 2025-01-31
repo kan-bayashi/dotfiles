@@ -123,9 +123,6 @@ return {
         }),
       })
 
-      -- Key mapping
-      vim.keymap.set("n", "<Space>d", "<cmd>lua vim.lsp.buf.definition()<CR>")
-      vim.keymap.set("n", "<Space>t", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
     end
   },
   -- Mason
@@ -224,6 +221,8 @@ return {
       vim.keymap.set("n", "<Space>a", "<cmd>Lspsaga code_action<CR>")
       vim.keymap.set("n", "<Space>]", "<cmd>Lspsaga diagnostic_jump_next<CR>")
       vim.keymap.set("n", "<Space>[", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
+      vim.keymap.set("n", "<Space>t", "<cmd>Lspsaga goto_type_definition<CR>")
+      vim.keymap.set("n", "<Space>d", "<cmd>Lspsaga goto_definition<CR>")
     end,
   },
   -- Formmater

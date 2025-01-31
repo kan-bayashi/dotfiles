@@ -154,14 +154,6 @@ return {
     "stefandtw/quickfix-reflector.vim",
     event = { "InsertEnter" },
   },
-  -- Quickfix preview
-  {
-    "kevinhwang91/nvim-bqf",
-    ft = "qf",
-    config = function()
-      require("bqf").setup()
-    end,
-  },
   -- Yank with history
   {
     "gbprod/yanky.nvim",

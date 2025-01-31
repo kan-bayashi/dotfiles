@@ -23,7 +23,7 @@ return {
       keymap(
         "n",
         "<C-f>p",
-        "<cmd>Telescope yank_history theme=dropdown layout_config={height=0.25,width=0.85}<CR>",
+        "<cmd>Telescope yank_history theme=dropdown layout_config={height=0.35,width=0.85}<CR>",
         keymap_opts
       )
       keymap(
@@ -63,12 +63,12 @@ return {
           },
         },
         pickers = {
-          find_files = themes.get_dropdown({ layout_config = { height = 0.25, width = 0.85 }, hidden = true }),
-          live_grep = themes.get_dropdown({ layout_config = { height = 0.25, width = 0.85 } }),
-          buffers = themes.get_dropdown({ layout_config = { height = 0.25, width = 0.85 } }),
-          git_status = themes.get_dropdown({ layout_config = { height = 0.25, width = 0.85 } }),
-          grep_string = themes.get_dropdown({ layout_config = { height = 0.25, width = 0.85 } }),
-          diagnostics = themes.get_dropdown({ layout_config = { height = 0.25, width = 0.85 } }),
+          find_files = themes.get_dropdown({ layout_config = { height = 0.35, width = 0.85 }, hidden = true }),
+          live_grep = themes.get_dropdown({ layout_config = { height = 0.35, width = 0.85 } }),
+          buffers = themes.get_dropdown({ layout_config = { height = 0.35, width = 0.85 } }),
+          git_status = themes.get_dropdown({ layout_config = { height = 0.35, width = 0.85 } }),
+          grep_string = themes.get_dropdown({ layout_config = { height = 0.35, width = 0.85 } }),
+          diagnostics = themes.get_dropdown({ layout_config = { height = 0.35, width = 0.85 } }),
         },
         extensions = {
           file_browser = {
