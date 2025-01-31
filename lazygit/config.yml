@@ -29,8 +29,12 @@ gui:
   authorColors:
     '*': '#b4befe'
 
+  screenMode: normal
+
 keybinding:
   universal:
     copyToClipboard: <disabled>
     openFile: <disabled>
     return: <c-o>
+    select: '-'
+    collapseAll: <disabled>
