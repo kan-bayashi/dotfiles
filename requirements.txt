@@ -3,6 +3,7 @@ neovim
 pynvim>=0.4.3
 greenlet
 jedi
+neovim-remote
 
 # basic library
 pandas
