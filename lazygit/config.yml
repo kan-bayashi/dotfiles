@@ -1,0 +1,36 @@
+os:
+  editPreset: 'nvim'
+  # Using -l here to change to the previous window via ":wincmd p".
+  edit: "nvr -l --remote {{filename}}"
+
+gui:
+  nerdFontsVersion: "3"
+  theme:
+    activeBorderColor:
+      - '#b4befe'
+      - bold
+    inactiveBorderColor:
+      - '#a6adc8'
+    optionsTextColor:
+      - '#89b4fa'
+    selectedLineBgColor:
+      - '#313244'
+    cherryPickedCommitBgColor:
+      - '#45475a'
+    cherryPickedCommitFgColor:
+      - '#b4befe'
+    unstagedChangesColor:
+      - '#f38ba8'
+    defaultFgColor:
+      - '#cdd6f4'
+    searchingActiveBorderColor:
+      - '#f9e2af'
+
+  authorColors:
+    '*': '#b4befe'
+
+keybinding:
+  universal:
+    copyToClipboard: <disabled>
+    openFile: <disabled>
+    return: <c-o>

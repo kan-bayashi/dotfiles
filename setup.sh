@@ -25,6 +25,7 @@ ln -s "${PWD}"/vim/dein_lazy.toml ~/.vim/rc
 ln -s "${PWD}"/vim/coc-settings.json ~/.vim
 ln -s "${PWD}"/vim/UltiSnips ~/.vim
 ln -s "${PWD}"/nvim ~/.config/nvim
+ln -s "${PWD}"/lazygit ~/.config/lazygit
 echo "Made symlink of vim related files."
 
 # copy cool zsh theme
