@@ -88,14 +88,15 @@ return {
     version = "*",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
+      local bufferline = require("bufferline")
       require("bufferline").setup({
         options = {
-          -- mode = 'tabs',
+          style_preset = bufferline.style_preset.minimal,
           numbers = "none",
           diagnostics = "nvim_lsp",
           show_buffer_close_icons = false,
           show_close_icon = false,
-          show_tab_indicators = true,
+          show_tab_indicators = false,
           separator_style = "thick",
           always_show_bufferline = true,
           sort_by = "id",
