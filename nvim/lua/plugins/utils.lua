@@ -67,15 +67,15 @@ return {
   {
     "tpope/vim-fugitive",
     event = { "VimEnter" },
-    config = function()
-      vim.api.nvim_set_keymap("n", "<leader>gs", ":Git<CR><C-w>J", { noremap = true, silent = true })
-      vim.api.nvim_set_keymap("n", "<leader>ga", ":Gwrite<CR>", { noremap = true, silent = true })
-      vim.api.nvim_set_keymap("n", "<leader>gc", ":Git commit<CR>", { noremap = true, silent = true })
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = "fugitive",
-        command = "nmap <buffer> q gq",
-      })
-    end,
+    -- config = function()
+    --   vim.api.nvim_set_keymap("n", "<leader>gs", ":Git<CR><C-w>J", { noremap = true, silent = true })
+    --   vim.api.nvim_set_keymap("n", "<leader>ga", ":Gwrite<CR>", { noremap = true, silent = true })
+    --   vim.api.nvim_set_keymap("n", "<leader>gc", ":Git commit<CR>", { noremap = true, silent = true })
+    --   vim.api.nvim_create_autocmd("FileType", {
+    --     pattern = "fugitive",
+    --     command = "nmap <buffer> q gq",
+    --   })
+    -- end,
   },
   -- Change direcotry by detecting git files
   {
@@ -92,6 +92,30 @@ return {
         patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "package.json" },
         detection_methods = { "pattern" },
       })
+    end,
+  },
+  -- Lazygit in nvim
+  {
+    "kdheepak/lazygit.nvim",
+    cmd = {
+      "LazyGit",
+      "LazyGitConfig",
+      "LazyGitCurrentFile",
+      "LazyGitFilter",
+      "LazyGitFilterCurrentFile",
+    },
+    -- optional for floating window border decoration
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    -- setting the keybinding for LazyGit with 'keys' is recommended in
+    -- order to load the plugin when the command is run for the first time
+    keys = {
+      { "<leader>gs", "<cmd>LazyGit<cr>", desc = "LazyGit" },
+    },
+    init = function()
+      vim.g.lazygit_floating_window_winblend = 10
+      vim.g.lazygit_floating_window_border_chars = {' ',' ', ' ', ' ', ' ',' ', ' ', ' '}
     end,
   },
 
@@ -153,14 +177,6 @@ return {
   {
     "stefandtw/quickfix-reflector.vim",
     event = { "InsertEnter" },
-  },
-  -- Quickfix preview
-  {
-    "kevinhwang91/nvim-bqf",
-    ft = "qf",
-    config = function()
-      require("bqf").setup()
-    end,
   },
   -- Yank with history
   {

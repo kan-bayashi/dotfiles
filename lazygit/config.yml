@@ -1,0 +1,46 @@
+os:
+  editPreset: 'nvim'
+  # Using -l here to change to the previous window via ":wincmd p".
+  edit: "nvr -l --remote {{filename}}"
+
+git:
+  paging:
+    colorArg: always
+    pager: delta --syntax-theme "Nord" --paging=never
+
+gui:
+  nerdFontsVersion: "3"
+  theme:
+    activeBorderColor:
+      - '#a6da95'
+      - bold
+    inactiveBorderColor:
+      - '#a5adcb'
+    optionsTextColor:
+      - '#8aadf4'
+    selectedLineBgColor:
+      - '#363a4f'
+    cherryPickedCommitBgColor:
+      - '#494d64'
+    cherryPickedCommitFgColor:
+      - '#a6da95'
+    unstagedChangesColor:
+      - '#ed8796'
+    defaultFgColor:
+      - '#cad3f5'
+    searchingActiveBorderColor:
+      - '#eed49f'
+
+  authorColors:
+    '*': '#b7bdf8'
+
+  screenMode: normal
+
+keybinding:
+  universal:
+    copyToClipboard: <disabled>
+    openFile: <disabled>
+    return: <c-o>
+    select: '-'
+  files:
+    collapseAll: <disabled>
