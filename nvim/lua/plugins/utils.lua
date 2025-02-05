@@ -115,7 +115,7 @@ return {
     },
     init = function()
       vim.g.lazygit_floating_window_winblend = 10
-      vim.g.lazygit_floating_window_border_chars = {' ',' ', ' ', ' ', ' ',' ', ' ', ' '}
+      vim.g.lazygit_floating_window_border_chars = { " ", " ", " ", " ", " ", " ", " ", " " }
     end,
   },
 
