@@ -167,9 +167,7 @@ return {
   -- Quickfix enhancements
   {
     "stevearc/quicker.nvim",
-    event = "FileType qf",
-    ---@module "quicker"
-    ---@type quicker.SetupOptions
+    ft = "qf",
     opts = {},
   },
   -- Preview in quickfix
