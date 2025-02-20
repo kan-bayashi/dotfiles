@@ -164,19 +164,26 @@ return {
       vim.g.better_whitespace_filetypes_blacklist = { "dashboard", "help" }
     end,
   },
-  -- Replace lines in quickfix
+  -- Quickfix enhancements
   {
-    "gabrielpoca/replacer.nvim",
-    event = { "InsertEnter" },
-    module = { "replacer" },
-    init = function()
-      vim.api.nvim_create_user_command("QFReplace", 'lua require("replacer").run()', {})
-    end,
+    "stevearc/quicker.nvim",
+    event = "FileType qf",
+    ---@module "quicker"
+    ---@type quicker.SetupOptions
+    opts = {},
   },
-  -- Reflect quickfix changes in buffer
+  -- Preview in quickfix
   {
-    "stefandtw/quickfix-reflector.vim",
-    event = { "InsertEnter" },
+    "kevinhwang91/nvim-bqf",
+    ft = "qf",
+    config = function()
+      require("bqf").setup({
+        auto_enable = true,
+        func_map = {
+          vsplit = "",
+        },
+      })
+    end,
   },
   -- Yank with history
   {
