@@ -127,11 +127,11 @@ if [ ! -e "${HOME}"/.local/bin/nvim ]; then
     wget https://github.com/neovim/neovim/releases/download/v0.10.3/nvim.appimage
     chmod u+x nvim.appimage
     if ./nvim.appimage --version >&/dev/null; then
-        ln -s ./nvim.appimage nvim
+        ln -sf ./nvim.appimage nvim
     else
         ./nvim.appimage --appimage-extract
         mv -v squashfs-root ../nvim
-        ln -s ../nvim/AppRun nvim
+        ln -sf ../nvim/AppRun nvim
         rm nvim.appimage
     fi
 fi

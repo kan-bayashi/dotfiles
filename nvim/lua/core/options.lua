@@ -101,7 +101,7 @@ vim.g.clipboard = {
 local autocmd = vim.api.nvim_create_autocmd
 autocmd("Filetype", {
   pattern = "yaml",
-  command = "setlocal tabstop=2 softtabstop=2 shiftwidth=2",
+  command = "setlocal tabstop=2 softtabstop=2 shiftwidth=2 foldmethod=indent",
 })
 autocmd("Filetype", {
   pattern = "tf",
