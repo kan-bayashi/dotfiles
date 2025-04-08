@@ -188,11 +188,7 @@ return {
     "gbprod/yanky.nvim",
     event = { "BufRead", "BufNewFile" },
     config = function()
-      require("yanky").setup({
-        system_clipboard = {
-          sync_with_ring = false,
-        },
-      })
+      require("yanky").setup()
       -- 2025/01/27 Does not work with neovim OSC52
       -- vim.keymap.set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
       -- vim.keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")

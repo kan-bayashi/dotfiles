@@ -32,7 +32,6 @@ return {
           { name = "nvim_lsp_signature_help" },
           { name = "buffer" },
           { name = "path" },
-          -- { name = "cody" },
         },
         mapping = cmp.mapping.preset.insert({
           ["<TAB>"] = cmp.mapping.select_next_item(),
@@ -306,6 +305,22 @@ return {
       -- },
       provider = "copilot",
       auto_suggestions_provider = "copilot",
+      windows = {
+        position = "right",
+        width = 30,
+        sidebar_header = {
+          align = "center",
+          rounded = true,
+        },
+        edit = {
+          start_insert = false,
+        },
+        ask = {
+          floating = true,
+          start_insert = false,
+          border = "rounded",
+        },
+      },
     },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
     build = "make",

@@ -3,3 +3,4 @@
 @eaDir/
 .vim
 nvim/plugin
+.aider*
