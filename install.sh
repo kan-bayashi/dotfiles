@@ -3,7 +3,7 @@
 # Pyenv-pythons, Neovim, and Tmux installation script
 # Copyright 2019 Tomoki Hayashi
 
-PYTHON3_VERSION=3.9.5
+PYTHON3_VERSION=3.10.16
 
 # check and install dependencies
 if [ -e /etc/lsb-release ]; then
@@ -69,7 +69,7 @@ fi
 # install pyenv
 if [ ! -e ~/.pyenv ]; then
     echo "Installing pyenv..."
-    git clone https://github.com/yyuu/pyenv.git -b v2.3.9 ~/.pyenv
+    git clone https://github.com/yyuu/pyenv.git -b v2.5.4 ~/.pyenv
 fi
 
 # install fzf
@@ -84,6 +84,32 @@ fi
 if [ ! -e ~/.volta ]; then
     echo "Installing volta..."
     curl https://get.volta.sh | bash
+fi
+
+# install lazygit
+if [ ! -e ~/.local/bin/lazygit ]; then
+    cwd=${PWD}
+    echo "Installing lazygit..."
+    cd ~/.local/
+    mkdir src
+    cd src
+    wget https://github.com/jesseduffield/lazygit/releases/download/v0.45.2/lazygit_0.45.2_Linux_x86_64.tar.gz
+    tar -xvf lazygit_0.45.2_Linux_x86_64.tar.gz
+    cp lazygit ~/.local/bin
+    cd "${cwd}"
+fi
+
+# install delta
+if [ ! -e ~/.local/bin/delta ]; then
+    cwd=${PWD}
+    echo "Installing delta..."
+    cd ~/.local/
+    mkdir src
+    cd src
+    wget https://github.com/dandavison/delta/releases/download/0.18.2/delta-0.18.2-x86_64-unknown-linux-musl.tar.gz
+    tar -xvf delta-0.18.2-x86_64-unknown-linux-musl.tar.gz
+    mv delta-0.18.2-x86_64-unknown-linux-musl/delta ~/.local/bin
+    cd "${cwd}"
 fi
 
 # pyenv init
@@ -124,7 +150,8 @@ TMPDIR=$(mktemp -d /tmp/XXXXX)
 if [ ! -e "${HOME}"/.local/bin/nvim ]; then
     echo "installing neovim..."
     cd "${HOME}"/.local/bin
-    wget https://github.com/neovim/neovim/releases/download/v0.11.0/nvim.appimage
+    wget https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.appimage
+    mv nvim-linux-x86_64.appimage nvim.appimage
     chmod u+x nvim.appimage
     if ./nvim.appimage --version >&/dev/null; then
         ln -sf ./nvim.appimage nvim

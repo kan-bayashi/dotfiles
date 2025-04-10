@@ -281,12 +281,6 @@ return {
       vim.api.nvim_set_keymap("i", "<c-]>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
     end,
   },
-  -- {
-  -- 	"sourcegraph/sg.nvim",
-  -- 	config = function()
-  -- 		require("sg").setup()
-  -- 	end,
-  -- },
   {
     "yetone/avante.nvim",
     event = "VeryLazy",

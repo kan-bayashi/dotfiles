@@ -45,7 +45,7 @@ echo "Made symlink of ipython setting files."
 # make symlink to bin
 [ ! -e ~/.local/bin ] && mkdir ~/.local/bin
 for bin in "${PWD}"/bin/*; do
-    ln -s "${bin}" ~/local/bin/
+    ln -s "${bin}" ~/.local/bin/
 done
 
 # install terminfo
