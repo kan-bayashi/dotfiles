@@ -114,21 +114,19 @@ export FZF_CTRL_R_OPTS="
     --preview 'echo {}'
     --preview-window down:10:hidden:wrap
     --bind '?:toggle-preview'"
+export FZF_CTRL_T_OPTS="
+  --walker-skip .git,node_modules,target
+  --preview 'bat -n --color=always {}'
+  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 export FZF_DEFAULT_COMMAND="fd -d 2 --no-ignore-vcs --ignore-file ~/.ignore --hidden --follow"
+export FZF_TMUX=1
+export FZF_TMUX_OPTS="-p 75%"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # not to use ctrl + T and alt + C
 bindkey -r "^T"
 bindkey -r "\ec"
-
-# interactively kill task with fzf
-fkill () {
-  local pid
-  pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
-  if [ "x$pid" != "x" ]; then
-    echo $pid | xargs kill -${1:-9}
-  fi
-}
+bindkey '^F' fzf-file-widget
 
 #########################
 #  completion settings  #

@@ -112,6 +112,19 @@ if [ ! -e ~/.local/bin/delta ]; then
     cd "${cwd}"
 fi
 
+# install bat
+if [ ! -e ~/.local/bin/bat ]; then
+    cwd=${PWD}
+    echo "Installing delta..."
+    cd ~/.local/
+    mkdir src
+    cd src
+    wget https://github.com/sharkdp/bat/releases/download/v0.25.0/bat-v0.25.0-x86_64-unknown-linux-musl.tar.gz
+    tar -xvf bat-v0.25.0-x86_64-unknown-linux-musl.tar.gz
+    mv bat-v0.25.0-x86_64-unknown-linux-musl/bat ~/.local/bin
+    cd "${cwd}"
+fi
+
 # pyenv init
 export PATH=${HOME}/.pyenv/bin:$PATH
 eval "$(pyenv init -)"
