@@ -117,10 +117,10 @@ export FZF_CTRL_R_OPTS="
 export FZF_CTRL_T_OPTS="
   --walker-skip .git,node_modules,target
   --preview 'bat -n --color=always {}'
-  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
+  --bind '?:change-preview-window(down|hidden|)'"
 export FZF_DEFAULT_COMMAND="fd -d 2 --no-ignore-vcs --ignore-file ~/.ignore --hidden --follow"
 export FZF_TMUX=1
-export FZF_TMUX_OPTS="-p 75%"
+export FZF_TMUX_OPTS="-p 85%"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # not to use ctrl + T and alt + C
