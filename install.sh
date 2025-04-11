@@ -155,10 +155,6 @@ python3 -m pip install -U pip
 python3 -m pip install -U setuptools
 python3 -m pip install -r requirements.txt
 
-# install vim
-ROOTDIR=$PWD
-TMPDIR=$(mktemp -d /tmp/XXXXX)
-
 # install nvim
 if [ ! -e "${HOME}"/.local/bin/nvim ]; then
     echo "installing neovim..."
@@ -174,17 +170,6 @@ if [ ! -e "${HOME}"/.local/bin/nvim ]; then
         ln -sf ../nvim/AppRun nvim
         rm nvim.appimage
     fi
-fi
-
-# install tmux
-if [ ! -e "${HOME}"/.local/bin/tmux ]; then
-    echo "installing tmux..."
-    cd "$TMPDIR"
-    wget https://github.com/tmux/tmux/releases/download/2.6/tmux-2.6.tar.gz
-    tar -xvf tmux-2.6.tar.gz
-    cd tmux-2.6
-    ./configure --prefix="${HOME}"/.local
-    make -j && make install
 fi
 
 # clean up
