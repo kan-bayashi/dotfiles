@@ -91,7 +91,7 @@ if [ ! -e ~/.local/bin/lazygit ]; then
     cwd=${PWD}
     echo "Installing lazygit..."
     cd ~/.local/
-    mkdir src
+    mkdir -p src
     cd src
     wget https://github.com/jesseduffield/lazygit/releases/download/v0.45.2/lazygit_0.45.2_Linux_x86_64.tar.gz
     tar -xvf lazygit_0.45.2_Linux_x86_64.tar.gz
@@ -104,7 +104,7 @@ if [ ! -e ~/.local/bin/delta ]; then
     cwd=${PWD}
     echo "Installing delta..."
     cd ~/.local/
-    mkdir src
+    mkdir -p src
     cd src
     wget https://github.com/dandavison/delta/releases/download/0.18.2/delta-0.18.2-x86_64-unknown-linux-musl.tar.gz
     tar -xvf delta-0.18.2-x86_64-unknown-linux-musl.tar.gz
@@ -117,7 +117,7 @@ if [ ! -e ~/.local/bin/bat ]; then
     cwd=${PWD}
     echo "Installing delta..."
     cd ~/.local/
-    mkdir src
+    mkdir -p src
     cd src
     wget https://github.com/sharkdp/bat/releases/download/v0.25.0/bat-v0.25.0-x86_64-unknown-linux-musl.tar.gz
     tar -xvf bat-v0.25.0-x86_64-unknown-linux-musl.tar.gz
