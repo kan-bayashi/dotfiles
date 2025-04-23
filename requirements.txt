@@ -10,8 +10,6 @@ pandas
 numpy
 scipy
 matplotlib
-soundfile
-scikit-learn
 
 # for debug
 ipython
@@ -19,9 +17,7 @@ pdbpp
 pytest
 
 # for linter and formatter
-hacking==6.0.1
-flake8==5.0.4
-pyproject-flake8==5.0.4
-flake8-docstrings==1.7.0
-black
-isort
+ruff
+
+# for pip
+pipx

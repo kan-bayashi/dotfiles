@@ -5,55 +5,6 @@
 
 PYTHON3_VERSION=3.10.16
 
-# check and install dependencies
-if [ -e /etc/lsb-release ]; then
-    required_packages="build-essential libssl-dev zlib1g-dev libbz2-dev
-        libreadline-dev libsqlite3-dev llvm libncurses5-dev libncursesw5-dev
-        xz-utils tk-dev liblzma-dev python-openssl lua5.2 liblua5.2-dev luajit libevent-dev
-        make git zsh wget curl fd-find ripgrep nkf jq"
-    install_packages=""
-    installed_packages=$(COLUMNS=200 dpkg -l | awk '{print $2}' | sed -e "s/\:.*$//g")
-    for package in ${required_packages}; do
-        echo -n "check ${package}..."
-        # shellcheck disable=SC2086
-        if echo "${installed_packages}" | grep -xq ${package}; then
-            echo "OK."
-        else
-            echo "Not installed."
-            install_packages="${install_packages} ${package}"
-        fi
-    done
-    if [ -n "${install_packages}" ]; then
-        echo "following packages will be installed: ${install_packages}"
-        sudo apt update -y
-        # shellcheck disable=SC2086
-        sudo apt install -y ${install_packages}
-    fi
-elif [ -e /etc/redhat-release ]; then
-    required_packages="gcc zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel
-        openssl-devel xz xz-devel findutils lua-devel luajit-devel ncurses-devel perl-ExtUtils-Embed
-        ncurses-devel libevent-devel make git zsh wget curl xclip xsel"
-    install_packages=""
-    installed_packages=$(yum list installed | awk '{print $1}' | sed -e "s/\..*$//g")
-    for package in ${required_packages}; do
-        echo -n "check ${package}..."
-        # shellcheck disable=SC2086
-        if echo "${installed_packages}" | grep -xq ${package}; then
-            echo "OK."
-        else
-            echo "Not installed."
-            install_packages="${install_packages} ${package}"
-        fi
-    done
-    if [ -n "${install_packages}" ]; then
-        echo "following packages will be installed: ${install_packages}"
-        # shellcheck disable=SC2086
-        sudo yum install -y ${install_packages}
-    fi
-else
-    echo "WARNING: It seems that your environment is not tested."
-fi
-
 # install zplug
 if [ ! -e ~/.zplug ]; then
     echo "Installing zplug..."
@@ -125,6 +76,20 @@ if [ ! -e ~/.local/bin/bat ]; then
     cd "${cwd}"
 fi
 
+# install nsxiv
+if [ ! -e ~/.local/bin/nsxiv ]; then
+    cwd=${PWD}
+    echo "Installing nsxiv..."
+    cd ~/.local/
+    mkdir -p src
+    cd src
+    git clone https://github.com/nsxiv/nsxiv.git
+    cd nsxiv
+    make
+    cp nsxiv ~/.local/bin
+    cd "${cwd}"
+fi
+
 # pyenv init
 export PATH=${HOME}/.pyenv/bin:$PATH
 eval "$(pyenv init -)"
@@ -152,8 +117,10 @@ fi
 # install python libraries
 pyenv shell ${PYTHON3_VERSION}
 python3 -m pip install -U pip
-python3 -m pip install -U setuptools
+python3 -m pip install -U setuptools wheel
 python3 -m pip install -r requirements.txt
+pythoh3 -m pipx install poetry
+pythoh3 -m pipx install gpustat
 
 # install nvim
 if [ ! -e "${HOME}"/.local/bin/nvim ]; then
