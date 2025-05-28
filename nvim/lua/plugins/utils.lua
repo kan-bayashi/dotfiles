@@ -77,19 +77,20 @@ return {
     --   })
     -- end,
   },
-  -- Change direcotry by detecting git files
+  -- Nice conflict view
   {
     "akinsho/git-conflict.nvim",
     version = "*",
     config = true,
     event = { "BufRead", "BufNewFile" },
   },
+  -- Change direcotry by detecting git files
   {
     "ahmedkhalf/project.nvim",
     event = { "BufRead", "BufNewFile" },
     config = function()
       require("project_nvim").setup({
-        patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "package.json" },
+        patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "package.json", "pyproject.toml" },
         detection_methods = { "pattern" },
       })
     end,
