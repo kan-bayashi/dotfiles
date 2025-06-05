@@ -118,9 +118,15 @@ fi
 pyenv shell ${PYTHON3_VERSION}
 python3 -m pip install -U pip
 python3 -m pip install -U setuptools wheel
-python3 -m pip install -r requirements.txt
-pythoh3 -m pipx install poetry
-pythoh3 -m pipx install gpustat
+python3 -m pip install pipx
+python3 -m pipx install poetry
+python3 -m pipx install gpustat
+
+# install uv
+if [ ! -e "${HOME}"/.local/bin/uv ]; then
+    echo "Installing uv..."
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+fi
 
 # install nvim
 if [ ! -e "${HOME}"/.local/bin/nvim ]; then
