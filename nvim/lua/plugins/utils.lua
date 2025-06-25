@@ -118,6 +118,18 @@ return {
       vim.g.lazygit_floating_window_winblend = 10
       vim.g.lazygit_floating_window_border_chars = { " ", " ", " ", " ", " ", " ", " ", " " }
     end,
+    -- Disable nvim-tmux-navigator keybindings in lazygit buffer
+    config = function()
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "lazygit",
+        callback = function(ev)
+          local opts = { buffer = ev.buf, silent = true }
+          for _, lhs in ipairs({ "<C-h>", "<C-j>", "<C-k>", "<C-l>", "<C-\\>" }) do
+            vim.keymap.set({ "t", "n" }, lhs, "<Nop>", opts)
+          end
+        end,
+      })
+  end,
   },
 
   ---------------------------------
