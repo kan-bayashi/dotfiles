@@ -152,6 +152,15 @@ return {
           },
         },
       })
+      vim.lsp.config("bashls", {
+        settings = {
+          bashIde = {
+            shellcheckPath = "shellcheck",
+            backgroundAnalysisMaxFiles = 0,
+            enableSourceErrorDiagnostics = false,
+          },
+        },
+      })
     end,
   },
   -- Mason
@@ -172,6 +181,7 @@ return {
           "yamlls",
           "jsonls",
           "lua_ls",
+          "bashls",
           "ruff",
           "shfmt",
           "shellcheck",
