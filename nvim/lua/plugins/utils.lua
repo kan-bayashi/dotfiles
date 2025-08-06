@@ -77,19 +77,20 @@ return {
     --   })
     -- end,
   },
-  -- Change direcotry by detecting git files
+  -- Nice conflict view
   {
     "akinsho/git-conflict.nvim",
     version = "*",
     config = true,
     event = { "BufRead", "BufNewFile" },
   },
+  -- Change direcotry by detecting git files
   {
     "ahmedkhalf/project.nvim",
     event = { "BufRead", "BufNewFile" },
     config = function()
       require("project_nvim").setup({
-        patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "package.json" },
+        patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "package.json", "pyproject.toml" },
         detection_methods = { "pattern" },
       })
     end,
@@ -115,8 +116,20 @@ return {
     },
     init = function()
       vim.g.lazygit_floating_window_winblend = 10
-      vim.g.lazygit_floating_window_border_chars = {' ',' ', ' ', ' ', ' ',' ', ' ', ' '}
+      vim.g.lazygit_floating_window_border_chars = { " ", " ", " ", " ", " ", " ", " ", " " }
     end,
+    -- Disable nvim-tmux-navigator keybindings in lazygit buffer
+    config = function()
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "lazygit",
+        callback = function(ev)
+          local opts = { buffer = ev.buf, silent = true }
+          for _, lhs in ipairs({ "<C-h>", "<C-j>", "<C-k>", "<C-l>", "<C-\\>" }) do
+            vim.keymap.set({ "t", "n" }, lhs, "<Nop>", opts)
+          end
+        end,
+      })
+  end,
   },
 
   ---------------------------------
@@ -164,37 +177,23 @@ return {
       vim.g.better_whitespace_filetypes_blacklist = { "dashboard", "help" }
     end,
   },
-  -- Replace lines in quickfix
+  -- Quickfix enhancements
   {
-    "gabrielpoca/replacer.nvim",
-    event = { "InsertEnter" },
-    module = { "replacer" },
-    init = function()
-      vim.api.nvim_create_user_command("QFReplace", 'lua require("replacer").run()', {})
-    end,
+    "stevearc/quicker.nvim",
+    ft = "qf",
+    opts = {},
   },
-  -- Reflect quickfix changes in buffer
+  -- Preview in quickfix
   {
-    "stefandtw/quickfix-reflector.vim",
-    event = { "InsertEnter" },
-  },
-  -- Yank with history
-  {
-    "gbprod/yanky.nvim",
-    event = { "BufRead", "BufNewFile" },
+    "kevinhwang91/nvim-bqf",
+    ft = "qf",
     config = function()
-      require("yanky").setup({
-        system_clipboard = {
-          sync_with_ring = false,
+      require("bqf").setup({
+        auto_enable = true,
+        func_map = {
+          vsplit = "",
         },
       })
-      -- 2025/01/27 Does not work with neovim OSC52
-      -- vim.keymap.set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
-      -- vim.keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
-      -- vim.keymap.set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
-      -- vim.keymap.set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
-      -- vim.keymap.set("n", "<c-p>", "<Plug>(YankyCycleForward)")
-      -- vim.keymap.set("n", "<c-n>", "<Plug>(YankyCycleBackward)")
     end,
   },
   -- Seemless navigation between tmux panes and vim splits

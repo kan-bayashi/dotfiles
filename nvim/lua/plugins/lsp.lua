@@ -1,6 +1,7 @@
 return {
   -- Cmp
-  { "hrsh7th/nvim-cmp",
+  {
+    "hrsh7th/nvim-cmp",
     dependencies = {
       "neovim/nvim-lspconfig",
       "onsails/lspkind.nvim",
@@ -31,7 +32,6 @@ return {
           { name = "nvim_lsp_signature_help" },
           { name = "buffer" },
           { name = "path" },
-          -- { name = "cody" },
         },
         mapping = cmp.mapping.preset.insert({
           ["<TAB>"] = cmp.mapping.select_next_item(),
@@ -123,7 +123,36 @@ return {
         }),
       })
 
-    end
+      -- LSP common settings
+      vim.lsp.config("*", {
+        capabilities = require("cmp_nvim_lsp").default_capabilities(),
+      })
+
+      -- LSP each server settings
+      local pyright_capabilities = require("cmp_nvim_lsp").default_capabilities()
+      -- Remove hint level diagnostics
+      -- See also: https://github.com/microsoft/pyright/issues/4652
+      pyright_capabilities.textDocument.publishDiagnostics = { tagSupport = { valueSet = { 2 } } }
+      vim.lsp.config("pyright", {
+        capabilities = pyright_capabilities,
+        settings = {
+          python = {
+            analysis = {
+              diagnosticMode = "openFilesOnly",
+            },
+          },
+        },
+      })
+      vim.lsp.config("lua_ls", {
+        settings = {
+          Lua = {
+            diagnostics = {
+              globals = { "vim" },
+            },
+          },
+        },
+      })
+    end,
   },
   -- Mason
   {
@@ -151,43 +180,7 @@ return {
           "prettier",
         },
       })
-      require("mason-lspconfig").setup_handlers({
-        function(server_name)
-          require("lspconfig")[server_name].setup({
-            capabilities = require("cmp_nvim_lsp").default_capabilities(),
-          })
-        end,
-      })
-      require("lspconfig").lua_ls.setup({
-        settings = {
-          Lua = {
-            -- Disable global vim warning
-            diagnostics = {
-              globals = { "vim" },
-            },
-          },
-        },
-      })
-      require("lspconfig").pyright.setup({
-        -- Disable hint level diagnostics
-        capabilities = {
-          textDocument = {
-            publishDiagnostics = {
-              tagSupport = {
-                valueSet = { 2 },
-              },
-            },
-          },
-        },
-        settings = {
-          python = {
-            analysis = {
-              typeCheckingMode = "off",
-              diagnosticMode = "openFilesOnly",
-            },
-          },
-        },
-      })
+      require("mason-lspconfig").setup()
     end,
   },
   -- Cool LSP UI
@@ -273,7 +266,7 @@ return {
       vim.keymap.set("n", "<Space>f", "<cmd>Format<CR>")
     end,
   },
-
+  -- AI assistant
   {
     "github/copilot.vim",
     event = { "InsertEnter" },
@@ -282,10 +275,4 @@ return {
       vim.api.nvim_set_keymap("i", "<c-]>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
     end,
   },
-  -- {
-  -- 	"sourcegraph/sg.nvim",
-  -- 	config = function()
-  -- 		require("sg").setup()
-  -- 	end,
-  -- },
 }

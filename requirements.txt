@@ -1,10 +1,23 @@
-neovim>=0.3.1
+# for editor
+neovim
+pynvim>=0.4.3
 greenlet
-jedi>=0.13.1
-hacking
-isort
-black
-pdbpp
-ipython
+jedi
+neovim-remote
+
+# basic library
+pandas
 numpy
+scipy
 matplotlib
+
+# for debug
+ipython
+pdbpp
+pytest
+
+# for linter and formatter
+ruff
+
+# for pip
+pipx

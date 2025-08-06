@@ -41,10 +41,16 @@ vim.opt.shortmess = "c"
 vim.opt.signcolumn = "yes"
 
 -- Sign definition
-vim.fn.sign_define("DiagnosticSignError", { text = "" })
-vim.fn.sign_define("DiagnosticSignWarn", { text = "" })
-vim.fn.sign_define("DiagnosticSignInfo", { text = "" })
-vim.fn.sign_define("DiagnosticSignHint", { text = "" })
+vim.diagnostic.config({
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = "",
+      [vim.diagnostic.severity.WARN] = "",
+      [vim.diagnostic.severity.INFO] = "",
+      [vim.diagnostic.severity.HINT] = "",
+    },
+  },
+})
 
 -- Diagnostic setting
 vim.diagnostic.config({
@@ -101,7 +107,7 @@ vim.g.clipboard = {
 local autocmd = vim.api.nvim_create_autocmd
 autocmd("Filetype", {
   pattern = "yaml",
-  command = "setlocal tabstop=2 softtabstop=2 shiftwidth=2",
+  command = "setlocal tabstop=2 softtabstop=2 shiftwidth=2 foldmethod=indent",
 })
 autocmd("Filetype", {
   pattern = "tf",
