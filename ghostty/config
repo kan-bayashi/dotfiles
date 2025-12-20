@@ -39,7 +39,7 @@ font-feature = "-dlig"
 font-feature = "-liga"
 
 # Window
-window-padding-x = 0
+window-padding-x = 3
 window-padding-y = 5
 window-padding-balance = true
 window-padding-color = extend
@@ -47,8 +47,8 @@ macos-titlebar-style = tabs
 macos-titlebar-proxy-icon = hidden
 macos-window-shadow = false
 title = " "
-background-opacity = 0.96
-background-blur = 25
+background-opacity = 0.97
+background-blur = 10
 
 # Theme
 theme = "/Users/tomoki.hayashi/dotfiles/ghostty/jellybeans_like.theme"
