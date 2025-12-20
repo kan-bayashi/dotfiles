@@ -5,10 +5,22 @@ return {
     dependencies = { "rktjmp/lush.nvim" },
     config = function()
       vim.cmd([[colorscheme jellybeans]])
-      -- Transparent background
+      -- Get colorscheme background before overriding
+      local normal_hl = vim.api.nvim_get_hl(0, { name = "Normal" })
+      local colorscheme_bg = normal_hl.bg
+      -- Save for other plugins
+      vim.g.colorscheme_bg = colorscheme_bg
+      -- Use Ghostty background directly
       vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
       vim.api.nvim_set_hl(0, "NormalNC", { bg = "NONE" })
-      vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE" })
+      -- Set floating window background for winblend to work
+      vim.api.nvim_set_hl(0, "NormalFloat", { bg = colorscheme_bg })
+      -- Set Telescope background for winblend to work
+      vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = colorscheme_bg })
+      vim.api.nvim_set_hl(0, "TelescopePromptNormal", { bg = colorscheme_bg })
+      vim.api.nvim_set_hl(0, "TelescopeResultsNormal", { bg = colorscheme_bg })
+      vim.api.nvim_set_hl(0, "TelescopePreviewNormal", { bg = colorscheme_bg })
+
     end,
   },
   -- Start screen
