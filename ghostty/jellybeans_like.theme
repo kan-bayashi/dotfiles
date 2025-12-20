@@ -22,3 +22,6 @@ palette = 12=#64b5f6
 palette = 13=#eab1e7
 palette = 14=#8ac7cf
 palette = 15=#eaeaea
+
+# Cursor colors
+cursor-color = #f0a0c0

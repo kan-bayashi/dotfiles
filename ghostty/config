@@ -1,0 +1,56 @@
+# This is the configuration file for Ghostty.
+#
+# This template file has been automatically created at the following
+# path since Ghostty couldn't find any existing config files on your system:
+#
+#   /Users/tomoki.hayashi/Library/Application Support/com.mitchellh.ghostty/config
+#
+# The template does not set any default options, since Ghostty ships
+# with sensible defaults for all options. Users should only need to set
+# options that they want to change from the default.
+#
+# Run `ghostty +show-config --default --docs` to view a list of
+# all available config options and their default values.
+#
+# Additionally, each config option is also explained in detail
+# on Ghostty's website, at https://ghostty.org/docs/config.
+#
+# Ghostty can reload the configuration while running by using the menu
+# options or the bound key (default: Command + Shift + comma on macOS and
+# Control + Shift + comma on other platforms). Not all config options can be
+# reloaded while running; some only apply to new windows and others may require
+# a full restart to take effect.
+
+# Font
+font-family = Hasklug Nerd Font
+font-style = Medium
+font-style-bold = Bold
+font-style-italic = Medium Italic
+font-style-bold-italic = Bold Italic
+font-size = 17
+adjust-cell-width = -3
+adjust-cell-height = 2
+adjust-font-baseline = 1
+font-thicken = true
+
+font-family = 源柔ゴシックX等幅
+# font-feature = "-calt"
+# font-feature = "-dlig"
+# font-feature = "-liga"
+
+# Window
+window-padding-x = 0
+window-padding-y = 5
+window-padding-balance = true
+macos-titlebar-style = tabs
+macos-titlebar-proxy-icon = hidden
+macos-window-shadow = false
+title = " "
+
+# Theme
+theme = "/Users/tomoki.hayashi/dotfiles/ghostty/jellybeans_like.theme"
+
+# Cursor
+cursor-style = underline
+cursor-style-blink = true
+cursor-click-to-move = true
