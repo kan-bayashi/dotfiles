@@ -1,0 +1,24 @@
+# Jellybeans-like color theme
+
+background = #131313
+foreground = #eaeaea
+
+# Normal colors (0-7)
+palette = 0=#333333
+palette = 1=#cb484c
+palette = 2=#75a24d
+palette = 3=#fd9f4d
+palette = 4=#446ecc
+palette = 5=#cc98de
+palette = 6=#6f9cc2
+palette = 7=#ffffff
+
+# Bright colors (8-15)
+palette = 8=#535353
+palette = 9=#ef5350
+palette = 10=#8bc34a
+palette = 11=#ffd43b
+palette = 12=#64b5f6
+palette = 13=#eab1e7
+palette = 14=#8ac7cf
+palette = 15=#eaeaea

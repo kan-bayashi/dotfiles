@@ -5,6 +5,10 @@ return {
     dependencies = { "rktjmp/lush.nvim" },
     config = function()
       vim.cmd([[colorscheme jellybeans]])
+      -- Transparent background
+      vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
+      vim.api.nvim_set_hl(0, "NormalNC", { bg = "NONE" })
+      vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE" })
     end,
   },
   -- Start screen
