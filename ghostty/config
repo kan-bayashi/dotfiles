@@ -34,14 +34,15 @@ adjust-font-baseline = 1
 font-thicken = true
 
 font-family = 源柔ゴシックX等幅
-# font-feature = "-calt"
-# font-feature = "-dlig"
-# font-feature = "-liga"
+font-feature = "-calt"
+font-feature = "-dlig"
+font-feature = "-liga"
 
 # Window
 window-padding-x = 0
 window-padding-y = 5
 window-padding-balance = true
+window-padding-color = extend
 macos-titlebar-style = tabs
 macos-titlebar-proxy-icon = hidden
 macos-window-shadow = false
