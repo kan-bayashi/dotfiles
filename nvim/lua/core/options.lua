@@ -48,8 +48,8 @@ vim.diagnostic.config({
       [vim.diagnostic.severity.WARN] = "",
       [vim.diagnostic.severity.INFO] = "",
       [vim.diagnostic.severity.HINT] = "",
-    }
-  }
+    },
+  },
 })
 
 -- Diagnostic setting

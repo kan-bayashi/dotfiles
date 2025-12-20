@@ -1,7 +1,5 @@
 os:
-  editPreset: 'nvim'
-  # Using -l here to change to the previous window via ":wincmd p".
-  edit: "nvr -l --remote {{filename}}"
+  editPreset: 'nvim-remote'
 
 git:
   paging:
