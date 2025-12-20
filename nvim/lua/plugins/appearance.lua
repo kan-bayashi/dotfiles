@@ -20,6 +20,11 @@ return {
       vim.api.nvim_set_hl(0, "TelescopePromptNormal", { bg = colorscheme_bg })
       vim.api.nvim_set_hl(0, "TelescopeResultsNormal", { bg = colorscheme_bg })
       vim.api.nvim_set_hl(0, "TelescopePreviewNormal", { bg = colorscheme_bg })
+      local border_hl = vim.api.nvim_get_hl(0, { name = "TelescopeBorder" })
+      vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = border_hl.fg, bg = colorscheme_bg })
+      vim.api.nvim_set_hl(0, "TelescopePromptBorder", { fg = border_hl.fg, bg = colorscheme_bg })
+      vim.api.nvim_set_hl(0, "TelescopeResultsBorder", { fg = border_hl.fg, bg = colorscheme_bg })
+      vim.api.nvim_set_hl(0, "TelescopePreviewBorder", { fg = border_hl.fg, bg = colorscheme_bg })
     end,
   },
   -- Start screen
@@ -156,6 +161,35 @@ return {
     },
     config = function()
       require("scrollbar").setup()
+      local scrollbar_groups = {
+        "ScrollbarHandle",
+        "ScrollbarCursor",
+        "ScrollbarCursorHandle",
+        "ScrollbarSearch",
+        "ScrollbarSearchHandle",
+        "ScrollbarError",
+        "ScrollbarErrorHandle",
+        "ScrollbarWarn",
+        "ScrollbarWarnHandle",
+        "ScrollbarInfo",
+        "ScrollbarInfoHandle",
+        "ScrollbarHint",
+        "ScrollbarHintHandle",
+        "ScrollbarMisc",
+        "ScrollbarMiscHandle",
+        "ScrollbarGitAdd",
+        "ScrollbarGitAddHandle",
+        "ScrollbarGitChange",
+        "ScrollbarGitChangeHandle",
+        "ScrollbarGitDelete",
+        "ScrollbarGitDeleteHandle",
+      }
+      for _, group in ipairs(scrollbar_groups) do
+        local hl = vim.api.nvim_get_hl(0, { name = group })
+        vim.api.nvim_set_hl(0, group, { fg = hl.fg, bg = "NONE" })
+      end
+      vim.api.nvim_set_hl(0, "ScrollbarCursor", { fg = "#ffffff", bg = "NONE" })
+      vim.api.nvim_set_hl(0, "ScrollbarCursorHandle", { fg = "#ffffff", bg = "NONE" })
     end,
   },
   -- Show counts of searched items
