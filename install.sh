@@ -44,8 +44,8 @@ if [ ! -e ~/.local/bin/lazygit ]; then
     cd ~/.local/
     mkdir -p src
     cd src
-    wget https://github.com/jesseduffield/lazygit/releases/download/v0.45.2/lazygit_0.45.2_Linux_x86_64.tar.gz
-    tar -xvf lazygit_0.45.2_Linux_x86_64.tar.gz
+    wget https://github.com/jesseduffield/lazygit/releases/download/v0.54.0/lazygit_0.54.0_Linux_x86_64.tar.gz
+    tar -xvf lazygit_0.54.0_Linux_x86_64.tar.gz
     cp lazygit ~/.local/bin
     cd "${cwd}"
 fi
