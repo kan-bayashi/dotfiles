@@ -2,9 +2,9 @@ os:
   editPreset: 'nvim-remote'
 
 git:
-  paging:
-    colorArg: always
-    pager: delta --syntax-theme "Nord" --paging=never
+  pagers:
+    - colorArg: always
+      pager: delta --syntax-theme "Nord" --paging=never
 
 gui:
   nerdFontsVersion: "3"
@@ -28,12 +28,9 @@ gui:
       - '#cad3f5'
     searchingActiveBorderColor:
       - '#eed49f'
-
   authorColors:
     '*': '#b7bdf8'
-
   screenMode: normal
-
 keybinding:
   universal:
     copyToClipboard: <disabled>
