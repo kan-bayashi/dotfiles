@@ -176,6 +176,7 @@ alias ll="ls -l"
 alias lla="ls -la"
 alias free="free -g"
 alias watch='watch '
+alias timg='timg -pk'
 
 # load environment dependent setting
 [ -e ~/.zshrc.takedalab ] && source ~/.zshrc.takedalab
