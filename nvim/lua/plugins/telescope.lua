@@ -13,6 +13,7 @@ return {
       local keymap = vim.api.nvim_set_keymap
       local keymap_opts = { noremap = true, silent = true }
       keymap("n", "<C-f>f", "<cmd>Telescope find_files<CR>", keymap_opts)
+      keymap("n", "<C-f>F", "<cmd>Telescope find_files no_ignore=true<CR>", keymap_opts)
       keymap("n", "<C-f>g", "<cmd>Telescope git_status<CR>", keymap_opts)
       keymap("n", "<C-f><C-g>", "<cmd>Telescope live_grep<CR>", keymap_opts)
       keymap("n", "<C-f>b", "<cmd>Telescope buffers<CR>", keymap_opts)
@@ -58,13 +59,13 @@ return {
           },
         },
         pickers = {
-          find_files = themes.get_dropdown({ layout_config = { height = 0.4, width = 0.9 }, hidden = true }),
-          live_grep = themes.get_dropdown({ layout_config = { height = 0.4, width = 0.9 } }),
-          buffers = themes.get_dropdown({ layout_config = { height = 0.4, width = 0.9 }, initial_mode = "normal" }),
-          oldfiles = themes.get_dropdown({ layout_config = { height = 0.4, width = 0.9 }, initial_mode = "normal" }),
-          git_status = themes.get_dropdown({ layout_config = { height = 0.4, width = 0.9 }, initial_mode = "normal" }),
-          grep_string = themes.get_dropdown({ layout_config = { height = 0.4, width = 0.9 } }),
-          diagnostics = themes.get_dropdown({ layout_config = { height = 0.4, width = 0.9 } }),
+          find_files = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.9 }, hidden = true }),
+          live_grep = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.9 } }),
+          buffers = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.9 }, initial_mode = "normal" }),
+          oldfiles = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.9 }, initial_mode = "normal" }),
+          git_status = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.9 }, initial_mode = "normal" }),
+          grep_string = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.9 } }),
+          diagnostics = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.9 } }),
         },
         extensions = {
           file_browser = {
