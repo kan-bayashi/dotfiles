@@ -41,60 +41,9 @@ return {
     end,
   },
   -- Surround text objects
-  -- {
-  --   "machakann/vim-sandwich",
-  --   event = { "InsertEnter" },
-  -- },
   {
-    "kylechui/nvim-surround",
-    version = "^3.0.0",
+    "machakann/vim-sandwich",
     event = { "InsertEnter" },
-    config = function()
-      require("nvim-surround").setup({
-        indent_lines = false, -- 余計なインデントを付けない
-        surrounds = {
-          F = {
-            add = function()
-              -- 行選択 (V) を想定して開始/終了行を取得
-              local srow = vim.fn.getpos("'<")[2]
-              local erow = vim.fn.getpos("'>")[2]
-              if srow > erow then
-                srow, erow = erow, srow
-              end
-
-              -- foldmarker と commentstring を反映
-              local left, right = vim.o.foldmarker:match("([^,]+),([^,]+)")
-              if not left then
-                left, right = "{{{", "}}}"
-              end
-              local cs = vim.bo.commentstring or ""
-              local before, after = "", ""
-              if cs:find("%%s") then
-                before = cs:match("^(.*)%%s") or ""
-                after = cs:match("%%s(.*)$") or ""
-              end
-              local function line(s)
-                return before .. s .. after
-              end
-
-              -- 追加直後にその外側の fold を閉じる
-              vim.schedule(function()
-                if vim.bo.buftype ~= "" then
-                  return
-                end
-                pcall(vim.api.nvim_win_set_cursor, 0, { srow, 0 })
-                vim.cmd("silent! normal! zc") -- 外側だけ閉じる
-                -- 好みで下記に変更可能：
-                -- vim.cmd("silent! normal! zC")      -- 再帰で全部閉じる
-                -- vim.cmd(("%d,%dfoldclose"):format(srow, erow + 2)) -- 範囲内を全部閉じる
-              end)
-
-              return { { line(left) }, { line(right) } }
-            end,
-          },
-        },
-      })
-    end,
   },
   -- Better asterisk
   {
@@ -296,5 +245,20 @@ return {
         },
       })
     end,
+  },
+  -- Key mapping helper
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    opts = {},
+    keys = {
+      {
+        "<leader>?",
+        function()
+          require("which-key").show({ global = false })
+        end,
+        desc = "Buffer Local Keymaps (which-key)",
+      },
+    },
   },
 }
