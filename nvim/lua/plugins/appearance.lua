@@ -76,7 +76,7 @@ return {
         if theme[mode] and theme[mode].a then
           theme[mode].a.gui = ""
           theme[mode].b.bg = "#303030"
-          theme.insert.b.fg = "#dadada"
+          theme[mode].b.fg = "#dadada"
         end
       end
       theme.insert.a.bg = "#87af5f"
@@ -102,7 +102,7 @@ return {
           },
           lualine_x = {
             { "searchcount" },
-            { "filetype", colored = false, icon_only = false },
+            { "filetype", colored = true, icon_only = false },
           }
         },
         tabline = {},
