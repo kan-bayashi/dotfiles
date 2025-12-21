@@ -48,7 +48,7 @@ macos-titlebar-proxy-icon = hidden
 macos-window-shadow = false
 title = " "
 background-opacity = 0.97
-background-blur = 10
+background-blur = 25
 
 # Theme
 theme = "/Users/tomoki.hayashi/dotfiles/ghostty/jellybeans_like.theme"
