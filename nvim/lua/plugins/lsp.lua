@@ -191,6 +191,8 @@ return {
         },
       })
       require("mason-lspconfig").setup()
+      -- Disable stylua LSP (stylua 2.0 removed --lsp flag, use conform.nvim for formatting)
+      vim.lsp.enable("stylua", false)
     end,
   },
   -- Cool LSP UI

@@ -97,12 +97,12 @@ return {
               path = 1,
               newfile_status = true,
               shorting_target = 24,
-              symbols = { modified = "_󰷥", readonly = " ", newfile = "󰄛" },
+              symbols = { modified = "_󰷥 ", readonly = " ", newfile = "󰄛 " },
             },
           },
           lualine_x = {
             { "searchcount" },
-            { "filetype", colored = false, icon_only = false },
+            { "filetype", colored = true, icon_only = false },
           }
         },
         tabline = {},
