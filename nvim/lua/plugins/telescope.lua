@@ -16,16 +16,11 @@ return {
       keymap("n", "<C-f>g", "<cmd>Telescope git_status<CR>", keymap_opts)
       keymap("n", "<C-f><C-g>", "<cmd>Telescope live_grep<CR>", keymap_opts)
       keymap("n", "<C-f>b", "<cmd>Telescope buffers<CR>", keymap_opts)
+      keymap("n", "<C-f>r", "<cmd>Telescope oldfiles<CR>", keymap_opts)
       keymap("n", "<C-f><Space>", "<cmd>Telescope file_browser<CR>", keymap_opts)
       keymap("n", "<C-f>d", "<cmd>Telescope diagnostics bufnr=0 severity_bound=ERROR<CR>", keymap_opts)
       keymap("n", "<C-f><C-d>", "<cmd>Telescope diagnostics severity_bound=ERROR<CR>", keymap_opts)
       keymap("n", "<C-f>*", "<cmd>Telescope grep_string<CR>", keymap_opts)
-      keymap(
-        "n",
-        "<C-f>p",
-        "<cmd>Telescope yank_history theme=dropdown layout_config={height=0.3,width=0.9}<CR>",
-        keymap_opts
-      )
       keymap(
         "n",
         "<C-f>/",
@@ -44,7 +39,7 @@ return {
           selection_caret = " ",
           shorten_path = true,
           color_devicons = true,
-          winblend = 5,
+          winblend = 10,
           set_env = { ["COLORTERM"] = "truecolor" },
           mappings = {
             n = {
@@ -63,12 +58,13 @@ return {
           },
         },
         pickers = {
-          find_files = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.9 }, hidden = true }),
-          live_grep = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.9 } }),
-          buffers = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.9 } }),
-          git_status = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.9 } }),
-          grep_string = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.9 } }),
-          diagnostics = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.9 } }),
+          find_files = themes.get_dropdown({ layout_config = { height = 0.4, width = 0.9 }, hidden = true }),
+          live_grep = themes.get_dropdown({ layout_config = { height = 0.4, width = 0.9 } }),
+          buffers = themes.get_dropdown({ layout_config = { height = 0.4, width = 0.9 }, initial_mode = "normal" }),
+          oldfiles = themes.get_dropdown({ layout_config = { height = 0.4, width = 0.9 }, initial_mode = "normal" }),
+          git_status = themes.get_dropdown({ layout_config = { height = 0.4, width = 0.9 }, initial_mode = "normal" }),
+          grep_string = themes.get_dropdown({ layout_config = { height = 0.4, width = 0.9 } }),
+          diagnostics = themes.get_dropdown({ layout_config = { height = 0.4, width = 0.9 } }),
         },
         extensions = {
           file_browser = {
