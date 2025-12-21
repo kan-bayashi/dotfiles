@@ -8,8 +8,6 @@ return {
       -- Get colorscheme background before overriding
       local normal_hl = vim.api.nvim_get_hl(0, { name = "Normal" })
       local colorscheme_bg = normal_hl.bg
-      -- Save for other plugins
-      vim.g.colorscheme_bg = colorscheme_bg
       -- Use Ghostty background directly
       vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
       vim.api.nvim_set_hl(0, "NormalNC", { bg = "NONE" })
@@ -118,9 +116,18 @@ return {
           show_buffer_close_icons = false,
           show_close_icon = false,
           show_tab_indicators = false,
-          separator_style = "thick",
+          separator_style = {' ', ' '},
           always_show_bufferline = true,
           sort_by = "id",
+        },
+        highlights = {
+          fill = { bg = "NONE" },
+          background = { bg = "NONE" },
+          buffer_visible = { bg = "NONE" },
+          buffer_selected = { bg = "NONE" },
+          separator = { bg = "NONE" },
+          separator_visible = { bg = "NONE" },
+          separator_selected = { bg = "NONE" },
         },
       })
       vim.api.nvim_set_keymap("n", "tl", ":BufferLineCycleNext<CR>", { noremap = true, silent = true })
