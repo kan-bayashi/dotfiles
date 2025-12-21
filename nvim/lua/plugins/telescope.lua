@@ -58,13 +58,13 @@ return {
           },
         },
         pickers = {
-          find_files = themes.get_dropdown({ layout_config = { height = 0.4, width = 0.9 }, hidden = true }),
-          live_grep = themes.get_dropdown({ layout_config = { height = 0.4, width = 0.9 } }),
-          buffers = themes.get_dropdown({ layout_config = { height = 0.4, width = 0.9 }, initial_mode = "normal" }),
-          oldfiles = themes.get_dropdown({ layout_config = { height = 0.4, width = 0.9 }, initial_mode = "normal" }),
-          git_status = themes.get_dropdown({ layout_config = { height = 0.4, width = 0.9 }, initial_mode = "normal" }),
-          grep_string = themes.get_dropdown({ layout_config = { height = 0.4, width = 0.9 } }),
-          diagnostics = themes.get_dropdown({ layout_config = { height = 0.4, width = 0.9 } }),
+          find_files = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.9 }, hidden = true }),
+          live_grep = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.9 } }),
+          buffers = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.9 }, initial_mode = "normal" }),
+          oldfiles = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.9 }, initial_mode = "normal" }),
+          git_status = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.9 }, initial_mode = "normal" }),
+          grep_string = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.9 } }),
+          diagnostics = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.9 } }),
         },
         extensions = {
           file_browser = {
