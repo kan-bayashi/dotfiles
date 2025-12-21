@@ -15,6 +15,9 @@ vim.opt.updatetime = 300
 vim.opt.undofile = true
 vim.opt.undodir = vim.fn.expand("~/.cache/nvim/undo")
 vim.opt.ttimeoutlen = 10
+
+-- Set NVIM environment variable for nvim --remote commands
+vim.env.NVIM = vim.v.servername
 vim.opt.backspace = { "indent", "eol", "start" }
 vim.opt.tabstop = 4
 vim.opt.expandtab = true
