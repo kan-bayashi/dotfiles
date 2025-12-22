@@ -7,7 +7,7 @@ foreground = #dadada
 # Normal colors (0-7)
 palette = 0=#333333
 palette = 1=#cb484c
-palette = 2=#75a24d
+palette = 2=#799d6a
 palette = 3=#fd9f4d
 palette = 4=#446ecc
 palette = 5=#cc98de
