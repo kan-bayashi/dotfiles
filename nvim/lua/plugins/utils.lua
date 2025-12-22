@@ -110,7 +110,8 @@ return {
       { "<leader>gs", "<cmd>LazyGit<cr>", desc = "LazyGit" },
     },
     init = function()
-      vim.g.lazygit_floating_window_winblend = 10
+      vim.g.lazygit_floating_window_winblend = 0
+      vim.g.lazygit_floating_window_scaling_factor = 0.85
       vim.g.lazygit_floating_window_border_chars = { " ", " ", " ", " ", " ", " ", " ", " " }
     end,
     -- Disable nvim-tmux-navigator keybindings in lazygit buffer

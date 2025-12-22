@@ -40,7 +40,7 @@ return {
           selection_caret = " ",
           shorten_path = true,
           color_devicons = true,
-          winblend = 10,
+          winblend = 0,
           set_env = { ["COLORTERM"] = "truecolor" },
           mappings = {
             n = {
@@ -59,13 +59,13 @@ return {
           },
         },
         pickers = {
-          find_files = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.9 }, hidden = true }),
-          live_grep = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.9 } }),
-          buffers = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.9 }, initial_mode = "normal" }),
-          oldfiles = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.9 }, initial_mode = "normal" }),
-          git_status = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.9 }, initial_mode = "normal" }),
-          grep_string = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.9 } }),
-          diagnostics = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.9 } }),
+          find_files = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.85 }, hidden = true }),
+          live_grep = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.85 } }),
+          buffers = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.85 }, initial_mode = "normal" }),
+          oldfiles = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.85 }, initial_mode = "normal" }),
+          git_status = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.85 }, initial_mode = "normal" }),
+          grep_string = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.85 } }),
+          diagnostics = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.85 } }),
         },
         extensions = {
           file_browser = {

@@ -5,24 +5,22 @@ return {
     dependencies = { "rktjmp/lush.nvim" },
     config = function()
       vim.cmd([[colorscheme jellybeans]])
-      -- Get colorscheme background before overriding
-      local normal_hl = vim.api.nvim_get_hl(0, { name = "Normal" })
-      local colorscheme_bg = normal_hl.bg
       -- Use Ghostty background directly
       vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
       vim.api.nvim_set_hl(0, "NormalNC", { bg = "NONE" })
+      vim.api.nvim_set_hl(0, "StatusLine", { bg = "NONE" })
       -- Set floating window background for winblend to work
-      vim.api.nvim_set_hl(0, "NormalFloat", { bg = colorscheme_bg })
+      vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE" })
       -- Set Telescope background for winblend to work
-      vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = colorscheme_bg })
-      vim.api.nvim_set_hl(0, "TelescopePromptNormal", { bg = colorscheme_bg })
-      vim.api.nvim_set_hl(0, "TelescopeResultsNormal", { bg = colorscheme_bg })
-      vim.api.nvim_set_hl(0, "TelescopePreviewNormal", { bg = colorscheme_bg })
+      vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "NONE" })
+      vim.api.nvim_set_hl(0, "TelescopePromptNormal", { bg = "NONE" })
+      vim.api.nvim_set_hl(0, "TelescopeResultsNormal", { bg = "NONE" })
+      vim.api.nvim_set_hl(0, "TelescopePreviewNormal", { bg = "NONE" })
       local border_hl = vim.api.nvim_get_hl(0, { name = "TelescopeBorder" })
-      vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = border_hl.fg, bg = colorscheme_bg })
-      vim.api.nvim_set_hl(0, "TelescopePromptBorder", { fg = border_hl.fg, bg = colorscheme_bg })
-      vim.api.nvim_set_hl(0, "TelescopeResultsBorder", { fg = border_hl.fg, bg = colorscheme_bg })
-      vim.api.nvim_set_hl(0, "TelescopePreviewBorder", { fg = border_hl.fg, bg = colorscheme_bg })
+      vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = border_hl.fg, bg = "NONE" })
+      vim.api.nvim_set_hl(0, "TelescopePromptBorder", { fg = border_hl.fg, bg = "NONE" })
+      vim.api.nvim_set_hl(0, "TelescopeResultsBorder", { fg = border_hl.fg, bg = "NONE" })
+      vim.api.nvim_set_hl(0, "TelescopePreviewBorder", { fg = border_hl.fg, bg = "NONE" })
     end,
   },
   -- Start screen
@@ -80,7 +78,7 @@ return {
         end
       end
       theme.insert.a.bg = "#87af5f"
-      theme.normal.c.bg = "#131313"
+      theme.normal.c.bg = nil
       theme.normal.c.fg = "#dadada"
 
       require("lualine").setup({
@@ -103,7 +101,7 @@ return {
           lualine_x = {
             { "searchcount" },
             { "filetype", colored = true, icon_only = false },
-          }
+          },
         },
         tabline = {},
       })
@@ -136,6 +134,35 @@ return {
           separator = { bg = "NONE" },
           separator_visible = { bg = "NONE" },
           separator_selected = { bg = "NONE" },
+          tab = { bg = "NONE" },
+          tab_selected = { bg = "NONE" },
+          tab_separator = { bg = "NONE" },
+          tab_separator_selected = { bg = "NONE" },
+          tab_close = { bg = "NONE" },
+          modified = { bg = "NONE" },
+          modified_visible = { bg = "NONE" },
+          modified_selected = { bg = "NONE" },
+          duplicate = { bg = "NONE" },
+          duplicate_visible = { bg = "NONE" },
+          duplicate_selected = { bg = "NONE" },
+          diagnostic = { bg = "NONE" },
+          diagnostic_visible = { bg = "NONE" },
+          diagnostic_selected = { bg = "NONE" },
+          hint = { bg = "NONE" },
+          hint_visible = { bg = "NONE" },
+          hint_selected = { bg = "NONE" },
+          info = { bg = "NONE" },
+          info_visible = { bg = "NONE" },
+          info_selected = { bg = "NONE" },
+          warning = { bg = "NONE" },
+          warning_visible = { bg = "NONE" },
+          warning_selected = { bg = "NONE" },
+          error = { bg = "NONE" },
+          error_visible = { bg = "NONE" },
+          error_selected = { bg = "NONE" },
+          indicator_visible = { bg = "NONE" },
+          indicator_selected = { bg = "NONE" },
+          trunc_marker = { bg = "NONE" },
         },
       })
       vim.api.nvim_set_keymap("n", "tl", ":BufferLineCycleNext<CR>", { noremap = true, silent = true })
@@ -278,12 +305,15 @@ return {
     config = function()
       local devicons = require("nvim-web-devicons")
       require("incline").setup({
+        highlight = {
+          groups = {
+            InclineNormal = { guibg = "NONE" },
+            InclineNormalNC = { guibg = "NONE" },
+          },
+        },
         window = {
           padding = 0,
           margin = { horizontal = 0 },
-          options = {
-            winblend = 5,
-          },
         },
         render = function(props)
           local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
@@ -303,10 +333,18 @@ return {
           local clients = vim.lsp.get_clients({ bufnr = props.buf })
           local lsp_count = #clients
           local diag = vim.diagnostic.get(props.buf)
-          local errors = #vim.tbl_filter(function(d) return d.severity == vim.diagnostic.severity.ERROR end, diag)
-          local warns = #vim.tbl_filter(function(d) return d.severity == vim.diagnostic.severity.WARN end, diag)
-          local infos = #vim.tbl_filter(function(d) return d.severity == vim.diagnostic.severity.INFO end, diag)
-          local hints = #vim.tbl_filter(function(d) return d.severity == vim.diagnostic.severity.HINT end, diag)
+          local errors = #vim.tbl_filter(function(d)
+            return d.severity == vim.diagnostic.severity.ERROR
+          end, diag)
+          local warns = #vim.tbl_filter(function(d)
+            return d.severity == vim.diagnostic.severity.WARN
+          end, diag)
+          local infos = #vim.tbl_filter(function(d)
+            return d.severity == vim.diagnostic.severity.INFO
+          end, diag)
+          local hints = #vim.tbl_filter(function(d)
+            return d.severity == vim.diagnostic.severity.HINT
+          end, diag)
 
           local result = {}
           if errors > 0 then
@@ -323,7 +361,6 @@ return {
           end
           if errors + warns + infos + hints > 0 then
             table.insert(result, " ┃")
-
           end
           if added > 0 then
             table.insert(result, { "  " .. added, guifg = "#8bc34a" })
@@ -346,7 +383,7 @@ return {
             modified and { " ●", guifg = "#ef5350" } or "",
           })
           table.insert(result, "  ")
-          result.guibg = "#131313"
+          result.guibg = nil
           return result
         end,
       })
