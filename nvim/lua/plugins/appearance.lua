@@ -9,6 +9,9 @@ return {
       vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
       vim.api.nvim_set_hl(0, "NormalNC", { bg = "NONE" })
       vim.api.nvim_set_hl(0, "StatusLine", { bg = "NONE" })
+      vim.api.nvim_set_hl(0, "ColorColumn", { bg = "NONE" })
+      vim.api.nvim_set_hl(0, "WinBar", { bg = "NONE" })
+      vim.api.nvim_set_hl(0, "WinBarNC", { bg = "NONE" })
       -- Set floating window background for winblend to work
       vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE" })
       -- Set Telescope background for winblend to work
