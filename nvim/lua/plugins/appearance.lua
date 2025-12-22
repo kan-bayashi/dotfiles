@@ -256,7 +256,7 @@ return {
   -- Line color depending on the mode
   {
     "mvllow/modes.nvim",
-    tag = "v0.2.1",
+    tag = "v0.3.0",
     config = function()
       require("modes").setup({
         colors = {
@@ -265,6 +265,7 @@ return {
           -- delete = "#ef5350", -- red (bright)
           -- copy = "#ffd43b", -- yellow (bright)
         },
+        line_opacity = 0.3,
       })
     end,
   },
