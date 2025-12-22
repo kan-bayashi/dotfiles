@@ -1,7 +1,8 @@
 # Jellybeans-like color theme
 
 background = #131313
-foreground = #eaeaea
+# foreground = #eaeaea
+foreground = #dadada
 
 # Normal colors (0-7)
 palette = 0=#333333

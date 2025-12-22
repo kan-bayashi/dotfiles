@@ -148,7 +148,7 @@ return {
     branch = "stable",
     config = function()
       require("mini.indentscope").setup({
-        symbol = "▏",
+        symbol = "┃",
       })
     end,
   },
@@ -166,7 +166,13 @@ return {
       "WinScrolled",
     },
     config = function()
-      require("scrollbar").setup()
+      require("scrollbar").setup({
+        marks = {
+          GitAdd = { text = "┃" },
+          GitChange = { text = "┃" },
+          GitDelete = { text = "▁" },
+        },
+      })
       local scrollbar_groups = {
         "ScrollbarHandle",
         "ScrollbarCursor",
@@ -198,30 +204,6 @@ return {
       vim.api.nvim_set_hl(0, "ScrollbarCursorHandle", { fg = "#ffffff", bg = "NONE" })
     end,
   },
-  -- -- Show counts of searched items
-  -- {
-  --   "kevinhwang91/nvim-hlslens",
-  --   event = { "BufRead", "BufNewFile" },
-  --   dependencies = { "petertriho/nvim-scrollbar" },
-  --   config = function()
-  --     require("scrollbar.handlers.search").setup()
-  --     local kopts = { noremap = true, silent = true }
-  --     vim.api.nvim_set_keymap(
-  --       "n",
-  --       "n",
-  --       [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>zz]],
-  --       kopts
-  --     )
-  --     vim.api.nvim_set_keymap(
-  --       "n",
-  --       "N",
-  --       [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>zz]],
-  --       kopts
-  --     )
-  --     vim.api.nvim_set_keymap("n", "<Esc><Esc>", "<Cmd>noh<CR>", kopts)
-  --     vim.api.nvim_set_keymap("n", "<C-o><C-o>", "<Cmd>noh<CR>", kopts)
-  --   end,
-  -- },
   -- Show git modification status in columns
   {
     "lewis6991/gitsigns.nvim",
@@ -339,7 +321,8 @@ return {
             table.insert(result, { "  " .. hints, guifg = "#64b5f6" })
           end
           if errors + warns + infos + hints > 0 then
-            table.insert(result, " |")
+            table.insert(result, " ┃")
+
           end
           if added > 0 then
             table.insert(result, { "  " .. added, guifg = "#8bc34a" })
@@ -354,7 +337,7 @@ return {
             table.insert(result, { "  " .. lsp_count, guifg = "#64b5f6" })
           end
           if added + changed + removed + lsp_count > 0 then
-            table.insert(result, " |")
+            table.insert(result, " ┃")
           end
           table.insert(result, {
             ft_icon and { " ", ft_icon, " ", guifg = ft_color } or "",
