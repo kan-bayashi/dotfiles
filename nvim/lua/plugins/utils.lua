@@ -62,15 +62,6 @@ return {
   {
     "tpope/vim-fugitive",
     event = { "VimEnter" },
-    -- config = function()
-    --   vim.api.nvim_set_keymap("n", "<leader>gs", ":Git<CR><C-w>J", { noremap = true, silent = true })
-    --   vim.api.nvim_set_keymap("n", "<leader>ga", ":Gwrite<CR>", { noremap = true, silent = true })
-    --   vim.api.nvim_set_keymap("n", "<leader>gc", ":Git commit<CR>", { noremap = true, silent = true })
-    --   vim.api.nvim_create_autocmd("FileType", {
-    --     pattern = "fugitive",
-    --     command = "nmap <buffer> q gq",
-    --   })
-    -- end,
   },
   -- Nice conflict view
   {

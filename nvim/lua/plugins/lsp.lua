@@ -81,13 +81,13 @@ return {
           completion = {
             border = "rounded",
             scrollbar = true,
-            winblend = 10,
+            winblend = 0,
             winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
           },
           documentation = {
             border = "rounded",
             winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,Search:None",
-            winblend = 10,
+            winblend = 0,
           },
         },
         formatting = {
@@ -204,6 +204,9 @@ return {
     event = { "InsertEnter" },
     config = function()
       require("lspsaga").setup({
+        hover = {
+          max_width = 0.6,
+        },
         lightbulb = {
           enable = false,
         },
@@ -222,12 +225,27 @@ return {
 
       -- LSP key mapping settings
       vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>")
-      vim.keymap.set("n", "<Space>r", "<cmd>Lspsaga rename<CR>")
       vim.keymap.set("n", "<Space>a", "<cmd>Lspsaga code_action<CR>")
       vim.keymap.set("n", "<Space>]", "<cmd>Lspsaga diagnostic_jump_next<CR>")
       vim.keymap.set("n", "<Space>[", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
-      vim.keymap.set("n", "<Space>t", "<cmd>Lspsaga goto_type_definition<CR>")
-      vim.keymap.set("n", "<Space>d", "<cmd>Lspsaga goto_definition<CR>")
+    end,
+  },
+  -- Glance (LSP references/definitions viewer)
+  {
+    "dnlhc/glance.nvim",
+    event = { "LspAttach" },
+    config = function()
+      require("glance").setup({
+        border = {
+          enable = true,
+        },
+      })
+
+      -- LSP key mapping settings
+      vim.keymap.set("n", "<Space>t", "<cmd>Glance type_definitions<CR>")
+      vim.keymap.set("n", "<Space>d", "<cmd>Glance definitions<CR>")
+      vim.keymap.set("n", "<Space>R", "<cmd>Glance references<CR>")
+      vim.keymap.set("n", "<Space>i", "<cmd>Glance implementations<CR>")
     end,
   },
   -- Formmater

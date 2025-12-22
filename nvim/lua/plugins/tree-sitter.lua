@@ -5,6 +5,7 @@ return {
       "David-Kunz/treesitter-unit",
       "m-demare/hlargs.nvim",
       "nvim-treesitter/playground",
+      "nvim-treesitter/nvim-treesitter-context",
     },
     event = { "BufRead", "BufNewFile" },
     build = ":TSUpdate",
@@ -65,6 +66,11 @@ return {
 
       -- HLargs
       require("hlargs").setup()
+
+      -- Treesitter-context
+      require("treesitter-context").setup({
+        separator = "━",
+      })
     end,
   },
 }
