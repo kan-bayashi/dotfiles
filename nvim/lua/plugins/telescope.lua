@@ -25,7 +25,7 @@ return {
       keymap(
         "n",
         "<C-f>/",
-        ':lua require("telescope.builtin").live_grep({search_dirs={vim.fn.expand("%:p")}, previewer=false, path_display={shorten=1}})<CR>',
+        ':lua require("telescope.builtin").live_grep({search_dirs={vim.fn.expand("%:p")}, previewer=true, path_display={shorten=1}})<CR>',
         keymap_opts
       )
       keymap("n", "<C-f><C-f>", "<cmd>Telescope resume<CR>", keymap_opts)
