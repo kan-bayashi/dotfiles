@@ -132,17 +132,11 @@ return {
     "Vimjas/vim-python-pep8-indent",
     ft = { "python" },
   },
-  -- Markdown preview in normal mode
+  -- Markdown preview
   {
-    "MeanderingProgrammer/render-markdown.nvim",
+    "OXY2DEV/markview.nvim",
     ft = { "markdown" },
-    after = { "nvim-treesitter" },
-    dependencies = { "echasnovski/mini.icons", opt = true },
-    config = function()
-      require("render-markdown").setup({
-        anti_conceal = { enabled = false },
-      })
-    end,
+    lazy = false,
   },
   -- CSV viewer
   {
