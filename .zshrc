@@ -77,8 +77,6 @@ zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions"
 # command line syntax highlight
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
-# useful change directory
-zplug "b4b4r07/enhancd", use:init.sh
 # load theme from local
 zplug "~/.zsh/themes/", from:local, use:bullet-train.zsh-theme, defer:3
 
@@ -160,6 +158,9 @@ if [ -z "$TMUX" ];then
     if [ -e ${HOME}/.poetry/bin ]; then
         export PATH=$HOME/.poetry/bin:$PATH
     fi
+    if [ -d /home/tomoki.hayashi/.pixi/bin ]; then
+        export PATH="/home/tomoki.hayashi/.pixi/bin:$PATH"
+    fi
 fi
 
 # alias settings
@@ -195,43 +196,3 @@ eval "$(pyenv init -)"
     && export SSH_AUTH_SOCK="$HOME/.ssh/sock"
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
-
-########################
-#    user functions    #
-########################
-show_spectrogram() {
-  # Check arguments
-  if [[ $# -eq 0 ]]; then
-    echo "Usage: show_spectrogram <audio-file>"
-    return 1
-  fi
-
-  # Check for required commands
-  if ! command -v sox >/dev/null 2>&1; then
-    echo "Error: sox is not installed."
-    return 1
-  fi
-
-  if ! command -v nsxiv >/dev/null 2>&1; then
-    echo "Error: nsxiv is not installed."
-    return 1
-  fi
-
-  local input="$1"
-  # Create a temporary file
-  local tmpfile
-  tmpfile=$(mktemp /tmp/spectrogram.XXXXXX.png) || { echo "Failed to create a temporary file."; return 1; }
-
-  # Generate spectrogram with sox
-  if ! sox "$input" -n spectrogram -o "$tmpfile"; then
-    echo "Failed to generate spectrogram."
-    rm -f "$tmpfile"
-    return 1
-  fi
-
-  # Display the image with nsxiv
-  nsxiv -q "$tmpfile"
-
-  # Delete the temporary file after display
-  rm -f "$tmpfile"
-}

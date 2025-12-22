@@ -1,35 +1,17 @@
-# export environment setting
-if [ -z "$TMUX" ];then
-    # cuda related setting
-    export CUDA_ROOT=/usr/local/cuda-12.1
-    export CUDA_HOME=$CUDA_ROOT
-    export CUDA_PATH=$CUDA_ROOT
-    export PATH=$CUDA_ROOT/bin:$PATH
-    export CPATH=$CUDA_ROOT/include:$CPATH
-    export LD_LIBRARY_PATH=$CUDA_ROOT/lib64:$LD_LIBRARY_PATH
-
-    # add path of other libraries
-    export LD_LIBRARY_PATH=/lib:/usr/local/lib:/usr/local/lib64:$LD_LIBRARY_PATH
-    export LD_LIBRARY_PATH=/opt/intel/mkl/lib/intel64:$LD_LIBRARY_PATH
-fi
+# # export environment setting
+# if [ -z "$TMUX" ];then
+#     # cuda related setting
+#     export CUDA_ROOT=/usr/local/cuda-12.1
+#     export CUDA_HOME=$CUDA_ROOT
+#     export CUDA_PATH=$CUDA_ROOT
+#     export PATH=$CUDA_ROOT/bin:$PATH
+#     export CPATH=$CUDA_ROOT/include:$CPATH
+#     export LD_LIBRARY_PATH=$CUDA_ROOT/lib64:$LD_LIBRARY_PATH
+#     # add path of other libraries
+#     export LD_LIBRARY_PATH=/lib:/usr/local/lib:/usr/local/lib64:$LD_LIBRARY_PATH
+#     export LD_LIBRARY_PATH=/opt/intel/mkl/lib/intel64:$LD_LIBRARY_PATH
+# fi
 
 # alias setting
 alias squeue='squeue -h -o "%.9i %.5P %.35j %.10u %.1t %.11M %.9R cpu:%.2C %.20b"'
 alias sqw='watch -n 1 -c "schecker -c;echo;squeue -h -o \"%.14i %.6P %.40j %.8u %.1t %.10M %.10R cpu:%.2C %.8b\""'
-
-# tensorboard wrapper
-tbd() {
-    if [ ${#} -le 1 ] || [ $1 = "--help" ] || [ $1 = "-h" ]; then
-        echo "Usage: tbd <port> <logdir_1> <logdir_2> ... <logdir_N>"
-        echo "e.g.: tbd 5901 exp/train_nodev_ljspeech_melgan.v1 exp/train_nodev_ljspeech_melgan.v2"
-        return 1
-    fi
-    port=$1
-    logdirs=
-    for logdir in ${@:2}; do
-        logdir_id=$(basename "${logdir}")
-        logdirs+="${logdir_id}:${logdir},"
-    done
-    echo "tensorboard --port ${port} --logdir_spec=${logdirs:0:-1}"
-    tensorboard --port ${port} --logdir_spec=${logdirs:0:-1}
-}
