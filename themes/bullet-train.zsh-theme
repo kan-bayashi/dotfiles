@@ -9,6 +9,54 @@
 # Terminal.app - it has significantly better color fidelity.
 
 # ------------------------------------------------------------------------------
+# GIT HELPER FUNCTIONS (standalone, no Oh My Zsh dependency)
+# ------------------------------------------------------------------------------
+
+function parse_git_dirty() {
+  local STATUS
+  STATUS=$(git status --porcelain --ignore-submodules=dirty 2>/dev/null | tail -n 1)
+  if [[ -n $STATUS ]]; then
+    echo "$ZSH_THEME_GIT_PROMPT_DIRTY"
+  else
+    echo "$ZSH_THEME_GIT_PROMPT_CLEAN"
+  fi
+}
+
+function git_prompt_status() {
+  local INDEX STATUS
+  INDEX=$(git status --porcelain -b 2>/dev/null)
+  STATUS=""
+  if echo "$INDEX" | grep -qE '^\?\? '; then
+    STATUS="$ZSH_THEME_GIT_PROMPT_UNTRACKED$STATUS"
+  fi
+  if echo "$INDEX" | grep -qE '^A  |^M  |^MM '; then
+    STATUS="$ZSH_THEME_GIT_PROMPT_ADDED$STATUS"
+  fi
+  if echo "$INDEX" | grep -qE '^ M |^AM |^MM |^ T '; then
+    STATUS="$ZSH_THEME_GIT_PROMPT_MODIFIED$STATUS"
+  fi
+  if echo "$INDEX" | grep -qE '^R  '; then
+    STATUS="$ZSH_THEME_GIT_PROMPT_RENAMED$STATUS"
+  fi
+  if echo "$INDEX" | grep -qE '^ D |^D  |^AD '; then
+    STATUS="$ZSH_THEME_GIT_PROMPT_DELETED$STATUS"
+  fi
+  if echo "$INDEX" | grep -qE '^UU '; then
+    STATUS="$ZSH_THEME_GIT_PROMPT_UNMERGED$STATUS"
+  fi
+  if echo "$INDEX" | grep -qE '^## [^ ]\+ .*ahead'; then
+    STATUS="$ZSH_THEME_GIT_PROMPT_AHEAD$STATUS"
+  fi
+  if echo "$INDEX" | grep -qE '^## [^ ]\+ .*behind'; then
+    STATUS="$ZSH_THEME_GIT_PROMPT_BEHIND$STATUS"
+  fi
+  if echo "$INDEX" | grep -qE '^## [^ ]\+ .*diverged'; then
+    STATUS="$ZSH_THEME_GIT_PROMPT_DIVERGED$STATUS"
+  fi
+  echo $STATUS
+}
+
+# ------------------------------------------------------------------------------
 # CONFIGURATION
 # The default configuration, that can be overwrite in your .zshrc file
 # ------------------------------------------------------------------------------
@@ -70,10 +118,10 @@ if [ ! -n "${BULLETTRAIN_TIME_SHOW+1}" ]; then
   BULLETTRAIN_TIME_SHOW=true
 fi
 if [ ! -n "${BULLETTRAIN_TIME_BG+1}" ]; then
-  BULLETTRAIN_TIME_BG=white
+  BULLETTRAIN_TIME_BG=15
 fi
 if [ ! -n "${BULLETTRAIN_TIME_FG+1}" ]; then
-  BULLETTRAIN_TIME_FG=black
+  BULLETTRAIN_TIME_FG=8
 fi
 
 # CUSTOM
@@ -322,7 +370,8 @@ fi
 # ------------------------------------------------------------------------------
 
 CURRENT_BG='NONE'
-SEGMENT_SEPARATOR='\ue0b0'
+SEGMENT_SEPARATOR=' '
+# SEGMENT_SEPARATOR=''
 
 # Begin a segment
 # Takes two arguments, background and foreground. Both can be omitted,
@@ -368,7 +417,7 @@ prompt_context() {
   [[ $BULLETTRAIN_CONTEXT_SHOW == false ]] && return
 
   local _context="$(context)"
-  [[ -n "$_context" ]] && prompt_segment $BULLETTRAIN_CONTEXT_BG $BULLETTRAIN_CONTEXT_FG $_context
+  [[ -n "$_context" ]] && prompt_segment $BULLETTRAIN_CONTEXT_BG $BULLETTRAIN_CONTEXT_FG "$_context"
 }
 
 # Based on http://stackoverflow.com/a/32164707/3859566
@@ -609,8 +658,8 @@ prompt_status() {
 
   local symbols
   symbols=()
-  [[ $RETVAL -ne 0 && $BULLETTRAIN_STATUS_EXIT_SHOW != true ]] && symbols+="✘"
-  [[ $RETVAL -ne 0 && $BULLETTRAIN_STATUS_EXIT_SHOW == true ]] && symbols+="✘ $RETVAL"
+  [[ $RETVAL -ne 0 && $BULLETTRAIN_STATUS_EXIT_SHOW != true ]] && symbols+="%{%F{15}%} "
+  [[ $RETVAL -ne 0 && $BULLETTRAIN_STATUS_EXIT_SHOW == true ]] && symbols+="%{%F{15}%} $RETVAL"
   [[ $UID -eq 0 ]] && symbols+="%{%F{yellow}%}⚡%f"
   [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="⚙"
 
@@ -627,7 +676,7 @@ prompt_char() {
   local bt_prompt_char
   bt_prompt_char=""
 
-  if [[ ${#BULLETTRAIN_PROMPT_CHAR} -eq 1 ]]; then
+  if [[ -n "${BULLETTRAIN_PROMPT_CHAR}" ]]; then
     bt_prompt_char="${BULLETTRAIN_PROMPT_CHAR}"
   fi
 
