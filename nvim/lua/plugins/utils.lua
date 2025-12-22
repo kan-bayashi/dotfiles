@@ -11,11 +11,6 @@ return {
         let g:VM_maps = {}
         let g:VM_maps['Find Under'] = '<space>n'
         let g:VM_maps['Find Subword Under'] = '<space>n'
-        aug VMlens
-          au!
-          au User visual_multi_start lua require('user.vmlens').start()
-          au User visual_multi_exit lua require('user.vmlens').exit()
-        aug END
       ]])
     end,
   },
