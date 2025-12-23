@@ -84,7 +84,7 @@ fi
 
 # PROMPT
 if [ ! -n "${BULLETTRAIN_PROMPT_CHAR+1}" ]; then
-  BULLETTRAIN_PROMPT_CHAR="\$"
+  BULLETTRAIN_PROMPT_CHAR="󰄾"
 fi
 if [ ! -n "${BULLETTRAIN_PROMPT_ROOT+1}" ]; then
   BULLETTRAIN_PROMPT_ROOT=true
@@ -678,6 +678,7 @@ prompt_char() {
 
   if [[ -n "${BULLETTRAIN_PROMPT_CHAR}" ]]; then
     bt_prompt_char="${BULLETTRAIN_PROMPT_CHAR}"
+    # bt_prompt_char="%(!.%F{red}#.%F{green}${bt_prompt_char}%f)"
   fi
 
   if [[ $BULLETTRAIN_PROMPT_ROOT == true ]]; then

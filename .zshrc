@@ -45,6 +45,12 @@ fi
 autoload -Uz add-zsh-hook
 add-zsh-hook preexec refresh
 
+# reset cursor to blinking underline on each prompt
+_reset_cursor() {
+    echo -ne '\e[3 q'
+}
+add-zsh-hook precmd _reset_cursor
+
 # dircolors setting
 if [ -f ~/.dircolors ]; then
     if type dircolors > /dev/null 2>&1; then

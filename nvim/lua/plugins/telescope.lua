@@ -25,7 +25,7 @@ return {
       keymap(
         "n",
         "<C-f>/",
-        ':lua require("telescope.builtin").live_grep({search_dirs={vim.fn.expand("%:p")}, previewer=false, path_display={shorten=1}})<CR>',
+        ':lua require("telescope.builtin").live_grep({search_dirs={vim.fn.expand("%:p")}, previewer=true, path_display={shorten=1}})<CR>',
         keymap_opts
       )
       keymap("n", "<C-f><C-f>", "<cmd>Telescope resume<CR>", keymap_opts)
@@ -36,8 +36,8 @@ return {
       local actions = require("telescope.actions")
       require("telescope").setup({
         defaults = {
-          prompt_prefix = ">>> ",
-          selection_caret = " ",
+          prompt_prefix = " 󰄾 ",
+          selection_caret = " ",
           shorten_path = true,
           color_devicons = true,
           winblend = 0,
