@@ -77,7 +77,7 @@ return {
         },
         sections = {
           { section = "header" },
-          { section = "keys", gap = 0, padding = 1 },
+          { section = "keys", gap = 0, padding = { 1, 0 } },
           { icon = " ", title = "Recent Files", section = "recent_files", cwd = true, indent = 2, padding = 1 },
           { section = "startup" },
         },

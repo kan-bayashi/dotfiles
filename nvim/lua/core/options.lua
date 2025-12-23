@@ -15,6 +15,9 @@ vim.opt.updatetime = 300
 vim.opt.undofile = true
 vim.opt.undodir = vim.fn.expand("~/.cache/nvim/undo")
 vim.opt.ttimeoutlen = 10
+
+-- Set NVIM environment variable for nvim --remote commands
+vim.env.NVIM = vim.v.servername
 vim.opt.backspace = { "indent", "eol", "start" }
 vim.opt.tabstop = 4
 vim.opt.expandtab = true
@@ -37,8 +40,16 @@ vim.opt.pumheight = 10
 vim.opt.foldmethod = "marker"
 vim.opt.hidden = true
 vim.opt.mouse = "a"
+vim.opt.guicursor = {
+  "n-v-c:block-blinkon500-blinkoff500",
+  "i-ci-ve:ver25-blinkon500-blinkoff500",
+  "r-cr:hor20-blinkon500-blinkoff500",
+  "o:hor50",
+}
 vim.opt.shortmess = "c"
 vim.opt.signcolumn = "yes"
+vim.opt.linebreak = true
+vim.opt.fillchars = { eob = " " }
 
 -- Sign definition
 vim.diagnostic.config({

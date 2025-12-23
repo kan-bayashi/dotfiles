@@ -52,7 +52,15 @@ keymap("n", "<Leader>w", ":w<CR>", keymap_opts)
 keymap("n", "<Leader>q", ":bdel<CR>", keymap_opts)
 
 -- Force close buffer
-keymap("n", "<Leader>Q", ":bdel!<CR>", keymap_opts)
+keymap("n", "<Leader><C-q>", ":bdel!<CR>", keymap_opts)
 
 -- Preserve annoying pop
 keymap("n", "q:", ":q<CR>", keymap_opts)
+
+-- Move selected lines up/down in visual mode
+keymap("v", "J", ":m '>+1<CR>gv=gv", keymap_opts)
+keymap("v", "K", ":m '<-2<CR>gv=gv", keymap_opts)
+
+-- Keep selection after indent
+keymap("v", "<", "<gv", keymap_opts)
+keymap("v", ">", ">gv", keymap_opts)
