@@ -24,6 +24,10 @@ return {
       vim.api.nvim_set_hl(0, "TelescopePromptBorder", { fg = border_hl.fg, bg = "NONE" })
       vim.api.nvim_set_hl(0, "TelescopeResultsBorder", { fg = border_hl.fg, bg = "NONE" })
       vim.api.nvim_set_hl(0, "TelescopePreviewBorder", { fg = border_hl.fg, bg = "NONE" })
+      vim.api.nvim_set_hl(0, "TelescopeResultsDiffAdd", { bg = "NONE" })
+      vim.api.nvim_set_hl(0, "TelescopeResultsDiffChange", { bg = "NONE" })
+      vim.api.nvim_set_hl(0, "TelescopeResultsDiffDelete", { bg = "NONE" })
+      vim.api.nvim_set_hl(0, "TelescopeResultsDiffUntracked", { bg = "NONE" })
     end,
   },
   -- Start screen
@@ -87,8 +91,8 @@ return {
       require("lualine").setup({
         options = {
           theme = theme,
-          component_separators = { left = '', right = ''},
-          section_separators = { left = ' ', right = ' '},
+          component_separators = { left = "", right = "" },
+          section_separators = { left = " ", right = " " },
         },
         sections = {
           lualine_b = {
@@ -300,6 +304,22 @@ return {
         line_opacity = 0.3,
       })
     end,
+  },
+  -- LSP progress indicator
+  {
+    "j-hui/fidget.nvim",
+    event = "LspAttach",
+    opts = {
+      notification = {
+        window = {
+          winblend = 0,
+        },
+      },
+    },
+  },
+  {
+    "sphamba/smear-cursor.nvim",
+    opts = {},
   },
   -- Mini popup info
   {
