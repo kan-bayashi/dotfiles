@@ -8,10 +8,10 @@ palette = 0=#333333
 palette = 1=#cb484c
 palette = 2=#799d6a
 palette = 3=#f5a25b
-palette = 4=#537ddb
+palette = 4=#4b73cc
 palette = 5=#cc98de
 palette = 6=#6f9cc2
-palette = 7=#ffffff
+palette = 7=#fafafa
 
 # Bright colors (8-15)
 palette = 8=#535353
