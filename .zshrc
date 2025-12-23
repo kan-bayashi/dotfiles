@@ -34,7 +34,6 @@ setopt HIST_NO_STORE        # do not record history cmd
 # function to refresh tmux env
 if [ -n "$TMUX" ]; then
     function refresh {
-        export OS=`tmux show-environment | grep ^OS | sed -e 's/OS=//g'`
         export DISPLAY=`tmux show-environment | grep ^DISPLAY | sed -e 's/DISPLAY=//g'`
         tmux source-file ~/.tmux.conf
     }
@@ -51,15 +50,6 @@ _reset_cursor() {
     echo -ne '\e[3 q'
 }
 add-zsh-hook precmd _reset_cursor
-
-# dircolors setting
-if [ -f ~/.dircolors ]; then
-    if type dircolors > /dev/null 2>&1; then
-        eval $(dircolors ~/.dircolors)
-    elif type gdircolors > /dev/null 2>&1; then
-        eval $(gdircolors ~/.dircolors)
-    fi
-fi
 
 # disable ctrl+s in vim
 stty stop undef
