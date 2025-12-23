@@ -83,36 +83,32 @@ return {
   },
   -- Lazygit in nvim
   {
-    "kdheepak/lazygit.nvim",
-    cmd = {
-      "LazyGit",
-      "LazyGitConfig",
-      "LazyGitCurrentFile",
-      "LazyGitFilter",
-      "LazyGitFilterCurrentFile",
-    },
-    -- optional for floating window border decoration
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    -- setting the keybinding for LazyGit with 'keys' is recommended in
-    -- order to load the plugin when the command is run for the first time
+    "folke/snacks.nvim",
     keys = {
-      { "<leader>gs", "<cmd>LazyGit<cr>", desc = "LazyGit" },
+      { "<leader>gs", function() Snacks.lazygit() end, desc = "LazyGit" },
     },
-    init = function()
-      vim.g.lazygit_floating_window_winblend = 0
-      vim.g.lazygit_floating_window_scaling_factor = 0.85
-      vim.g.lazygit_floating_window_border_chars = { " ", " ", " ", " ", " ", " ", " ", " " }
-    end,
-    -- Disable nvim-tmux-navigator keybindings in lazygit buffer
-    config = function()
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = "lazygit",
+    ---@type snacks.Config
+    opts = {
+      lazygit = {
+        win = {
+          width = 0.9,
+          height = 0.85,
+          border = "none",
+          wo = {
+            winblend = 0,
+          },
+        },
+      },
+    },
+    config = function(_, opts)
+      require("snacks").setup(opts)
+      -- Disable nvim-tmux-navigator keybindings in lazygit buffer
+      vim.api.nvim_create_autocmd("TermOpen", {
+        pattern = "*lazygit*",
         callback = function(ev)
-          local opts = { buffer = ev.buf, silent = true }
+          local buf_opts = { buffer = ev.buf, silent = true }
           for _, lhs in ipairs({ "<C-h>", "<C-j>", "<C-k>", "<C-l>", "<C-\\>" }) do
-            vim.keymap.set({ "t", "n" }, lhs, "<Nop>", opts)
+            vim.keymap.set({ "t", "n" }, lhs, "<Nop>", buf_opts)
           end
         end,
       })
@@ -150,6 +146,37 @@ return {
   ---------------------------------
   --        Other plugins        --
   ---------------------------------
+  -- File explorer as a buffer
+  {
+    "stevearc/oil.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    keys = {
+      { "<leader>-", "<cmd>Oil --float<cr>", desc = "Open parent directory" },
+    },
+    opts = {
+      float = {
+        max_width = 0.9,
+        max_height = 0.5,
+        border = "rounded",
+        win_options = {
+          winblend = 0,
+        },
+        preview_split = "right",
+      },
+    },
+    config = function(_, opts)
+      require("oil").setup(opts)
+      local oil_group = vim.api.nvim_create_augroup("OilConfig", {})
+      -- Fix relative path when leaving oil buffer
+      vim.api.nvim_create_autocmd("BufLeave", {
+        group = oil_group,
+        pattern = "oil:///*",
+        callback = function()
+          vim.cmd("cd .")
+        end,
+      })
+    end,
+  },
   -- Visualize and clean trailing whitespaces
   {
     "ntpeters/vim-better-whitespace",
@@ -231,14 +258,12 @@ return {
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
-    opts = {},
-    keys = {
-      {
-        "<leader>?",
-        function()
-          require("which-key").show({ global = false })
-        end,
-        desc = "Buffer Local Keymaps (which-key)",
+    opts = {
+      win = {
+        border = "rounded",
+        wo = {
+          winblend = 0,
+        },
       },
     },
   },

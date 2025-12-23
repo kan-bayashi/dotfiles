@@ -4,31 +4,33 @@ return {
     dependencies = {
       { "nvim-lua/plenary.nvim" },
       { "nvim-tree/nvim-web-devicons" },
-      { "nvim-telescope/telescope-file-browser.nvim" },
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+      {
+        "AckslD/nvim-neoclip.lua",
+        event = "TextYankPost",
+        opts = {},
+      },
     },
     cmd = "Telescope",
     init = function()
       -- Keybindings
       local keymap = vim.api.nvim_set_keymap
       local keymap_opts = { noremap = true, silent = true }
+      keymap("n", "<C-f>r", "<cmd>Telescope oldfiles<CR>", keymap_opts)
       keymap("n", "<C-f>f", "<cmd>Telescope find_files<CR>", keymap_opts)
-      keymap("n", "<C-f>F", "<cmd>Telescope find_files no_ignore=true<CR>", keymap_opts)
-      keymap("n", "<C-f>g", "<cmd>Telescope git_status<CR>", keymap_opts)
+      keymap("n", "<C-f><C-f>", "<cmd>Telescope find_files no_ignore=true<CR>", keymap_opts)
+      keymap("n", "<C-f>g", "<cmd>Telescope grep_string<CR>", keymap_opts)
       keymap("n", "<C-f><C-g>", "<cmd>Telescope live_grep<CR>", keymap_opts)
       keymap("n", "<C-f>b", "<cmd>Telescope buffers<CR>", keymap_opts)
-      keymap("n", "<C-f>r", "<cmd>Telescope oldfiles<CR>", keymap_opts)
-      keymap("n", "<C-f><Space>", "<cmd>Telescope file_browser<CR>", keymap_opts)
       keymap("n", "<C-f>d", "<cmd>Telescope diagnostics bufnr=0 severity_bound=ERROR<CR>", keymap_opts)
       keymap("n", "<C-f><C-d>", "<cmd>Telescope diagnostics severity_bound=ERROR<CR>", keymap_opts)
-      keymap("n", "<C-f>*", "<cmd>Telescope grep_string<CR>", keymap_opts)
+      keymap("n", "<C-f><space>", "<cmd>Telescope resume<CR>", keymap_opts)
       keymap(
         "n",
-        "<C-f>/",
-        ':lua require("telescope.builtin").live_grep({search_dirs={vim.fn.expand("%:p")}, previewer=true, path_display={shorten=1}})<CR>',
+        "<C-f>y",
+        "<cmd>Telescope neoclip theme=dropdown layout_config={height=0.3,width=0.85} initial_mode=normal<CR>",
         keymap_opts
       )
-      keymap("n", "<C-f><C-f>", "<cmd>Telescope resume<CR>", keymap_opts)
     end,
     config = function()
       -- General configuration
@@ -59,54 +61,17 @@ return {
           },
         },
         pickers = {
+          oldfiles = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.85 }, initial_mode = "normal" }),
           find_files = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.85 }, hidden = true }),
+          grep_string = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.85 } }),
           live_grep = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.85 } }),
           buffers = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.85 }, initial_mode = "normal" }),
-          oldfiles = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.85 }, initial_mode = "normal" }),
-          git_status = themes.get_dropdown({
-          layout_config = { height = 0.3, width = 0.85 },
-          initial_mode = "normal",
-          git_icons = {
-            added = "󰐕",
-            changed = "󰷫",
-            copied = "󰆏",
-            deleted = "󰩹",
-            renamed = "󰁕",
-            unmerged = "",
-            untracked = "",
-          },
-        }),
-          grep_string = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.85 } }),
           diagnostics = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.85 } }),
-        },
-        extensions = {
-          file_browser = {
-            theme = "ivy",
-            cwd_to_path = true,
-            files = true,
-            hidden = { file_browser = true, folder_browser = true },
-            git_icons = {
-              added = "󰐕",
-              changed = "󰷫",
-              copied = "󰆏",
-              deleted = "󰩹",
-              renamed = "󰁕",
-              unmerged = "",
-              untracked = "",
-            },
-            mappings = {
-              ["i"] = {
-                ["<C-o>"] = false,
-                ["<bs>"] = false,
-              },
-            },
-          },
         },
       })
       -- Add extentions
       require("telescope").load_extension("fzf")
-      require("telescope").load_extension("file_browser")
-
+      require("telescope").load_extension("neoclip")
     end,
   },
 }
