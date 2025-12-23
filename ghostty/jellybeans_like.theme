@@ -7,8 +7,8 @@ foreground = #dadada
 palette = 0=#333333
 palette = 1=#cb484c
 palette = 2=#799d6a
-palette = 3=#fd9f4d
-palette = 4=#446ecc
+palette = 3=#f5a25b
+palette = 4=#537ddb
 palette = 5=#cc98de
 palette = 6=#6f9cc2
 palette = 7=#ffffff
@@ -24,4 +24,4 @@ palette = 14=#8ac7cf
 palette = 15=#eaeaea
 
 # Cursor colors
-cursor-color = #f0a0c0
+cursor-color = #cc98d3
