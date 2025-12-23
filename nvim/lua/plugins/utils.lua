@@ -146,6 +146,37 @@ return {
   ---------------------------------
   --        Other plugins        --
   ---------------------------------
+  -- File explorer as a buffer
+  {
+    "stevearc/oil.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    keys = {
+      { "<leader>-", "<cmd>Oil --float<cr>", desc = "Open parent directory" },
+    },
+    opts = {
+      float = {
+        max_width = 0.9,
+        max_height = 0.5,
+        border = "rounded",
+        win_options = {
+          winblend = 0,
+        },
+        preview_split = "right",
+      },
+    },
+    config = function(_, opts)
+      require("oil").setup(opts)
+      local oil_group = vim.api.nvim_create_augroup("OilConfig", {})
+      -- Fix relative path when leaving oil buffer
+      vim.api.nvim_create_autocmd("BufLeave", {
+        group = oil_group,
+        pattern = "oil:///*",
+        callback = function()
+          vim.cmd("cd .")
+        end,
+      })
+    end,
+  },
   -- Visualize and clean trailing whitespaces
   {
     "ntpeters/vim-better-whitespace",
@@ -227,14 +258,12 @@ return {
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
-    opts = {},
-    keys = {
-      {
-        "<leader>?",
-        function()
-          require("which-key").show({ global = false })
-        end,
-        desc = "Buffer Local Keymaps (which-key)",
+    opts = {
+      win = {
+        border = "rounded",
+        wo = {
+          winblend = 0,
+        },
       },
     },
   },
