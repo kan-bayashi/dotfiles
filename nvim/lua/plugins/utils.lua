@@ -85,7 +85,13 @@ return {
   {
     "folke/snacks.nvim",
     keys = {
-      { "<leader>gs", function() Snacks.lazygit() end, desc = "LazyGit" },
+      {
+        "<leader>gs",
+        function()
+          Snacks.lazygit()
+        end,
+        desc = "LazyGit",
+      },
     },
     ---@type snacks.Config
     opts = {
@@ -114,7 +120,6 @@ return {
       })
     end,
   },
-
   ---------------------------------
   --  Filetype specific plugins  --
   ---------------------------------
