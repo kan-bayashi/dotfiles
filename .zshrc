@@ -1,6 +1,9 @@
 ########################
 #    basic settings    #
 ########################
+# prevent duplicate PATH entries
+typeset -U PATH
+
 # language setting
 LANG=en_US.UTF-8
 
@@ -27,13 +30,10 @@ setopt HIST_IGNORE_SPACE    # do not record cmd whose start char is space
 setopt HIST_FIND_NO_DUPS    # reduce deprecated cmd when finding
 setopt HIST_REDUCE_BLANKS   # remove blank
 setopt HIST_NO_STORE        # do not record history cmd
-setopt share_history        # share history among the tmux panes and windows
-unsetopt auto_remove_slash
 
 # function to refresh tmux env
 if [ -n "$TMUX" ]; then
     function refresh {
-        export OS=`tmux show-environment | grep ^OS | sed -e 's/OS=//g'`
         export DISPLAY=`tmux show-environment | grep ^DISPLAY | sed -e 's/DISPLAY=//g'`
         tmux source-file ~/.tmux.conf
     }
@@ -51,15 +51,6 @@ _reset_cursor() {
 }
 add-zsh-hook precmd _reset_cursor
 
-# dircolors setting
-if [ -f ~/.dircolors ]; then
-    if type dircolors > /dev/null 2>&1; then
-        eval $(dircolors ~/.dircolors)
-    elif type gdircolors > /dev/null 2>&1; then
-        eval $(gdircolors ~/.dircolors)
-    fi
-fi
-
 # disable ctrl+s in vim
 stty stop undef
 stty start undef
@@ -67,7 +58,11 @@ stty start undef
 #########################
 #      Zplug init       #
 #########################
-source ~/.zplug/init.zsh
+if [[ -f ~/.zplug/init.zsh ]]; then
+  source ~/.zplug/init.zsh
+else
+  echo "zplug not found. Please install: https://github.com/zplug/zplug"
+fi
 
 #########################
 #     Zplug plugins     #
@@ -83,6 +78,8 @@ zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions"
 # command line syntax highlight
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
+# history substring search
+zplug "zsh-users/zsh-history-substring-search", defer:2
 # load theme from local
 zplug "~/.zsh/themes/", from:local, use:bullet-train.zsh-theme, defer:3
 
@@ -92,52 +89,26 @@ zplug load
 
 bindkey '^]' autosuggest-accept
 
-#########################
-#   enhancd settings    #
-#########################
-export ENHANCD_USE_FUZZY_MATCH=0 # do not use fuzzy match
-export ENHANCD_DISABLE_HOME=1    # "cd" then go home
-export ENHANCD_FILTER=fzf
-export ENHANCD_AWK=awk
-
-#########################
-#     less settings     #
-#########################
-export LESS="-i -R -M"
-
-#########################
-#      fzf settings     #
-#########################
-export FZF_DEFAULT_OPTS='
-    --reverse
-    --exit-0 --select-1
-    --color fg:-1,bg:-1,hl:230,fg+:3,bg+:233,hl+:229
-    --color info:150,prompt:110,spinner:150,pointer:167,marker:174'
-export FZF_CTRL_R_OPTS="
-    --sort
-    --preview 'echo {}'
-    --preview-window down:10:hidden:wrap
-    --bind '?:toggle-preview'"
-export FZF_CTRL_T_OPTS="
-  --walker-skip .git,node_modules,target
-  --preview 'bat -n --color=always {}'
-  --bind '?:change-preview-window(down|hidden|)'"
-export FZF_DEFAULT_COMMAND="fd -d 2 --no-ignore-vcs --ignore-file ~/.ignore --hidden --follow"
-export FZF_TMUX=1
-export FZF_TMUX_OPTS="-p 85%"
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# not to use ctrl + T and alt + C
-bindkey -r "^T"
-bindkey -r "\ec"
-bindkey '^F' fzf-file-widget
+# history-substring-search keybindings
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
 
 #########################
 #  completion settings  #
 #########################
 # enable completion
 zmodload -i zsh/complist
-autoload -Uz compinit && compinit
+autoload -Uz compinit
+if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
+  compinit
+else
+  compinit -C
+fi
+if [ ~/.zshrc -nt ~/.zshrc.zwc ]; then
+    zcompile ~/.zshrc
+fi
 
 # colorized path completion
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
@@ -156,27 +127,18 @@ bindkey -M menuselect 'l' vi-forward-char
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
 ########################
-#    extra settings    #
+#    alias settings    #
 ########################
-# path setting
-if [ -z "$TMUX" ];then
-    export PATH=$HOME/.local/bin:$PATH
-    if [ -e ${HOME}/.poetry/bin ]; then
-        export PATH=$HOME/.poetry/bin:$PATH
-    fi
-    if [ -d /home/tomoki.hayashi/.pixi/bin ]; then
-        export PATH="/home/tomoki.hayashi/.pixi/bin:$PATH"
-    fi
-fi
-
-# alias settings
-if which lsd > /dev/null; then
+if command -v lsd > /dev/null; then
     alias ls="lsd"
 else
     alias ls="ls --color=auto"
 fi
-if which nvim > /dev/null; then
+if command -v nvim > /dev/null; then
     alias vim="nvim"
+fi
+if command -v squeue > /dev/null; then
+    alias squeue='squeue -h -o "%.9i %.5P %.35j %.10u %.1t %.11M %.9R cpu:%.2C %.20b"'
 fi
 alias la="ls -a"
 alias ll="ls -l"
@@ -185,20 +147,33 @@ alias free="free -g"
 alias watch='watch '
 alias timg='timg -pk'
 
-# load environment dependent setting
-[ -e ~/.zshrc.takedalab ] && source ~/.zshrc.takedalab
-
-# compile zshrc
-if [ ~/.zshrc -nt ~/.zshrc.zwc ]; then
-    zcompile ~/.zshrc
-fi
-
-# activate pyenv
-eval "$(pyenv init -)"
-
+########################
+#     SSH settings     #
+########################
 # SSH forward agent
 [[ $SSH_AUTH_SOCK != $HOME/.ssh/sock && -S $SSH_AUTH_SOCK ]] \
     && ln -snf "$SSH_AUTH_SOCK" "$HOME/.ssh/sock" \
     && export SSH_AUTH_SOCK="$HOME/.ssh/sock"
+
+########################
+#     path settings    #
+########################
 export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
+export PATH="$VOLTA_HOME/bin:$HOME/.local/bin:/opt/homebrew/bin:${HOME}/local/bin:$HOME/.pyenv/bin:$PATH"
+if [ -e ${HOME}/.poetry/bin ]; then
+    export PATH=$HOME/.poetry/bin:$PATH
+fi
+if [ -e $HOME/.pixi/bin ]; then
+    export PATH="$HOME/.pixi/bin:$PATH"
+fi
+if command -v pyenv > /dev/null; then
+  eval "$(pyenv init -)"
+fi
+if command -v atuin > /dev/null; then
+  eval "$(atuin init zsh)"
+fi
+[[ -f ~/.zshrc.takedalab ]] && source ~/.zshrc.takedalab
+[[ -f ~/google-cloud-sdk/path.zsh.inc ]] && source ~/google-cloud-sdk/path.zsh.inc
+[[ -f ~/google-cloud-sdk/completion.zsh.inc ]] && source ~/google-cloud-sdk/completion.zsh.inc
+[[ -f ~/.orbstack/shell/init.zsh ]] && source ~/.orbstack/shell/init.zsh
+[[ -f ~/.safe-chain/scripts/init-posix.sh ]] && source ~/.safe-chain/scripts/init-posix.sh
