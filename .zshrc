@@ -43,6 +43,12 @@ fi
 autoload -Uz add-zsh-hook
 add-zsh-hook preexec refresh
 
+# reset cursor to blinking underline on each prompt
+_reset_cursor() {
+    echo -ne '\e[3 q'
+}
+add-zsh-hook precmd _reset_cursor
+
 # dircolors setting
 if [ -f ~/.dircolors ]; then
     if type dircolors > /dev/null 2>&1; then
@@ -75,8 +81,6 @@ zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions"
 # command line syntax highlight
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
-# useful change directory
-zplug "b4b4r07/enhancd", use:init.sh
 # load theme from local
 zplug "~/.zsh/themes/", from:local, use:bullet-train.zsh-theme, defer:3
 
