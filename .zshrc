@@ -153,7 +153,7 @@ if command -v pyenv > /dev/null; then
   eval "$(pyenv init -)"
 fi
 if command -v atuin > /dev/null; then
-  eval "$(atuin init zsh)"
+  eval "$(atuin init zsh --disable-up-arrow)"
 fi
 
 [[ -f ~/google-cloud-sdk/path.zsh.inc ]] && source ~/google-cloud-sdk/path.zsh.inc
