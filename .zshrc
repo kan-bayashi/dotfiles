@@ -1,6 +1,9 @@
 ########################
 #    basic settings    #
 ########################
+# prevent duplicate PATH entries
+typeset -U PATH
+
 # language setting
 LANG=en_US.UTF-8
 
@@ -65,7 +68,11 @@ stty start undef
 #########################
 #      Zplug init       #
 #########################
-source ~/.zplug/init.zsh
+if [[ -f ~/.zplug/init.zsh ]]; then
+  source ~/.zplug/init.zsh
+else
+  echo "zplug not found. Please install: https://github.com/zplug/zplug"
+fi
 
 #########################
 #     Zplug plugins     #
@@ -81,6 +88,8 @@ zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions"
 # command line syntax highlight
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
+# history substring search
+zplug "zsh-users/zsh-history-substring-search", defer:2
 # load theme from local
 zplug "~/.zsh/themes/", from:local, use:bullet-train.zsh-theme, defer:3
 
@@ -90,53 +99,26 @@ zplug load
 
 bindkey '^]' autosuggest-accept
 
-#########################
-#   enhancd settings    #
-#########################
-export ENHANCD_USE_FUZZY_MATCH=0 # do not use fuzzy match
-export ENHANCD_DISABLE_HOME=1    # "cd" then go home
-export ENHANCD_FILTER=fzf
-
-#########################
-#     less settings     #
-#########################
-export LESS=" -R "
-
-#########################
-#      fzf settings     #
-#########################
-export FZF_DEFAULT_OPTS='
-    --height=40% --reverse --border
-    --exit-0 --select-1
-    --color fg:188,bg:233,hl:103,fg+:222,bg+:234,hl+:104
-    --color info:183,prompt:110,spinner:107,pointer:167,marker:215'
-export FZF_CTRL_R_OPTS="
-    --sort
-    --preview 'echo {}'
-    --preview-window down:3:hidden:wrap
-    --bind '?:toggle-preview'"
-export FZF_DEFAULT_COMMAND="fd --no-ignore-vcs --ignore-file ~/.ignore --hidden --follow"
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# kill task with fxf
-bindkey -r "^T"
-bindkey -r "\ec"
-
-# interactively kill task with fzf
-fkill() {
-  local pid
-  pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
-  if [ "x$pid" != "x" ]; then
-    echo $pid | xargs kill -${1:-9}
-  fi
-}
+# history-substring-search keybindings
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
 
 #########################
 #  completion settings  #
 #########################
 # enable completion
 zmodload -i zsh/complist
-autoload -Uz compinit && compinit
+autoload -Uz compinit
+if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
+  compinit
+else
+  compinit -C
+fi
+if [ ~/.zshrc -nt ~/.zshrc.zwc ]; then
+    zcompile ~/.zshrc
+fi
 
 # colorized path completion
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
@@ -155,13 +137,8 @@ bindkey -M menuselect 'l' vi-forward-char
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
 ########################
-#    extra settings    #
+#    alias settings    #
 ########################
-# add path
-export PATH=/opt/homebrew/bin:${HOME}/local/bin:$HOME/.pyenv/bin:$PATH
-eval "$(pyenv init -)"
-
-# alias settings
 if command -v lsd > /dev/null; then
     alias ls="lsd"
 else
@@ -175,11 +152,21 @@ alias ll="ls -l"
 alias lla="ls -la"
 alias free="free -g"
 alias watch='watch '
-nless () {
-    nkf -Lw ${1} | less
-}
 
-# compile zshrc
-if [ ~/.zshrc -nt ~/.zshrc.zwc ]; then
-    zcompile ~/.zshrc
+########################
+#     path settings    #
+########################
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$HOME/.local/bin:/opt/homebrew/bin:${HOME}/local/bin:$HOME/.pyenv/bin:$PATH"
+
+if command -v pyenv > /dev/null; then
+  eval "$(pyenv init -)"
 fi
+if command -v atuin > /dev/null; then
+  eval "$(atuin init zsh)"
+fi
+
+[[ -f ~/google-cloud-sdk/path.zsh.inc ]] && source ~/google-cloud-sdk/path.zsh.inc
+[[ -f ~/google-cloud-sdk/completion.zsh.inc ]] && source ~/google-cloud-sdk/completion.zsh.inc
+[[ -f ~/.orbstack/shell/init.zsh ]] && source ~/.orbstack/shell/init.zsh
+[[ -f ~/.safe-chain/scripts/init-posix.sh ]] && source ~/.safe-chain/scripts/init-posix.sh
