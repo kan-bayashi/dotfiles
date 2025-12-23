@@ -40,8 +40,16 @@ vim.opt.pumheight = 10
 vim.opt.foldmethod = "marker"
 vim.opt.hidden = true
 vim.opt.mouse = "a"
+vim.opt.guicursor = {
+  "n-v-c:block-blinkon500-blinkoff500",
+  "i-ci-ve:ver25-blinkon500-blinkoff500",
+  "r-cr:hor20-blinkon500-blinkoff500",
+  "o:hor50",
+}
 vim.opt.shortmess = "c"
 vim.opt.signcolumn = "yes"
+vim.opt.linebreak = true
+vim.opt.fillchars = { eob = " " }
 
 -- Sign definition
 vim.diagnostic.config({
