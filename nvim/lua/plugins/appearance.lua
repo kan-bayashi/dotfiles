@@ -91,8 +91,8 @@ return {
       require("lualine").setup({
         options = {
           theme = theme,
-          component_separators = { left = '', right = ''},
-          section_separators = { left = ' ', right = ' '},
+          component_separators = { left = "", right = "" },
+          section_separators = { left = " ", right = " " },
         },
         sections = {
           lualine_b = {
@@ -304,6 +304,22 @@ return {
         line_opacity = 0.3,
       })
     end,
+  },
+  -- LSP progress indicator
+  {
+    "j-hui/fidget.nvim",
+    event = "LspAttach",
+    opts = {
+      notification = {
+        window = {
+          winblend = 0,
+        },
+      },
+    },
+  },
+  {
+    "sphamba/smear-cursor.nvim",
+    opts = {},
   },
   -- Mini popup info
   {

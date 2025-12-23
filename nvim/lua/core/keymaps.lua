@@ -30,6 +30,8 @@ keymap("n", ";", ":", {})
 keymap("n", "Y", "y$", keymap_opts)
 keymap("n", "n", "nzz", keymap_opts)
 keymap("n", "N", "Nzz", keymap_opts)
+keymap("n", "<C-d>", "<C-d>zz", keymap_opts)
+keymap("n", "<C-u>", "<C-u>zz", keymap_opts)
 keymap("n", "j", "gj", keymap_opts)
 keymap("n", "k", "gk", keymap_opts)
 
