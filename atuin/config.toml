@@ -1,0 +1,33 @@
+# Atuin configuration
+# Full options: https://docs.atuin.sh/configuration/config/
+
+# Search mode: prefix, fulltext, fuzzy, skim
+search_mode = "fuzzy"
+
+# Filter mode: global, host, session, directory, workspace
+filter_mode = "global"
+
+# UI style: auto, full, compact
+style = "full"
+
+# Show preview of selected command
+show_preview = true
+max_preview_height = 4
+
+# Execute command immediately on enter (false = insert to command line)
+enter_accept = false
+
+# Keymap mode: auto, emacs, vim-insert, vim-normal
+keymap_mode = "auto"
+
+# Secrets filter (AWS keys, GitHub tokens, etc.)
+secrets_filter = true
+
+# UI appearance
+invert = true
+show_help = false
+show_tabs = false
+show_numeric_shortcuts = false
+
+[sync]
+records = true

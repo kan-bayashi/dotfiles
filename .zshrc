@@ -167,10 +167,10 @@ if [ -e $HOME/.pixi/bin ]; then
     export PATH="$HOME/.pixi/bin:$PATH"
 fi
 if command -v pyenv > /dev/null; then
-  eval "$(pyenv init -)"
+    eval "$(pyenv init -)"
 fi
 if command -v atuin > /dev/null; then
-  eval "$(atuin init zsh)"
+    eval "$(atuin init zsh --disable-up-arrow)"
 fi
 [[ -f ~/.zshrc.takedalab ]] && source ~/.zshrc.takedalab
 [[ -f ~/google-cloud-sdk/path.zsh.inc ]] && source ~/google-cloud-sdk/path.zsh.inc
