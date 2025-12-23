@@ -24,6 +24,10 @@ return {
       vim.api.nvim_set_hl(0, "TelescopePromptBorder", { fg = border_hl.fg, bg = "NONE" })
       vim.api.nvim_set_hl(0, "TelescopeResultsBorder", { fg = border_hl.fg, bg = "NONE" })
       vim.api.nvim_set_hl(0, "TelescopePreviewBorder", { fg = border_hl.fg, bg = "NONE" })
+      vim.api.nvim_set_hl(0, "TelescopeResultsDiffAdd", { bg = "NONE" })
+      vim.api.nvim_set_hl(0, "TelescopeResultsDiffChange", { bg = "NONE" })
+      vim.api.nvim_set_hl(0, "TelescopeResultsDiffDelete", { bg = "NONE" })
+      vim.api.nvim_set_hl(0, "TelescopeResultsDiffUntracked", { bg = "NONE" })
     end,
   },
   -- Start screen

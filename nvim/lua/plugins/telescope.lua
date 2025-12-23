@@ -63,7 +63,19 @@ return {
           live_grep = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.85 } }),
           buffers = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.85 }, initial_mode = "normal" }),
           oldfiles = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.85 }, initial_mode = "normal" }),
-          git_status = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.85 }, initial_mode = "normal" }),
+          git_status = themes.get_dropdown({
+          layout_config = { height = 0.3, width = 0.85 },
+          initial_mode = "normal",
+          git_icons = {
+            added = "󰐕",
+            changed = "󰷫",
+            copied = "󰆏",
+            deleted = "󰩹",
+            renamed = "󰁕",
+            unmerged = "",
+            untracked = "",
+          },
+        }),
           grep_string = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.85 } }),
           diagnostics = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.85 } }),
         },
@@ -73,6 +85,15 @@ return {
             cwd_to_path = true,
             files = true,
             hidden = { file_browser = true, folder_browser = true },
+            git_icons = {
+              added = "󰐕",
+              changed = "󰷫",
+              copied = "󰆏",
+              deleted = "󰩹",
+              renamed = "󰁕",
+              unmerged = "",
+              untracked = "",
+            },
             mappings = {
               ["i"] = {
                 ["<C-o>"] = false,
@@ -85,6 +106,7 @@ return {
       -- Add extentions
       require("telescope").load_extension("fzf")
       require("telescope").load_extension("file_browser")
+
     end,
   },
 }
