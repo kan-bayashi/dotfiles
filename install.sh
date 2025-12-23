@@ -76,6 +76,11 @@ if [ ! -e ~/.local/bin/bat ]; then
     cd "${cwd}"
 fi
 
+# install autin
+if command -v autin >/dev/null 2>&1; then
+    curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
+fi
+
 # install nsxiv
 if [ ! -e ~/.local/bin/nsxiv ]; then
     cwd=${PWD}
