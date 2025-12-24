@@ -1,0 +1,12 @@
+[theme]
+name = "jellybeans-like"
+
+[colors]
+AlertInfo = "#799d6a"
+AlertWarn = "#ffb964"
+AlertError = "#cf6a4c"
+Annotation = "#fad07a"
+Base = "#dadada"
+Guidance = "#9098A0"
+Important = "#cf6a4c"
+Title = "#8197bf"

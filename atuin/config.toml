@@ -18,7 +18,7 @@ max_preview_height = 4
 enter_accept = false
 
 # Keymap mode: auto, emacs, vim-insert, vim-normal
-keymap_mode = "auto"
+keymap_mode = "emacs"
 
 # Secrets filter (AWS keys, GitHub tokens, etc.)
 secrets_filter = true
@@ -28,6 +28,9 @@ invert = true
 show_help = false
 show_tabs = false
 show_numeric_shortcuts = false
+
+[theme]
+name = "jellybeans-like"
 
 [sync]
 records = true
