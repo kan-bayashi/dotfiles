@@ -5,7 +5,7 @@
 typeset -U PATH
 
 # language setting
-LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # vim like movement
 bindkey -v
@@ -24,8 +24,7 @@ bindkey "^o^o" clear-prompt
 HISTFILE=~/.zsh_history
 HISTSIZE=50000
 SAVEHIST=1000000
-setopt HIST_IGNORE_DUPS     # do not recode deprecated cmd
-setopt HIST_IGNORE_ALL_DUPS # do not recode deprecated cmd
+setopt HIST_IGNORE_ALL_DUPS # do not record duplicate cmd
 setopt HIST_IGNORE_SPACE    # do not record cmd whose start char is space
 setopt HIST_FIND_NO_DUPS    # reduce deprecated cmd when finding
 setopt HIST_REDUCE_BLANKS   # remove blank
@@ -34,13 +33,11 @@ setopt HIST_NO_STORE        # do not record history cmd
 # function to refresh tmux env
 if [ -n "$TMUX" ]; then
     function refresh {
-        export DISPLAY=`tmux show-environment | grep ^DISPLAY | sed -e 's/DISPLAY=//g'`
+        export DISPLAY=$(tmux show-environment | grep ^DISPLAY | sed 's/DISPLAY=//')
         tmux source-file ~/.tmux.conf
     }
 else
-    function refresh {
-        echo -n ""
-    }
+    function refresh { :; }
 fi
 autoload -Uz add-zsh-hook
 add-zsh-hook preexec refresh
@@ -143,7 +140,7 @@ alias timg='timg -pk'
 #     SSH settings     #
 ########################
 # SSH forward agent
-[[ $SSH_AUTH_SOCK != $HOME/.ssh/sock && -S $SSH_AUTH_SOCK ]] \
+[[ "$SSH_AUTH_SOCK" != "$HOME/.ssh/sock" && -S "$SSH_AUTH_SOCK" ]] \
     && ln -snf "$SSH_AUTH_SOCK" "$HOME/.ssh/sock" \
     && export SSH_AUTH_SOCK="$HOME/.ssh/sock"
 
@@ -151,11 +148,11 @@ alias timg='timg -pk'
 #     path settings    #
 ########################
 export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$HOME/.local/bin:/opt/homebrew/bin:${HOME}/local/bin:$HOME/.pyenv/bin:$PATH"
-if [ -e ${HOME}/.poetry/bin ]; then
-    export PATH=$HOME/.poetry/bin:$PATH
+export PATH="$VOLTA_HOME/bin:$HOME/.local/bin:/opt/homebrew/bin:$HOME/local/bin:$HOME/.pyenv/bin:$PATH"
+if [ -e "$HOME/.poetry/bin" ]; then
+    export PATH="$HOME/.poetry/bin:$PATH"
 fi
-if [ -e $HOME/.pixi/bin ]; then
+if [ -e "$HOME/.pixi/bin" ]; then
     export PATH="$HOME/.pixi/bin:$PATH"
 fi
 if command -v pyenv > /dev/null; then
