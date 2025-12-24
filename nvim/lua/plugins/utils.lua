@@ -38,7 +38,17 @@ return {
   -- Surround text objects
   {
     "machakann/vim-sandwich",
-    event = { "InsertEnter" },
+    event = { "BufRead", "BufNewFile" },
+    config = function()
+      vim.fn["operator#sandwich#set"]("add", "block", "skip_space", 1)
+      vim.g["sandwich#recipes"] = vim.list_extend(vim.deepcopy(vim.g["sandwich#default_recipes"]), {
+        {
+          buns = { 'substitute(&commentstring, "%s", "{{{", "")', 'substitute(&commentstring, "%s", "}}}", "")' },
+          expr = 1,
+          input = { "z" },
+        },
+      })
+    end,
   },
   -- Better asterisk
   {
