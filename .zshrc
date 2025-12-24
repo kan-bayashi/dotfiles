@@ -164,9 +164,8 @@ fi
 if command -v atuin > /dev/null; then
     eval "$(atuin init zsh --disable-up-arrow)"
 fi
-[[ -f ~/.zshrc.takedalab ]] && source ~/.zshrc.takedalab
-[[ -f ~/google-cloud-sdk/path.zsh.inc ]] && source ~/google-cloud-sdk/path.zsh.inc
-[[ -f ~/google-cloud-sdk/completion.zsh.inc ]] && source ~/google-cloud-sdk/completion.zsh.inc
-[[ -f ~/.orbstack/shell/init.zsh ]] && source ~/.orbstack/shell/init.zsh
-[[ -f ~/.safe-chain/scripts/init-posix.sh ]] && source ~/.safe-chain/scripts/init-posix.sh
-[[ -f ~/.atuin/bin/env ]] && source "$HOME/.atuin/bin/env"
+[[ -f ~/.zshrc.takedalab ]] && source ~/.zshrc.takedalab || true
+[[ -f ~/google-cloud-sdk/path.zsh.inc ]] && source ~/google-cloud-sdk/path.zsh.inc || true
+[[ -f ~/google-cloud-sdk/completion.zsh.inc ]] && source ~/google-cloud-sdk/completion.zsh.inc || true
+[[ -f ~/.safe-chain/scripts/init-posix.sh ]] && source ~/.safe-chain/scripts/init-posix.sh || true
+[[ -f ~/.atuin/bin/env ]] && source "$HOME/.atuin/bin/env" || true
