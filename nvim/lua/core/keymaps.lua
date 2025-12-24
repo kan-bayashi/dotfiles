@@ -64,3 +64,10 @@ keymap("v", "K", ":m '<-2<CR>gv=gv", keymap_opts)
 -- Keep selection after indent
 keymap("v", "<", "<gv", keymap_opts)
 keymap("v", ">", ">gv", keymap_opts)
+
+-- Insert current date with comment
+vim.keymap.set("n", "<Leader>id", function()
+  local date = vim.fn.strftime("%Y/%m/%d")
+  local commented = vim.bo.commentstring:gsub("%%s", date)
+  vim.api.nvim_put({ commented }, "c", true, true)
+end, { noremap = true, silent = true, desc = "Insert current date with comment" })
