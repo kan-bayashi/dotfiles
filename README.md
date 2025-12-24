@@ -1,6 +1,6 @@
 # Dotfiles
 
-My dotfiles (zsh + tmux 2.6 + neovim)
+My dotfiles for macOS.
 
 ![](./sample/terminal.png)
 
@@ -12,12 +12,11 @@ My dotfiles (zsh + tmux 2.6 + neovim)
 ## Setup
 
 1. Get Nerd fonts from <https://github.com/ryanoasis/nerd-fonts>
-2. If use iterm2, install `iterm2/jellybeans_like.itermcolors`
-3. Setup dotfiles and install software as follow
+2. Setup dotfiles and install software as follow
 
   ```bash
   # clone this repository
-  $ git clone https://github.com/kan-bayashi/dotfiles -b mac
+  $ git clone https://github.com/kan-bayashi/dotfiles -b m1-mac
   $ cd dotfiles
 
   # setup dotfiles

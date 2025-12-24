@@ -1,23 +1,5 @@
-# for editor
-neovim
-pynvim>=0.4.3
-greenlet
-jedi
+pynvim
 neovim-remote
-
-# basic library
-pandas
-numpy
-scipy
-matplotlib
-
-# for debug
-ipython
-pdbpp
-pytest
-
-# for linter and formatter
-ruff
-
-# for pip
 pipx
+ruff
+pyright

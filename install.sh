@@ -1,80 +1,76 @@
-#!/bin/bash -e
+#!/bin/bash
 
 # Dotfile install script
-# Copyright 2019 Tomoki Hayashi
+# Copyright 2025 Tomoki Hayashi
 
-PYTHON3_VERSION=3.10.5
+set -eu
 
-# check brew installation
+PYTHON_VERSION=3.12
+
+# Check brew installation
 if ! command -v brew > /dev/null; then
-    echo "brew is not installed. please run following command to install brew." 2>&1
-    # shellcheck disable=SC2016
-    echo '/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"' 2>&1
-    exit 1
+    echo "brew is not installed. Installing Homebrew..." >&2
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-# install zplug
-if [ ! -e ~/.zplug ];then
+# Install zplug
+if [ ! -e ~/.zplug ]; then
     git clone https://github.com/zplug/zplug ~/.zplug
 fi
 
-# install tpm
-if [ ! -e ~/.tmux/plugins/tpm ];then
+# Install tpm
+if [ ! -e ~/.tmux/plugins/tpm ]; then
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
 
-# install fzf
-if [ ! -e ~/.fzf ];then
-    workdir=$(pwd)
-    git clone https://github.com/junegunn/fzf.git ~/.fzf
-    cd ~/.fzf && ./install && cd "${workdir}"
-fi
+# Install essential tools via brew
+brew_packages=(
+    pyenv
+    uv
+    zsh
+    neovim
+    tmux
+    fzf
+    fd
+    ripgrep
+    lsd
+    bat
+    atuin
+    delta
+    lazygit
+    shellcheck
+    timg
+    gh
+    jq
+    yq
+    btop
+)
 
-# install essential tools
-for tool in pyenv zsh fd ripgrep tmux lsd bat shellcheck fzf autin timg; do
-    ! brew ls --versions ${tool} > /dev/null && brew install ${tool}
+for pkg in "${brew_packages[@]}"; do
+    brew ls --versions "$pkg" > /dev/null 2>&1 || brew install "$pkg"
 done
 
+# Setup fzf key bindings
+if [ -f "$(brew --prefix)/opt/fzf/install" ]; then
+    "$(brew --prefix)/opt/fzf/install" --key-bindings --completion --no-update-rc --no-bash --no-fish
+fi
+
 # pyenv init
-export PATH=/opt/homebrew/bin:$PATH
+export PATH="/opt/homebrew/bin:$PATH"
 eval "$(pyenv init --path)"
 
-# install enable-shared python using pyenv
-if [ ! -e "${HOME}"/.pyenv/versions/${PYTHON3_VERSION} ];then
-    pyenv install ${PYTHON3_VERSION}
-else
-    echo "Python ${PYTHON3_VERSION} is already installed."
+# Install Python via pyenv
+if ! pyenv versions | grep -q "$PYTHON_VERSION"; then
+    pyenv install "$PYTHON_VERSION"
+fi
+pyenv global "$PYTHON_VERSION"
+
+# Install Python packages for neovim
+if [ -f requirements.txt ]; then
+    python -m pip install --quiet --upgrade pip
+    python -m pip install --quiet -r requirements.txt
 fi
 
-# set python
-pyenv shell --unset
-pyenv global ${PYTHON3_VERSION}
-
-# check python version
-python3_version=$(python3 --version 2>&1)
-if [ "${python3_version}" = "Python ${PYTHON3_VERSION}" ];then
-    echo Python 3 version check is OK.
-else
-    echo Python 3 version check is failed.
-    exit 1
-fi
-
-# install python libraries
-python -m pip install -U pip
-python -m pip install -U setuptools
-python -m pip install -r requirements.txt
-
-if [ ! -e ~/local/bin/nvim ];then
-    mkdir -p ~/local/bin
-    cwd=$(pwd)
-    cd ~/local
-    wget wget https://github.com/neovim/neovim/releases/download/v0.5.1/nvim-macos.tar.gz
-    tar xzvf nvim-macos.tar.gz
-    cd ~/local/bin
-    ln -s ../nvim-osx64/bin/nvim .
-    cd "${cwd}"
-fi
-
-# install neovim
-echo "Sucessfully finished installation."
-echo "Please run exec zsh -l."
+echo "Successfully finished installation."
+echo "Please run: exec zsh -l"
