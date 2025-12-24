@@ -1,42 +1,30 @@
 # Dotfiles
 
-[![Build Status](https://travis-ci.org/kan-bayashi/dotfiles.svg?branch=master)](https://travis-ci.org/kan-bayashi/dotfiles)
-
-My dotfiles (zsh + tmux 2.6 + vim 8 or neovim)
+Personal dotfiles for Linux server (zsh + tmux + neovim)
 
 ![](./sample/terminal.png)
-
-## Environments
-
-Scripts are tested on following environments:
-
-- CentOS 7.5
-- Ubuntu 16.04 and 18.04
 
 ## Setup
 
 1. Get Nerd fonts from <https://github.com/ryanoasis/nerd-fonts>
-2. If use iterm2, install `iterm2/jellybeans_like.itermcolors`
-3. Setup dotfiles and install software as follow
+2. Setup dotfiles and install software as follows:
 
-  ```bash
-  # clone this repository
-  $ git clone https://github.com/kan-bayashi/dotfiles
-  $ cd dotfiles
+```bash
+# Clone this repository
+git clone https://github.com/kan-bayashi/dotfiles
+cd dotfiles
 
-  # setup dotfiles
-  $ ./setup.sh
+# Setup dotfiles (creates symlinks)
+./setup.sh
 
-  # install essential tools (required sudo)
-  $ ./install.sh
+# Install essential tools
+./install.sh
 
-  # enable zsh environment
-  $ exec zsh -l
-  ```
-
-If you do not have sudo, please contact your administrator to install dependencies.
+# Enable zsh environment
+exec zsh -l
+```
 
 ## References
 
-- nerd font: [ryanoasis/nerd-fonts](https://github.com/ryanoasis/nerd-fonts)
-- zsh theme: [caiogondim/bullet-train.zsh](https://github.com/caiogondim/bullet-train.zsh)
+- Nerd font: [ryanoasis/nerd-fonts](https://github.com/ryanoasis/nerd-fonts)
+- Zsh theme: [caiogondim/bullet-train.zsh](https://github.com/caiogondim/bullet-train.zsh)

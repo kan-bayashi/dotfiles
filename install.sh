@@ -1,161 +1,134 @@
-#!/bin/bash -e
+#!/bin/bash
 
-# Pyenv-pythons, Neovim, and Tmux installation script
-# Copyright 2019 Tomoki Hayashi
+# Dotfile install script for Linux server
+# Copyright 2025 Tomoki Hayashi
 
-PYTHON3_VERSION=3.10.16
+set -eu
 
-# install zplug
+PYTHON_VERSION=3.12
+LAZYGIT_VERSION=0.57.0
+DELTA_VERSION=0.18.2
+BAT_VERSION=0.26.1
+PYENV_VERSION=2.6.17
+
+# Ensure ~/.local/bin exists
+mkdir -p ~/.local/bin ~/.local/src
+
+# Install zplug
 if [ ! -e ~/.zplug ]; then
     echo "Installing zplug..."
-    git clone https://github.com/zplug/zplug.git ~/.zplug
+    git clone https://github.com/zplug/zplug ~/.zplug
 fi
 
-# install tpm
+# Install tpm
 if [ ! -e ~/.tmux/plugins/tpm ]; then
     echo "Installing tpm..."
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
 
-# install pyenv
+# Install pyenv
 if [ ! -e ~/.pyenv ]; then
     echo "Installing pyenv..."
-    git clone https://github.com/yyuu/pyenv.git -b v2.5.4 ~/.pyenv
+    git clone https://github.com/pyenv/pyenv.git -b "v${PYENV_VERSION}" ~/.pyenv
 fi
 
-# install fzf
+# Install fzf
 if [ ! -e ~/.fzf ]; then
     echo "Installing fzf..."
     git clone https://github.com/junegunn/fzf.git ~/.fzf
-    workdir=${PWD}
-    cd ~/.fzf && ./install --key-bindings --no-completion --no-update-rc && cd "${workdir}"
+    ~/.fzf/install --key-bindings --completion --no-update-rc --no-bash --no-fish
 fi
 
-# install volta
+# Install volta
 if [ ! -e ~/.volta ]; then
     echo "Installing volta..."
     curl https://get.volta.sh | bash
 fi
 
-# install lazygit
+# Install lazygit
 if [ ! -e ~/.local/bin/lazygit ]; then
-    cwd=${PWD}
     echo "Installing lazygit..."
-    cd ~/.local/
-    mkdir -p src
-    cd src
-    wget https://github.com/jesseduffield/lazygit/releases/download/v0.56.0/lazygit_0.56.0_Linux_x86_64.tar.gz
-    tar -xvf lazygit_0.56.0_Linux_x86_64.tar.gz
-    cp lazygit ~/.local/bin
-    cd "${cwd}"
+    cd ~/.local/src
+    wget -q "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+    tar -xzf "lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz" lazygit
+    mv lazygit ~/.local/bin/
 fi
 
-# install delta
+# Install delta
 if [ ! -e ~/.local/bin/delta ]; then
-    cwd=${PWD}
     echo "Installing delta..."
-    cd ~/.local/
-    mkdir -p src
-    cd src
-    wget https://github.com/dandavison/delta/releases/download/0.18.2/delta-0.18.2-x86_64-unknown-linux-musl.tar.gz
-    tar -xvf delta-0.18.2-x86_64-unknown-linux-musl.tar.gz
-    mv delta-0.18.2-x86_64-unknown-linux-musl/delta ~/.local/bin
-    cd "${cwd}"
+    cd ~/.local/src
+    wget -q "https://github.com/dandavison/delta/releases/download/${DELTA_VERSION}/delta-${DELTA_VERSION}-x86_64-unknown-linux-musl.tar.gz"
+    tar -xzf "delta-${DELTA_VERSION}-x86_64-unknown-linux-musl.tar.gz"
+    mv "delta-${DELTA_VERSION}-x86_64-unknown-linux-musl/delta" ~/.local/bin/
 fi
 
-# install bat
+# Install bat
 if [ ! -e ~/.local/bin/bat ]; then
-    cwd=${PWD}
-    echo "Installing delta..."
-    cd ~/.local/
-    mkdir -p src
-    cd src
-    wget https://github.com/sharkdp/bat/releases/download/v0.25.0/bat-v0.25.0-x86_64-unknown-linux-musl.tar.gz
-    tar -xvf bat-v0.25.0-x86_64-unknown-linux-musl.tar.gz
-    mv bat-v0.25.0-x86_64-unknown-linux-musl/bat ~/.local/bin
-    cd "${cwd}"
+    echo "Installing bat..."
+    cd ~/.local/src
+    wget -q "https://github.com/sharkdp/bat/releases/download/v${BAT_VERSION}/bat-v${BAT_VERSION}-x86_64-unknown-linux-musl.tar.gz"
+    tar -xzf "bat-v${BAT_VERSION}-x86_64-unknown-linux-musl.tar.gz"
+    mv "bat-v${BAT_VERSION}-x86_64-unknown-linux-musl/bat" ~/.local/bin/
 fi
 
-# install autin
-if command -v autin >/dev/null 2>&1; then
+# Install atuin
+if ! command -v atuin >/dev/null 2>&1; then
+    echo "Installing atuin..."
     curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
 fi
 
-# install nsxiv
+# Install nsxiv
 if [ ! -e ~/.local/bin/nsxiv ]; then
-    cwd=${PWD}
     echo "Installing nsxiv..."
-    cd ~/.local/
-    mkdir -p src
-    cd src
-    git clone https://github.com/nsxiv/nsxiv.git
+    cd ~/.local/src
+    if [ ! -d nsxiv ]; then
+        git clone https://github.com/nsxiv/nsxiv.git
+    fi
     cd nsxiv
-    make
-    cp nsxiv ~/.local/bin
-    cd "${cwd}"
+    make -j"$(nproc)"
+    cp nsxiv ~/.local/bin/
 fi
 
-# pyenv init
-export PATH=${HOME}/.pyenv/bin:$PATH
-eval "$(pyenv init -)"
-
-# install enable-shared python using pyenv
-if [ ! -e "${HOME}"/.pyenv/versions/${PYTHON3_VERSION} ]; then
-    CONFIGURE_OPTS="--enable-shared" pyenv install ${PYTHON3_VERSION}
-else
-    echo "Python ${PYTHON3_VERSION} is already installed."
-fi
-
-# set python
-pyenv shell --unset
-pyenv global ${PYTHON3_VERSION}
-
-# check python version
-python3_version=$(python3 --version 2>&1)
-if [ "${python3_version}" = "Python ${PYTHON3_VERSION}" ]; then
-    echo "Python 3 version check is OK."
-else
-    echo "Python 3 version check is failed."
-    exit 1
-fi
-
-# install python libraries
-pyenv shell ${PYTHON3_VERSION}
-python3 -m pip install -U pip
-python3 -m pip install -U setuptools wheel
-python3 -m pip install pipx
-python3 -m pipx install poetry
-python3 -m pipx install gpustat
-
-# install uv
-if [ ! -e "${HOME}"/.local/bin/uv ]; then
+# Install uv
+if [ ! -e ~/.local/bin/uv ]; then
     echo "Installing uv..."
     curl -LsSf https://astral.sh/uv/install.sh | sh
 fi
 
-# install nvim
-if [ ! -e "${HOME}"/.local/bin/nvim ]; then
-    echo "installing neovim..."
-    cd "${HOME}"/.local/bin
-    wget https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.appimage
+# Install neovim
+if [ ! -e ~/.local/bin/nvim ]; then
+    echo "Installing neovim..."
+    cd ~/.local/bin
+    wget -q https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.appimage
     mv nvim-linux-x86_64.appimage nvim.appimage
     chmod u+x nvim.appimage
-    if ./nvim.appimage --version >&/dev/null; then
+    if ./nvim.appimage --version >/dev/null 2>&1; then
         ln -sf ./nvim.appimage nvim
     else
         ./nvim.appimage --appimage-extract
-        mv -v squashfs-root ../nvim
+        mv squashfs-root ../nvim
         ln -sf ../nvim/AppRun nvim
         rm nvim.appimage
     fi
 fi
 
-# clean up
-cd "$ROOTDIR"
-[ -e "$TMPDIR" ] && rm -fr "$TMPDIR"
+# Setup Python via pyenv
+export PATH="${HOME}/.pyenv/bin:${HOME}/.local/bin:$PATH"
+eval "$(pyenv init -)"
 
-export PATH=${HOME}/.local/bin:$PATH
+if ! pyenv versions | grep -q "$PYTHON_VERSION"; then
+    echo "Installing Python ${PYTHON_VERSION}..."
+    CONFIGURE_OPTS="--enable-shared" pyenv install "$PYTHON_VERSION"
+fi
+pyenv global "$PYTHON_VERSION"
+
+# Install Python packages
+python -m pip install --quiet --upgrade pip
+if [ -f requirements.txt ]; then
+    python -m pip install --quiet -r requirements.txt
+fi
 
 echo ""
-echo "Sucessfully installed essential tools."
-echo "Please run following command \"exec zsh -l\" to run zsh."
+echo "Successfully finished installation."
+echo "Please run: exec zsh -l"
