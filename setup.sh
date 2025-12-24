@@ -5,6 +5,9 @@
 
 set -eu
 
+# Get the directory where this script is located
+DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
+
 # Helper function: backup existing file/dir and create symlink
 make_symlink() {
     local src="$1"
@@ -18,23 +21,24 @@ make_symlink() {
 }
 
 # Make symbolic link of dotfiles
+cd "$DOTFILES_DIR"
 for f in .??*; do
     [[ "$f" == ".git" ]] && continue
     [[ "$f" == ".gitignore" ]] && continue
     [[ "$f" == ".DS_Store" ]] && continue
     [[ "$f" == ".claude" ]] && continue
-    make_symlink "${PWD}/$f" ~/"$f"
+    make_symlink "${DOTFILES_DIR}/$f" ~/"$f"
 done
 
 # XDG config directories
 mkdir -p ~/.config
 for dir in nvim ghostty lazygit atuin; do
-    [ -d "${PWD}/${dir}" ] && make_symlink "${PWD}/${dir}" ~/.config/"${dir}"
+    [ -d "${DOTFILES_DIR}/${dir}" ] && make_symlink "${DOTFILES_DIR}/${dir}" ~/.config/"${dir}"
 done
 
 # Zsh theme
 mkdir -p ~/.zsh/themes
-make_symlink "${PWD}/themes/bullet-train.zsh-theme" ~/.zsh/themes/bullet-train.zsh-theme
+make_symlink "${DOTFILES_DIR}/themes/bullet-train.zsh-theme" ~/.zsh/themes/bullet-train.zsh-theme
 
 echo "Successfully setup dotfiles."
 echo "Next, please run install.sh to install essential tools."

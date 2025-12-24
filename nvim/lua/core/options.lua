@@ -13,7 +13,11 @@ vim.opt.backup = false
 vim.opt.writebackup = false
 vim.opt.updatetime = 300
 vim.opt.undofile = true
-vim.opt.undodir = vim.fn.expand("~/.cache/nvim/undo")
+local undodir = vim.fn.expand("~/.cache/nvim/undo")
+if vim.fn.isdirectory(undodir) == 0 then
+  vim.fn.mkdir(undodir, "p")
+end
+vim.opt.undodir = undodir
 vim.opt.ttimeoutlen = 10
 
 -- Set NVIM environment variable for nvim --remote commands
@@ -115,7 +119,7 @@ local autocmd = vim.api.nvim_create_autocmd
 
 -- 2-space indentation for specific filetypes
 autocmd("Filetype", {
-  pattern = { "yaml", "tf", "vim", "lua", "typescriptreact" },
+  pattern = { "yaml", "tf", "vim", "lua", "typescript", "typescriptreact", "javascript", "javascriptreact", "json", "html", "css" },
   command = "setlocal tabstop=2 softtabstop=2 shiftwidth=2",
 })
 

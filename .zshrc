@@ -90,7 +90,8 @@ bindkey '^]' autosuggest-accept
 # enable completion
 zmodload -i zsh/complist
 autoload -Uz compinit
-if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
+# Regenerate zcompdump only once per day
+if [[ -z ~/.zcompdump(#qN.mh-24) ]]; then
   compinit
 else
   compinit -C

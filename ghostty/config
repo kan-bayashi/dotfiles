@@ -50,8 +50,8 @@ title = " "
 background-opacity = 0.96
 background-blur = 25
 
-# Theme
-theme = "/Users/tomoki.hayashi/dotfiles/ghostty/jellybeans_like.theme"
+# Theme (relative to config directory)
+theme = "jellybeans_like.theme"
 
 # Cursor
 cursor-style = underline

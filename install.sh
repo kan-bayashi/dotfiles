@@ -5,6 +5,9 @@
 
 set -eu
 
+# Get the directory where this script is located
+DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
+
 PYTHON_VERSION=3.12
 
 # Check brew installation
@@ -67,9 +70,9 @@ fi
 pyenv global "$PYTHON_VERSION"
 
 # Install Python packages for neovim
-if [ -f requirements.txt ]; then
+if [ -f "${DOTFILES_DIR}/requirements.txt" ]; then
     python -m pip install --quiet --upgrade pip
-    python -m pip install --quiet -r requirements.txt
+    python -m pip install --quiet -r "${DOTFILES_DIR}/requirements.txt"
 fi
 
 echo "Successfully finished installation."
