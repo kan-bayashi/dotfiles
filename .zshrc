@@ -5,7 +5,7 @@
 typeset -U PATH
 
 # language setting
-LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # vim like movement
 bindkey -v
@@ -24,8 +24,7 @@ bindkey "^o^o" clear-prompt
 HISTFILE=~/.zsh_history
 HISTSIZE=50000
 SAVEHIST=1000000
-setopt HIST_IGNORE_DUPS     # do not recode deprecated cmd
-setopt HIST_IGNORE_ALL_DUPS # do not recode deprecated cmd
+setopt HIST_IGNORE_ALL_DUPS # do not record duplicate cmd
 setopt HIST_IGNORE_SPACE    # do not record cmd whose start char is space
 setopt HIST_FIND_NO_DUPS    # reduce deprecated cmd when finding
 setopt HIST_REDUCE_BLANKS   # remove blank
@@ -34,13 +33,11 @@ setopt HIST_NO_STORE        # do not record history cmd
 # function to refresh tmux env
 if [ -n "$TMUX" ]; then
     function refresh {
-        export DISPLAY=`tmux show-environment | grep ^DISPLAY | sed -e 's/DISPLAY=//g'`
+        export DISPLAY=$(tmux show-environment | grep ^DISPLAY | sed 's/DISPLAY=//')
         tmux source-file ~/.tmux.conf
     }
 else
-    function refresh {
-        echo -n ""
-    }
+    function refresh { :; }
 fi
 autoload -Uz add-zsh-hook
 add-zsh-hook preexec refresh
@@ -134,21 +131,23 @@ alias ll="ls -l"
 alias lla="ls -la"
 alias free="free -g"
 alias watch='watch '
+alias timg='timg -pk'
 
 ########################
 #     path settings    #
 ########################
 export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$HOME/.local/bin:/opt/homebrew/bin:${HOME}/local/bin:$HOME/.pyenv/bin:$PATH"
+export PATH="$VOLTA_HOME/bin:$HOME/.local/bin:/opt/homebrew/bin:$HOME/local/bin:$HOME/.pyenv/bin:$PATH"
 
 if command -v pyenv > /dev/null; then
-  eval "$(pyenv init -)"
+    eval "$(pyenv init -)"
 fi
 if command -v atuin > /dev/null; then
-  eval "$(atuin init zsh --disable-up-arrow)"
+    eval "$(atuin init zsh --disable-up-arrow)"
 fi
-
-[[ -f ~/google-cloud-sdk/path.zsh.inc ]] && source ~/google-cloud-sdk/path.zsh.inc
-[[ -f ~/google-cloud-sdk/completion.zsh.inc ]] && source ~/google-cloud-sdk/completion.zsh.inc
-[[ -f ~/.orbstack/shell/init.zsh ]] && source ~/.orbstack/shell/init.zsh
-[[ -f ~/.safe-chain/scripts/init-posix.sh ]] && source ~/.safe-chain/scripts/init-posix.sh
+[[ -f ~/.zshrc.takedalab ]] && source ~/.zshrc.takedalab || true
+[[ -f ~/google-cloud-sdk/path.zsh.inc ]] && source ~/google-cloud-sdk/path.zsh.inc || true
+[[ -f ~/google-cloud-sdk/completion.zsh.inc ]] && source ~/google-cloud-sdk/completion.zsh.inc || true
+[[ -f ~/.safe-chain/scripts/init-posix.sh ]] && source ~/.safe-chain/scripts/init-posix.sh || true
+[[ -f ~/.atuin/bin/env ]] && source "$HOME/.atuin/bin/env" || true
+[[ -f ~/.orbstack/shell/init.zsh ]] && source ~/.orbstack/shell/init.zsh || true
