@@ -1,73 +1,73 @@
 -- Keymaps
-local keymap_opts = { noremap = true, silent = true }
-local keymap = vim.api.nvim_set_keymap
+local map = vim.keymap.set
+local opts = { silent = true }
 
---Remap space as leader key
-keymap("", "<Space>", "<Nop>", keymap_opts)
+-- Remap space as leader key
+map("", "<Space>", "<Nop>", opts)
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
 -- Escape
-keymap("!", "<C-o>", "<Esc>", keymap_opts)
-keymap("v", "<C-o>", "<Esc>", keymap_opts)
-keymap("x", "<C-o>", "<Esc>", keymap_opts)
+map("!", "<C-o>", "<Esc>", opts)
+map("v", "<C-o>", "<Esc>", opts)
+map("x", "<C-o>", "<Esc>", opts)
 
 -- Remap jump
-keymap("n", "{", "<C-o>", keymap_opts)
-keymap("n", "}", "<C-i>", keymap_opts)
-keymap("n", "<C-i>", "<Nop>", keymap_opts)
-keymap("n", "<C-o>", "<Nop>", keymap_opts)
+map("n", "{", "<C-o>", opts)
+map("n", "}", "<C-i>", opts)
+map("n", "<C-i>", "<Nop>", opts)
+map("n", "<C-o>", "<Nop>", opts)
 
 -- Disable items to avoid many typos
-keymap("n", "<S-j>", "<Nop>", keymap_opts)
-keymap("n", "<C-f>", "<Nop>", keymap_opts)
-keymap("n", "<C-b>", "<Nop>", keymap_opts)
+map("n", "<S-j>", "<Nop>", opts)
+map("n", "<C-f>", "<Nop>", opts)
+map("n", "<C-b>", "<Nop>", opts)
 
 -- For US keyboard
-keymap("n", ";", ":", {})
+map("n", ";", ":")
 
 -- Useful mappings
-keymap("n", "Y", "y$", keymap_opts)
-keymap("n", "n", "nzz", keymap_opts)
-keymap("n", "N", "Nzz", keymap_opts)
-keymap("n", "<C-d>", "<C-d>zz", keymap_opts)
-keymap("n", "<C-u>", "<C-u>zz", keymap_opts)
-keymap("n", "j", "gj", keymap_opts)
-keymap("n", "k", "gk", keymap_opts)
+map("n", "Y", "y$", opts)
+map("n", "n", "nzz", opts)
+map("n", "N", "Nzz", opts)
+map("n", "<C-d>", "<C-d>zz", opts)
+map("n", "<C-u>", "<C-u>zz", opts)
+map("n", "j", "gj", opts)
+map("n", "k", "gk", opts)
 
 -- Window navigation
-keymap("n", "<C-w>-", ":sp<CR>", keymap_opts)
-keymap("n", "<C-w>|", ":vs<CR>", keymap_opts)
+map("n", "<C-w>-", "<cmd>sp<CR>", opts)
+map("n", "<C-w>|", "<cmd>vs<CR>", opts)
 
 -- Tab and buffer navigation
-keymap("n", "tt", ":tabnew<CR>", keymap_opts)
+map("n", "tt", "<cmd>tabnew<CR>", opts)
 
 -- Reload file
-keymap("n", "<Leader>e", ":e!<CR>", keymap_opts)
+map("n", "<Leader>e", "<cmd>e!<CR>", opts)
 
 -- Save file
-keymap("n", "<Leader>w", ":w<CR>", keymap_opts)
+map("n", "<Leader>w", "<cmd>w<CR>", opts)
 
 -- Close buffer
-keymap("n", "<Leader>q", ":bdel<CR>", keymap_opts)
+map("n", "<Leader>q", "<cmd>bdel<CR>", opts)
 
 -- Force close buffer
-keymap("n", "<Leader><C-q>", ":bdel!<CR>", keymap_opts)
+map("n", "<Leader><C-q>", "<cmd>bdel!<CR>", opts)
 
 -- Preserve annoying pop
-keymap("n", "q:", ":q<CR>", keymap_opts)
+map("n", "q:", "<cmd>q<CR>", opts)
 
 -- Move selected lines up/down in visual mode
-keymap("v", "J", ":m '>+1<CR>gv=gv", keymap_opts)
-keymap("v", "K", ":m '<-2<CR>gv=gv", keymap_opts)
+map("v", "J", ":m '>+1<CR>gv=gv", opts)
+map("v", "K", ":m '<-2<CR>gv=gv", opts)
 
 -- Keep selection after indent
-keymap("v", "<", "<gv", keymap_opts)
-keymap("v", ">", ">gv", keymap_opts)
+map("v", "<", "<gv", opts)
+map("v", ">", ">gv", opts)
 
 -- Insert current date with comment
-vim.keymap.set("n", "<Leader>id", function()
+map("n", "<Leader>id", function()
   local date = vim.fn.strftime("%Y/%m/%d")
   local commented = vim.bo.commentstring:gsub("%%s", date)
   vim.api.nvim_put({ commented }, "c", true, true)
-end, { noremap = true, silent = true, desc = "Insert current date with comment" })
+end, { silent = true, desc = "Insert current date with comment" })

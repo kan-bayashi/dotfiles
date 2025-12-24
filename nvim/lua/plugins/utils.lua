@@ -80,7 +80,7 @@ return {
     config = true,
     event = { "BufRead", "BufNewFile" },
   },
-  -- Change direcotry by detecting git files
+  -- Change directory by detecting git files
   {
     "ahmedkhalf/project.nvim",
     event = { "BufRead", "BufNewFile" },
@@ -219,7 +219,7 @@ return {
       })
     end,
   },
-  -- Seemless navigation between tmux panes and vim splits
+  -- Seamless navigation between tmux panes and vim splits
   {
     "christoomey/vim-tmux-navigator",
     init = function()

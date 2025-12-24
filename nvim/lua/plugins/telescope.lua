@@ -69,7 +69,7 @@ return {
           diagnostics = themes.get_dropdown({ layout_config = { height = 0.3, width = 0.85 } }),
         },
       })
-      -- Add extentions
+      -- Add extensions
       require("telescope").load_extension("fzf")
       require("telescope").load_extension("neoclip")
     end,
