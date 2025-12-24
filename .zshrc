@@ -78,8 +78,6 @@ zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions"
 # command line syntax highlight
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
-# history substring search
-zplug "zsh-users/zsh-history-substring-search", defer:2
 # load theme from local
 zplug "~/.zsh/themes/", from:local, use:bullet-train.zsh-theme, defer:3
 
@@ -88,12 +86,6 @@ zplug check || zplug install
 zplug load
 
 bindkey '^]' autosuggest-accept
-
-# history-substring-search keybindings
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
 
 #########################
 #  completion settings  #
