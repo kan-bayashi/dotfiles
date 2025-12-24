@@ -51,7 +51,7 @@ vim.opt.signcolumn = "yes"
 vim.opt.linebreak = true
 vim.opt.fillchars = { eob = " " }
 
--- Sign definition
+-- Diagnostic setting
 vim.diagnostic.config({
   signs = {
     text = {
@@ -61,10 +61,6 @@ vim.diagnostic.config({
       [vim.diagnostic.severity.HINT] = "",
     },
   },
-})
-
--- Diagnostic setting
-vim.diagnostic.config({
   virtual_text = false,
   severity_sort = true,
   float = {
@@ -116,31 +112,14 @@ vim.g.clipboard = {
 
 -- Autocommands
 local autocmd = vim.api.nvim_create_autocmd
+
+-- 2-space indentation for specific filetypes
 autocmd("Filetype", {
-  pattern = "yaml",
-  command = "setlocal tabstop=2 softtabstop=2 shiftwidth=2 foldmethod=indent",
-})
-autocmd("Filetype", {
-  pattern = "tf",
+  pattern = { "yaml", "tf", "vim", "lua", "typescriptreact" },
   command = "setlocal tabstop=2 softtabstop=2 shiftwidth=2",
 })
-autocmd("Filetype", {
-  pattern = "json",
-  command = "set conceallevel=0",
-})
-autocmd("Filetype", {
-  pattern = "vim",
-  command = "setlocal tabstop=2 softtabstop=2 shiftwidth=2",
-})
-autocmd("Filetype", {
-  pattern = "lua",
-  command = "setlocal tabstop=2 softtabstop=2 shiftwidth=2",
-})
-autocmd("Filetype", {
-  pattern = "typescriptreact",
-  command = "setlocal tabstop=2 softtabstop=2 shiftwidth=2",
-})
-autocmd("Filetype", {
-  pattern = "gitcommit",
-  command = "setlocal spell",
-})
+
+-- Filetype specific settings
+autocmd("Filetype", { pattern = "yaml", command = "setlocal foldmethod=indent" })
+autocmd("Filetype", { pattern = "json", command = "setlocal conceallevel=0" })
+autocmd("Filetype", { pattern = "gitcommit", command = "setlocal spell" })

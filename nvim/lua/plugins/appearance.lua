@@ -138,7 +138,7 @@ return {
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
       local bufferline = require("bufferline")
-      require("bufferline").setup({
+      bufferline.setup({
         options = {
           style_preset = bufferline.style_preset.minimal,
           numbers = "none",
@@ -189,8 +189,8 @@ return {
           trunc_marker = { bg = "NONE" },
         },
       })
-      vim.api.nvim_set_keymap("n", "tl", ":BufferLineCycleNext<CR>", { noremap = true, silent = true })
-      vim.api.nvim_set_keymap("n", "th", ":BufferLineCyclePrev<CR>", { noremap = true, silent = true })
+      vim.keymap.set("n", "tl", "<cmd>BufferLineCycleNext<CR>", { silent = true })
+      vim.keymap.set("n", "th", "<cmd>BufferLineCyclePrev<CR>", { silent = true })
     end,
   },
   -- Show indent line
@@ -320,7 +320,7 @@ return {
       })
     end,
   },
-  -- Cool cursol move
+  -- Cool cursor move
   {
     "sphamba/smear-cursor.nvim",
     opts = {},

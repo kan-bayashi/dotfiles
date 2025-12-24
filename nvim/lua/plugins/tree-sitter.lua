@@ -39,30 +39,11 @@ return {
       })
 
       -- Treesitter-unit
-      vim.api.nvim_set_keymap(
-        "x",
-        "iu",
-        ':lua require"treesitter-unit".select()<CR>',
-        { noremap = true, silent = true }
-      )
-      vim.api.nvim_set_keymap(
-        "x",
-        "au",
-        ':lua require"treesitter-unit".select(true)<CR>',
-        { noremap = true, silent = true }
-      )
-      vim.api.nvim_set_keymap(
-        "o",
-        "iu",
-        ':<c-u>lua require"treesitter-unit".select()<CR>',
-        { noremap = true, silent = true }
-      )
-      vim.api.nvim_set_keymap(
-        "o",
-        "au",
-        ':<c-u>lua require"treesitter-unit".select(true)<CR>',
-        { noremap = true, silent = true }
-      )
+      local ts_unit = require("treesitter-unit")
+      vim.keymap.set("x", "iu", function() ts_unit.select() end, { silent = true })
+      vim.keymap.set("x", "au", function() ts_unit.select(true) end, { silent = true })
+      vim.keymap.set("o", "iu", function() ts_unit.select() end, { silent = true })
+      vim.keymap.set("o", "au", function() ts_unit.select(true) end, { silent = true })
 
       -- HLargs
       require("hlargs").setup()

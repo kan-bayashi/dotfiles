@@ -20,8 +20,7 @@ return {
       local lspkind = require("lspkind")
       local cmp = require("cmp")
 
-      require("cmp").setup({
-        -- Completion settings
+      cmp.setup({
         snippet = {
           expand = function(args)
             vim.fn["vsnip#anonymous"](args.body)
@@ -94,7 +93,7 @@ return {
           format = lspkind.cmp_format({
             mode = "symbol_text",
             maxwidth = {
-              manu = 50,
+              menu = 50,
               abbr = 50,
             },
             ellipsis_char = "...",
@@ -248,7 +247,7 @@ return {
       vim.keymap.set("n", "<Space>i", "<cmd>Glance implementations<CR>")
     end,
   },
-  -- Formmater
+  -- Formatter
   {
     "stevearc/conform.nvim",
     event = { "InsertEnter" },
@@ -302,7 +301,7 @@ return {
     event = { "InsertEnter" },
     init = function()
       vim.g.copilot_no_tab_map = true
-      vim.api.nvim_set_keymap("i", "<c-]>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
+      vim.keymap.set("i", "<C-]>", 'copilot#Accept("<CR>")', { silent = true, expr = true, replace_keycodes = false })
     end,
   },
 }
