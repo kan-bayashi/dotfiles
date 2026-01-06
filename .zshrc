@@ -152,3 +152,4 @@ fi
 [[ -f ~/.safe-chain/scripts/init-posix.sh ]] && source ~/.safe-chain/scripts/init-posix.sh || true
 [[ -f ~/.atuin/bin/env ]] && source "$HOME/.atuin/bin/env" || true
 [[ -f ~/.orbstack/shell/init.zsh ]] && source ~/.orbstack/shell/init.zsh || true
+[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env" || true
