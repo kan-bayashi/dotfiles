@@ -18,13 +18,13 @@ return {
       local keymap_opts = { noremap = true, silent = true }
       keymap("n", "<C-f>r", "<cmd>Telescope oldfiles<CR>", keymap_opts)
       keymap("n", "<C-f>f", "<cmd>Telescope find_files<CR>", keymap_opts)
-      keymap("n", "<C-f><C-f>", "<cmd>Telescope find_files no_ignore=true<CR>", keymap_opts)
-      keymap("n", "<C-f>g", "<cmd>Telescope grep_string<CR>", keymap_opts)
-      keymap("n", "<C-f><C-g>", "<cmd>Telescope live_grep<CR>", keymap_opts)
+      keymap("n", "<C-f>F", "<cmd>Telescope find_files no_ignore=true<CR>", keymap_opts)
+      keymap("n", "<C-f>g", "<cmd>Telescope live_grep<CR>", keymap_opts)
+      keymap("n", "<C-f>G", "<cmd>Telescope grep_string<CR>", keymap_opts)
       keymap("n", "<C-f>b", "<cmd>Telescope buffers<CR>", keymap_opts)
       keymap("n", "<C-f>d", "<cmd>Telescope diagnostics bufnr=0 severity_bound=ERROR<CR>", keymap_opts)
-      keymap("n", "<C-f><C-d>", "<cmd>Telescope diagnostics severity_bound=ERROR<CR>", keymap_opts)
-      keymap("n", "<C-f><space>", "<cmd>Telescope resume<CR>", keymap_opts)
+      keymap("n", "<C-f>D", "<cmd>Telescope diagnostics severity_bound=ERROR<CR>", keymap_opts)
+      keymap("n", "<C-f><C-f>", "<cmd>Telescope resume<CR>", keymap_opts)
       keymap(
         "n",
         "<C-f>y",
