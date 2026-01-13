@@ -420,4 +420,29 @@ return {
     -- Optional: Lazy load Incline
     event = "VeryLazy",
   },
+  -- Visual feebacks on undo/redo, yank, etc.
+  {
+    "y3owk1n/undo-glow.nvim",
+    event = "VeryLazy",
+    config = function()
+      local ug = require("undo-glow")
+      ug.setup({
+        animation = {
+          enabled = true,
+          duration = 300,
+          animation_type = "fade",
+        },
+      })
+      -- Undo / Redo
+      vim.keymap.set("n", "u", ug.undo, { desc = "Undo with glow" })
+      vim.keymap.set("n", "<C-r>", ug.redo, { desc = "Redo with glow" })
+      -- Paste
+      vim.keymap.set("n", "p", ug.paste_below, { desc = "Paste below with glow" })
+      vim.keymap.set("n", "P", ug.paste_above, { desc = "Paste above with glow" })
+      -- Yank (autocmd)
+      vim.api.nvim_create_autocmd("TextYankPost", {
+        callback = function() ug.yank() end,
+      })
+    end,
+  },
 }
