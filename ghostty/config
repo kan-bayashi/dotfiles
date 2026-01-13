@@ -47,7 +47,7 @@ macos-titlebar-style = tabs
 macos-titlebar-proxy-icon = hidden
 macos-window-shadow = false
 title = " "
-background-opacity = 0.96
+background-opacity = 0.97
 background-blur = 25
 
 # Theme (relative to config directory)
