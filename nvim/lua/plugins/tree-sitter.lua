@@ -30,30 +30,15 @@ return {
         summary = false, -- print summary of successful and total operations for multiple languages.
       })
 
-      -- Automatic syntax highlighting
+      -- Automatic syntax highlighting for all filetypes with available parser
       vim.api.nvim_create_autocmd({ "FileType" }, {
-        pattern = {
-          "bash",
-          "markdown",
-          "python",
-          "typescript",
-          "javascript",
-          "tsx",
-          "lua",
-          "yaml",
-          "json",
-          "toml",
-          "vim",
-          "make",
-          "rust",
-        },
+        pattern = "*",
         callback = function()
-          -- syntax highlighting, provided by Neovim
-          vim.treesitter.start()
-          -- folds, provided by Neovim
-          vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-          -- indentation, provided by nvim-treesitter
-          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+          local ok = pcall(vim.treesitter.start)
+          if ok then
+            vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+            vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+          end
         end,
       })
 
