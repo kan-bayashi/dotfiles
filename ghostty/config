@@ -60,4 +60,5 @@ mouse-scroll-multiplier = precision:0.05,discrete:0.5
 cursor-style = underline
 cursor-style-blink = true
 cursor-click-to-move = true
+adjust-cursor-thickness = 3
 keybind = shift+enter=text:\x1b\r
