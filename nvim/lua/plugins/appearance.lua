@@ -43,6 +43,7 @@ return {
         end,
       })
     end,
+    ---@diagnostic disable: undefined-doc-name
     ---@type snacks.Config
     opts = {
       dashboard = {
