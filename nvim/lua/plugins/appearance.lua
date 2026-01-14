@@ -442,7 +442,9 @@ return {
       vim.keymap.set("n", "P", ug.paste_above, { desc = "Paste above with glow" })
       -- Yank (autocmd)
       vim.api.nvim_create_autocmd("TextYankPost", {
-        callback = function() ug.yank() end,
+        callback = function()
+          ug.yank()
+        end,
       })
     end,
   },

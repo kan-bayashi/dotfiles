@@ -9,7 +9,8 @@ set -eu
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # Helper function: backup existing file/dir and create symlink
-make_symlink() {
+make_symlink()
+{
     local src="$1"
     local dest="$2"
     if [ -e "$dest" ] || [ -L "$dest" ]; then
