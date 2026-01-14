@@ -73,7 +73,7 @@ if [ ! -e ~/.local/bin/bat ]; then
 fi
 
 # Install atuin
-if ! command -v atuin >/dev/null 2>&1; then
+if ! command -v atuin > /dev/null 2>&1; then
     echo "Installing atuin..."
     curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
 fi
@@ -103,7 +103,7 @@ if [ ! -e ~/.local/bin/nvim ]; then
     wget -q https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.appimage
     mv nvim-linux-x86_64.appimage nvim.appimage
     chmod u+x nvim.appimage
-    if ./nvim.appimage --version >/dev/null 2>&1; then
+    if ./nvim.appimage --version > /dev/null 2>&1; then
         ln -sf ./nvim.appimage nvim
     else
         ./nvim.appimage --appimage-extract
