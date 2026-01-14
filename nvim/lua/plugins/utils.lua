@@ -98,11 +98,12 @@ return {
       {
         "<leader>gs",
         function()
-          Snacks.lazygit()
+          require("snacks").lazygit()
         end,
         desc = "LazyGit",
       },
     },
+    ---@diagnostic disable-next-line: undefined-doc-name
     ---@type snacks.Config
     opts = {
       lazygit = {

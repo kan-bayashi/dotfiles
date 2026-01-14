@@ -166,3 +166,4 @@ fi
 [[ -f ~/google-cloud-sdk/completion.zsh.inc ]] && source ~/google-cloud-sdk/completion.zsh.inc || true
 [[ -f ~/.safe-chain/scripts/init-posix.sh ]] && source ~/.safe-chain/scripts/init-posix.sh || true
 [[ -f ~/.atuin/bin/env ]] && source "$HOME/.atuin/bin/env" || true
+[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env" || true
