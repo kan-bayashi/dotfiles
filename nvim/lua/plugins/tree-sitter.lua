@@ -1,34 +1,63 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
     dependencies = {
-      "David-Kunz/treesitter-unit",
       "m-demare/hlargs.nvim",
-      "nvim-treesitter/playground",
       "nvim-treesitter/nvim-treesitter-context",
     },
     event = { "BufRead", "BufNewFile" },
     build = ":TSUpdate",
     config = function()
-      -- Tree-sitter
-      require("nvim-treesitter.configs").setup({
-        highlight = { enable = true },
-        ensure_installed = {
-          "python",
+      require("nvim-treesitter").install({
+        "python",
+        "bash",
+        "json",
+        "toml",
+        "yaml",
+        "typescript",
+        "javascript",
+        "tsx",
+        "make",
+        "markdown",
+        "vim",
+        "lua",
+        "rust",
+      }, {
+        force = false, -- force installation of already installed parsers
+        generate = true, -- generate `parser.c` from `grammar.json` or `grammar.js` before compiling.
+        max_jobs = 4, -- limit parallel tasks (useful in combination with {generate} on memory-limited systems).
+        summary = false, -- print summary of successful and total operations for multiple languages.
+      })
+
+      -- Automatic syntax highlighting
+      vim.api.nvim_create_autocmd({ "FileType" }, {
+        pattern = {
           "bash",
-          "json",
-          "toml",
-          "yaml",
+          "markdown",
+          "python",
           "typescript",
           "javascript",
           "tsx",
-          "make",
-          "markdown",
-          "vim",
           "lua",
+          "yaml",
+          "json",
+          "toml",
+          "vim",
+          "make",
+          "rust",
         },
-        additional_vim_regex_highlighting = false,
+        callback = function()
+          -- syntax highlighting, provided by Neovim
+          vim.treesitter.start()
+          -- folds, provided by Neovim
+          vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+          -- indentation, provided by nvim-treesitter
+          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end,
       })
+
+      -- Folding with markers for shell scripts, Tree-sitter for others
       vim.opt.foldmethod = "expr"
       vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
       vim.opt.foldlevel = 99
@@ -38,14 +67,7 @@ return {
         command = "setlocal foldmethod=marker",
       })
 
-      -- Treesitter-unit
-      local ts_unit = require("treesitter-unit")
-      vim.keymap.set("x", "iu", function() ts_unit.select() end, { silent = true })
-      vim.keymap.set("x", "au", function() ts_unit.select(true) end, { silent = true })
-      vim.keymap.set("o", "iu", function() ts_unit.select() end, { silent = true })
-      vim.keymap.set("o", "au", function() ts_unit.select(true) end, { silent = true })
-
-      -- HLargs
+      -- Highthlight arguments
       require("hlargs").setup()
 
       -- Treesitter-context
