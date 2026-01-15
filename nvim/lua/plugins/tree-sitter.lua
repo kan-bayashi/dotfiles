@@ -23,6 +23,8 @@ return {
         "vim",
         "lua",
         "rust",
+        "html",
+        "css",
       }, {
         force = false, -- force installation of already installed parsers
         generate = true, -- generate `parser.c` from `grammar.json` or `grammar.js` before compiling.
