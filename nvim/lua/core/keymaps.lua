@@ -58,8 +58,8 @@ map("n", "<Leader><C-q>", "<cmd>bdel!<CR>", opts)
 map("n", "q:", "<cmd>q<CR>", opts)
 
 -- Move selected lines up/down in visual mode
-map("v", "J", ":m '>+1<CR>gv=gv", opts)
-map("v", "K", ":m '<-2<CR>gv=gv", opts)
+-- map("v", "J", ":m '>+1<CR>gv=gv", opts)
+-- map("v", "K", ":m '<-2<CR>gv=gv", opts)
 
 -- Keep selection after indent
 map("v", "<", "<gv", opts)

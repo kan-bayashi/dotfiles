@@ -1,0 +1,54 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(gh api:*)",
+      "Bash(gh pr checks:*)",
+      "Bash(gh pr diff:*)",
+      "Bash(gh pr view:*)",
+      "Bash(gh repo view:*)",
+      "Bash(gh run view:*)",
+      "Bash(gh search:*)",
+      "Bash(grep:*)",
+      "Bash(ls:*)",
+      "Bash(mv:*)",
+      "Bash(pnpm run build:*)",
+      "Bash(pnpm run format:*)",
+      "Bash(pnpm run lint)",
+      "Bash(pnpm run test:*)",
+      "Bash(pnpm run type-check:*)",
+      "Bash(pnpm type-check:*)",
+      "Bash(rg:*)",
+      "Bash(tree:*)",
+      "Bash(uv run pyright:*)",
+      "Bash(uv run pytest:*)",
+      "Bash(uv run ruff:*)",
+      "Fetch(https://*)",
+      "List(*)"
+    ],
+    "deny": []
+  },
+  "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME\"/.claude/hooks/notify-waiting.sh"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME\"/.claude/hooks/notify-complete.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
+

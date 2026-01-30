@@ -138,7 +138,11 @@ alias timg='timg -pk'
 #     path settings    #
 ########################
 export VOLTA_HOME="$HOME/.volta"
+export JAVA_HOME="/opt/homebrew/opt/openjdk@17"
+export ANDROID_HOME="/opt/homebrew/share/android-commandlinetools"
 export PATH="$VOLTA_HOME/bin:$HOME/.local/bin:/opt/homebrew/bin:$HOME/local/bin:$HOME/.pyenv/bin:$PATH"
+export PATH="$JAVA_HOME/bin:$PATH"
+export PATH="$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator"
 
 if command -v pyenv > /dev/null; then
     eval "$(pyenv init -)"
