@@ -32,15 +32,29 @@ setopt HIST_NO_STORE        # do not record history cmd
 
 # function to refresh tmux env
 if [ -n "$TMUX" ]; then
+    function _update_tmux_env {
+        local val
+        val=$(tmux show-environment DISPLAY 2>/dev/null)
+        [[ $val == DISPLAY=* ]] && export "$val"
+        val=$(tmux show-environment SSH_CONNECTION 2>/dev/null)
+        [[ $val == SSH_CONNECTION=* ]] && export "$val"
+    }
     function refresh {
-        export DISPLAY=$(tmux show-environment | grep ^DISPLAY | sed 's/DISPLAY=//')
+        _update_tmux_env
         tmux source-file ~/.tmux.conf
     }
+    # update env on shell startup in tmux
+    _update_tmux_env
 else
     function refresh { :; }
 fi
 autoload -Uz add-zsh-hook
 add-zsh-hook preexec refresh
+
+# SSH agent: use forwarded agent when connected via SSH, otherwise use 1Password
+if [[ -z "$SSH_CONNECTION" ]]; then
+    export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+fi
 
 # reset cursor to blinking underline on each prompt
 _reset_cursor() {
@@ -133,6 +147,14 @@ alias lla="ls -la"
 alias free="free -g"
 alias watch='watch '
 alias timg='timg -pk'
+
+########################
+#     SSH settings     #
+########################
+# SSH forward agent
+[[ "$SSH_AUTH_SOCK" != "$HOME/.ssh/sock" && -S "$SSH_AUTH_SOCK" ]] \
+    && ln -snf "$SSH_AUTH_SOCK" "$HOME/.ssh/sock" \
+    && export SSH_AUTH_SOCK="$HOME/.ssh/sock"
 
 ########################
 #     path settings    #
