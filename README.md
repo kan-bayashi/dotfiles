@@ -8,6 +8,7 @@ My dotfiles for macOS.
 
 - git
 - brew
+- ghostty
 
 ## Setup
 
