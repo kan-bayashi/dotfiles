@@ -23,6 +23,7 @@ return {
         "vim",
         "lua",
         "rust",
+        "matlab",
       }, {
         force = false, -- force installation of already installed parsers
         generate = true, -- generate `parser.c` from `grammar.json` or `grammar.js` before compiling.
@@ -36,13 +37,16 @@ return {
         callback = function()
           local ok = pcall(vim.treesitter.start)
           if ok then
-            vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+            if vim.bo.filetype ~= "python" then
+              vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+            end
             vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
           end
         end,
       })
 
       -- Folding with markers for shell scripts, Tree-sitter for others
+      -- Python uses SimpylFold (def/class only)
       vim.opt.foldmethod = "expr"
       vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
       vim.opt.foldlevel = 99
@@ -50,6 +54,10 @@ return {
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "sh",
         command = "setlocal foldmethod=marker",
+      })
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "python",
+        command = "setlocal foldlevel=0",
       })
 
       -- Highthlight arguments

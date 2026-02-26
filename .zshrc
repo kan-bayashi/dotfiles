@@ -167,3 +167,4 @@ fi
 [[ -f ~/.safe-chain/scripts/init-posix.sh ]] && source ~/.safe-chain/scripts/init-posix.sh || true
 [[ -f ~/.atuin/bin/env ]] && source "$HOME/.atuin/bin/env" || true
 [[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env" || true
+[[ -f "$HOME/.safe-chain/scripts/init-posix.sh" ]] && source "$HOME/.safe-chain/scripts/init-posix.sh" || true
