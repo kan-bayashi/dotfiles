@@ -13,7 +13,11 @@ vim.opt.backup = false
 vim.opt.writebackup = false
 vim.opt.updatetime = 300
 vim.opt.undofile = true
-vim.opt.undodir = vim.fn.expand("~/.cache/nvim/undo")
+local undodir = vim.fn.expand("~/.cache/nvim/undo")
+if vim.fn.isdirectory(undodir) == 0 then
+  vim.fn.mkdir(undodir, "p")
+end
+vim.opt.undodir = undodir
 vim.opt.ttimeoutlen = 10
 
 -- Set NVIM environment variable for nvim --remote commands
@@ -28,7 +32,7 @@ vim.opt.completeopt = { "menuone", "noinsert", "noselect" }
 vim.opt.number = true
 vim.opt.laststatus = 3
 vim.opt.showtabline = 2
-vim.opt.cmdheight = 2
+vim.opt.cmdheight = 1
 vim.opt.showmode = false
 vim.opt.showcmd = false
 vim.opt.cursorline = true
@@ -46,7 +50,7 @@ vim.opt.guicursor = {
   "r-cr:hor20-blinkon500-blinkoff500",
   "o:hor50",
 }
-vim.opt.shortmess = "c"
+vim.opt.shortmess = "filnxtToOFc"
 vim.opt.signcolumn = "yes"
 vim.opt.linebreak = true
 vim.opt.fillchars = { eob = " " }
@@ -115,7 +119,7 @@ local autocmd = vim.api.nvim_create_autocmd
 
 -- 2-space indentation for specific filetypes
 autocmd("Filetype", {
-  pattern = { "yaml", "tf", "vim", "lua", "typescriptreact" },
+  pattern = { "yaml", "tf", "vim", "lua", "typescript", "typescriptreact", "javascript", "javascriptreact", "json", "html", "css" },
   command = "setlocal tabstop=2 softtabstop=2 shiftwidth=2",
 })
 
