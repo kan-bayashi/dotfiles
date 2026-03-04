@@ -32,7 +32,7 @@ vim.opt.completeopt = { "menuone", "noinsert", "noselect" }
 vim.opt.number = true
 vim.opt.laststatus = 3
 vim.opt.showtabline = 2
-vim.opt.cmdheight = 2
+vim.opt.cmdheight = 1
 vim.opt.showmode = false
 vim.opt.showcmd = false
 vim.opt.cursorline = true
@@ -50,7 +50,7 @@ vim.opt.guicursor = {
   "r-cr:hor20-blinkon500-blinkoff500",
   "o:hor50",
 }
-vim.opt.shortmess = "c"
+vim.opt.shortmess = "filnxtToOFc"
 vim.opt.signcolumn = "yes"
 vim.opt.linebreak = true
 vim.opt.fillchars = { eob = " " }
