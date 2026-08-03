@@ -19,7 +19,7 @@ map("n", "<C-i>", "<Nop>", opts)
 map("n", "<C-o>", "<Nop>", opts)
 
 -- Disable items to avoid many typos
-map("n", "<S-j>", "<Nop>", opts)
+-- map("n", "<S-j>", "<Nop>", opts)
 map("n", "<C-f>", "<Nop>", opts)
 map("n", "<C-b>", "<Nop>", opts)
 

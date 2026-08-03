@@ -37,6 +37,11 @@ for dir in nvim ghostty lazygit atuin; do
     [ -d "${DOTFILES_DIR}/${dir}" ] && make_symlink "${DOTFILES_DIR}/${dir}" ~/.config/"${dir}"
 done
 
+# Herdr writes logs next to its config, so link only config.toml rather than
+# the whole directory. This keeps runtime files out of the dotfiles repository.
+mkdir -p ~/.config/herdr
+make_symlink "${DOTFILES_DIR}/herdr/config.toml" ~/.config/herdr/config.toml
+
 # Zsh theme
 mkdir -p ~/.zsh/themes
 make_symlink "${DOTFILES_DIR}/themes/bullet-train.zsh-theme" ~/.zsh/themes/bullet-train.zsh-theme

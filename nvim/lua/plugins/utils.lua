@@ -220,11 +220,23 @@ return {
       })
     end,
   },
-  -- Seamless navigation between tmux panes and vim splits
+  -- Seamless navigation between Vim splits and tmux/Herdr panes
   {
     "christoomey/vim-tmux-navigator",
+    lazy = false,
     init = function()
       vim.g.tmux_navigator_disable_when_zoomed = 1
+      -- vim-herdr-navigation owns the Ctrl-h/j/k/l mappings and falls back to
+      -- these commands when Neovim is running inside tmux.
+      vim.g.tmux_navigator_no_mappings = 1
+    end,
+  },
+  {
+    "paulbkim-dev/vim-herdr-navigation",
+    lazy = false,
+    dependencies = { "christoomey/vim-tmux-navigator" },
+    config = function(plugin)
+      dofile(plugin.dir .. "/editor/nvim.lua")
     end,
   },
   -- Show color or color code in buffer
