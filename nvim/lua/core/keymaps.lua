@@ -19,7 +19,7 @@ map("n", "<C-i>", "<Nop>", opts)
 map("n", "<C-o>", "<Nop>", opts)
 
 -- Disable items to avoid many typos
-map("n", "<S-j>", "<Nop>", opts)
+-- map("n", "<S-j>", "<Nop>", opts)
 map("n", "<C-f>", "<Nop>", opts)
 map("n", "<C-b>", "<Nop>", opts)
 
@@ -58,8 +58,8 @@ map("n", "<Leader><C-q>", "<cmd>bdel!<CR>", opts)
 map("n", "q:", "<cmd>q<CR>", opts)
 
 -- Move selected lines up/down in visual mode
-map("v", "J", ":m '>+1<CR>gv=gv", opts)
-map("v", "K", ":m '<-2<CR>gv=gv", opts)
+-- map("v", "J", ":m '>+1<CR>gv=gv", opts)
+-- map("v", "K", ":m '<-2<CR>gv=gv", opts)
 
 -- Keep selection after indent
 map("v", "<", "<gv", opts)

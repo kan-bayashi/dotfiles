@@ -1,0 +1,166 @@
+# herdr configuration based on ~/.tmux.conf
+# Installed at ~/.config/herdr/config.toml by setup.sh.
+
+# Skip the first-run setup after applying this managed configuration.
+onboarding = false
+
+[theme]
+# Keep the terminal's default background, as in the tmux status bar.
+name = "vesper"
+
+auto_switch = false
+
+[terminal]
+# Keep this unset so macOS and Linux use the login account's $SHELL.
+# Falling back to /bin/sh is handled by Herdr when $SHELL is unavailable.
+shell_mode = "auto"
+# Match new-window/split-window -c '#{pane_current_path}'.
+new_cwd = "follow"
+
+[keys]
+# Match tmux's `set -g prefix C-t`.
+prefix = "ctrl+t"
+
+# Use tmux defaults whenever ~/.tmux.conf does not override the action.
+help = "prefix+?"
+settings = "prefix+shift+c"
+detach = "prefix+d"
+workspace_picker = "prefix+s"
+goto = "prefix+w"
+rename_workspace = "prefix+$"
+previous_workspace = "prefix+("
+next_workspace = "prefix+)"
+
+# Herdr-only actions keep distinct bindings that do not shadow tmux keys.
+new_workspace = "prefix+shift+n"
+new_worktree = "prefix+shift+g"
+close_workspace = "prefix+shift+d"
+open_notification_target = "prefix+shift+o"
+
+# Tabs are the Herdr equivalent of tmux windows.
+new_tab = "prefix+c"
+rename_tab = "prefix+comma"
+previous_tab = "prefix+ctrl+p"
+next_tab = "prefix+ctrl+n"
+switch_tab = "prefix+1..9"
+close_tab = "prefix+ampersand"
+rename_pane = "prefix+shift+p"
+# prefix+e/E remain free because ~/.tmux.conf uses them for pane sync.
+edit_scrollback = "prefix+alt+e"
+
+# Preserve the tmux split keys: `|` opens side-by-side, `-` opens stacked.
+split_vertical = "prefix+|"
+split_horizontal = "prefix+-"
+
+# Preserve the configured vi-style copy key. Herdr's copy mode already uses
+# vi/tmux navigation and y to copy to the system clipboard.
+copy_mode = "prefix+v"
+resize_mode = "prefix+r"
+reload_config = "prefix+shift+r"
+
+# tmux defaults for pane focus and cycling. Arrow bindings also respect the
+# explicit `unbind l` in ~/.tmux.conf.
+focus_pane_left = "prefix+left"
+focus_pane_down = "prefix+down"
+focus_pane_up = "prefix+up"
+focus_pane_right = "prefix+right"
+cycle_pane_next = "prefix+o"
+cycle_pane_previous = "prefix+alt+o"
+last_pane = "prefix+;"
+
+# tmux uses { and } for swapping with the previous/next pane. Retain spatial
+# left/right swaps on shifted arrows as a Herdr extension.
+swap_pane_left = "prefix+shift+left"
+swap_pane_down = "prefix+}"
+swap_pane_up = "prefix+{"
+swap_pane_right = "prefix+shift+right"
+
+close_pane = "prefix+x"
+zoom = "prefix+z"
+toggle_sidebar = "prefix+b"
+
+[ui]
+# Keep the default view close to a minimal tmux layout. Toggle the sidebar with
+# prefix+b when the workspace/agent overview is needed.
+sidebar_start_collapsed = true
+sidebar_collapsed_mode = "hidden"
+mouse_capture = true
+copy_on_select = true
+pane_borders = false
+# tmux panes share their divider rather than leaving a gap.
+pane_gaps = true
+# Dim unfocused panes (custom fork feature, ~/work/herdr).
+dim_inactive_panes = true
+show_agent_labels_on_pane_borders = true
+hide_tab_bar_when_single_tab = true
+
+agent_panel_sort = "spaces"
+[session]
+# Closest Herdr equivalent to tmux-resurrect/tmux-continuum restore behavior.
+resume_agents_on_restore = true
+
+[experimental]
+# Match tmux allow-passthrough/allow-images for Ghostty's Kitty protocol.
+kitty_graphics = true
+
+[advanced]
+# tmux history-limit is measured in lines; Herdr uses bytes. Keep a generous
+# 50 MB per-pane buffer to preserve the intent of history-limit = 50000.
+scrollback_limit_bytes = 50_000_000
+
+# Herdr has no built-in one-shot resize/send-key bindings, so use its local
+# pane API to reproduce the explicit ~/.tmux.conf bindings. A 0.05 resize is
+# approximately five cells in a 100-column/row terminal.
+[[keys.command]]
+key = "prefix+ctrl+l"
+type = "shell"
+command = '"${HERDR_BIN_PATH}" pane send-keys "${HERDR_ACTIVE_PANE_ID}" ctrl+l'
+description = "clear pane (tmux Ctrl-l)"
+
+[[keys.command]]
+key = "ctrl+h"
+type = "plugin_action"
+command = "vim-herdr-navigation.left"
+description = "navigate left (Vim/Herdr)"
+
+[[keys.command]]
+key = "ctrl+j"
+type = "plugin_action"
+command = "vim-herdr-navigation.down"
+description = "navigate down (Vim/Herdr)"
+
+[[keys.command]]
+key = "ctrl+k"
+type = "plugin_action"
+command = "vim-herdr-navigation.up"
+description = "navigate up (Vim/Herdr)"
+
+[[keys.command]]
+key = "ctrl+l"
+type = "plugin_action"
+command = "vim-herdr-navigation.right"
+description = "navigate right (Vim/Herdr)"
+
+[[keys.command]]
+key = "prefix+shift+h"
+type = "shell"
+command = '"${HERDR_BIN_PATH}" pane resize --direction left --amount 0.05 --pane "${HERDR_ACTIVE_PANE_ID}"'
+description = "resize pane left"
+
+[[keys.command]]
+key = "prefix+shift+j"
+type = "shell"
+command = '"${HERDR_BIN_PATH}" pane resize --direction down --amount 0.05 --pane "${HERDR_ACTIVE_PANE_ID}"'
+description = "resize pane down"
+
+[[keys.command]]
+key = "prefix+shift+k"
+type = "shell"
+command = '"${HERDR_BIN_PATH}" pane resize --direction up --amount 0.05 --pane "${HERDR_ACTIVE_PANE_ID}"'
+description = "resize pane up"
+
+[[keys.command]]
+key = "prefix+shift+l"
+type = "shell"
+command = '"${HERDR_BIN_PATH}" pane resize --direction right --amount 0.05 --pane "${HERDR_ACTIVE_PANE_ID}"'
+description = "resize pane right"
