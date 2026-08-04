@@ -11,7 +11,8 @@ name = "vesper"
 auto_switch = false
 
 [terminal]
-default_shell = "/opt/homebrew/bin/zsh"
+# Keep this unset so macOS and Linux use the login account's $SHELL.
+# Falling back to /bin/sh is handled by Herdr when $SHELL is unavailable.
 shell_mode = "auto"
 # Match new-window/split-window -c '#{pane_current_path}'.
 new_cwd = "follow"
@@ -88,6 +89,8 @@ copy_on_select = true
 pane_borders = false
 # tmux panes share their divider rather than leaving a gap.
 pane_gaps = true
+# Dim unfocused panes (custom fork feature, ~/work/herdr).
+dim_inactive_panes = true
 show_agent_labels_on_pane_borders = true
 hide_tab_bar_when_single_tab = true
 
@@ -113,12 +116,6 @@ key = "prefix+ctrl+l"
 type = "shell"
 command = '"${HERDR_BIN_PATH}" pane send-keys "${HERDR_ACTIVE_PANE_ID}" ctrl+l'
 description = "clear pane (tmux Ctrl-l)"
-
-[[keys.command]]
-key = "prefix+p"
-type = "shell"
-command = '"${HERDR_BIN_PATH}" pane send-text "${HERDR_ACTIVE_PANE_ID}" "$(pbpaste)"'
-description = "paste system clipboard (tmux paste-buffer)"
 
 [[keys.command]]
 key = "ctrl+h"

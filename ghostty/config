@@ -42,7 +42,7 @@ font-feature = "-liga"
 window-padding-x = 3
 window-padding-y = 5
 window-padding-balance = true
-window-padding-color = extend
+window-padding-color = background
 macos-titlebar-style = tabs
 macos-titlebar-proxy-icon = hidden
 macos-window-shadow = false
@@ -55,6 +55,10 @@ theme = "jellybeans_like.theme"
 
 # Mouse
 mouse-scroll-multiplier = precision:0.05,discrete:0.5
+
+# Prepare remote shells for Ghostty's TERM entry so terminal capabilities and
+# modified keys remain consistent when Herdr is launched after SSH.
+shell-integration-features = ssh-env,ssh-terminfo
 
 # Cursor
 cursor-style = underline
