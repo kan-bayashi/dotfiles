@@ -5,10 +5,29 @@
 onboarding = false
 
 [theme]
-# Keep the terminal's default background, as in the tmux status bar.
+# Use Vesper only as the fallback for tokens not defined by the custom palette.
 name = "vesper"
-
 auto_switch = false
+
+# Jellybeans-like palette shared with Ghostty and Atuin. Keep the terminal's
+# translucent background while giving Herdr surfaces enough separation.
+[theme.custom]
+accent = "#799d6a"
+panel_bg = "reset"
+surface0 = "#242424"
+surface1 = "#333333"
+surface_dim = "#1f1f1f"
+overlay0 = "#6c6c6c"
+overlay1 = "#9098a0"
+text = "#dadada"
+subtext0 = "#b0b0b0"
+mauve = "#cc98de"
+green = "#8bc34a"
+yellow = "#ffd43b"
+red = "#ef5350"
+blue = "#64b5f6"
+teal = "#8ac7cf"
+peach = "#f5a25b"
 
 [terminal]
 # Keep this unset so macOS and Linux use the login account's $SHELL.
@@ -88,11 +107,13 @@ mouse_capture = true
 copy_on_select = true
 pane_borders = false
 # tmux panes share their divider rather than leaving a gap.
-pane_gaps = true
+pane_gaps = false
 # Dim unfocused panes (custom fork feature, ~/work/herdr).
 dim_inactive_panes = true
 show_agent_labels_on_pane_borders = true
 hide_tab_bar_when_single_tab = true
+tab_separator_right = " "
+tab_separator_left = " "
 
 agent_panel_sort = "spaces"
 [session]
