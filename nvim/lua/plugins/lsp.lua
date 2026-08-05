@@ -14,11 +14,31 @@ return {
       "hrsh7th/vim-vsnip",
       "rafamadriz/friendly-snippets",
     },
-    event = { "InsertEnter" },
+    event = { "InsertEnter", "CmdlineEnter" },
     config = function()
       -- Completion settings
       local lspkind = require("lspkind")
       local cmp = require("cmp")
+
+      local function confirm_mapping()
+        return cmp.mapping({
+          i = function(fallback)
+            if cmp.visible() and cmp.get_active_entry() then
+              cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+            else
+              fallback()
+            end
+          end,
+          s = cmp.mapping.confirm({ select = true }),
+          c = function(fallback)
+            if cmp.visible() and cmp.get_active_entry() then
+              cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+            else
+              fallback()
+            end
+          end,
+        })
+      end
 
       cmp.setup({
         snippet = {
@@ -45,24 +65,7 @@ return {
             },
           }),
           ["<C-e>"] = cmp.mapping.abort(),
-          ["<CR>"] = cmp.mapping({
-            i = function(fallback)
-              if cmp.visible() and cmp.get_active_entry() then
-                cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
-              else
-                fallback()
-              end
-            end,
-            s = cmp.mapping.confirm({ select = true }),
-            c = function(fallback)
-              if cmp.visible() then
-                cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
-                vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<CR>", true, true, true), "n", false)
-              else
-                fallback()
-              end
-            end,
-          }),
+          ["<CR>"] = confirm_mapping(),
           ["<C-d>"] = cmp.mapping.scroll_docs(6),
           ["<C-u>"] = cmp.mapping.scroll_docs(-6),
         }),
@@ -103,13 +106,17 @@ return {
         },
       })
       cmp.setup.cmdline("/", {
-        mapping = cmp.mapping.preset.cmdline(),
+        mapping = cmp.mapping.preset.cmdline({
+          ["<CR>"] = confirm_mapping(),
+        }),
         sources = {
           { name = "buffer" },
         },
       })
       cmp.setup.cmdline(":", {
-        mapping = cmp.mapping.preset.cmdline(),
+        mapping = cmp.mapping.preset.cmdline({
+          ["<CR>"] = confirm_mapping(),
+        }),
         sources = cmp.config.sources({
           { name = "path" },
         }, {

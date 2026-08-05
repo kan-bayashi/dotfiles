@@ -39,10 +39,10 @@ font-feature = "-dlig"
 font-feature = "-liga"
 
 # Window
-window-padding-x = 3
-window-padding-y = 5
+window-padding-x = 10
+window-padding-y = 12
 window-padding-balance = true
-window-padding-color = background
+window-padding-color = extend
 macos-titlebar-style = tabs
 macos-titlebar-proxy-icon = hidden
 macos-window-shadow = false

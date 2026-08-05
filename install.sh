@@ -9,7 +9,6 @@ set -eu
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 PYTHON_VERSION=3.12
-VIM_HERDR_NAVIGATION_REF=820d48f5d9c9a7dece6a4bebfa3982ec30bbfbb7
 
 # Check brew installation
 if ! command -v brew > /dev/null; then
@@ -56,10 +55,9 @@ for pkg in "${brew_packages[@]}"; do
     brew ls --versions "$pkg" > /dev/null 2>&1 || brew install "$pkg"
 done
 
-# Install the reviewed Herdr side of Ctrl-h/j/k/l navigation. Reinstalling a
-# GitHub-managed plugin is safe and keeps the checkout on the pinned revision.
-herdr plugin install paulbkim-dev/vim-herdr-navigation \
-    --ref "$VIM_HERDR_NAVIGATION_REF" --yes
+# Install herdr plugins
+herdr plugin install paulbkim-dev/vim-herdr-navigation --yes
+# herdr plugin install nikok6/herdr-mirror --yes
 
 # Setup fzf key bindings
 if [ -f "$(brew --prefix)/opt/fzf/install" ]; then

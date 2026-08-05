@@ -21,6 +21,7 @@ return {
         "make",
         "markdown",
         "vim",
+        "regex",
         "lua",
         "rust",
         "html",

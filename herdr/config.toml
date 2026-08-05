@@ -42,25 +42,25 @@ prefix = "ctrl+t"
 
 # Use tmux defaults whenever ~/.tmux.conf does not override the action.
 help = "prefix+?"
-settings = "prefix+shift+c"
+settings = "prefix+shift+s"
 detach = "prefix+d"
 workspace_picker = "prefix+s"
 goto = "prefix+w"
 rename_workspace = "prefix+$"
-previous_workspace = "prefix+("
-next_workspace = "prefix+)"
+previous_workspace = "prefix+ctrl+p"
+next_workspace = "prefix+ctrl+n"
 
 # Herdr-only actions keep distinct bindings that do not shadow tmux keys.
-new_workspace = "prefix+shift+n"
+new_workspace = "prefix+shift+c"
 new_worktree = "prefix+shift+g"
-close_workspace = "prefix+shift+d"
+close_workspace = "prefix+shift+x"
 open_notification_target = "prefix+shift+o"
 
 # Tabs are the Herdr equivalent of tmux windows.
 new_tab = "prefix+c"
 rename_tab = "prefix+comma"
-previous_tab = "prefix+ctrl+p"
-next_tab = "prefix+ctrl+n"
+previous_tab = "prefix+p"
+next_tab = "prefix+n"
 switch_tab = "prefix+1..9"
 close_tab = "prefix+ampersand"
 rename_pane = "prefix+shift+p"
@@ -123,6 +123,7 @@ resume_agents_on_restore = true
 [experimental]
 # Match tmux allow-passthrough/allow-images for Ghostty's Kitty protocol.
 kitty_graphics = true
+switch_ascii_input_source_in_prefix = true
 
 [advanced]
 # tmux history-limit is measured in lines; Herdr uses bytes. Keep a generous
@@ -185,3 +186,8 @@ key = "prefix+shift+l"
 type = "shell"
 command = '"${HERDR_BIN_PATH}" pane resize --direction right --amount 0.05 --pane "${HERDR_ACTIVE_PANE_ID}"'
 description = "resize pane right"
+
+[[keys.command]]
+key = "prefix+ctrl+d"           # destructive: closes ALL mirrors + clears state
+type = "plugin_action"
+command = "mirror.teardown"    # stop mirroring everything (start to resume)
