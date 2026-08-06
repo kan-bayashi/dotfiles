@@ -30,6 +30,50 @@ return {
       vim.api.nvim_set_hl(0, "TelescopeResultsDiffUntracked", { bg = "NONE" })
     end,
   },
+  -- Command line and message UI
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+    },
+    opts = {},
+    config = function()
+      require("noice").setup({
+        cmdline = {
+          format = {
+              cmdline = { pattern = "^:", icon = "󰄾", lang = "vim" },
+          },
+        },
+        lsp = {
+          override = {
+            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+            ["vim.lsp.util.stylize_markdown"] = true,
+            ["cmp.entry.get_documentation"] = true,
+          },
+        },
+        presets = {
+          bottom_search = true,
+          command_palette = false,
+          long_message_to_split = true,
+          inc_rename = false,
+          lsp_doc_border = false,
+        },
+        views = {
+          cmdline_popup = {
+            border = {
+              style = "none",
+              padding = { 2, 3 },
+            },
+            filter_options = {},
+            win_options = {
+              winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
+            },
+          },
+        },
+      })
+    end
+  },
   -- Start screen
   {
     "folke/snacks.nvim",
