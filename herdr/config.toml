@@ -48,8 +48,8 @@ detach = "prefix+d"
 workspace_picker = "prefix+s"
 goto = "prefix+w"
 rename_workspace = "prefix+$"
-previous_workspace = "shift+ctrl+p"
-next_workspace = "shift+ctrl+n"
+previous_workspace = ["shift+ctrl+p", "shift+ctrl+k"]
+next_workspace = ["shift+ctrl+n", "shift+ctrl+j"]
 
 # Herdr-only actions keep distinct bindings that do not shadow tmux keys.
 new_workspace = "prefix+shift+c"
@@ -113,6 +113,18 @@ pane_gaps = false
 dim_inactive_panes = true
 show_agent_labels_on_pane_borders = true
 hide_tab_bar_when_single_tab = true
+
+# v0.8.2: tmux-style right-aligned status, shown whenever the tab bar is visible.
+tab_bar_right = [
+  { type = "zoom" },
+  { type = "hostname" },
+  { type = "datetime", format = "%H:%M" },
+]
+tab_bar_right_separator = " ▎"
+
+# Use shape as well as color to distinguish agent lifecycle states.
+status_indicators = "dots"
+
 tab_separator_right = " "
 tab_separator_left = " "
 
@@ -164,29 +176,3 @@ type = "plugin_action"
 command = "vim-herdr-navigation.right"
 description = "navigate right (Vim/Herdr)"
 
-[[keys.command]]
-key = "prefix+shift+h"
-type = "shell"
-command = '"${HERDR_BIN_PATH}" pane resize --direction left --amount 0.05 --pane "${HERDR_ACTIVE_PANE_ID}"'
-description = "resize pane left"
-
-[[keys.command]]
-key = "prefix+shift+j"
-type = "shell"
-command = '"${HERDR_BIN_PATH}" pane resize --direction down --amount 0.05 --pane "${HERDR_ACTIVE_PANE_ID}"'
-description = "resize pane down"
-
-[[keys.command]]
-key = "prefix+shift+k"
-type = "shell"
-command = '"${HERDR_BIN_PATH}" pane resize --direction up --amount 0.05 --pane "${HERDR_ACTIVE_PANE_ID}"'
-description = "resize pane up"
-
-[[keys.command]]
-key = "prefix+shift+l"
-type = "shell"
-command = '"${HERDR_BIN_PATH}" pane resize --direction right --amount 0.05 --pane "${HERDR_ACTIVE_PANE_ID}"'
-description = "resize pane right"
-
-[worktrees]
-directory = "/mnt/hdl_work1/tomoki.hayashi/worktrees"
