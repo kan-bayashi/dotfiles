@@ -116,6 +116,19 @@ bindkey -M menuselect 'l' vi-forward-char
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
 ########################
+#     path settings    #
+########################
+# Set PATH before command-dependent aliases are evaluated.
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$HOME/.local/bin:/opt/homebrew/bin:$HOME/local/bin:$HOME/.pyenv/bin:$PATH"
+if [ -e "$HOME/.poetry/bin" ]; then
+    export PATH="$HOME/.poetry/bin:$PATH"
+fi
+if [ -e "$HOME/.pixi/bin" ]; then
+    export PATH="$HOME/.pixi/bin:$PATH"
+fi
+
+########################
 #    alias settings    #
 ########################
 if command -v lsd > /dev/null; then
@@ -140,21 +153,13 @@ alias timg='timg -pk'
 #     SSH settings     #
 ########################
 # SSH forward agent
-[[ "$SSH_AUTH_SOCK" != "$HOME/.ssh/sock" && -S "$SSH_AUTH_SOCK" ]] \
-    && ln -snf "$SSH_AUTH_SOCK" "$HOME/.ssh/sock" \
-    && export SSH_AUTH_SOCK="$HOME/.ssh/sock"
+if [[ -n "$SSH_AUTH_SOCK" &&
+      "$SSH_AUTH_SOCK" != "$HOME/.ssh/sock" &&
+      -S "$SSH_AUTH_SOCK" ]]; then
+    ln -snf "$SSH_AUTH_SOCK" "$HOME/.ssh/sock"
+fi
+[[ -S "$HOME/.ssh/sock" ]] && export SSH_AUTH_SOCK="$HOME/.ssh/sock"
 
-########################
-#     path settings    #
-########################
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$HOME/.local/bin:/opt/homebrew/bin:$HOME/local/bin:$HOME/.pyenv/bin:$PATH"
-if [ -e "$HOME/.poetry/bin" ]; then
-    export PATH="$HOME/.poetry/bin:$PATH"
-fi
-if [ -e "$HOME/.pixi/bin" ]; then
-    export PATH="$HOME/.pixi/bin:$PATH"
-fi
 if command -v pyenv > /dev/null; then
     eval "$(pyenv init -)"
 fi
