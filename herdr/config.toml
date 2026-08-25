@@ -113,6 +113,7 @@ pane_gaps = false
 dim_inactive_panes = true
 show_agent_labels_on_pane_borders = true
 hide_tab_bar_when_single_tab = true
+pane_scrollbars = false
 
 # v0.8.2: tmux-style right-aligned status, shown whenever the tab bar is visible.
 tab_bar_right = [
