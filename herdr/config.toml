@@ -37,6 +37,9 @@ shell_mode = "auto"
 # Match new-window/split-window -c '#{pane_current_path}'.
 new_cwd = "follow"
 
+[worktrees]
+directory = "/mnt/hdl_work1/tomoki.hayashi/worktrees"
+
 [keys]
 # Match tmux's `set -g prefix C-t`.
 prefix = "ctrl+t"
@@ -176,4 +179,3 @@ key = "ctrl+l"
 type = "plugin_action"
 command = "vim-herdr-navigation.right"
 description = "navigate right (Vim/Herdr)"
-
