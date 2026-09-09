@@ -152,13 +152,14 @@ alias timg='timg -pk'
 ########################
 #     SSH settings     #
 ########################
-# SSH forward agent
+# Keep shells on the stable symlink even while its current socket is stale.
+# ~/.ssh/rc refreshes it on reconnection, reviving existing herdr panes.
 if [[ -n "$SSH_AUTH_SOCK" &&
       "$SSH_AUTH_SOCK" != "$HOME/.ssh/sock" &&
       -S "$SSH_AUTH_SOCK" ]]; then
     ln -snf "$SSH_AUTH_SOCK" "$HOME/.ssh/sock"
 fi
-[[ -S "$HOME/.ssh/sock" ]] && export SSH_AUTH_SOCK="$HOME/.ssh/sock"
+[[ -L "$HOME/.ssh/sock" ]] && export SSH_AUTH_SOCK="$HOME/.ssh/sock"
 
 if command -v pyenv > /dev/null; then
     eval "$(pyenv init -)"

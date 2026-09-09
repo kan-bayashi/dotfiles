@@ -37,6 +37,10 @@ done
 mkdir -p ~/.zsh/themes
 make_symlink "${PWD}/themes/bullet-train.zsh-theme" ~/.zsh/themes/bullet-train.zsh-theme
 
+# SSH connection hook
+mkdir -p ~/.ssh
+make_symlink "${PWD}/ssh/rc" ~/.ssh/rc
+
 # Make symlink to bin
 mkdir -p ~/.local/bin
 for bin in "${PWD}"/bin/*; do
