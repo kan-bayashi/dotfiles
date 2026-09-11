@@ -147,6 +147,9 @@ alias lla="ls -la"
 alias free="free -g"
 alias watch='watch '
 alias timg='timg -pk'
+alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
+# Workaround for too long socket path
+alias terminal-browser='XDG_RUNTIME_DIR=/private/tmp/tb-tomoki command /Users/tomoki.hayashi/.local/bin/terminal-browser'
 
 ########################
 #     SSH settings     #

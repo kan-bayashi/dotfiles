@@ -1,0 +1,134 @@
+#!/bin/sh
+#
+# herdr-fwd: manage SSH port forwards on the ssh master used by `herdr --remote`.
+#
+# `herdr --remote` keeps a persistent OpenSSH ControlMaster per attached remote
+# (control socket at $TMPDIR/herdr-ssh-<client pid>-N/ctl). Forwards added to
+# that master stay up while the herdr client is running, even across detaches.
+#
+# Usage:
+#   herdr-fwd add    [-t HOST] <-L|-R|-D spec>...   add forwards (ssh syntax)
+#   herdr-fwd cancel [-t HOST] <-L|-R|-D spec>...   remove forwards
+#   herdr-fwd list                                  show masters and local ports
+#
+#   -t HOST   choose the remote by (sub)string when several are attached
+#
+# Examples:
+#   herdr-fwd add -L 8888:localhost:8888        # remote:8888 -> local:8888
+#   herdr-fwd add -R 3000:localhost:3000        # local:3000  -> remote:3000
+#   herdr-fwd cancel -L 8888:localhost:8888
+#
+# `list` shows only local listening ports (-L/-D); -R forwards live on the
+# remote side and cannot be listed from here.
+
+set -eu
+
+# Host name given to ssh for -O requests. It deliberately matches no Host block
+# in ~/.ssh/config, so only the forwards passed on the command line are touched.
+DUMMY_HOST="herdr-remote"
+
+usage() {
+    cat <<USAGE
+Usage:
+  herdr-fwd add    [-t HOST] <-L|-R|-D spec>...   add forwards (ssh syntax)
+  herdr-fwd cancel [-t HOST] <-L|-R|-D spec>...   remove forwards
+  herdr-fwd list                                  show masters and local ports
+
+  -t HOST   choose the remote by (sub)string when several are attached
+
+Examples:
+  herdr-fwd add -L 8888:localhost:8888        # remote:8888 -> local:8888
+  herdr-fwd add -R 3000:localhost:3000        # local:3000  -> remote:3000
+  herdr-fwd cancel -L 8888:localhost:8888
+USAGE
+}
+
+die() {
+    printf 'herdr-fwd: %s\n' "$*" >&2
+    exit 1
+}
+
+# Print one line per live herdr ssh master: "<host>\t<client pid>\t<ctl path>"
+find_masters() {
+    seen=""
+    tmp=${TMPDIR:-/tmp}
+    tmp=${tmp%/}
+    for ctl in "$tmp"/herdr-ssh-*/ctl /tmp/herdr-ssh-*/ctl; do
+        [ -S "$ctl" ] || continue
+        case " $seen " in *" $ctl "*) continue ;; esac
+        seen="$seen $ctl"
+        dir=${ctl%/ctl}
+        pid=${dir##*/herdr-ssh-}
+        pid=${pid%-*}
+        host=$(ps -o command= -p "$pid" 2>/dev/null |
+            sed -n -E 's/.*--remote[ =]([^ ]+).*/\1/p')
+        ssh -F /dev/null -S "$ctl" -O check "$DUMMY_HOST" >/dev/null 2>&1 || continue
+        printf '%s\t%s\t%s\n' "${host:--}" "$pid" "$ctl"
+    done
+}
+
+# Select exactly one master, optionally filtered by $1 (substring of host).
+select_master() {
+    masters=$(find_masters)
+    [ -n "$masters" ] || die "no running herdr --remote session found"
+    if [ -n "${1:-}" ]; then
+        masters=$(printf '%s\n' "$masters" | grep -F -- "$1" || true)
+        [ -n "$masters" ] || die "no herdr --remote session matches '$1'"
+    fi
+    if [ "$(printf '%s\n' "$masters" | wc -l)" -gt 1 ]; then
+        printf 'herdr-fwd: several remotes are attached, pick one with -t:\n' >&2
+        printf '%s\n' "$masters" | cut -f1 | sed 's/^/  /' >&2
+        exit 1
+    fi
+    printf '%s\n' "$masters"
+}
+
+master_pid() {
+    ssh -F /dev/null -S "$1" -O check "$DUMMY_HOST" 2>&1 |
+        sed -n 's/.*pid=\([0-9]*\).*/\1/p'
+}
+
+cmd_list() {
+    masters=$(find_masters)
+    [ -n "$masters" ] || die "no running herdr --remote session found"
+    printf '%s\n' "$masters" | while IFS="$(printf '\t')" read -r host pid ctl; do
+        printf '%s (herdr pid %s)\n' "$host" "$pid"
+        printf '  ctl: %s\n' "$ctl"
+        if command -v lsof >/dev/null 2>&1; then
+            lsof -nP -a -p "$(master_pid "$ctl")" -iTCP -sTCP:LISTEN 2>/dev/null |
+                awk 'NR > 1 { print "  listen: " $9 }'
+        fi
+    done
+}
+
+cmd_forward() {
+    name=$1
+    op=$2
+    shift 2
+    target=""
+    if [ "${1:-}" = "-t" ]; then
+        [ $# -ge 2 ] || die "-t requires a host"
+        target=$2
+        shift 2
+    fi
+    [ $# -gt 0 ] || die "$name requires at least one -L/-R/-D spec"
+    for arg in "$@"; do
+        case "$arg" in
+            -L|-R|-D|-L*|-R*|-D*) ;;
+            *:*) ;;
+            *) die "unexpected argument '$arg' (use -L/-R/-D specs)" ;;
+        esac
+    done
+    ctl=$(select_master "$target" | cut -f3)
+    [ -n "$ctl" ] || exit 1
+    ssh -F /dev/null -S "$ctl" -O "$op" "$@" "$DUMMY_HOST"
+}
+
+case "${1:-}" in
+    add)    shift; cmd_forward add forward "$@" ;;
+    cancel) shift; cmd_forward cancel cancel "$@" ;;
+    list)   cmd_list ;;
+    -h|--help|help) usage ;;
+    "")     usage >&2; exit 1 ;;
+    *)      die "unknown command '$1' (add|cancel|list)" ;;
+esac

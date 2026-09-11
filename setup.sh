@@ -46,5 +46,11 @@ make_symlink "${DOTFILES_DIR}/herdr/config.toml" ~/.config/herdr/config.toml
 mkdir -p ~/.zsh/themes
 make_symlink "${DOTFILES_DIR}/themes/bullet-train.zsh-theme" ~/.zsh/themes/bullet-train.zsh-theme
 
+# Make symlink to bin
+mkdir -p ~/.local/bin
+for bin in "${DOTFILES_DIR}"/bin/*; do
+    make_symlink "${bin}" ~/.local/bin/"$(basename "${bin}")"
+done
+
 echo "Successfully setup dotfiles."
 echo "Next, please run install.sh to install essential tools."
