@@ -3,3 +3,4 @@
 @eaDir/
 nvim/plugin
 lazygit/state.yml
+__pycache__

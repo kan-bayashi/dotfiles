@@ -42,6 +42,11 @@ done
 mkdir -p ~/.config/herdr
 make_symlink "${DOTFILES_DIR}/herdr/config.toml" ~/.config/herdr/config.toml
 
+# Moshi hooks: link only the hooks directory; ~/.config/moshi also holds
+# runtime files (config.toml, webhook-token) that stay out of the repository.
+mkdir -p ~/.config/moshi
+make_symlink "${DOTFILES_DIR}/moshi/hooks" ~/.config/moshi/hooks
+
 # Zsh theme
 mkdir -p ~/.zsh/themes
 make_symlink "${DOTFILES_DIR}/themes/bullet-train.zsh-theme" ~/.zsh/themes/bullet-train.zsh-theme
